@@ -1,0 +1,27 @@
+project:
+  output-dir: ./docs/exp
+  render:
+    - index.qmd
+    - Qmd Files/Tipps and Tricks/*.qmd
+
+website:
+  title: "Quarto Tipps and Tricks"
+  navbar:
+    left:
+      - text: "Overview"
+        href: index.qmd
+      - text: "Example Page"
+        href: "/beg/Qmd Files/Example Page/index_beg.html"
+      - text: "Getting Started"
+        href: "/int/Qmd Files/Getting Started/getting_started.html"
+      - text: "Tipps and Tricks for Quarto Users"
+        href: "exp/Qmd Files/Tipps and Tricks/index_exp.html"
+  sidebar:
+    - href: index_exp.qmd
+      text: What you should know
+    - href: exp_yml.qmd
+      text: The YML File
+    - href: exp_website.qmd
+      text: The QMD File
+    - href: exp_multilanguage.qmd
+      text: Multilanguage Quarto Projects

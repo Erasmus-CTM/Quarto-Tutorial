@@ -1,0 +1,30 @@
+---
+title: "References"
+bibliography: references.bib
+sidebar: example-sidebar
+---
+
+Quarto supports citations and bibliographies via standard `.bib` files — no plugins needed.
+
+## How It Works
+
+1. Create a `references.bib` file with BibTeX entries.
+2. Add `bibliography: references.bib` to the page's YAML frontmatter.
+3. Cite anywhere in the text using `[@key]`.
+
+The bibliography is rendered automatically at the end of the page.
+
+::: {.callout-tip}
+## Example
+Writing `[@quarto]` in your text produces the inline citation: [@quarto]
+
+The full entry appears below under *References*.
+:::
+
+## Tools Used in This Example
+
+All interactive features on this site are powered by open-source tools:
+
+- **Quarto** [@quarto] — the publishing system behind this entire site
+- **Pyodide** [@pyodide] — runs Python directly in the browser (see [Code](ep_code.qmd))
+- **JSXGraph** [@jsxgraph] — interactive mathematics in the browser (see [Visualizations](ep_visuals.qmd))

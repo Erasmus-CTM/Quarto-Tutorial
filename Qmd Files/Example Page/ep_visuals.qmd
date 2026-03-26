@@ -1,0 +1,69 @@
+---
+title: "Visualizations"
+bibliography: references.bib
+sidebar: example-sidebar
+filters:
+  - jsxgraph/jsxgraph
+---
+
+## Interactive Plot
+
+Drag the point along the x-axis to read off values of $\sin(x)$.
+The plot is rendered with the [JSXGraph Quarto extension](https://github.com/jsxgraph/jsxgraph-quarto) [@jsxgraph].
+
+```jsxgraph
+var board = JXG.JSXGraph.initBoard(BOARDID, {
+    boundingbox: [-7, 1.8, 7, -1.8],
+    axis: true,
+    keepaspectratio: false,
+    showNavigation: false
+});
+
+board.create('functiongraph', [Math.sin], {
+    strokeColor: '#2196F3',
+    strokeWidth: 2.5,
+    name: 'sin(x)'
+});
+
+var xAxis = board.defaultAxes.x;
+
+var p = board.create('glider', [1.571, 0, xAxis], {
+    name: 'x',
+    size: 5,
+    fillColor: '#E91E63',
+    strokeColor: '#c2185b'
+});
+
+var q = board.create('point', [
+    function() { return p.X(); },
+    function() { return Math.sin(p.X()); }
+], {
+    name: function() { return 'sin(x) ≈ ' + Math.sin(p.X()).toFixed(3); },
+    size: 5,
+    fillColor: '#4CAF50',
+    strokeColor: '#388e3c',
+    fixed: true
+});
+
+board.create('segment', [p, q], {
+    strokeColor: '#4CAF50',
+    strokeWidth: 1.5,
+    dash: 2
+});
+```
+
+## Diagram
+
+How does Quarto turn a `.qmd` file into a finished document?
+
+```{mermaid}
+flowchart LR
+    A[".qmd File"] --> B{"Quarto"}
+    B --> C["🌐 HTML Website"]
+    B --> D["📄 PDF"]
+    B --> E["📊 Presentation"]
+    style B fill:#4CAF50,color:#fff,stroke:#388e3c
+    style A fill:#e3f2fd,stroke:#90caf9
+```
+
+→ The code that generated the plot above lives on the [Code page](ep_code.qmd).

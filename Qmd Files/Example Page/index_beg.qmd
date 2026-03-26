@@ -1,0 +1,26 @@
+---
+title: "What Quarto Can Do"
+subtitle: "A hands-on example — built entirely with Quarto"
+sidebar: example-sidebar
+---
+
+Quarto turns plain `.qmd` files into interactive websites, PDFs, and presentations —
+no web development experience needed.
+
+This mini-site explores the **sine function** and demonstrates Quarto's capabilities along the way.
+
+::: {.callout-tip}
+## Built with Quarto
+Every element on this site — runnable code, interactive plots, and quizzes —
+was written in plain text and rendered by Quarto.
+:::
+
+## Pages at a Glance
+
+| | Page | What you'll see |
+|:-:|------|-----------------|
+| 1 | [Layout & Formatting](ep_layout.qmd) | Callouts, columns, tabs |
+| 2 | [Code](ep_code.qmd) | Static, executable, and editable Python |
+| 3 | [Visualizations](ep_visuals.qmd) | Interactive plot & diagram |
+| 4 | [Quiz](ep_quiz.qmd) | Self-check questions |
+| 5 | [References](ep_references.qmd) | Citations & bibliography |

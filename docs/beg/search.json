@@ -1,0 +1,194 @@
+[
+  {
+    "objectID": "Qmd Files/Example Page/index_beg.html",
+    "href": "Qmd Files/Example Page/index_beg.html",
+    "title": "What Quarto Can Do",
+    "section": "",
+    "text": "Quarto turns plain .qmd files into interactive websites, PDFs, and presentations — no web development experience needed.\nThis mini-site explores the sine function and demonstrates Quarto’s capabilities along the way.",
+    "crumbs": [
+      "Overview"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/index_beg.html#pages-at-a-glance",
+    "href": "Qmd Files/Example Page/index_beg.html#pages-at-a-glance",
+    "title": "What Quarto Can Do",
+    "section": "Pages at a Glance",
+    "text": "Pages at a Glance\n\n\n\n\nPage\nWhat you’ll see\n\n\n\n\n1\nLayout & Formatting\nCallouts, columns, tabs\n\n\n2\nCode\nStatic, executable, and editable Python\n\n\n3\nVisualizations\nInteractive plot & diagram\n\n\n4\nQuiz\nSelf-check questions\n\n\n5\nReferences\nCitations & bibliography",
+    "crumbs": [
+      "Overview"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_visuals.html",
+    "href": "Qmd Files/Example Page/ep_visuals.html",
+    "title": "Visualizations",
+    "section": "",
+    "text": "Drag the point along the x-axis to read off values of \\(\\sin(x)\\). The plot is rendered with the JSXGraph Quarto extension (Miller 2023).",
+    "crumbs": [
+      "Overview",
+      "Visualizations"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_visuals.html#interactive-plot",
+    "href": "Qmd Files/Example Page/ep_visuals.html#interactive-plot",
+    "title": "Visualizations",
+    "section": "",
+    "text": "Drag the point along the x-axis to read off values of \\(\\sin(x)\\). The plot is rendered with the JSXGraph Quarto extension (Miller 2023).",
+    "crumbs": [
+      "Overview",
+      "Visualizations"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_visuals.html#diagram",
+    "href": "Qmd Files/Example Page/ep_visuals.html#diagram",
+    "title": "Visualizations",
+    "section": "Diagram",
+    "text": "Diagram\nHow does Quarto turn a .qmd file into a finished document?\n\n\n\n\n\nflowchart LR\n    A[\".qmd File\"] --&gt; B{\"Quarto\"}\n    B --&gt; C[\"🌐 HTML Website\"]\n    B --&gt; D[\"📄 PDF\"]\n    B --&gt; E[\"📊 Presentation\"]\n    style B fill:#4CAF50,color:#fff,stroke:#388e3c\n    style A fill:#e3f2fd,stroke:#90caf9\n\n\n\n\n\n\n→ The code that generated the plot above lives on the Code page.",
+    "crumbs": [
+      "Overview",
+      "Visualizations"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_quiz.html",
+    "href": "Qmd Files/Example Page/ep_quiz.html",
+    "title": "Quiz",
+    "section": "",
+    "text": "Test your understanding of the sine function — and Quarto’s features.\n\n---\nshuffleAnswers: true\nshuffleQuestions: false\n---\n\n# What is $\\sin(0)$?\n\n1. [x] $0$\n2. [ ] $1$\n3. [ ] $-1$\n4. [ ] undefined\n\n# What is the maximum value of $\\sin(x)$?\n\n1. [ ] $0$\n2. [ ] $\\pi$\n3. [x] $1$\n4. [ ] $2$\n\n# What is the period of $\\sin(x)$?\n\n1. [ ] $\\pi$\n2. [x] $2\\pi$\n3. [ ] $4\\pi$\n4. [ ] $\\frac{\\pi}{2}$\n\n# Which extension makes Python run live in the browser?\n\n1. [x] pyodide\n2. [ ] quizdown\n3. [ ] jsxgraph\n4. [ ] py-exercise\n\n# Which file extension does Quarto use for source files?\n\n1. [ ] `.html`\n2. [ ] `.py`\n3. [x] `.qmd`\n4. [ ] `.tex`",
+    "crumbs": [
+      "Overview",
+      "Quiz"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_code.html",
+    "href": "Qmd Files/Example Page/ep_code.html",
+    "title": "Code",
+    "section": "",
+    "text": "Quarto supports three ways to include Python code — all powered by Pyodide (Droettboom et al. 2021), which runs Python directly in the browser.",
+    "crumbs": [
+      "Overview",
+      "Code"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_code.html#output-only",
+    "href": "Qmd Files/Example Page/ep_code.html#output-only",
+    "title": "Code",
+    "section": "Output Only",
+    "text": "Output Only\nThe code runs automatically in the background; only the result is shown:\n\n\nsin(  0°) = 0.0000\nsin( 30°) = 0.5000\nsin( 45°) = 0.7071\nsin( 60°) = 0.8660\nsin( 90°) = 1.0000\nsin(180°) = 0.0000\n\n\n\n\nThe Code for this Output looked like this:\n\n```python\n#| execute: true # This makes the Code execute during render\n#| echo: false # This makes the Code invisible in the final output \nimport math\n\nangles = [0, 30, 45, 60, 90, 180]\nfor deg in angles:\n    val = math.sin(math.radians(deg))   \n    print(f\"sin({deg:3d}°) = {val:.4f}\")\n```",
+    "crumbs": [
+      "Overview",
+      "Code"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_code.html#executable-code",
+    "href": "Qmd Files/Example Page/ep_code.html#executable-code",
+    "title": "Code",
+    "section": "Executable Code",
+    "text": "Executable Code\nClick Run — the code executes live in the browser:\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.",
+    "crumbs": [
+      "Overview",
+      "Code"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_code.html#editable-exercise",
+    "href": "Qmd Files/Example Page/ep_code.html#editable-exercise",
+    "title": "Code",
+    "section": "Editable Exercise",
+    "text": "Editable Exercise\nComplete the function — tests run automatically on checking your solution:\n\n  \n    Please enable JavaScript to load the interactive exercise.\n  \n\n\n→ See the result plotted on the Visualizations page.",
+    "crumbs": [
+      "Overview",
+      "Code"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Quarto Tutorial",
+    "section": "",
+    "text": "This is a Tutorial for using Quarto in a creating context.\nIf you never saw a Quarto page before click here!\nIf you want to learn how to create something with Quarto click here! If you already know how to create Quarto Documents and want to become better click here!"
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_layout.html",
+    "href": "Qmd Files/Example Page/ep_layout.html",
+    "title": "Layout & Formatting",
+    "section": "",
+    "text": "Quarto supports rich layout without writing any HTML or CSS.",
+    "crumbs": [
+      "Overview",
+      "Layout & Formatting"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_layout.html#callouts",
+    "href": "Qmd Files/Example Page/ep_layout.html#callouts",
+    "title": "Layout & Formatting",
+    "section": "Callouts",
+    "text": "Callouts\n\n\n\n\n\n\nNoteNote\n\n\n\nUse notes for background information or definitions.\n\n\n\n\n\n\n\n\nTipTip\n\n\n\nUse tips for best practices or practical advice.\n\n\n\n\n\n\n\n\nWarningWarning\n\n\n\nUse warnings to flag common mistakes.\n\n\n\n\n\n\n\n\nImportantImportant\n\n\n\nUse important for things students must not miss.",
+    "crumbs": [
+      "Overview",
+      "Layout & Formatting"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_layout.html#columns",
+    "href": "Qmd Files/Example Page/ep_layout.html#columns",
+    "title": "Layout & Formatting",
+    "section": "Columns",
+    "text": "Columns\n\n\nConcept\nThe sine function maps an angle to the y-coordinate on the unit circle.\n\\[f: \\mathbb{R} \\to [-1, 1]\\]\n\nKey values\n\n\n\n\\(x\\)\n\\(0\\)\n\\(\\frac{\\pi}{6}\\)\n\\(\\frac{\\pi}{2}\\)\n\\(\\pi\\)\n\n\n\n\n\\(\\sin(x)\\)\n\\(0\\)\n\\(0.5\\)\n\\(1\\)\n\\(0\\)",
+    "crumbs": [
+      "Overview",
+      "Layout & Formatting"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_layout.html#tabs",
+    "href": "Qmd Files/Example Page/ep_layout.html#tabs",
+    "title": "Layout & Formatting",
+    "section": "Tabs",
+    "text": "Tabs\n\nDefinitionFormulaProperties\n\n\nThe sine function is one of the fundamental trigonometric functions. It is periodic with period \\(2\\pi\\) and range \\([-1, 1]\\).\n\n\nUsing the Taylor series expansion:\n\\[\\sin(x) = \\sum_{n=0}^{\\infty} \\frac{(-1)^n}{(2n+1)!}\\, x^{2n+1}\n           = x - \\frac{x^3}{6} + \\frac{x^5}{120} - \\cdots\\]\n\n\n\nPeriod: \\(2\\pi\\)\nRange: \\([-1,\\, 1]\\)\nZeros: \\(x = k\\pi,\\; k \\in \\mathbb{Z}\\)\nMaxima: \\(x = \\frac{\\pi}{2} + 2k\\pi\\)",
+    "crumbs": [
+      "Overview",
+      "Layout & Formatting"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_references.html",
+    "href": "Qmd Files/Example Page/ep_references.html",
+    "title": "References",
+    "section": "",
+    "text": "Quarto supports citations and bibliographies via standard .bib files — no plugins needed.",
+    "crumbs": [
+      "Overview",
+      "References"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_references.html#how-it-works",
+    "href": "Qmd Files/Example Page/ep_references.html#how-it-works",
+    "title": "References",
+    "section": "How It Works",
+    "text": "How It Works\n\nCreate a references.bib file with BibTeX entries.\nAdd bibliography: references.bib to the page’s YAML frontmatter.\nCite anywhere in the text using [@key].\n\nThe bibliography is rendered automatically at the end of the page.\n\n\n\n\n\n\nTipExample\n\n\n\nWriting [@quarto] in your text produces the inline citation: (Posit Software, PBC 2022)\nThe full entry appears below under References.",
+    "crumbs": [
+      "Overview",
+      "References"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_references.html#tools-used-in-this-example",
+    "href": "Qmd Files/Example Page/ep_references.html#tools-used-in-this-example",
+    "title": "References",
+    "section": "Tools Used in This Example",
+    "text": "Tools Used in This Example\nAll interactive features on this site are powered by open-source tools:\n\nQuarto (Posit Software, PBC 2022) — the publishing system behind this entire site\nPyodide (Droettboom et al. 2021) — runs Python directly in the browser (see Code)\nJSXGraph (Miller 2023) — interactive mathematics in the browser (see Visualizations)",
+    "crumbs": [
+      "Overview",
+      "References"
+    ]
+  }
+]

@@ -1,0 +1,76 @@
+---
+title: "Code"
+bibliography: references.bib
+sidebar: example-sidebar
+filters:
+  - coatless-quarto/pyodide
+  - py-exercise
+---
+Quarto supports three ways to include Python code —
+all powered by [Pyodide](https://pyodide.org) [@pyodide], which runs Python directly in the browser.
+
+## Output Only
+
+The code runs automatically in the background; only the result is shown:
+
+```{python}
+#| execute: true # This makes the Code execute during render
+#| echo: false # This makes the Code invisible in the final output
+import math
+
+angles = [0, 30, 45, 60, 90, 180]
+for deg in angles:
+    val = math.sin(math.radians(deg))   
+    print(f"sin({deg:3d}°) = {val:.4f}")
+```
+
+<details>
+<summary>The Code for this Output looked like this:</summary>
+
+````markdown
+```python
+#| execute: true # This makes the Code execute during render
+#| echo: false # This makes the Code invisible in the final output 
+import math
+
+angles = [0, 30, 45, 60, 90, 180]
+for deg in angles:
+    val = math.sin(math.radians(deg))   
+    print(f"sin({deg:3d}°) = {val:.4f}")
+```
+````
+</details>
+
+## Executable Code
+
+Click **Run** — the code executes live in the browser:
+
+```{pyodide-python}
+import math
+
+angles = [0, 30, 45, 60, 90, 180]
+for deg in angles:
+    val = math.sin(math.radians(deg))
+    bar = "█" * round(abs(val) * 12)
+    print(f"sin({deg:3d}°) = {val:+.4f}  {bar}")
+```
+
+## Editable Exercise
+
+Complete the function — tests run automatically on checking your solution:
+
+```{py-exercise}
+import math
+
+def f(x_deg):
+    """Return sin(x) + cos(x) for x given in degrees."""
+    # Your solution here
+    pass
+
+## TESTS ##
+assert abs(f(0)  - 1.0)           < 1e-4, "f(0) should be 1.0"
+assert abs(f(90) - 1.0)           < 1e-4, "f(90°) should be 1.0"
+assert abs(f(45) - math.sqrt(2))  < 1e-4, "f(45°) should be √2"
+```
+
+→ See the result plotted on the [Visualizations page](ep_visuals.qmd).

@@ -1,0 +1,68 @@
+---
+title: "Layout & Formatting"
+sidebar: example-sidebar
+---
+
+Quarto supports rich layout without writing any HTML or CSS.
+
+## Callouts
+
+::: {.callout-note}
+## Note
+Use **notes** for background information or definitions.
+:::
+
+::: {.callout-tip}
+## Tip
+Use **tips** for best practices or practical advice.
+:::
+
+::: {.callout-warning}
+## Warning
+Use **warnings** to flag common mistakes.
+:::
+
+::: {.callout-important}
+## Important
+Use **important** for things students must not miss.
+:::
+
+## Columns
+
+:::: {.columns}
+::: {.column width="50%"}
+**Concept**
+
+The sine function maps an angle to the
+y-coordinate on the unit circle.
+
+$$f: \mathbb{R} \to [-1, 1]$$
+:::
+::: {.column width="50%"}
+**Key values**
+
+| $x$ | $0$ | $\frac{\pi}{6}$ | $\frac{\pi}{2}$ | $\pi$ |
+|-----|-----|--------|--------|-------|
+| $\sin(x)$ | $0$ | $0.5$ | $1$ | $0$ |
+:::
+::::
+
+## Tabs
+
+::: {.panel-tabset}
+## Definition
+The sine function is one of the fundamental trigonometric functions.
+It is periodic with period $2\pi$ and range $[-1, 1]$.
+
+## Formula
+Using the Taylor series expansion:
+
+$$\sin(x) = \sum_{n=0}^{\infty} \frac{(-1)^n}{(2n+1)!}\, x^{2n+1}
+           = x - \frac{x^3}{6} + \frac{x^5}{120} - \cdots$$
+
+## Properties
+- **Period:** $2\pi$
+- **Range:** $[-1,\, 1]$
+- **Zeros:** $x = k\pi,\; k \in \mathbb{Z}$
+- **Maxima:** $x = \frac{\pi}{2} + 2k\pi$
+:::

@@ -1,0 +1,35 @@
+project:
+  output-dir: ./docs/beg
+  render:
+    - index.qmd
+    - Qmd Files/Example Page/*.qmd
+
+website:
+  title: "What Quarto Can Do"
+  navbar:
+    left:
+      - text: "Overview"
+        href: index.qmd
+      - text: "Example Page"
+        href: "Qmd Files/Example Page/index_beg.qmd"
+      - text: "Getting Started"
+        href: "/int/Qmd Files/Getting Started/getting_started.html"
+      - text: "Tipps and Tricks for Quarto Users"
+        href: "/exp/index.html"
+  sidebar:
+    - id: example-sidebar
+      title: "Example Pages"
+      style: docked
+      contents:
+        - text: "Overview"
+          href: "Qmd Files/Example Page/index_beg.qmd"
+        - text: "Layout & Formatting"
+          href: "Qmd Files/Example Page/ep_layout.qmd"
+        - text: "Code"
+          href: "Qmd Files/Example Page/ep_code.qmd"
+        - text: "Visualizations"
+          href: "Qmd Files/Example Page/ep_visuals.qmd"
+        - text: "Quiz"
+          href: "Qmd Files/Example Page/ep_quiz.qmd"
+        - text: "References"
+          href: "Qmd Files/Example Page/ep_references.qmd"

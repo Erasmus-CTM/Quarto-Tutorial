@@ -1,0 +1,12 @@
+project:
+  type: website
+
+execute: 
+  freeze: auto
+
+format: html
+
+profile:
+  default: beg
+  group: [beg, int, exp]
+
