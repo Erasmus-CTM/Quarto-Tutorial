@@ -114,7 +114,7 @@
     "href": "index.html",
     "title": "Quarto Tutorial",
     "section": "",
-    "text": "This is a Tutorial for using Quarto in a creating context.\nIf you never saw a Quarto page before click here! If you want to learn how to create something with Quarto click here! If you already know how to create Quarto Documents and want to become better click here!"
+    "text": "This is a Tutorial for using Quarto in a creating context.\n\nIf you never saw a Quarto page before click here!\n\nIf you want to learn how to create something with Quarto click here!\n\nIf you already know how to create Quarto Documents and want to become better click here!"
   },
   {
     "objectID": "Qmd Files/Example Page/ep_layout.html",
