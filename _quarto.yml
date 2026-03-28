@@ -8,5 +8,5 @@ format: html
 
 profile:
   default: beg
-  group: [beg, int, exp]
+  group: [beg, int, exp, root]
 

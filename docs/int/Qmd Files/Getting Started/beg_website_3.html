@@ -324,8 +324,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Open your <code>_quarto.yml</code> file and add <code>output-dir: docs</code> to the <code>project:</code> section, exactly as shown above. GitHub Pages expects your website files to live in a folder named <code>docs</code>.</p>
 <hr>
 <p><strong>② Render your website</strong></p>
-<p>Open the terminal (<strong>View → Terminal</strong>) and run:</p>
-<pre><code>quarto render</code></pre>
+<p>Open the <strong>Terminal</strong> via <strong>View → Terminal</strong> and run:</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Terminal</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-filename="Terminal"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> render</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 <p>Quarto builds your entire website into the <code>docs/</code> folder. You will see it appear in the file explorer on the left.</p>
 <hr>
 </section>
@@ -410,7 +415,7 @@ Warning
 <div class="callout-body-container callout-body">
 <p>Whenever you make changes:</p>
 <ol type="1">
-<li>Run <code>quarto render</code> in VS Code to rebuild the <code>docs/</code> folder</li>
+<li>Run <code>quarto render</code> in VS Code’s Terminal (or click the Preview button and close it) to rebuild the <code>docs/</code> folder</li>
 <li>Go to your GitHub repository → drag the updated <code>docs/</code> folder onto the file list → Commit</li>
 </ol>
 <p>GitHub Pages will redeploy automatically within a minute or two.</p>
@@ -901,10 +906,10 @@ Warning
 <span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>**② Render your website**</span>
 <span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>Open the terminal (**View → Terminal**) and run:</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>Open the **Terminal** via **View → Terminal** and run:</span>
 <span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="in">quarto render</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a><span class="in">```{.bash filename="Terminal"}</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> render</span>
 <span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>Quarto builds your entire website into the <span class="in">`docs/`</span> folder. You will see it appear in the file explorer on the left.</span>
@@ -1018,7 +1023,7 @@ Warning
 <span id="cb2-142"><a href="#cb2-142" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-143"><a href="#cb2-143" aria-hidden="true" tabindex="-1"></a>Whenever you make changes:</span>
 <span id="cb2-144"><a href="#cb2-144" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-145"><a href="#cb2-145" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Run <span class="in">`quarto render`</span> in VS Code to rebuild the <span class="in">`docs/`</span> folder</span>
+<span id="cb2-145"><a href="#cb2-145" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Run <span class="in">`quarto render`</span> in VS Code's Terminal (or click the Preview button and close it) to rebuild the <span class="in">`docs/`</span> folder</span>
 <span id="cb2-146"><a href="#cb2-146" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Go to your GitHub repository → drag the updated <span class="in">`docs/`</span> folder onto the file list → Commit</span>
 <span id="cb2-147"><a href="#cb2-147" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-148"><a href="#cb2-148" aria-hidden="true" tabindex="-1"></a>GitHub Pages will redeploy automatically within a minute or two.</span>

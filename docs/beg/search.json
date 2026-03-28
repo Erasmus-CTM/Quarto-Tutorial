@@ -57,7 +57,7 @@
     "href": "Qmd Files/Example Page/ep_quiz.html",
     "title": "Quiz",
     "section": "",
-    "text": "Test your understanding of the sine function — and Quarto’s features.\n\n---\nshuffleAnswers: true\nshuffleQuestions: false\n---\n\n# What is $\\sin(0)$?\n\n1. [x] $0$\n2. [ ] $1$\n3. [ ] $-1$\n4. [ ] undefined\n\n# What is the maximum value of $\\sin(x)$?\n\n1. [ ] $0$\n2. [ ] $\\pi$\n3. [x] $1$\n4. [ ] $2$\n\n# What is the period of $\\sin(x)$?\n\n1. [ ] $\\pi$\n2. [x] $2\\pi$\n3. [ ] $4\\pi$\n4. [ ] $\\frac{\\pi}{2}$\n\n# Which extension makes Python run live in the browser?\n\n1. [x] pyodide\n2. [ ] quizdown\n3. [ ] jsxgraph\n4. [ ] py-exercise\n\n# Which file extension does Quarto use for source files?\n\n1. [ ] `.html`\n2. [ ] `.py`\n3. [x] `.qmd`\n4. [ ] `.tex`",
+    "text": "Test your understanding of the sine function — and Quarto’s features, powered by the quarto-quizdown extension (Sauer 2023) by Parmsam.\n\n---\nshuffleAnswers: true\nshuffleQuestions: false\n---\n\n# What is $\\sin(0)$?\n\n1. [x] $0$\n2. [ ] $1$\n3. [ ] $-1$\n4. [ ] undefined\n\n# What is the maximum value of $\\sin(x)$?\n\n1. [ ] $0$\n2. [ ] $\\pi$\n3. [x] $1$\n4. [ ] $2$\n\n# What is the period of $\\sin(x)$?\n\n1. [ ] $\\pi$\n2. [x] $2\\pi$\n3. [ ] $4\\pi$\n4. [ ] $\\frac{\\pi}{2}$\n\n# Which extension makes Python run live in the browser?\n\n1. [x] pyodide\n2. [ ] quizdown\n3. [ ] jsxgraph\n4. [ ] py-exercise\n\n# Which file extension does Quarto use for source files?\n\n1. [ ] `.html`\n2. [ ] `.py`\n3. [x] `.qmd`\n4. [ ] `.tex`\n\n\n\n\n\nReferences\n\nSauer, Patrick. 2023. “Quarto-Quizdown: Quizdown Extension for Quarto.” https://github.com/parmsam/quarto-quizdown.",
     "crumbs": [
       "Overview",
       "Quiz"
@@ -112,7 +112,7 @@
     "href": "index.html",
     "title": "Quarto Tutorial",
     "section": "",
-    "text": "This is a Tutorial for using Quarto in a creating context.\nIf you never saw a Quarto page before click here!\nIf you want to learn how to create something with Quarto click here! If you already know how to create Quarto Documents and want to become better click here!"
+    "text": "This is a Tutorial for using Quarto in a creating context.\nIf you never saw a Quarto page before click here! If you want to learn how to create something with Quarto click here! If you already know how to create Quarto Documents and want to become better click here!"
   },
   {
     "objectID": "Qmd Files/Example Page/ep_layout.html",
@@ -185,7 +185,7 @@
     "href": "Qmd Files/Example Page/ep_references.html#tools-used-in-this-example",
     "title": "References",
     "section": "Tools Used in This Example",
-    "text": "Tools Used in This Example\nAll interactive features on this site are powered by open-source tools:\n\nQuarto (Posit Software, PBC 2022) — the publishing system behind this entire site\nPyodide (Droettboom et al. 2021) — runs Python directly in the browser (see Code)\nJSXGraph (Miller 2023) — interactive mathematics in the browser (see Visualizations)",
+    "text": "Tools Used in This Example\nAll interactive features on this site are powered by open-source tools:\n\nQuarto (Posit Software, PBC 2022) — the publishing system behind this entire site\nPyodide (Droettboom et al. 2021) — runs Python directly in the browser (see Code)\nJSXGraph (Miller 2023) — interactive mathematics in the browser (see Visualizations)\nquizdown (Sauer 2023) — interactive multiple-choice quizzes in the browser (see Quiz)",
     "crumbs": [
       "Overview",
       "References"

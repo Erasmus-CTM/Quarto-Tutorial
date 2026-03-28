@@ -56,7 +56,7 @@
     "href": "Qmd Files/Getting Started/beg_website_2.html#create-a-quarto-website-project",
     "title": "Create a Website",
     "section": "2 — Create a Quarto Website project",
-    "text": "2 — Create a Quarto Website project\n① Open the Command Palette and create a project\n\nPress Ctrl+Shift+P, type Quarto: Create Project and press Enter. A menu appears — select Website Project.\n\n② Your project files are ready\n\nQuarto created four files:\n\n_quarto.yml — settings: title, navigation, theme\nindex.qmd — your homepage\nabout.qmd — an example second page\nstyles.css — optional custom styling",
+    "text": "2 — Create a Quarto Website project\n① Create a new Quarto project\n\nGo to File → New File…. A small menu appears — select Quarto Project.\n\nSelect Website Project and choose your project folder.\n\n② Your project files are ready\n\nQuarto created four files:\n\n_quarto.yml — settings: title, navigation, theme\nindex.qmd — your homepage\nabout.qmd — an example second page\nstyles.css — optional custom styling",
     "crumbs": [
       "Creating a Quarto Website",
       "Create a Website"
@@ -67,7 +67,7 @@
     "href": "Qmd Files/Getting Started/beg_website_2.html#preview-your-website",
     "title": "Create a Website",
     "section": "3 — Preview your website",
-    "text": "3 — Preview your website\n① Click the Preview button in the top-right corner of the editor\n\nClick the small preview icon in the top-right corner of the coding window. VS Code opens the terminal automatically, renders your site, and shows a live preview in a new panel on the right — no browser needed.\n\n\n\n\n\n\n\nNote🔍 Other ways to preview and render\n\n\n\n\n\nRender files (create output without previewing)\nIf you just want to produce the output files without opening any preview, open the terminal (View → Terminal) and run:\nquarto render\nThis creates all output files in the _site folder (or docs/ if you configured it that way). Use this when you are ready to publish — see Publish your Website →.\n\nPreview in your browser\nYou have two options:\n\nOpen the generated HTML files from the _site folder directly in your browser (double-click them in File Explorer).\nOr run quarto preview in the terminal — this starts a local server and opens your site in the browser automatically. The browser updates every time you save a file.\n\n\n\n\n\n\n\n\n\n\n\n\nTip✅ Your first Quarto website is running!\n\n\n\nNext steps:\n\nEdit index.qmd and save — the preview updates immediately\nChange the title: in _quarto.yml to rename your site\nReady to go online? Continue with Publish your Website →",
+    "text": "3 — Preview your website\n① Click the Preview button in the top-right corner of the editor\n\nClick the small preview icon in the top-right corner of the coding window. VS Code opens the terminal automatically, renders your site, and shows a live preview in a new panel on the right — no browser needed.\n\n\n\n\n\n\n\nNote🔍 Other ways to preview and render\n\n\n\n\n\nRender files (create output without previewing)\nIf you just want to produce the output files without opening any preview, open the Terminal via View → Terminal and run:\n\n\nTerminal\n\nquarto render\n\nThis creates all output files in the _site folder (or docs/ if you configured it that way). Use this when you are ready to publish — see Publish your Website →.\n\nPreview in your browser\nYou have two options:\n\nOpen the generated HTML files from the _site folder directly in your browser (double-click them in File Explorer).\nOr run quarto preview in the Terminal — this starts a local server and opens your site in the browser automatically. The browser updates every time you save a file.\n\n\n\nTerminal\n\nquarto preview\n\n\n\n\n\n\n\n\n\n\n\n\nTip✅ Your first Quarto website is running!\n\n\n\nNext steps:\n\nEdit index.qmd and save — the preview updates immediately\nChange the title: in _quarto.yml to rename your site\nReady to go online? Continue with Publish your Website →",
     "crumbs": [
       "Creating a Quarto Website",
       "Create a Website"
@@ -89,7 +89,7 @@
     "href": "Qmd Files/Getting Started/beg_extensions.html#install-the-pyodide-extension",
     "title": "Interactive Code with Pyodide",
     "section": "1 — Install the Pyodide extension",
-    "text": "1 — Install the Pyodide extension\n① Open the terminal in VS Code\nGo to View → Terminal. A panel opens at the bottom of the screen. Make sure you are in your project folder (the path shown in the terminal should match your project).\n\n② Run the install command\n\nType the following and press Enter:\nquarto add coatless-quarto/pyodide\nWait until it finishes — it will ask you to confirm once. This only needs to be done once per project folder.",
+    "text": "1 — Install the Pyodide extension\n① Open the Terminal in VS Code\nOpen the Terminal (the command line interface) via View → Terminal. A panel opens at the bottom of the screen. Make sure the path shown matches your project folder.\n\n② Run the install command\n\n\n\nTerminal\n\nquarto add coatless-quarto/pyodide\n\nWait until it finishes — it will ask you to confirm once. This only needs to be done once per project folder.",
     "crumbs": [
       "Interactive Code",
       "Interactive Python with Pyodide"
@@ -122,7 +122,7 @@
     "href": "Qmd Files/Getting Started/beg_extensions.html#see-the-result",
     "title": "Interactive Code with Pyodide",
     "section": "4 — See the result",
-    "text": "4 — See the result\n① Preview your page\nRun quarto preview in the terminal. The code block appears in the browser with a Run Code button.\n\n② The interactive block in the browser\n\nAt the top of the page Quarto shows PYODIDE STATUS: Ready! when Python has loaded. Students can click Run Code, edit the code, and run it again — all without installing anything.\n\n\n\n\n\n\n\nTipWant students to fill in solutions?\n\n\n\nThe py-exercise extension adds code blocks with hidden automated tests — students see whether their solution passes or fails. You can see a live example on the Example Page of this tutorial.",
+    "text": "4 — See the result\n① Preview your page\nRun quarto preview in the Terminal. The code block appears in the browser with a Run Code button.\n\n② The interactive block in the browser\n\nAt the top of the page Quarto shows PYODIDE STATUS: Ready! when Python has loaded. Students can click Run Code, edit the code, and run it again — all without installing anything.\n\n\n\n\n\n\n\nTipWant students to fill in solutions?\n\n\n\nThe py-exercise extension adds code blocks with hidden automated tests — students see whether their solution passes or fails. You can see a live example on the Example Page of this tutorial.",
     "crumbs": [
       "Interactive Code",
       "Interactive Python with Pyodide"
@@ -133,7 +133,7 @@
     "href": "Qmd Files/Getting Started/beg_exercise_2.html",
     "title": "Create an Exercise Sheet",
     "section": "",
-    "text": "① Open the New File dialog\n\nIn VS Code press Ctrl+Alt+Windows+N — or go to File → New File…. A small menu appears. Select Quarto Document.\n\n② Your file opens with a starter header\n\nVS Code creates a new file with a basic settings block already filled in. Save it with a name like exercises.qmd (Ctrl+S).",
+    "text": "① Open the New File dialog\n\nIn VS Code go to File → New File…. A small menu appears. Select Quarto Document.\n\n② Your file opens with a starter header\n\nVS Code creates a new file with a basic settings block already filled in. Save it with a name like exercises.qmd (File → Save or Ctrl+S).",
     "crumbs": [
       "Creating an Exercise Sheet with Quarto",
       "Create an Exercise Sheet"
@@ -144,7 +144,7 @@
     "href": "Qmd Files/Getting Started/beg_exercise_2.html#create-a-new-quarto-file",
     "title": "Create an Exercise Sheet",
     "section": "",
-    "text": "① Open the New File dialog\n\nIn VS Code press Ctrl+Alt+Windows+N — or go to File → New File…. A small menu appears. Select Quarto Document.\n\n② Your file opens with a starter header\n\nVS Code creates a new file with a basic settings block already filled in. Save it with a name like exercises.qmd (Ctrl+S).",
+    "text": "① Open the New File dialog\n\nIn VS Code go to File → New File…. A small menu appears. Select Quarto Document.\n\n② Your file opens with a starter header\n\nVS Code creates a new file with a basic settings block already filled in. Save it with a name like exercises.qmd (File → Save or Ctrl+S).",
     "crumbs": [
       "Creating an Exercise Sheet with Quarto",
       "Create an Exercise Sheet"
@@ -188,7 +188,7 @@
     "href": "Qmd Files/Getting Started/beg_exercise_2.html#render-your-sheet",
     "title": "Create an Exercise Sheet",
     "section": "5 — Render your sheet",
-    "text": "5 — Render your sheet\nOpen the terminal (View → Terminal) and run:\nquarto render exercises.qmd\n\nQuarto creates the output file (PDF or HTML) in the same folder. Open it from your file explorer.\n\n\n\n\n\n\nNote🔍 Preview while writing\n\n\n\n\n\nInstead of quarto render, you can use:\nquarto preview exercises.qmd\nThis opens a live preview in your browser that updates every time you save the file.\n\n\n\n\n\n\n\n\n\n\nTip✅ Your exercise sheet is ready!\n\n\n\n\nWant to export as HTML, Word, or PDF from the same file? See Other Output Formats →\nWant students to run and edit Python code in the browser? See Interactive Code →",
+    "text": "5 — Render your sheet\nOpen the Terminal via View → Terminal and run:\n\n\nTerminal\n\nquarto render exercises.qmd\n\n\nQuarto creates the output file (PDF or HTML) in the same folder. Open it from your file explorer.\n\n\n\n\n\n\nNote🔍 Preview while writing\n\n\n\n\n\nInstead of quarto render, you can use:\n\n\nTerminal\n\nquarto preview exercises.qmd\n\nThis opens a live preview in your browser that updates every time you save the file.\n\n\n\n\n\n\n\n\n\n\nTip✅ Your exercise sheet is ready!\n\n\n\n\nWant to export as HTML, Word, or PDF from the same file? See Other Output Formats →\nWant students to run and edit Python code in the browser? See Interactive Code →",
     "crumbs": [
       "Creating an Exercise Sheet with Quarto",
       "Create an Exercise Sheet"
@@ -221,7 +221,7 @@
     "href": "Qmd Files/Getting Started/beg_book_2.html#create-a-book-project",
     "title": "Create a Book",
     "section": "2 — Create a Book project",
-    "text": "2 — Create a Book project\n① Open the Command Palette and select Book\n\nPress Ctrl+Shift+P, type Quarto: Create Project and press Enter. Select Book Project from the list.\n\n② Your book files are ready\n\nQuarto created the full book structure:\n\n_quarto.yml — book settings and chapter order\nindex.qmd — cover / preface\nintro.qmd, summary.qmd — example chapters\nreferences.bib — bibliography file\nreferences.qmd — references page",
+    "text": "2 — Create a Book project\n① Create a new Quarto project\n\nGo to File → New File…. A small menu appears — select Quarto Project.\n\nSelect Book Project and choose your project folder.\n\n② Your book files are ready\n\nQuarto created the full book structure:\n\n_quarto.yml — book settings and chapter order\nindex.qmd — cover / preface\nintro.qmd, summary.qmd — example chapters\nreferences.bib — bibliography file\nreferences.qmd — references page",
     "crumbs": [
       "Creating a Quarto Book",
       "Create a Book"
@@ -254,7 +254,7 @@
     "href": "index.html",
     "title": "Quarto Tutorial",
     "section": "",
-    "text": "This is a Tutorial for using Quarto in a creating context.\nIf you never saw a Quarto page before click here!\nIf you want to learn how to create something with Quarto click here! If you already know how to create Quarto Documents and want to become better click here!"
+    "text": "This is a Tutorial for using Quarto in a creating context.\nIf you never saw a Quarto page before click here! If you want to learn how to create something with Quarto click here! If you already know how to create Quarto Documents and want to become better click here!"
   },
   {
     "objectID": "Qmd Files/Getting Started/beg_book_1.html",
@@ -305,7 +305,7 @@
     "href": "Qmd Files/Getting Started/beg_exercise_1.html#step-2-install-tinytex-for-pdf-output-only",
     "title": "What you need — Exercise Sheet",
     "section": "Step 2 — Install TinyTeX (for PDF output only)",
-    "text": "Step 2 — Install TinyTeX (for PDF output only)\nQuarto needs a LaTeX engine to create PDFs. The easiest option is TinyTeX, which Quarto can install for you directly from VS Code.\nOpen the Command Palette (Ctrl+Shift+P), type Quarto: Install TinyTeX and press Enter. Wait for the installation to finish — this can take a few minutes.\n\n\n\n\n\n\nNote\n\n\n\nIf you only want to produce HTML or Word output, you can skip this step entirely.\n\n\n\n\n\n\n\n\n\nTip✅ Ready!\n\n\n\nContinue with Create an Exercise Sheet →",
+    "text": "Step 2 — Install TinyTeX (for PDF output only)\nQuarto needs a LaTeX engine to create PDFs. The easiest option is TinyTeX, which Quarto can install for you directly from VS Code.\nOpen the Terminal (the command line interface) in VS Code via View → Terminal, and run:\n\n\nTerminal\n\nquarto install tinytex\n\nWait for the installation to finish — this can take a few minutes.\n\n\n\n\n\n\nNote\n\n\n\nIf you only want to produce HTML or Word output, you can skip this step entirely.\n\n\n\n\n\n\n\n\n\nTip✅ Ready!\n\n\n\nContinue with Create an Exercise Sheet →",
     "crumbs": [
       "Creating an Exercise Sheet with Quarto",
       "What you need"
@@ -404,7 +404,7 @@
     "href": "Qmd Files/Getting Started/beg_website_3.html#tell-quarto-to-output-into-a-docs-folder",
     "title": "Publish your Website",
     "section": "1 — Tell Quarto to output into a docs folder",
-    "text": "1 — Tell Quarto to output into a docs folder\n① Open _quarto.yml and add the output folder\n\nOpen your _quarto.yml file and add output-dir: docs to the project: section, exactly as shown above. GitHub Pages expects your website files to live in a folder named docs.\n\n② Render your website\nOpen the terminal (View → Terminal) and run:\nquarto render\nQuarto builds your entire website into the docs/ folder. You will see it appear in the file explorer on the left.",
+    "text": "1 — Tell Quarto to output into a docs folder\n① Open _quarto.yml and add the output folder\n\nOpen your _quarto.yml file and add output-dir: docs to the project: section, exactly as shown above. GitHub Pages expects your website files to live in a folder named docs.\n\n② Render your website\nOpen the Terminal via View → Terminal and run:\n\n\nTerminal\n\nquarto render\n\nQuarto builds your entire website into the docs/ folder. You will see it appear in the file explorer on the left.",
     "crumbs": [
       "Creating a Quarto Website",
       "Publish a Website"
@@ -448,7 +448,7 @@
     "href": "Qmd Files/Getting Started/beg_website_3.html#your-site-is-live",
     "title": "Publish your Website",
     "section": "5 — Your site is live",
-    "text": "5 — Your site is live\n① Wait for deployment\n\nGo back to the main page of your repository. On the right side you will see a Deployments section. Wait until it shows a green checkmark — this usually takes 1–2 minutes.\nClick on the deployment to find your public website address — it looks like https://yourusername.github.io/your-repo-name/.\n\n\n\n\n\n\n\nTipUpdating your site later\n\n\n\nWhenever you make changes:\n\nRun quarto render in VS Code to rebuild the docs/ folder\nGo to your GitHub repository → drag the updated docs/ folder onto the file list → Commit\n\nGitHub Pages will redeploy automatically within a minute or two.",
+    "text": "5 — Your site is live\n① Wait for deployment\n\nGo back to the main page of your repository. On the right side you will see a Deployments section. Wait until it shows a green checkmark — this usually takes 1–2 minutes.\nClick on the deployment to find your public website address — it looks like https://yourusername.github.io/your-repo-name/.\n\n\n\n\n\n\n\nTipUpdating your site later\n\n\n\nWhenever you make changes:\n\nRun quarto render in VS Code’s Terminal (or click the Preview button and close it) to rebuild the docs/ folder\nGo to your GitHub repository → drag the updated docs/ folder onto the file list → Commit\n\nGitHub Pages will redeploy automatically within a minute or two.",
     "crumbs": [
       "Creating a Quarto Website",
       "Publish a Website"

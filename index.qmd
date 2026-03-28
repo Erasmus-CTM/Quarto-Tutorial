@@ -4,7 +4,7 @@ title: "Quarto Tutorial"
 
 This is a Tutorial for using Quarto in a creating context.  
 
-If you never saw a Quarto page before click [here!](../beg/Qmd Files/Example Page/index_beg.html)  
-If you want to *learn* how to create something with Quarto click [here!](../int/Qmd Files/Getting Started/getting_started.html)
-If you already know how to create Quarto Documents and want to become better click [here!](../exp/Qmd Files/Tipps and Tricks/index_exp.html)
+If you never saw a Quarto page before click [here!](beg/Qmd Files/Example Page/index_beg.html)
+If you want to *learn* how to create something with Quarto click [here!](int/Qmd Files/Getting Started/getting_started.html)
+If you already know how to create Quarto Documents and want to become better click [here!](exp/Qmd Files/Tipps and Tricks/index_exp.html)
 

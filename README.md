@@ -25,11 +25,14 @@ The tutorial is split into three independent levels — visitors self-select the
 ├── Img Files/
 │   └── Getting Started/     ← Screenshots used in the intermediate tutorial
 ├── docs/
+│   ├── index.html           ← Landing page (rendered from root profile)
 │   ├── beg/                 ← Rendered beginner site
 │   ├── int/                 ← Rendered intermediate site
 │   └── exp/                 ← Rendered expert site
 ├── _extensions/             ← Quarto extensions (pyodide, py-exercise, jsxgraph, quizdown)
+├── index.qmd                ← Landing page source
 ├── _quarto.yml              ← Root config: profile group definition
+├── _quarto-root.yml         ← Root profile config (renders index.qmd → docs/)
 ├── _quarto-beg.yml          ← Beginner profile config
 ├── _quarto-int.yml          ← Intermediate profile config
 ├── _quarto-exp.yml          ← Expert profile config
@@ -57,7 +60,7 @@ Requires [Quarto](https://quarto.org/docs/get-started/) and Python 3.
 python preview.py
 ```
 
-This renders all three profiles and serves them locally at `http://localhost:8000/beg/index.html`.
+This renders all four profiles (root, beg, int, exp) and serves them locally at `http://localhost:8000/index.html`.
 
 To skip re-rendering (serve existing output only):
 

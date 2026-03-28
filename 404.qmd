@@ -1,0 +1,17 @@
+---
+title: "404 — Page Not Found"
+---
+
+<div style="text-align: center; padding: 2rem 0;">
+
+# 🚧 🔍
+
+**This page is still under construction — or you found a link that didn't work.** 😅
+
+Either way, nothing to worry about! ✨
+
+<br/>
+
+[← Back to the Tutorial](index.html){.btn .btn-primary}
+
+</div>

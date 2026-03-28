@@ -305,11 +305,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="create-a-new-quarto-file">1 — Create a new Quarto file</h2>
 <p><strong>① Open the New File dialog</strong></p>
 <p><img src="../../Img Files/Getting Started/create_new_file_menu.png" class="img-fluid"></p>
-<p>In VS Code press <code>Ctrl+Alt+Windows+N</code> — or go to <strong>File → New File…</strong>. A small menu appears. Select <strong>Quarto Document</strong>.</p>
+<p>In VS Code go to <strong>File → New File…</strong>. A small menu appears. Select <strong>Quarto Document</strong>.</p>
 <hr>
 <p><strong>② Your file opens with a starter header</strong></p>
 <p><img src="../../Img Files/Getting Started/Screenshot 2026-03-27 102111.png" class="img-fluid"></p>
-<p>VS Code creates a new file with a basic settings block already filled in. Save it with a name like <code>exercises.qmd</code> (<code>Ctrl+S</code>).</p>
+<p>VS Code creates a new file with a basic settings block already filled in. Save it with a name like <code>exercises.qmd</code> (<strong>File → Save</strong> or <code>Ctrl+S</code>).</p>
 <hr>
 </section>
 <section id="set-the-output-format" class="level2">
@@ -360,8 +360,13 @@ Note
 </section>
 <section id="render-your-sheet" class="level2">
 <h2 class="anchored" data-anchor-id="render-your-sheet">5 — Render your sheet</h2>
-<p>Open the terminal (<strong>View → Terminal</strong>) and run:</p>
-<pre><code>quarto render exercises.qmd</code></pre>
+<p>Open the <strong>Terminal</strong> via <strong>View → Terminal</strong> and run:</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Terminal</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" data-filename="Terminal"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> render exercises.qmd</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 <p><img src="../../Img Files/Getting Started/terminal_quarto_render.png" class="img-fluid"></p>
 <p>Quarto creates the output file (PDF or HTML) in the same folder. Open it from your file explorer.</p>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -377,7 +382,12 @@ Note
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Instead of <code>quarto render</code>, you can use:</p>
-<pre><code>quarto preview exercises.qmd</code></pre>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Terminal</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" data-filename="Terminal"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> preview exercises.qmd</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 <p>This opens a live preview in your browser that updates every time you save the file.</p>
 </div>
 </div>
@@ -867,7 +877,7 @@ Note
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="al">![](../../Img Files/Getting Started/create_new_file_menu.png)</span></span>
 <span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>In VS Code press <span class="in">`Ctrl+Alt+Windows+N`</span> — or go to **File → New File…**.</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>In VS Code go to **File → New File…**.</span>
 <span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>A small menu appears. Select **Quarto Document**.</span>
 <span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>---</span>
@@ -877,7 +887,7 @@ Note
 <span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="al">![](../../Img Files/Getting Started/Screenshot 2026-03-27 102111.png)</span></span>
 <span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>VS Code creates a new file with a basic settings block already filled in.</span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>Save it with a name like <span class="in">`exercises.qmd`</span> (<span class="in">`Ctrl+S`</span>).</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>Save it with a name like <span class="in">`exercises.qmd`</span> (**File → Save** or <span class="in">`Ctrl+S`</span>).</span>
 <span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>---</span>
 <span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a></span>
@@ -936,10 +946,10 @@ Note
 <span id="cb6-77"><a href="#cb6-77" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-78"><a href="#cb6-78" aria-hidden="true" tabindex="-1"></a><span class="fu">## 5 — Render your sheet</span></span>
 <span id="cb6-79"><a href="#cb6-79" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-80"><a href="#cb6-80" aria-hidden="true" tabindex="-1"></a>Open the terminal (**View → Terminal**) and run:</span>
+<span id="cb6-80"><a href="#cb6-80" aria-hidden="true" tabindex="-1"></a>Open the **Terminal** via **View → Terminal** and run:</span>
 <span id="cb6-81"><a href="#cb6-81" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-82"><a href="#cb6-82" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb6-83"><a href="#cb6-83" aria-hidden="true" tabindex="-1"></a><span class="in">quarto render exercises.qmd</span></span>
+<span id="cb6-82"><a href="#cb6-82" aria-hidden="true" tabindex="-1"></a><span class="in">```{.bash filename="Terminal"}</span></span>
+<span id="cb6-83"><a href="#cb6-83" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> render exercises.qmd</span>
 <span id="cb6-84"><a href="#cb6-84" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb6-85"><a href="#cb6-85" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-86"><a href="#cb6-86" aria-hidden="true" tabindex="-1"></a><span class="al">![](../../Img Files/Getting Started/terminal_quarto_render.png)</span></span>
@@ -951,8 +961,8 @@ Note
 <span id="cb6-92"><a href="#cb6-92" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-93"><a href="#cb6-93" aria-hidden="true" tabindex="-1"></a>Instead of <span class="in">`quarto render`</span>, you can use:</span>
 <span id="cb6-94"><a href="#cb6-94" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-95"><a href="#cb6-95" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb6-96"><a href="#cb6-96" aria-hidden="true" tabindex="-1"></a><span class="in">quarto preview exercises.qmd</span></span>
+<span id="cb6-95"><a href="#cb6-95" aria-hidden="true" tabindex="-1"></a><span class="in">```{.bash filename="Terminal"}</span></span>
+<span id="cb6-96"><a href="#cb6-96" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> preview exercises.qmd</span>
 <span id="cb6-97"><a href="#cb6-97" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb6-98"><a href="#cb6-98" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-99"><a href="#cb6-99" aria-hidden="true" tabindex="-1"></a>This opens a live preview in your browser that updates every time you save the file.</span>

@@ -1,11 +1,13 @@
 ---
 title: "Quiz"
+bibliography: references.bib
 sidebar: example-sidebar
 filters:
   - parmsam/quizdown
 ---
 
-Test your understanding of the sine function — and Quarto's features.
+Test your understanding of the sine function — and Quarto's features,
+powered by the [quarto-quizdown](https://github.com/parmsam/quarto-quizdown) extension [@quizdown] by Parmsam.
 
 ```{quizdown}
 ---

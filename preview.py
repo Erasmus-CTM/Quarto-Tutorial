@@ -17,9 +17,9 @@ import webbrowser
 
 # ── Config ────────────────────────────────────────────────────────────────────
 
-PROFILES   = ["beg", "int", "exp"]   # must match _quarto-<profile>.yml files
+PROFILES   = ["root", "beg", "int", "exp"]  # must match _quarto-<profile>.yml files
 DOCS_DIR   = "docs"
-START_PAGE = "beg/index.html"        # opened in browser after serving
+START_PAGE = "index.html"                   # opened in browser after serving
 
 # ── Argument parsing ──────────────────────────────────────────────────────────
 
