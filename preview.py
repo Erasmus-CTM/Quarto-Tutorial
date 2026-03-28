@@ -88,11 +88,36 @@ def fix_cross_profile_links(docs_dir, profiles):
 
     print(f"  ✓  Fixed cross-profile links in {fixed} HTML file(s).\n")
 
+def fix_root_absolute_paths(docs_dir):
+    """
+    Quarto renders root-profile pages (docs/*.html) with absolute paths like
+    /site_libs/... and /index.html. These break when opened as file:// or on
+    a GitHub Pages project page (where the site lives at /repo-name/, not /).
+    Rewrite all root-relative paths to explicit relative paths (./...).
+    """
+    docs_path = os.path.abspath(docs_dir)
+    # Matches src=, href=, or content= with a root-absolute path /foo but not //foo
+    abs_re = re.compile(r'((?:src|href|content)=")(/(?!/)[^"]*")')
+    fixed = 0
+
+    for filename in os.listdir(docs_path):
+        if not filename.endswith('.html'):
+            continue
+        html_file = os.path.join(docs_path, filename)
+        with open(html_file, encoding='utf-8') as f:
+            content = f.read()
+        new_content = abs_re.sub(r'\1.\2', content)
+        if new_content != content:
+            with open(html_file, 'w', encoding='utf-8') as f:
+                f.write(new_content)
+            fixed += 1
+
+    print(f"  ✓  Fixed absolute paths in {fixed} root HTML file(s).\n")
+
 if not args.no_render:
-    fix_cross_profile_links(
-        os.path.join(os.path.dirname(os.path.abspath(__file__)), DOCS_DIR),
-        PROFILES,
-    )
+    docs_abs = os.path.join(os.path.dirname(os.path.abspath(__file__)), DOCS_DIR)
+    fix_cross_profile_links(docs_abs, PROFILES)
+    fix_root_absolute_paths(docs_abs)
 
 # ── Serve ─────────────────────────────────────────────────────────────────────
 

@@ -8,8 +8,6 @@ website:
   title: "Quarto Tipps and Tricks"
   navbar:
     left:
-      - text: "Overview"
-        href: index.qmd
       - text: "Example Page"
         href: "/beg/Qmd Files/Example Page/index_beg.html"
       - text: "Getting Started"

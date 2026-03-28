@@ -8,8 +8,6 @@ website:
   title: "What Quarto Can Do"
   navbar:
     left:
-      - text: "Overview"
-        href: index.qmd
       - text: "Example Page"
         href: "Qmd Files/Example Page/index_beg.qmd"
       - text: "Getting Started"

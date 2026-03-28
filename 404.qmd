@@ -12,6 +12,20 @@ Either way, nothing to worry about! ✨
 
 <br/>
 
-[← Back to the Tutorial](index.html){.btn .btn-primary}
+```{=html}
+<a id="home-btn" href="/" class="btn btn-primary">← Back to the Tutorial</a>
+<script>
+  (function () {
+    var root;
+    if (location.hostname.endsWith("github.io")) {
+      var seg = location.pathname.split("/").filter(Boolean)[0];
+      root = seg ? "/" + seg + "/" : "/";
+    } else {
+      root = "/";
+    }
+    document.getElementById("home-btn").href = root;
+  })();
+</script>
+```
 
 </div>
