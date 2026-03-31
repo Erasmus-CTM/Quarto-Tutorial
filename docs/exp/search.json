@@ -1,9 +1,416 @@
 [
   {
+    "objectID": "Qmd Files/Tipps and Tricks/index_exp.html",
+    "href": "Qmd Files/Tipps and Tricks/index_exp.html",
+    "title": "Quarto Tips & Tricks",
+    "section": "",
+    "text": "This section is for people who already know how to build Quarto documents and want to go further. All three levels of this tutorial are built with the techniques described here.",
+    "crumbs": [
+      "Example Page",
+      "What you should know"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/index_exp.html#whats-covered-and-where-to-find-it",
+    "href": "Qmd Files/Tipps and Tricks/index_exp.html#whats-covered-and-where-to-find-it",
+    "title": "Quarto Tips & Tricks",
+    "section": "What’s covered — and where to find it",
+    "text": "What’s covered — and where to find it\n\n\n\nI want to…\nGo to\n\n\n\n\nControl output formats, freeze, and profiles\nThe YML File\n\n\nConfigure advanced sidebar sections and collapsing\nThe YML File → Sidebar\n\n\nCustomise the site’s look with themes and CSS\nThe YML File → Styles\n\n\nControl how code runs (echo, eval, fold, …)\nThe QMD File\n\n\nShow content only in certain profiles or formats\nThe QMD File → Conditional content\n\n\nCross-reference figures, tables, and sections\nThe QMD File → Cross-referencing\n\n\nUse quizdown, Pyodide, JSXGraph, or py-exercise\nExtensions\n\n\nServe the same project in multiple languages\nMultilanguage Projects\n\n\nLook something up quickly\nCheatsheet",
+    "crumbs": [
+      "Example Page",
+      "What you should know"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/index_exp.html#what-you-should-already-know",
+    "href": "Qmd Files/Tipps and Tricks/index_exp.html#what-you-should-already-know",
+    "title": "Quarto Tips & Tricks",
+    "section": "What you should already know",
+    "text": "What you should already know\nThis section assumes you are comfortable with the following from the previous levels:\n\nCreating a Quarto website, exercise sheet, or book — Getting Started\nRunning Python in the browser with Pyodide — Extensions\nWhat interactive Quarto output looks like — Example Page",
+    "crumbs": [
+      "Example Page",
+      "What you should know"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_qmd.html",
+    "href": "Qmd Files/Tipps and Tricks/exp_qmd.html",
+    "title": "The QMD File",
+    "section": "",
+    "text": "A .qmd file is a plain text file combining Markdown for prose and code chunks for computation. This chapter covers the options that give you precise control over how code runs and how content is shown.",
+    "crumbs": [
+      "Example Page",
+      "The QMD File"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_qmd.html#code-chunk-options",
+    "href": "Qmd Files/Tipps and Tricks/exp_qmd.html#code-chunk-options",
+    "title": "The QMD File",
+    "section": "Code chunk options",
+    "text": "Code chunk options\nEvery code chunk can be fine-tuned with options written as #| comments at the top of the chunk:\n\n::: {#ce63c222 .cell execution_count=1}\n\n::: {.cell-output .cell-output-stdout}\n```\nHello!\n```\n:::\n:::\n\n\nOption reference\n\n\n\n\n\n\n\n\nOption\nValues\nWhat it controls\n\n\n\n\necho\ntrue / false / fenced\nShow the source code\n\n\neval\ntrue / false\nActually run the code\n\n\noutput\ntrue / false / asis\nShow the output\n\n\nwarning\ntrue / false\nShow warnings\n\n\nerror\ntrue / false\nShow errors (instead of stopping)\n\n\ninclude\ntrue / false\nInclude chunk at all (shorthand for echo+output: false)\n\n\ncode-fold\ntrue / false\nCollapse code into a toggle\n\n\ncode-summary\nstring\nLabel for the fold toggle\n\n\nfig-cap\nstring\nCaption for figures\n\n\nfig-align\nleft / center / right\nFigure alignment\n\n\nlabel\nstring (must start with fig- or tbl-)\nID for cross-referencing\n\n\n\n\n\nCommon combinations\nShow output only — hide code:\n#| echo: false\nShow code but don’t run it:\n#| eval: false\nCollapsible code block:\n#| code-fold: true\n#| code-summary: \"Show the code\"",
+    "crumbs": [
+      "Example Page",
+      "The QMD File"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_qmd.html#global-chunk-defaults",
+    "href": "Qmd Files/Tipps and Tricks/exp_qmd.html#global-chunk-defaults",
+    "title": "The QMD File",
+    "section": "Global chunk defaults",
+    "text": "Global chunk defaults\nSet defaults for all chunks in _quarto.yml so you don’t repeat yourself:\n\n\n_quarto.yml\n\nexecute:\n  echo: false\n  warning: false\n\nOverride for individual chunks as needed.",
+    "crumbs": [
+      "Example Page",
+      "The QMD File"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_qmd.html#conditional-content",
+    "href": "Qmd Files/Tipps and Tricks/exp_qmd.html#conditional-content",
+    "title": "The QMD File",
+    "section": "Conditional content",
+    "text": "Conditional content\nShow or hide content depending on the active profile or format:\n\nProfile-based content\nUse a custom div with a CSS class and conditionally include it:\n::: {.content-visible when-profile=\"int\"}\nThis paragraph only appears in the **intermediate** profile.\n:::\n\n::: {.content-hidden when-profile=\"beg\"}\nThis is hidden in the beginner profile, visible everywhere else.\n:::\n\n\nFormat-based content\n::: {.content-visible when-format=\"html\"}\nThis only appears in HTML output.\n:::\n\n::: {.content-visible when-format=\"pdf\"}\nThis only appears in PDF output.\n:::",
+    "crumbs": [
+      "Example Page",
+      "The QMD File"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_qmd.html#cross-referencing",
+    "href": "Qmd Files/Tipps and Tricks/exp_qmd.html#cross-referencing",
+    "title": "The QMD File",
+    "section": "Cross-referencing",
+    "text": "Cross-referencing\nLabel a figure, table, or section — then reference it anywhere on the same page.\n\nFigures\n\n::: {#cell-fig-sine .cell execution_count=2}\n``` {.python .cell-code}\nimport matplotlib.pyplot as plt\nimport numpy as np\nx = np.linspace(0, 2*np.pi, 200)\nplt.plot(x, np.sin(x))\nplt.show()\n```\n\n::: {.cell-output .cell-output-display}\n![A plot of sin(x)](exp_qmd_files/figure-html/fig-sine-output-1.png){#fig-sine width=590 height=411}\n:::\n:::\n\n\nAs shown in @fig-sine, the sine function...\n\n\nTables\n\n::: {#tbl-data .cell tbl-cap='Summary statistics' execution_count=3}\n``` {.python .cell-code}\nimport pandas as pd\ndf = pd.DataFrame({\"x\": [1,2,3], \"y\": [4,5,6]})\ndf\n```\n\n::: {.cell-output .cell-output-display execution_count=3}\n```{=html}\n&lt;div&gt;\n&lt;style scoped&gt;\n    .dataframe tbody tr th:only-of-type {\n        vertical-align: middle;\n    }\n\n    .dataframe tbody tr th {\n        vertical-align: top;\n    }\n\n    .dataframe thead th {\n        text-align: right;\n    }\n&lt;/style&gt;\n&lt;table border=\"1\" class=\"dataframe\"&gt;\n  &lt;thead&gt;\n    &lt;tr style=\"text-align: right;\"&gt;\n      &lt;th&gt;&lt;/th&gt;\n      &lt;th&gt;x&lt;/th&gt;\n      &lt;th&gt;y&lt;/th&gt;\n    &lt;/tr&gt;\n  &lt;/thead&gt;\n  &lt;tbody&gt;\n    &lt;tr&gt;\n      &lt;th&gt;0&lt;/th&gt;\n      &lt;td&gt;1&lt;/td&gt;\n      &lt;td&gt;4&lt;/td&gt;\n    &lt;/tr&gt;\n    &lt;tr&gt;\n      &lt;th&gt;1&lt;/th&gt;\n      &lt;td&gt;2&lt;/td&gt;\n      &lt;td&gt;5&lt;/td&gt;\n    &lt;/tr&gt;\n    &lt;tr&gt;\n      &lt;th&gt;2&lt;/th&gt;\n      &lt;td&gt;3&lt;/td&gt;\n      &lt;td&gt;6&lt;/td&gt;\n    &lt;/tr&gt;\n  &lt;/tbody&gt;\n&lt;/table&gt;\n&lt;/div&gt;\n```\n:::\n:::\n\n\nThe values in @tbl-data show...\n\n\nSections\n## Introduction {#sec-intro}\n\nAs described in @sec-intro...\n\n\n\n\n\n\nTipLabel naming rules\n\n\n\n\nFigure labels must start with fig-\nTable labels must start with tbl-\nSection labels must start with sec-",
+    "crumbs": [
+      "Example Page",
+      "The QMD File"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_qmd.html#custom-divs-and-spans",
+    "href": "Qmd Files/Tipps and Tricks/exp_qmd.html#custom-divs-and-spans",
+    "title": "The QMD File",
+    "section": "Custom divs and spans",
+    "text": "Custom divs and spans\nApply any CSS class to a block of content using Quarto’s div syntax:\n::: {.my-class}\nThis block gets the `my-class` CSS class.\n:::\nFor inline styling, use a span:\nThis word is [highlighted]{.my-highlight} in the text.\n\nBuilt-in Bootstrap utility classes\nThese work out of the box without any custom CSS:\n\n\n\nClass\nEffect\n\n\n\n\n.text-center\nCentre-align text\n\n\n.text-muted\nGrey text\n\n\n.fw-bold\nBold text\n\n\n.border\nAdd a border\n\n\n.bg-light\nLight background\n\n\n.p-3\nAdd padding\n\n\n.mt-4\nAdd top margin\n\n\n\nExample:\n::: {.border .p-3 .bg-light}\nThis box has a border, padding, and a light background — no custom CSS needed.\n:::",
+    "crumbs": [
+      "Example Page",
+      "The QMD File"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_qmd.html#callout-blocks",
+    "href": "Qmd Files/Tipps and Tricks/exp_qmd.html#callout-blocks",
+    "title": "The QMD File",
+    "section": "Callout blocks",
+    "text": "Callout blocks\nQuarto provides five callout types out of the box:\n::: {.callout-note}\n## Optional title\nInformational note.\n:::\n\n::: {.callout-tip}\nPractical advice.\n:::\n\n::: {.callout-warning}\nSomething to watch out for.\n:::\n\n::: {.callout-important}\nCritical information.\n:::\n\n::: {.callout-caution}\nProceed carefully.\n:::\nAdd collapse=\"true\" to make a callout collapsible:\n::: {.callout-note collapse=\"true\"}\n## Click to expand\nHidden detail.\n:::",
+    "crumbs": [
+      "Example Page",
+      "The QMD File"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_extensions.html",
+    "href": "Qmd Files/Tipps and Tricks/exp_extensions.html",
+    "title": "Extensions",
+    "section": "",
+    "text": "This chapter covers the four extensions used in this tutorial. Each extension is installed once per project with quarto add &lt;name&gt; — the files land in _extensions/ and should be committed to git.\nExtensions can be enabled globally in _quarto.yml or per page in the frontmatter:",
+    "crumbs": [
+      "Example Page",
+      "Extensions"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_extensions.html#quizdown-interactive-quizzes",
+    "href": "Qmd Files/Tipps and Tricks/exp_extensions.html#quizdown-interactive-quizzes",
+    "title": "Extensions",
+    "section": "quizdown — interactive quizzes",
+    "text": "quizdown — interactive quizzes\nInstall: quarto add parmsam/quizdown Source: (Sauer 2023) — github.com/parmsam/quarto-quizdown\n\n# Which file controls global project settings in Quarto?\n\n1. [x] `_quarto.yml`\n2. [ ] `index.qmd`\n3. [ ] `styles.css`\n\n# Select all valid Quarto output formats.\n\n1. [x] HTML\n2. [x] PDF\n3. [x] Word (.docx)\n4. [ ] Excel (.xlsx)\n\n# Put the Quarto render pipeline in the correct order.\n\n1. Parse `.qmd` source\n2. Execute code chunks\n3. Convert Markdown to HTML/PDF\n4. Apply theme and styles\n\n\nSettingsQuestion typesImages & code\n\n\nGlobal quiz settings go inside a --- block at the top of the quiz:\n```{quizdown}\n---\nshuffleAnswers: true    # default: true — randomise answer order\nshuffleQuestions: false # default: false — randomise question order\n---\n```\n\n\n\n\n\n\nTip\n\n\n\nshuffleAnswers: true is the default — answers are shuffled unless you explicitly set it to false.\n\n\n\n\nSingle choice — exactly one correct answer:\n```{quizdown}\n# What is 2 + 2?\n1. [ ] 3\n2. [x] 4\n3. [ ] 5\n```\nMultiple choice — more than one correct answer:\n```{quizdown}\n# Which of these are programming languages?\n1. [x] Python\n2. [ ] Quarto\n3. [x] R\n4. [x] JavaScript\n```\n\n\nInclude an image in a question:\n```{quizdown}\n# What does this logo belong to?\n![](https://quarto.org/quarto.png)\n1. [x] Quarto\n2. [ ] RMarkdown\n```\nInclude inline code in answers:\n```{quizdown}\n# Which chunk option hides the source code?\n1. [x] `echo: false`\n2. [ ] `eval: false`\n3. [ ] `output: false`\n```",
+    "crumbs": [
+      "Example Page",
+      "Extensions"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_extensions.html#pyodide-live-python-in-the-browser",
+    "href": "Qmd Files/Tipps and Tricks/exp_extensions.html#pyodide-live-python-in-the-browser",
+    "title": "Extensions",
+    "section": "Pyodide — live Python in the browser",
+    "text": "Pyodide — live Python in the browser\nInstall: quarto add coatless-quarto/pyodide Source: (Droettboom et al. 2021) — github.com/coatless-quarto/pyodide\n\nExampleSetup & optionsvs. regular Python\n\n\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.\n\n\nEnable per page:\n---\nfilters:\n  - coatless-quarto/pyodide\n---\nOr globally in _quarto.yml (applies to all pages):\nfilters:\n  - coatless-quarto/pyodide\nPer-chunk options:\n```{pyodide-python}\n#| autorun: true     # run automatically on page load\n#| readonly: true    # reader cannot edit the code\nprint(\"Auto-runs, cannot be changed.\")\n```\n\n\n\n\n\n\n{python}\n{pyodide-python}\n\n\n\n\nRuns at\nRender time\nRead time (in browser)\n\n\nReader can edit\nNo\nYes\n\n\nNeeds Python installed\nYes (author)\nNo (reader)\n\n\nOutput baked into HTML\nYes\nNo — computed live\n\n\n\n\n\n\n\n\n\nWarningPackage availability\n\n\n\nPyodide runs in WebAssembly. Most pure-Python packages work (numpy, pandas, matplotlib) but packages with C extensions may not be available.",
+    "crumbs": [
+      "Example Page",
+      "Extensions"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_extensions.html#py-exercise-editable-exercises-with-hidden-tests",
+    "href": "Qmd Files/Tipps and Tricks/exp_extensions.html#py-exercise-editable-exercises-with-hidden-tests",
+    "title": "Extensions",
+    "section": "py-exercise — editable exercises with hidden tests",
+    "text": "py-exercise — editable exercises with hidden tests\nInstall: quarto add Erasmus-CTM/py-exercise Source: (Erasmus CTM, n.d.) — github.com/Erasmus-CTM/py-exercise\n\n\n\n\n\n\nImportantRequires Pyodide\n\n\n\npy-exercise runs student code in the browser using Pyodide. Both filters must be active on the same page — either globally in _quarto.yml or together in the page frontmatter:\nfilters:\n  - coatless-quarto/pyodide\n  - py-exercise\n\n\n\nExampleSyntax\n\n\n\n  \n    Please enable JavaScript to load the interactive exercise.\n  \n\n\n\n\n```{py-exercise}\ndef my_function(x):\n    \"\"\"Docstring shown to the reader.\"\"\"\n    # Student fills this in\n    pass\n\n## TESTS ##\nassert my_function(2) == 4, \"Feedback shown on failure\"\nassert my_function(0) == 0\n```\nRules: 1. Write the function stub with a docstring at the top. 2. ## TESTS ## is the separator — everything below is hidden from the reader. 3. Each assert statement’s message becomes the feedback shown on test failure.\n\n\n\n\n\n\nTip\n\n\n\nWrite assertion messages as if you are talking to the student: \"my_function(2) should return 4 — did you multiply correctly?\"",
+    "crumbs": [
+      "Example Page",
+      "Extensions"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_extensions.html#jsxgraph-interactive-mathematical-graphs",
+    "href": "Qmd Files/Tipps and Tricks/exp_extensions.html#jsxgraph-interactive-mathematical-graphs",
+    "title": "Extensions",
+    "section": "JSXGraph — interactive mathematical graphs",
+    "text": "JSXGraph — interactive mathematical graphs\nInstall: quarto add jsxgraph/jsxgraph Source: (Miller 2023) — github.com/jsxgraph/jsxgraph-quarto\n\nExampleSyntaxCommon elements\n\n\n\n\n\n```jsxgraph\nvar board = JXG.JSXGraph.initBoard(BOARDID, {\n    boundingbox: [-5, 5, 5, -5],   // [xmin, ymax, xmax, ymin]\n    axis: true,\n    keepaspectratio: false,\n    showNavigation: false\n});\n```\n\n\n\n\n\n\nImportant\n\n\n\nAlways use the literal string BOARDID — Quarto replaces it with a unique ID. Hardcoding a string breaks pages with multiple graphs.\n\n\n\n\n// Function graph\nboard.create('functiongraph', [Math.sin], { strokeColor: '#0d6efd' });\n\n// Draggable point\nvar p = board.create('point', [2, 1], { name: 'P', size: 4 });\n\n// Glider — point constrained to a line/curve\nvar g = board.create('glider', [1, 0, board.defaultAxes.x], { name: 'x' });\n\n// Slider\nvar s = board.create('slider', [[0,-3],[4,-3],[0,1,2*Math.PI]], { name: 'a' });\n\n// Use slider value\nboard.create('functiongraph', [function(x) { return Math.sin(s.Value()*x); }]);\n\n// Text label\nboard.create('text', [1, 2, function() { return 'x = ' + g.X().toFixed(2); }]);\n\n// Segment\nboard.create('segment', [p1, p2], { strokeColor: '#198754', dash: 2 });",
+    "crumbs": [
+      "Example Page",
+      "Extensions"
+    ]
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Quarto Tutorial",
     "section": "",
     "text": "This is a Tutorial for using Quarto in a creating context.\n\nIf you never saw a Quarto page before click here!\n\nIf you want to learn how to create something with Quarto click here!\n\nIf you already know how to create Quarto Documents and want to become better click here!"
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_cheatsheet.html",
+    "href": "Qmd Files/Tipps and Tricks/exp_cheatsheet.html",
+    "title": "Cheatsheet",
+    "section": "",
+    "text": "A quick reference for everything covered in this section.",
+    "crumbs": [
+      "Example Page",
+      "Cheatsheet"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_cheatsheet.html#yaml-_quarto.yml-options",
+    "href": "Qmd Files/Tipps and Tricks/exp_cheatsheet.html#yaml-_quarto.yml-options",
+    "title": "Cheatsheet",
+    "section": "YAML — _quarto.yml options",
+    "text": "YAML — _quarto.yml options\n\nProject\nproject:\n  type: website       # website | book | manuscript | default\n  output-dir: docs    # where rendered files go\n\n\nExecute (global code defaults)\nexecute:\n  echo: true          # show source code\n  eval: true          # run the code\n  warning: false      # hide warnings\n  error: false        # hide errors\n  freeze: auto        # auto | true | false\n\n\nFormat\nformat:\n  html:\n    toc: true\n    toc-depth: 3\n    theme: cosmo\n    theme:\n      - cosmo\n      - custom.scss\n    code-fold: true\n    code-tools: true\n    number-sections: false\n  pdf:\n    toc: true\n    documentclass: article\n    geometry: margin=2.5cm\n  docx:\n    toc: true\n\n\nWebsite\nwebsite:\n  title: \"My Site\"\n  navbar:\n    left:\n      - text: \"Home\"\n        href: index.qmd\n      - text: \"External\"\n        href: https://example.com\n    right:\n      - icon: github\n        href: https://github.com/your/repo\n  sidebar:\n    - id: my-sidebar\n      style: docked        # docked | floating\n      contents:\n        - href: page.qmd\n          text: Page Title\n        - section: \"Group\"\n          contents:\n            - href: sub.qmd\n              text: Sub-page\n\n\nProfiles\nprofile:\n  default: web\n  group: [web, print, de, en]",
+    "crumbs": [
+      "Example Page",
+      "Cheatsheet"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_cheatsheet.html#qmd-code-chunk-options",
+    "href": "Qmd Files/Tipps and Tricks/exp_cheatsheet.html#qmd-code-chunk-options",
+    "title": "Cheatsheet",
+    "section": "QMD — code chunk options",
+    "text": "QMD — code chunk options\n#| echo: false          # hide source code\n#| eval: false          # don't run (show code only)\n#| output: false        # hide output\n#| warning: false       # hide warnings\n#| include: false       # hide everything (no trace in output)\n#| code-fold: true      # true | false — collapsible code block\n#| code-summary: \"Show the code\"\n#| fig-cap: \"My figure\"\n#| fig-align: center    # left | center | right\n#| label: fig-myplot    # for cross-referencing\n\nCross-reference labels\n\n\n\nType\nLabel prefix\nReference\n\n\n\n\nFigure\nfig-\n@fig-myplot\n\n\nTable\ntbl-\n@tbl-mydata\n\n\nSection\nsec- (on heading)\n@sec-intro",
+    "crumbs": [
+      "Example Page",
+      "Cheatsheet"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_cheatsheet.html#qmd-conditional-content",
+    "href": "Qmd Files/Tipps and Tricks/exp_cheatsheet.html#qmd-conditional-content",
+    "title": "Cheatsheet",
+    "section": "QMD — conditional content",
+    "text": "QMD — conditional content\n::: {.content-visible when-profile=\"de\"}\nNur auf Deutsch sichtbar.\n:::\n\n::: {.content-hidden when-format=\"pdf\"}\nNot in PDF.\n:::",
+    "crumbs": [
+      "Example Page",
+      "Cheatsheet"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_cheatsheet.html#qmd-markdown-elements",
+    "href": "Qmd Files/Tipps and Tricks/exp_cheatsheet.html#qmd-markdown-elements",
+    "title": "Cheatsheet",
+    "section": "QMD — Markdown elements",
+    "text": "QMD — Markdown elements\n\nCallouts\n::: {.callout-note}\n::: {.callout-tip}\n::: {.callout-warning}\n::: {.callout-important}\n::: {.callout-caution}\n\n::: {.callout-tip collapse=\"true\"}\n## Title\nHidden by default.\n:::\n\n\nShortcodes\n{{&lt; include other-file.qmd &gt;}}   ← embed another file\n{{&lt; pagebreak &gt;}}                ← force page break (PDF)\n{{&lt; kbd Ctrl+C &gt;}}               ← keyboard shortcut styling\n\n\nGrid layout\n::: {.grid}\n::: {.g-col-6}\nLeft column (half width)\n:::\n::: {.g-col-6}\nRight column (half width)\n:::\n:::\nColumn widths are in 12ths: g-col-4 = one third, g-col-6 = half, g-col-12 = full.",
+    "crumbs": [
+      "Example Page",
+      "Cheatsheet"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_cheatsheet.html#extensions-syntax-summary",
+    "href": "Qmd Files/Tipps and Tricks/exp_cheatsheet.html#extensions-syntax-summary",
+    "title": "Cheatsheet",
+    "section": "Extensions — syntax summary",
+    "text": "Extensions — syntax summary\n\nquizdown\n```{quizdown}\n---\nshuffleAnswers: true\n---\n# Question text?\n1. [x] Correct answer\n2. [ ] Wrong answer\n```\n\n\nPyodide\n```{pyodide-python}\n#| autorun: false\n#| readonly: false\nprint(\"runs in browser\")\n```\n\n\npy-exercise\n```{py-exercise}\ndef my_func(x):\n    pass        # student fills this in\n\n## TESTS ##\nassert my_func(2) == 4\n```\n\n\nJSXGraph\n```jsxgraph\nvar board = JXG.JSXGraph.initBoard(BOARDID, {\n    boundingbox: [-5, 5, 5, -5], axis: true\n});\nboard.create('functiongraph', [Math.sin]);\n```",
+    "crumbs": [
+      "Example Page",
+      "Cheatsheet"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_cheatsheet.html#css-bootstrap-utility-classes",
+    "href": "Qmd Files/Tipps and Tricks/exp_cheatsheet.html#css-bootstrap-utility-classes",
+    "title": "Cheatsheet",
+    "section": "CSS — Bootstrap utility classes",
+    "text": "CSS — Bootstrap utility classes\n\n\n\nClass\nEffect\n\n\n\n\n.text-center\nCentre text\n\n\n.text-muted\nGrey text\n\n\n.text-white\nWhite text\n\n\n.fw-bold\nBold\n\n\n.border\nBorder\n\n\n.rounded\nRounded corners\n\n\n.shadow\nDrop shadow\n\n\n.bg-light\nLight background\n\n\n.bg-primary\nPrimary colour background\n\n\n.p-{0-5}\nPadding all sides\n\n\n.m-{0-5}\nMargin all sides\n\n\n.mt-{0-5} / .mb-{0-5}\nMargin top / bottom\n\n\n.d-flex\nFlexbox container\n\n\n.gap-{0-5}\nGap between flex items\n\n\n.justify-content-center\nCentre flex items",
+    "crumbs": [
+      "Example Page",
+      "Cheatsheet"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_cheatsheet.html#css-scss-variable-reference",
+    "href": "Qmd Files/Tipps and Tricks/exp_cheatsheet.html#css-scss-variable-reference",
+    "title": "Cheatsheet",
+    "section": "CSS — SCSS variable reference",
+    "text": "CSS — SCSS variable reference\n/*-- scss:defaults --*/\n$primary:            #0d6efd;\n$body-bg:            #ffffff;\n$body-color:         #212529;\n$font-family-base:   \"Inter\", sans-serif;\n$font-size-base:     1rem;\n$headings-font-weight: 600;\n$border-radius:      0.375rem;\n$border-color:       #dee2e6;\n\n/*-- scss:rules --*/\n/* your custom CSS here */",
+    "crumbs": [
+      "Example Page",
+      "Cheatsheet"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_multilanguage.html",
+    "href": "Qmd Files/Tipps and Tricks/exp_multilanguage.html",
+    "title": "Multilanguage Projects",
+    "section": "",
+    "text": "Quarto does not have a built-in translation system, but profiles make it straightforward to build a project that serves content in multiple languages — each profile renders to its own output folder.",
+    "crumbs": [
+      "Example Page",
+      "Multilanguage Projects"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_multilanguage.html#project-structure",
+    "href": "Qmd Files/Tipps and Tricks/exp_multilanguage.html#project-structure",
+    "title": "Multilanguage Projects",
+    "section": "Project structure",
+    "text": "Project structure\nmy-project/\n├── _quarto.yml\n├── _quarto-de.yml\n├── _quarto-en.yml\n├── de/\n│   ├── index.qmd\n│   └── chapter1.qmd\n├── en/\n│   ├── index.qmd\n│   └── chapter1.qmd\n└── docs/\n    ├── de/\n    └── en/",
+    "crumbs": [
+      "Example Page",
+      "Multilanguage Projects"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_multilanguage.html#step-1-profile-group",
+    "href": "Qmd Files/Tipps and Tricks/exp_multilanguage.html#step-1-profile-group",
+    "title": "Multilanguage Projects",
+    "section": "Step 1 — Profile group",
+    "text": "Step 1 — Profile group\n\n\n_quarto.yml\n\nproject:\n  type: website\n\nprofile:\n  default: en\n  group: [en, de]",
+    "crumbs": [
+      "Example Page",
+      "Multilanguage Projects"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_multilanguage.html#step-2-per-language-config-files",
+    "href": "Qmd Files/Tipps and Tricks/exp_multilanguage.html#step-2-per-language-config-files",
+    "title": "Multilanguage Projects",
+    "section": "Step 2 — Per-language config files",
+    "text": "Step 2 — Per-language config files\n\n\n_quarto-en.yml\n\nproject:\n  output-dir: docs/en\n  render:\n    - en/*.qmd\n\nwebsite:\n  title: \"My Project\"\n  navbar:\n    left:\n      - text: \"Home\"\n        href: en/index.qmd\n      - text: \"🇩🇪 Deutsch\"\n        href: \"de/index.html\"    # ← links to DE start page only\n\n\n\n_quarto-de.yml\n\nproject:\n  output-dir: docs/de\n  render:\n    - de/*.qmd\n\nwebsite:\n  title: \"Mein Projekt\"\n  navbar:\n    left:\n      - text: \"Startseite\"\n        href: de/index.qmd\n      - text: \"🇬🇧 English\"\n        href: \"en/index.html\"    # ← links to EN start page only",
+    "crumbs": [
+      "Example Page",
+      "Multilanguage Projects"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_multilanguage.html#step-3-render-each-language",
+    "href": "Qmd Files/Tipps and Tricks/exp_multilanguage.html#step-3-render-each-language",
+    "title": "Multilanguage Projects",
+    "section": "Step 3 — Render each language",
+    "text": "Step 3 — Render each language\n\n\n\n\n\n\nImportantQuarto cannot render all profiles at once natively\n\n\n\nquarto render only runs the default profile. You must render each profile separately:\nquarto render --profile en\nquarto render --profile de\nUse a build script (like preview.py in this project) to automate this.",
+    "crumbs": [
+      "Example Page",
+      "Multilanguage Projects"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_multilanguage.html#language-switcher-fix",
+    "href": "Qmd Files/Tipps and Tricks/exp_multilanguage.html#language-switcher-fix",
+    "title": "Multilanguage Projects",
+    "section": "Language switcher fix",
+    "text": "Language switcher fix\nQuarto’s navbar links point to the other language’s homepage — they cannot know which page the reader is currently on.\nA Python post-processing script solves this: after rendering, it rewrites the language-switch link in every HTML file to point to the equivalent page in the other language.\nThis works as long as your source files have matching names across languages:\nen/chapter1.qmd  →  docs/en/chapter1.html\nde/chapter1.qmd  →  docs/de/chapter1.html\nAdd this to your build script after rendering:\nimport os, re\n\ndef fix_language_links(docs_dir, lang_pairs):\n    \"\"\"\n    Rewrite language-switch hrefs to point to the equivalent page\n    instead of the other language's homepage.\n\n    lang_pairs: list of (from_lang, to_lang) tuples, e.g. [(\"en\", \"de\"), (\"de\", \"en\")]\n    \"\"\"\n    docs_path = os.path.abspath(docs_dir)\n\n    for from_lang, to_lang in lang_pairs:\n        lang_dir = os.path.join(docs_path, from_lang)\n        if not os.path.isdir(lang_dir):\n            continue\n        for dirpath, _, filenames in os.walk(lang_dir):\n            for filename in filenames:\n                if not filename.endswith(\".html\"):\n                    continue\n                html_file = os.path.join(dirpath, filename)\n                rel = os.path.relpath(html_file, lang_dir)\n                # Compute the path to the equivalent page in the other language\n                depth = len(rel.replace(\"\\\\\", \"/\").split(\"/\")) - 1\n                prefix = \"../\" * depth\n                equivalent = prefix + \"../\" + to_lang + \"/\" + rel.replace(\"\\\\\", \"/\")\n\n                with open(html_file, encoding=\"utf-8\") as f:\n                    content = f.read()\n                # Replace the generic language-switch link\n                new_content = content.replace(\n                    f'href=\"{prefix}../{to_lang}/index.html\"',\n                    f'href=\"{equivalent}\"'\n                )\n                if new_content != content:\n                    with open(html_file, \"w\", encoding=\"utf-8\") as f:\n                        f.write(new_content)\n\nfix_language_links(\"docs\", [(\"en\", \"de\"), (\"de\", \"en\")])",
+    "crumbs": [
+      "Example Page",
+      "Multilanguage Projects"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_multilanguage.html#conditional-content-within-a-shared-file",
+    "href": "Qmd Files/Tipps and Tricks/exp_multilanguage.html#conditional-content-within-a-shared-file",
+    "title": "Multilanguage Projects",
+    "section": "Conditional content within a shared file",
+    "text": "Conditional content within a shared file\nFor small projects, you can maintain a single set of files and use conditional divs:\n::: {.content-visible when-profile=\"en\"}\nWelcome to this tutorial.\n:::\n\n::: {.content-visible when-profile=\"de\"}\nWillkommen zu diesem Tutorial.\n:::\n\n\n\n\n\n\nWarning\n\n\n\nThis approach works for small projects but becomes hard to maintain as content grows. For anything beyond a few pages, separate source folders (one per language) are strongly recommended.",
+    "crumbs": [
+      "Example Page",
+      "Multilanguage Projects"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_multilanguage.html#shared-content-across-languages",
+    "href": "Qmd Files/Tipps and Tricks/exp_multilanguage.html#shared-content-across-languages",
+    "title": "Multilanguage Projects",
+    "section": "Shared content across languages",
+    "text": "Shared content across languages\nFiles that don’t need translation (code examples, shared figures) can be included with Quarto’s include shortcode:\n{{&lt; include ../../shared/code-example.qmd &gt;}}\nPlace shared files in a shared/ folder outside the language folders.",
+    "crumbs": [
+      "Example Page",
+      "Multilanguage Projects"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_yml.html",
+    "href": "Qmd Files/Tipps and Tricks/exp_yml.html",
+    "title": "The YML File",
+    "section": "",
+    "text": "The _quarto.yml file is the control centre of your Quarto project. Everything you set here applies globally — unless overridden in a specific .qmd file or profile.",
+    "crumbs": [
+      "Example Page",
+      "The YML File"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_yml.html#output-formats",
+    "href": "Qmd Files/Tipps and Tricks/exp_yml.html#output-formats",
+    "title": "The YML File",
+    "section": "Output formats",
+    "text": "Output formats\nQuarto can render the same source to multiple formats at once:\n\n\n_quarto.yml\n\nformat:\n  html:\n    toc: true\n    theme: cosmo\n  pdf:\n    toc: true\n    documentclass: article\n  docx:\n    toc: true\n\nRun all formats: quarto render Run one format: quarto render --to pdf\n\n\n\n\n\n\nTip\n\n\n\nAny format option can be overridden per page in the .qmd file’s own YAML frontmatter.",
+    "crumbs": [
+      "Example Page",
+      "The YML File"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_yml.html#execute-freeze",
+    "href": "Qmd Files/Tipps and Tricks/exp_yml.html#execute-freeze",
+    "title": "The YML File",
+    "section": "Execute & freeze",
+    "text": "Execute & freeze\n\n\n_quarto.yml\n\nexecute:\n  echo: true        # show source code\n  eval: true        # run the code\n  warning: false    # suppress warnings\n  freeze: auto      # re-run only when source changes\n\n\n\n\nfreeze value\nBehaviour\n\n\n\n\nfalse\nAlways re-execute\n\n\ntrue\nNever re-execute — use cached output\n\n\nauto\nRe-execute only when the .qmd file changes\n\n\n\nFrozen results are stored in _freeze/ — commit this folder so collaborators don’t need to re-run everything.\n\n\n\n\n\n\nWarning\n\n\n\nfreeze: auto watches the .qmd file, not your data files. If you update a CSV but not the .qmd, delete the matching folder in _freeze/ to force a re-run.",
+    "crumbs": [
+      "Example Page",
+      "The YML File"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_yml.html#profiles",
+    "href": "Qmd Files/Tipps and Tricks/exp_yml.html#profiles",
+    "title": "The YML File",
+    "section": "Profiles",
+    "text": "Profiles\nProfiles let you maintain multiple build variants — different audiences, languages, or formats — from one project.\n\n\n_quarto.yml\n\nprofile:\n  default: web\n  group: [web, print]\n\nEach profile has its own config file _quarto-&lt;name&gt;.yml that overrides or extends the root config:\n\n\n_quarto-print.yml\n\nproject:\n  output-dir: docs/print\nformat:\n  pdf:\n    toc: true\n\nRender a specific profile:\nquarto render --profile print\n\n\n\n\n\n\nTip\n\n\n\nThis entire tutorial is built with three profiles — beg, int, and exp — each with its own sidebar, navbar, and output folder.",
+    "crumbs": [
+      "Example Page",
+      "The YML File"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_yml.html#sidebar",
+    "href": "Qmd Files/Tipps and Tricks/exp_yml.html#sidebar",
+    "title": "The YML File",
+    "section": "Sidebar",
+    "text": "Sidebar\n\nBasic setup\n\n\n_quarto.yml\n\nwebsite:\n  sidebar:\n    - id: my-sidebar\n      style: docked       # docked | floating\n      collapse-level: 1   # how many levels are expanded by default\n      contents:\n        - href: page.qmd\n          text: \"Page Title\"\n\n\n\nSections — collapsible groups\nUse section: to create collapsible groups in the sidebar. A section can have its own overview page (href) or just be a label:\ncontents:\n  - section: \"Chapter 1\"          # label only, no page\n    contents:\n      - href: ch1/part1.qmd\n        text: Part 1\n\n  - section: \"Chapter 2\"\n    href: ch2/index.qmd           # clicking the section title opens this page\n    contents:\n      - href: ch2/part1.qmd\n        text: Part 1\n\n\nCollapse level\ncollapse-level controls how many nesting levels are expanded when the page loads:\n\n\n\nValue\nEffect\n\n\n\n\n1\nOnly top-level items visible, all sections collapsed\n\n\n2\nTop level and first-level sections expanded\n\n\n3\nEverything expanded\n\n\n\nsidebar:\n  collapse-level: 1   # start collapsed — reader expands what they need\n\n\nCollapsible sidebar (hide/show)\nTo allow readers to collapse the sidebar entirely, use:\n\n\n_quarto.yml\n\nformat:\n  html:\n    sidebar: true    # this is the default\n\nFor a floating sidebar that can be dismissed:\nwebsite:\n  sidebar:\n    style: floating",
+    "crumbs": [
+      "Example Page",
+      "The YML File"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_yml.html#styles--css",
+    "href": "Qmd Files/Tipps and Tricks/exp_yml.html#styles--css",
+    "title": "The YML File",
+    "section": "Styles & CSS",
+    "text": "Styles & CSS\n\nChoosing a theme\nQuarto uses Bootswatch themes for HTML output:\n\n\n_quarto.yml\n\nformat:\n  html:\n    theme: cosmo\n\nPopular themes: default, cosmo, flatly, lumen, minty, sandstone, simplex, slate (dark), solar (dark), superhero (dark).\n\n\nLight / dark toggle\n\n\n_quarto.yml\n\nformat:\n  html:\n    theme:\n      light: flatly\n      dark: darkly\n\nQuarto adds a toggle button to the navbar automatically.\n\n\n\n\n\n\nNoteMore than two themes?\n\n\n\nQuarto’s built-in toggle only supports a light/dark pair. For a multi-theme switcher (e.g. three colour schemes), you would need a custom JavaScript implementation — this goes beyond what Quarto provides out of the box.\n\n\n\n\nAdding custom CSS on top of a theme\n\n\n_quarto.yml\n\nformat:\n  html:\n    theme:\n      - cosmo\n      - custom.scss\n\nCreate custom.scss next to _quarto.yml:\n\n\ncustom.scss\n\n/*-- scss:defaults --*/\n/* Override Bootstrap design tokens */\n$primary: #0d6efd;\n$font-size-base: 1rem;\n$headings-font-weight: 600;\n\n/*-- scss:rules --*/\n/* Regular CSS rules */\nh2 {\n  border-bottom: 2px solid $primary;\n  padding-bottom: 0.25rem;\n}\n\nThe two section markers are required by Quarto:\n\n\n\nSection\nPurpose\n\n\n\n\n/*-- scss:defaults --*/\nOverride Bootstrap SCSS variables\n\n\n/*-- scss:rules --*/\nWrite plain CSS rules\n\n\n\n\n\nKey SCSS variables\n/*-- scss:defaults --*/\n$primary:             #0d6efd;\n$body-bg:             #ffffff;\n$body-color:          #212529;\n$font-family-base:    \"Inter\", sans-serif;\n$font-size-base:      1rem;\n$headings-font-weight: 600;\n$border-radius:       0.375rem;\n\n\nTargeting dark mode\n\n\ncustom.scss\n\n/*-- scss:rules --*/\n[data-bs-theme=\"dark\"] .my-box {\n  background-color: #1e1e2e;\n}\n\n\n\nCustom callout icon — a practical CSS example\nA callout can get a completely custom icon by combining a custom CSS class with a small style block.\nThe callout below is the live result — the 🎨 icon is added entirely via CSS:\n\n\n\n\n\n\n\nTipCustom icon via CSS\n\n\n\nThis callout uses the .palette-callout class. The 🎨 icon is injected with ::before — the default SVG is hidden with display: none.\n\n\nThe code that produces it:\n::: {.callout-tip .palette-callout}\n## Custom icon via CSS\nContent here.\n:::\n\n\ncustom.scss\n\n/*-- scss:rules --*/\n.palette-callout &gt; .callout-header .callout-icon-container::before {\n  content: \"🎨\";\n  font-size: 1.1rem;\n  margin-right: 0.4rem;\n}\n.palette-callout &gt; .callout-header .callout-icon-container svg {\n  display: none;\n}\n\n\n\n\n\n\n\nTipVery nice to know — Inspect with F12\n\n\n\n\n\nBefore you can change a style, you need to know which CSS class to target.\n① Open your rendered HTML in a browser.\n② Press F12 → click the cursor icon → hover over the element you want to style.\n③ In the HTML panel, you will see the element and its classes:\n&lt;h2 class=\"anchored\" id=\"my-section\"&gt;My Section&lt;/h2&gt;\n④ In the Styles panel, you see which CSS rules apply and from which stylesheet.\n⑤ Click any value to edit it live — the page updates instantly so you can experiment before writing any code.",
+    "crumbs": [
+      "Example Page",
+      "The YML File"
+    ]
   }
 ]

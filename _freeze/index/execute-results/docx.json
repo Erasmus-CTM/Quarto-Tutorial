@@ -1,0 +1,11 @@
+{
+  "hash": "128574e76c84eca1cdbb0cda291da3be",
+  "result": {
+    "engine": "jupyter",
+    "markdown": "---\ntitle: \"Quarto Tutorial\"\n---\n\nThis is a Tutorial for using Quarto in a creating context.\n\n* If you never saw a Quarto page before click [here!](beg/Qmd Files/Example Page/index_beg.html)  \n* If you want to *learn* how to create something with Quarto click [here!](int/Qmd Files/Getting Started/getting_started.html)  \n* If you already know how to create Quarto Documents and want to become better click [here!](exp/Qmd Files/Tipps and Tricks/index_exp.html)  \n\n::: {.cell execution_count=1}\n\n::: {.cell-output .cell-output-display}\n```\n<IPython.core.display.HTML object>\n```\n:::\n:::\n\n\n",
+    "supporting": [
+      "index_files\\figure-docx"
+    ],
+    "filters": []
+  }
+}

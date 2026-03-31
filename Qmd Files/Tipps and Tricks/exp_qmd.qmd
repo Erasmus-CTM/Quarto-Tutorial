@@ -1,0 +1,232 @@
+---
+title: "The QMD File"
+sidebar: tips-sidebar
+---
+
+A `.qmd` file is a plain text file combining **Markdown** for prose and **code chunks** for computation.
+This chapter covers the options that give you precise control over how code runs and how content is shown.
+
+---
+
+## Code chunk options
+
+Every code chunk can be fine-tuned with options written as `#|` comments at the top of the chunk:
+
+````markdown
+```{python}
+#| echo: false
+#| eval: true
+#| output: true
+#| warning: false
+print("Hello!")
+```
+````
+
+### Option reference
+
+| Option | Values | What it controls |
+|---|---|---|
+| `echo` | `true` / `false` / `fenced` | Show the source code |
+| `eval` | `true` / `false` | Actually run the code |
+| `output` | `true` / `false` / `asis` | Show the output |
+| `warning` | `true` / `false` | Show warnings |
+| `error` | `true` / `false` | Show errors (instead of stopping) |
+| `include` | `true` / `false` | Include chunk at all (shorthand for echo+output: false) |
+| `code-fold` | `true` / `false` | Collapse code into a toggle |
+| `code-summary` | string | Label for the fold toggle |
+| `fig-cap` | string | Caption for figures |
+| `fig-align` | `left` / `center` / `right` | Figure alignment |
+| `label` | string (must start with `fig-` or `tbl-`) | ID for cross-referencing |
+
+### Common combinations
+
+**Show output only — hide code:**
+```{.yaml}
+#| echo: false
+```
+
+**Show code but don't run it:**
+```{.yaml}
+#| eval: false
+```
+
+**Collapsible code block:**
+```{.yaml}
+#| code-fold: true
+#| code-summary: "Show the code"
+```
+
+---
+
+## Global chunk defaults
+
+Set defaults for all chunks in `_quarto.yml` so you don't repeat yourself:
+
+```{.yaml filename="_quarto.yml"}
+execute:
+  echo: false
+  warning: false
+```
+
+Override for individual chunks as needed.
+
+---
+
+## Conditional content
+
+Show or hide content depending on the active **profile** or **format**:
+
+### Profile-based content
+
+Use a custom div with a CSS class and conditionally include it:
+
+````markdown
+::: {.content-visible when-profile="int"}
+This paragraph only appears in the **intermediate** profile.
+:::
+
+::: {.content-hidden when-profile="beg"}
+This is hidden in the beginner profile, visible everywhere else.
+:::
+````
+
+### Format-based content
+
+````markdown
+::: {.content-visible when-format="html"}
+This only appears in HTML output.
+:::
+
+::: {.content-visible when-format="pdf"}
+This only appears in PDF output.
+:::
+````
+
+---
+
+## Cross-referencing
+
+Label a figure, table, or section — then reference it anywhere on the same page.
+
+### Figures
+
+````markdown
+```{python}
+#| label: fig-sine
+#| fig-cap: "A plot of sin(x)"
+import matplotlib.pyplot as plt
+import numpy as np
+x = np.linspace(0, 2*np.pi, 200)
+plt.plot(x, np.sin(x))
+plt.show()
+```
+
+As shown in @fig-sine, the sine function...
+````
+
+### Tables
+
+````markdown
+```{python}
+#| label: tbl-data
+#| tbl-cap: "Summary statistics"
+import pandas as pd
+df = pd.DataFrame({"x": [1,2,3], "y": [4,5,6]})
+df
+```
+
+The values in @tbl-data show...
+````
+
+### Sections
+
+```{.markdown}
+## Introduction {#sec-intro}
+
+As described in @sec-intro...
+```
+
+::: {.callout-tip}
+## Label naming rules
+- Figure labels must start with `fig-`
+- Table labels must start with `tbl-`
+- Section labels must start with `sec-`
+:::
+
+---
+
+## Custom divs and spans
+
+Apply any CSS class to a block of content using Quarto's div syntax:
+
+```{.markdown}
+::: {.my-class}
+This block gets the `my-class` CSS class.
+:::
+```
+
+For inline styling, use a span:
+
+```{.markdown}
+This word is [highlighted]{.my-highlight} in the text.
+```
+
+### Built-in Bootstrap utility classes
+
+These work out of the box without any custom CSS:
+
+| Class | Effect |
+|---|---|
+| `.text-center` | Centre-align text |
+| `.text-muted` | Grey text |
+| `.fw-bold` | Bold text |
+| `.border` | Add a border |
+| `.bg-light` | Light background |
+| `.p-3` | Add padding |
+| `.mt-4` | Add top margin |
+
+Example:
+
+```{.markdown}
+::: {.border .p-3 .bg-light}
+This box has a border, padding, and a light background — no custom CSS needed.
+:::
+```
+
+---
+
+## Callout blocks
+
+Quarto provides five callout types out of the box:
+
+```{.markdown}
+::: {.callout-note}
+## Optional title
+Informational note.
+:::
+
+::: {.callout-tip}
+Practical advice.
+:::
+
+::: {.callout-warning}
+Something to watch out for.
+:::
+
+::: {.callout-important}
+Critical information.
+:::
+
+::: {.callout-caution}
+Proceed carefully.
+:::
+```
+
+Add `collapse="true"` to make a callout collapsible:
+
+```{.markdown}
+::: {.callout-note collapse="true"}
+## Click to expand
+Hidden detail.
+:::
+```

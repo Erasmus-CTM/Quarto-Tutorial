@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Quiz – What Quarto Can Do</title>
+<title>Quarto Tips &amp; Tricks – Quarto Tipps and Tricks</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,27 +20,42 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-  margin-bottom: 0em;
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
 }
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -50,6 +65,7 @@ div.csl-indent {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
+<link href="../../Qmd Files/Tipps and Tricks/exp_yml.html" rel="next">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -61,10 +77,6 @@ div.csl-indent {
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../../site_libs/bootstrap/bootstrap-5bf33484f8c6110779751dcd0ddece21.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<script src="../../site_libs/quarto-contrib/quizdown-0.6.0/quizdown.js"></script>
-<script src="../../site_libs/quarto-contrib/quizdown-0.6.0/quizdownKatex.js"></script>
-<script src="../../site_libs/quarto-contrib/quizdown-0.6.0/quizdownHighlight.js"></script>
-<script src="../../site_libs/quarto-contrib/quizdown-0.6.0/quizdown-init.js"></script>
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -96,7 +108,7 @@ div.csl-indent {
 
 </head>
 
-<body class="nav-sidebar docked nav-fixed fullcontent quarto-light">
+<body class="nav-sidebar docked nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -106,7 +118,7 @@ div.csl-indent {
     <a href="../../index.html" class="navbar-brand navbar-brand-logo">
     </a>
     <a class="navbar-brand" href="../../index.html">
-    <span class="navbar-title">What Quarto Can Do</span>
+    <span class="navbar-title">Quarto Tipps and Tricks</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -116,7 +128,7 @@ div.csl-indent {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="../../Qmd Files/Example Page/index_beg.html" aria-current="page"> 
+    <a class="nav-link" href="../../../beg/Qmd Files/Example Page/index_beg.html"> 
 <span class="menu-text">Example Page</span></a>
   </li>  
   <li class="nav-item">
@@ -138,7 +150,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../Qmd Files/Example Page/ep_quiz.html">Quiz</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../Qmd Files/Tipps and Tricks/index_exp.html">What you should know</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -148,7 +160,7 @@ div.csl-indent {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
       <a href="../../index.html" class="sidebar-logo-link">
       </a>
       </div>
@@ -156,38 +168,38 @@ div.csl-indent {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../Qmd Files/Example Page/index_beg.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Overview</span></a>
+  <a href="../../Qmd Files/Tipps and Tricks/index_exp.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">What you should know</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../Qmd Files/Example Page/ep_layout.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Layout &amp; Formatting</span></a>
+  <a href="../../Qmd Files/Tipps and Tricks/exp_yml.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The YML File</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../Qmd Files/Example Page/ep_code.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Code</span></a>
+  <a href="../../Qmd Files/Tipps and Tricks/exp_qmd.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The QMD File</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../Qmd Files/Example Page/ep_visuals.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Visualizations</span></a>
+  <a href="../../Qmd Files/Tipps and Tricks/exp_extensions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Extensions</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../Qmd Files/Example Page/ep_quiz.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Quiz</span></a>
+  <a href="../../Qmd Files/Tipps and Tricks/exp_multilanguage.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Multilanguage Projects</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../Qmd Files/Example Page/ep_references.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">References</span></a>
+  <a href="../../Qmd Files/Tipps and Tricks/exp_cheatsheet.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cheatsheet</span></a>
   </div>
 </li>
     </ul>
@@ -195,13 +207,23 @@ div.csl-indent {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#whats-covered-and-where-to-find-it" id="toc-whats-covered-and-where-to-find-it" class="nav-link active" data-scroll-target="#whats-covered-and-where-to-find-it">What’s covered — and where to find it</a></li>
+  <li><a href="#what-you-should-already-know" id="toc-what-you-should-already-know" class="nav-link" data-scroll-target="#what-you-should-already-know">What you should already know</a></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="index_exp.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li><li><a href="index_exp.docx"><i class="bi bi-file-word"></i>MS Word</a></li></ul></div></nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Quiz</h1>
+<div class="quarto-title-block"><div><h1 class="title">Quarto Tips &amp; Tricks</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<p class="subtitle lead">Going further with Quarto</p>
 </div>
 
 
@@ -218,57 +240,86 @@ div.csl-indent {
 </header>
 
 
-<p>Test your understanding of the sine function — and Quarto’s features, powered by the <a href="https://github.com/parmsam/quarto-quizdown">quarto-quizdown</a> extension <span class="citation" data-cites="quizdown">(<a href="#ref-quizdown" role="doc-biblioref">Sauer 2023</a>)</span> by Parmsam.</p>
-<div class="quizdown">
----
-shuffleAnswers: true
-shuffleQuestions: false
----
-
-# What is $\sin(0)$?
-
-1. [x] $0$
-2. [ ] $1$
-3. [ ] $-1$
-4. [ ] undefined
-
-# What is the maximum value of $\sin(x)$?
-
-1. [ ] $0$
-2. [ ] $\pi$
-3. [x] $1$
-4. [ ] $2$
-
-# What is the period of $\sin(x)$?
-
-1. [ ] $\pi$
-2. [x] $2\pi$
-3. [ ] $4\pi$
-4. [ ] $\frac{\pi}{2}$
-
-# Which extension makes Python run live in the browser?
-
-1. [x] pyodide
-2. [ ] quizdown
-3. [ ] jsxgraph
-4. [ ] py-exercise
-
-# Which file extension does Quarto use for source files?
-
-1. [ ] `.html`
-2. [ ] `.py`
-3. [x] `.qmd`
-4. [ ] `.tex`
+<p>This section is for people who already know how to build Quarto documents and want to go further. All three levels of this tutorial are built with the techniques described here.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
 </div>
-
-
-
-
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
-<div id="ref-quizdown" class="csl-entry" role="listitem">
-Sauer, Patrick. 2023. <span>“Quarto-Quizdown: <span>Quizdown</span> Extension for <span>Quarto</span>.”</span> <a href="https://github.com/parmsam/quarto-quizdown">https://github.com/parmsam/quarto-quizdown</a>.
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Official Documentation
 </div>
-</div></section></div></main> <!-- /main -->
+</div>
+<div class="callout-body-container callout-body">
+<p>The complete Quarto reference is at <strong><a href="https://quarto.org/docs/reference/">quarto.org/docs/reference</a></strong> — this section is a curated guide to the parts that are most useful in practice.</p>
+</div>
+</div>
+<hr>
+<section id="whats-covered-and-where-to-find-it" class="level2">
+<h2 class="anchored" data-anchor-id="whats-covered-and-where-to-find-it">What’s covered — and where to find it</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>I want to…</th>
+<th>Go to</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Control output formats, freeze, and profiles</td>
+<td><a href="../../Qmd Files/Tipps and Tricks/exp_yml.html">The YML File</a></td>
+</tr>
+<tr class="even">
+<td>Configure advanced sidebar sections and collapsing</td>
+<td><a href="../../Qmd Files/Tipps and Tricks/exp_yml.html#sidebar">The YML File → Sidebar</a></td>
+</tr>
+<tr class="odd">
+<td>Customise the site’s look with themes and CSS</td>
+<td><a href="../../Qmd Files/Tipps and Tricks/exp_yml.html#styles--css">The YML File → Styles</a></td>
+</tr>
+<tr class="even">
+<td>Control how code runs (<code>echo</code>, <code>eval</code>, <code>fold</code>, …)</td>
+<td><a href="../../Qmd Files/Tipps and Tricks/exp_qmd.html">The QMD File</a></td>
+</tr>
+<tr class="odd">
+<td>Show content only in certain profiles or formats</td>
+<td><a href="../../Qmd Files/Tipps and Tricks/exp_qmd.html#conditional-content">The QMD File → Conditional content</a></td>
+</tr>
+<tr class="even">
+<td>Cross-reference figures, tables, and sections</td>
+<td><a href="../../Qmd Files/Tipps and Tricks/exp_qmd.html#cross-referencing">The QMD File → Cross-referencing</a></td>
+</tr>
+<tr class="odd">
+<td>Use quizdown, Pyodide, JSXGraph, or py-exercise</td>
+<td><a href="../../Qmd Files/Tipps and Tricks/exp_extensions.html">Extensions</a></td>
+</tr>
+<tr class="even">
+<td>Serve the same project in multiple languages</td>
+<td><a href="../../Qmd Files/Tipps and Tricks/exp_multilanguage.html">Multilanguage Projects</a></td>
+</tr>
+<tr class="odd">
+<td>Look something up quickly</td>
+<td><a href="../../Qmd Files/Tipps and Tricks/exp_cheatsheet.html">Cheatsheet</a></td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="what-you-should-already-know" class="level2">
+<h2 class="anchored" data-anchor-id="what-you-should-already-know">What you should already know</h2>
+<p>This section assumes you are comfortable with the following from the previous levels:</p>
+<ul>
+<li>Creating a Quarto <strong>website</strong>, <strong>exercise sheet</strong>, or <strong>book</strong> — <a href="../../../int/Qmd Files/Getting Started/getting_started.html">Getting Started</a></li>
+<li>Running <strong>Python in the browser</strong> with Pyodide — <a href="../../../int/Qmd Files/Getting Started/beg_extensions.html">Extensions</a></li>
+<li>What interactive Quarto output looks like — <a href="../../../beg/Qmd Files/Example Page/index_beg.html">Example Page</a></li>
+</ul>
+
+
+<!-- -->
+
+</section>
+
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
@@ -339,6 +390,57 @@ Sauer, Patrick. 2023. <span>“Quarto-Quizdown: <span>Quizdown</span> Extension 
         container: window.document.getElementById('quarto-embedded-source-code-modal')
       });
       clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
@@ -669,6 +771,56 @@ Sauer, Patrick. 2023. <span>“Quarto-Quizdown: <span>Quizdown</span> Extension 
     }
   });
   </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../Qmd Files/Tipps and Tricks/exp_yml.html" class="pagination-link" aria-label="The YML File">
+        <span class="nav-page-text">The YML File</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Quarto Tips &amp; Tricks"</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "Going further with Quarto"</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="an">sidebar:</span><span class="co"> tips-sidebar</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>This section is for people who already know how to build Quarto documents and want to go further.</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>All three levels of this tutorial are built with the techniques described here.</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">## Official Documentation</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>The complete Quarto reference is at **[quarto.org/docs/reference](https://quarto.org/docs/reference/)** —</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>this section is a curated guide to the parts that are most useful in practice.</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="fu">## What's covered — and where to find it</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> I want to… <span class="pp">|</span> Go to <span class="pp">|</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Control output formats, freeze, and profiles <span class="pp">|</span> <span class="co">[</span><span class="ot">The YML File</span><span class="co">](exp_yml.qmd)</span> <span class="pp">|</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Configure advanced sidebar sections and collapsing <span class="pp">|</span> <span class="co">[</span><span class="ot">The YML File → Sidebar</span><span class="co">](exp_yml.qmd#sidebar)</span> <span class="pp">|</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Customise the site's look with themes and CSS <span class="pp">|</span> <span class="co">[</span><span class="ot">The YML File → Styles</span><span class="co">](exp_yml.qmd#styles--css)</span> <span class="pp">|</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Control how code runs (<span class="in">`echo`</span>, <span class="in">`eval`</span>, <span class="in">`fold`</span>, …) <span class="pp">|</span> <span class="co">[</span><span class="ot">The QMD File</span><span class="co">](exp_qmd.qmd)</span> <span class="pp">|</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Show content only in certain profiles or formats <span class="pp">|</span> <span class="co">[</span><span class="ot">The QMD File → Conditional content</span><span class="co">](exp_qmd.qmd#conditional-content)</span> <span class="pp">|</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Cross-reference figures, tables, and sections <span class="pp">|</span> <span class="co">[</span><span class="ot">The QMD File → Cross-referencing</span><span class="co">](exp_qmd.qmd#cross-referencing)</span> <span class="pp">|</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Use quizdown, Pyodide, JSXGraph, or py-exercise <span class="pp">|</span> <span class="co">[</span><span class="ot">Extensions</span><span class="co">](exp_extensions.qmd)</span> <span class="pp">|</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Serve the same project in multiple languages <span class="pp">|</span> <span class="co">[</span><span class="ot">Multilanguage Projects</span><span class="co">](exp_multilanguage.qmd)</span> <span class="pp">|</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Look something up quickly <span class="pp">|</span> <span class="co">[</span><span class="ot">Cheatsheet</span><span class="co">](exp_cheatsheet.qmd)</span> <span class="pp">|</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="fu">## What you should already know</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>This section assumes you are comfortable with the following from the previous levels:</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Creating a Quarto **website**, **exercise sheet**, or **book** — <span class="co">[</span><span class="ot">Getting Started</span><span class="co">](../../int/Qmd Files/Getting Started/getting_started.html)</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Running **Python in the browser** with Pyodide — <span class="co">[</span><span class="ot">Extensions</span><span class="co">](../../int/Qmd Files/Getting Started/beg_extensions.html)</span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>What interactive Quarto output looks like — <span class="co">[</span><span class="ot">Example Page</span><span class="co">](../../beg/Qmd Files/Example Page/index_beg.html)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+</div></div></div></div></div>
 </div> <!-- /content -->
 
 

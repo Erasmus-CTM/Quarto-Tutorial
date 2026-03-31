@@ -1,0 +1,354 @@
+---
+title: "Extensions"
+sidebar: tips-sidebar
+bibliography: ../../Qmd Files/Example Page/references.bib
+filters:
+  - parmsam/quizdown
+  - coatless-quarto/pyodide
+  - py-exercise
+  - jsxgraph/jsxgraph
+---
+
+This chapter covers the four extensions used in this tutorial.
+Each extension is installed once per project with `quarto add <name>` — the files land in `_extensions/` and should be committed to git.
+
+Extensions can be enabled **globally** in `_quarto.yml` or **per page** in the frontmatter:
+
+```{.yaml filename="_quarto.yml — global"}
+filters:
+  - parmsam/quizdown
+  - coatless-quarto/pyodide
+```
+
+```{.yaml filename="page.qmd — per page"}
+---
+filters:
+  - parmsam/quizdown
+---
+```
+
+---
+
+## quizdown — interactive quizzes
+
+**Install:** `quarto add parmsam/quizdown`
+**Source:** [@quizdown] — [github.com/parmsam/quarto-quizdown](https://github.com/parmsam/quarto-quizdown)
+
+:::: {.content-visible when-format="html"}
+```{quizdown}
+# Which file controls global project settings in Quarto?
+
+1. [x] `_quarto.yml`
+2. [ ] `index.qmd`
+3. [ ] `styles.css`
+
+# Select all valid Quarto output formats.
+
+1. [x] HTML
+2. [x] PDF
+3. [x] Word (.docx)
+4. [ ] Excel (.xlsx)
+
+# Put the Quarto render pipeline in the correct order.
+
+1. Parse `.qmd` source
+2. Execute code chunks
+3. Convert Markdown to HTML/PDF
+4. Apply theme and styles
+```
+::::
+
+:::: {.content-hidden when-format="html"}
+::: {.callout-note}
+## Interactive quiz — HTML only
+This quiz requires HTML output. Render as HTML to try it.
+:::
+::::
+
+::: {.panel-tabset}
+
+## Settings
+
+Global quiz settings go inside a `---` block at the top of the quiz:
+
+````{.markdown}
+```{quizdown}
+---
+shuffleAnswers: true    # default: true — randomise answer order
+shuffleQuestions: false # default: false — randomise question order
+---
+```
+````
+
+::: {.callout-tip}
+`shuffleAnswers: true` is the **default** — answers are shuffled unless you explicitly set it to `false`.
+:::
+
+## Question types
+
+**Single choice** — exactly one correct answer:
+````{.markdown}
+```{quizdown}
+# What is 2 + 2?
+1. [ ] 3
+2. [x] 4
+3. [ ] 5
+```
+````
+
+**Multiple choice** — more than one correct answer:
+````{.markdown}
+```{quizdown}
+# Which of these are programming languages?
+1. [x] Python
+2. [ ] Quarto
+3. [x] R
+4. [x] JavaScript
+```
+````
+
+## Images & code
+
+Include an image in a question:
+````{.markdown}
+```{quizdown}
+# What does this logo belong to?
+![](https://quarto.org/quarto.png)
+1. [x] Quarto
+2. [ ] RMarkdown
+```
+````
+
+Include inline code in answers:
+````{.markdown}
+```{quizdown}
+# Which chunk option hides the source code?
+1. [x] `echo: false`
+2. [ ] `eval: false`
+3. [ ] `output: false`
+```
+````
+
+:::
+
+---
+
+## Pyodide — live Python in the browser
+
+**Install:** `quarto add coatless-quarto/pyodide`
+**Source:** [@pyodide] — [github.com/coatless-quarto/pyodide](https://github.com/coatless-quarto/pyodide)
+
+::: {.panel-tabset}
+
+## Example
+
+:::: {.content-visible when-format="html"}
+```{pyodide-python}
+# Edit this code and click Run
+words = ["Quarto", "is", "great"]
+print(" ".join(words))
+```
+::::
+
+:::: {.content-hidden when-format="html"}
+::: {.callout-note}
+## Interactive code cell — HTML only
+This live Python cell runs in the browser via Pyodide. Render as HTML to try it.
+:::
+::::
+
+## Setup & options
+
+Enable per page:
+```{.yaml}
+---
+filters:
+  - coatless-quarto/pyodide
+---
+```
+
+Or globally in `_quarto.yml` (applies to all pages):
+```{.yaml}
+filters:
+  - coatless-quarto/pyodide
+```
+
+Per-chunk options:
+````{.markdown}
+```{pyodide-python}
+#| autorun: true     # run automatically on page load
+#| readonly: true    # reader cannot edit the code
+print("Auto-runs, cannot be changed.")
+```
+````
+
+## vs. regular Python
+
+| | `{python}` | `{pyodide-python}` |
+|---|---|---|
+| Runs at | Render time | Read time (in browser) |
+| Reader can edit | No | Yes |
+| Needs Python installed | Yes (author) | No (reader) |
+| Output baked into HTML | Yes | No — computed live |
+
+::: {.callout-warning}
+## Package availability
+Pyodide runs in WebAssembly. Most pure-Python packages work (`numpy`, `pandas`, `matplotlib`) but packages with C extensions may not be available.
+:::
+
+:::
+
+---
+
+## py-exercise — editable exercises with hidden tests
+
+**Install:** `quarto add Erasmus-CTM/py-exercise`
+**Source:** [@py-exercise] — [github.com/Erasmus-CTM/py-exercise](https://github.com/Erasmus-CTM/py-exercise)
+
+::: {.callout-important}
+## Requires Pyodide
+py-exercise runs student code in the browser using Pyodide.
+**Both filters must be active on the same page** — either globally in `_quarto.yml` or together in the page frontmatter:
+```{.yaml}
+filters:
+  - coatless-quarto/pyodide
+  - py-exercise
+```
+:::
+
+
+::: {.panel-tabset}
+
+## Example
+
+:::: {.content-visible when-format="html"}
+```{py-exercise}
+def square(x):
+    """Return x squared."""
+    # Your solution here
+    pass
+
+## TESTS ##
+assert square(3) == 9,  "square(3) should be 9"
+assert square(0) == 0,  "square(0) should be 0"
+assert square(-2) == 4, "square(-2) should be 4"
+```
+::::
+
+:::: {.content-hidden when-format="html"}
+::: {.callout-note}
+## Interactive exercise — HTML only
+This exercise runs student code in the browser. Render as HTML to try it.
+:::
+::::
+
+## Syntax
+
+````{.markdown}
+```{py-exercise}
+def my_function(x):
+    """Docstring shown to the reader."""
+    # Student fills this in
+    pass
+
+## TESTS ##
+assert my_function(2) == 4, "Feedback shown on failure"
+assert my_function(0) == 0
+```
+````
+
+Rules:
+1. Write the function stub with a docstring at the top.
+2. `## TESTS ##` is the separator — everything below is hidden from the reader.
+3. Each `assert` statement's message becomes the feedback shown on test failure.
+
+::: {.callout-tip}
+Write assertion messages as if you are talking to the student:
+`"my_function(2) should return 4 — did you multiply correctly?"`
+:::
+
+:::
+
+---
+
+## JSXGraph — interactive mathematical graphs
+
+**Install:** `quarto add jsxgraph/jsxgraph`
+**Source:** [@jsxgraph] — [github.com/jsxgraph/jsxgraph-quarto](https://github.com/jsxgraph/jsxgraph-quarto)
+
+::: {.panel-tabset}
+
+## Example
+
+:::: {.content-visible when-format="html"}
+```jsxgraph
+var board = JXG.JSXGraph.initBoard(BOARDID, {
+    boundingbox: [-7, 1.8, 7, -1.8],
+    axis: true,
+    showNavigation: false
+});
+board.create('functiongraph', [Math.sin], {
+    strokeColor: '#0d6efd', strokeWidth: 2.5
+});
+var p = board.create('glider', [1.57, 0, board.defaultAxes.x], {
+    name: 'x', size: 5, fillColor: '#E91E63'
+});
+board.create('point', [
+    function() { return p.X(); },
+    function() { return Math.sin(p.X()); }
+], { name: function() { return 'sin(x) ≈ ' + Math.sin(p.X()).toFixed(3); },
+     size: 5, fillColor: '#198754', fixed: true });
+```
+::::
+
+:::: {.content-hidden when-format="html"}
+::: {.callout-note}
+## Interactive graph — HTML only
+This JSXGraph canvas is rendered in the browser. Render as HTML to interact with it.
+:::
+::::
+
+## Syntax
+
+````{.markdown}
+```jsxgraph
+var board = JXG.JSXGraph.initBoard(BOARDID, {
+    boundingbox: [-5, 5, 5, -5],   // [xmin, ymax, xmax, ymin]
+    axis: true,
+    keepaspectratio: false,
+    showNavigation: false
+});
+```
+````
+
+::: {.callout-important}
+Always use the literal string `BOARDID` — Quarto replaces it with a unique ID.
+Hardcoding a string breaks pages with multiple graphs.
+:::
+
+## Common elements
+
+```{.javascript}
+// Function graph
+board.create('functiongraph', [Math.sin], { strokeColor: '#0d6efd' });
+
+// Draggable point
+var p = board.create('point', [2, 1], { name: 'P', size: 4 });
+
+// Glider — point constrained to a line/curve
+var g = board.create('glider', [1, 0, board.defaultAxes.x], { name: 'x' });
+
+// Slider
+var s = board.create('slider', [[0,-3],[4,-3],[0,1,2*Math.PI]], { name: 'a' });
+
+// Use slider value
+board.create('functiongraph', [function(x) { return Math.sin(s.Value()*x); }]);
+
+// Text label
+board.create('text', [1, 2, function() { return 'x = ' + g.X().toFixed(2); }]);
+
+// Segment
+board.create('segment', [p1, p2], { strokeColor: '#198754', dash: 2 });
+```
+
+:::
