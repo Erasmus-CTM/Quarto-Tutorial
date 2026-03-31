@@ -36,9 +36,9 @@ format:
   html:
     toc: true
     code-tools: true
-  pdf:
-    toc: true
-    documentclass: article
-    geometry: margin=2.5cm
-  docx:
-    toc: true
+  # pdf:
+  #   toc: true
+  #   documentclass: article
+  #   geometry: margin=2.5cm
+  # docx:
+  #   toc: true

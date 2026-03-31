@@ -190,12 +190,6 @@ format:
 
 Quarto adds a toggle button to the navbar automatically.
 
-::: {.callout-note}
-## More than two themes?
-Quarto's built-in toggle only supports a **light/dark pair**.
-For a multi-theme switcher (e.g. three colour schemes), you would need a custom JavaScript implementation — this goes beyond what Quarto provides out of the box.
-:::
-
 ### Adding custom CSS on top of a theme
 
 ```{.yaml filename="_quarto.yml"}
@@ -328,4 +322,20 @@ Before you can change a style, you need to know which CSS class to target.
 **④ In the Styles panel**, you see which CSS rules apply and from which stylesheet.
 
 **⑤ Click any value to edit it live** — the page updates instantly so you can experiment before writing any code.
+:::
+
+::: {.callout-note}
+## <i class="python"></i> Icons work in callout headings too
+
+Custom icons from `Theme/Icons/` render anywhere Quarto accepts inline HTML — including callout titles. The `<i class="python"></i>` above is produced entirely by the CSS rule in your SCSS:
+
+```{.scss}
+i.python {
+  content: url("Theme/Icons/python.svg");
+  display: inline-block;
+  height: 1em;
+  width: 1em;
+  margin-right: 0.25em;
+}
+```
 :::
