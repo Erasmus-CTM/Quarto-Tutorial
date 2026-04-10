@@ -130,6 +130,11 @@ body.quarto-dark .navbar {
   border-right:  1px solid #4a5060 !important;
 }
 
+/* Source Code Blocks */
+div.sourceCode{
+  background-color: rgba(52, 52, 62, 0.65);
+}
+
 /* All mermaid diagrams — general rules (same selectors as #fig-schema-mermaid, without the ID) */
 .label text,
 .nodeLabel,

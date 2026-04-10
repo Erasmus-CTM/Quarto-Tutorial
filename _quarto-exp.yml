@@ -20,7 +20,7 @@ website:
       style: docked
       contents:
         - href: "Qmd Files/Tipps and Tricks/index_exp.qmd"
-          text: What you should know
+          text: "What's covered & What you should know already"
         - href: "Qmd Files/Tipps and Tricks/exp_yml.qmd"
           text: The YML File
         - href: "Qmd Files/Tipps and Tricks/exp_qmd.qmd"
