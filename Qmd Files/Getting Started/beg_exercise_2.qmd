@@ -13,7 +13,7 @@ A small menu appears. Select **Quarto Document**.
 
 ---
 
-**② Your file opens with a starter header**
+**② Your new file opens with an existing header**
 
 ![](../../Img Files/Getting Started/Screenshot 2026-03-27 102111.png)
 
