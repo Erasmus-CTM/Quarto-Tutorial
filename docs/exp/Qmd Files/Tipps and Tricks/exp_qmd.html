@@ -79,9 +79,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-bae494a69c1f3cd02dcfc772964d1632.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-05292a6dc583a1565513274d3df51c0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-bae494a69c1f3cd02dcfc772964d1632.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-6fa7076c69b50b8265cc205f0f4a7b6d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-98c6b7addc835802dc22287f06303b48.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-6fa7076c69b50b8265cc205f0f4a7b6d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -303,7 +303,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text">Getting Started</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../exp/Qmd Files/Tipps and Tricks/index_exp.html"> 
+    <a class="nav-link active" href="../../Qmd Files/Tipps and Tricks/index_exp.html" aria-current="page"> 
 <span class="menu-text">Tipps and Tricks for Quarto Users</span></a>
   </li>  
 </ul>
@@ -533,7 +533,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="common-combinations" class="level3">
 <h3 class="anchored" data-anchor-id="common-combinations">Common combinations</h3>
 <p>These three patterns cover most everyday use cases:</p>
-<div class="columns" style="gap: 4.5rem;">
+<div class="columns">
 <div class="column" style="width:33%;">
 <p><strong>Hide code, show output</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -584,7 +584,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="profile-based-content" class="level3">
 <h3 class="anchored" data-anchor-id="profile-based-content">Profile-based content</h3>
 <p>Profiles are defined in <code>_quarto.yml</code>. Quarto evaluates them at render time — the <code>.qmd</code> source stays the same for every audience.</p>
-<div class="columns" style="gap: 4.5rem;">
+<div class="columns">
 <div class="column" style="width:50%;">
 <p><strong>Markdown</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>::: {.content-visible when-profile="int"}</span>
@@ -603,7 +603,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="format-based-content" class="level3">
 <h3 class="anchored" data-anchor-id="format-based-content">Format-based content</h3>
-<div class="columns" style="gap: 4.5rem;">
+<div class="columns">
 <div class="column" style="width:50%;">
 <p><strong>Markdown</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>::: {.content-visible when-format="html"}</span>
@@ -627,7 +627,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Cross-references let you write <code>@fig-sine</code> in prose and have Quarto automatically produce “Figure 1” — with a hyperlink in HTML and the correct number even if figures are reordered.</p>
 <section id="figures" class="level3">
 <h3 class="anchored" data-anchor-id="figures">Figures</h3>
-<div class="columns" style="gap: 4.5rem;">
+<div class="columns">
 <div class="column" style="width:50%;">
 <p><strong>Markdown</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{.python}</span></span>
@@ -663,7 +663,7 @@ Note
 </section>
 <section id="tables" class="level3">
 <h3 class="anchored" data-anchor-id="tables">Tables</h3>
-<div class="columns" style="gap: 4.5rem;">
+<div class="columns">
 <div class="column" style="width:50%;">
 <p><strong>Markdown</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{.python}</span></span>
@@ -696,7 +696,7 @@ Note
 </section>
 <section id="sections" class="level3">
 <h3 class="anchored" data-anchor-id="sections">Sections</h3>
-<div class="columns" style="gap: 4.5rem;">
+<div class="columns">
 <div class="column" style="width:50%;">
 <p><strong>Markdown</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">## Introduction {#sec-intro}</span></span>
@@ -730,7 +730,7 @@ Note
 <section id="custom-divs-and-spans" class="level2">
 <h2 class="anchored" data-anchor-id="custom-divs-and-spans">Custom divs and spans</h2>
 <p>CSS classes applied to a block let you style or target content without editing your stylesheet from within the <code>.qmd</code> file. Quarto passes the class straight through to the HTML output.</p>
-<div class="columns" style="gap: 4.5rem;">
+<div class="columns">
 <div class="column" style="width:50%;">
 <p><strong>Markdown</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>::: {.my-class}</span>
@@ -787,7 +787,7 @@ Note
 </tr>
 </tbody>
 </table>
-<div class="columns" style="gap: 4.5rem;">
+<div class="columns">
 <div class="column" style="width:50%;">
 <p><strong>Markdown</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>::: {.border .p-3 .bg-light}</span>
@@ -806,7 +806,7 @@ Note
 <section id="callout-blocks" class="level2">
 <h2 class="anchored" data-anchor-id="callout-blocks">Callout blocks</h2>
 <p>Callouts draw attention to important information without breaking prose flow. Quarto renders them as styled boxes with an icon — use them for tips, warnings, or critical notes.</p>
-<div class="columns" style="gap: 4.5rem;">
+<div class="columns">
 <div class="column" style="width:50%;">
 <p><strong>Markdown</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
@@ -899,7 +899,7 @@ Caution
 </div>
 </div>
 <p>Add <code>collapse="true"</code> to make a callout collapsible — readers expand it on demand:</p>
-<div class="columns" style="gap: 4.5rem;">
+<div class="columns">
 <div class="column" style="width:50%;">
 <p><strong>Markdown</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
@@ -1464,7 +1464,7 @@ Caution
 <span id="cb16-53"><a href="#cb16-53" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-54"><a href="#cb16-54" aria-hidden="true" tabindex="-1"></a>These three patterns cover most everyday use cases:</span>
 <span id="cb16-55"><a href="#cb16-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-56"><a href="#cb16-56" aria-hidden="true" tabindex="-1"></a>:::: {.columns style="gap: 4.5rem;"}</span>
+<span id="cb16-56"><a href="#cb16-56" aria-hidden="true" tabindex="-1"></a>:::: {.columns}</span>
 <span id="cb16-57"><a href="#cb16-57" aria-hidden="true" tabindex="-1"></a>::: {.column width="33%"}</span>
 <span id="cb16-58"><a href="#cb16-58" aria-hidden="true" tabindex="-1"></a>**Hide code, show output**</span>
 <span id="cb16-59"><a href="#cb16-59" aria-hidden="true" tabindex="-1"></a></span>
@@ -1523,7 +1523,7 @@ Caution
 <span id="cb16-112"><a href="#cb16-112" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-113"><a href="#cb16-113" aria-hidden="true" tabindex="-1"></a>Profiles are defined in <span class="in">`_quarto.yml`</span>. Quarto evaluates them at render time — the <span class="in">`.qmd`</span> source stays the same for every audience.</span>
 <span id="cb16-114"><a href="#cb16-114" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-115"><a href="#cb16-115" aria-hidden="true" tabindex="-1"></a>:::: {.columns style="gap: 4.5rem;"}</span>
+<span id="cb16-115"><a href="#cb16-115" aria-hidden="true" tabindex="-1"></a>:::: {.columns}</span>
 <span id="cb16-116"><a href="#cb16-116" aria-hidden="true" tabindex="-1"></a>::: {.column width="50%"}</span>
 <span id="cb16-117"><a href="#cb16-117" aria-hidden="true" tabindex="-1"></a>**Markdown**</span>
 <span id="cb16-118"><a href="#cb16-118" aria-hidden="true" tabindex="-1"></a></span>
@@ -1548,7 +1548,7 @@ Caution
 <span id="cb16-137"><a href="#cb16-137" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-138"><a href="#cb16-138" aria-hidden="true" tabindex="-1"></a><span class="fu">### Format-based content</span></span>
 <span id="cb16-139"><a href="#cb16-139" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-140"><a href="#cb16-140" aria-hidden="true" tabindex="-1"></a>:::: {.columns style="gap: 4.5rem;"}</span>
+<span id="cb16-140"><a href="#cb16-140" aria-hidden="true" tabindex="-1"></a>:::: {.columns}</span>
 <span id="cb16-141"><a href="#cb16-141" aria-hidden="true" tabindex="-1"></a>::: {.column width="50%"}</span>
 <span id="cb16-142"><a href="#cb16-142" aria-hidden="true" tabindex="-1"></a>**Markdown**</span>
 <span id="cb16-143"><a href="#cb16-143" aria-hidden="true" tabindex="-1"></a></span>
@@ -1579,7 +1579,7 @@ Caution
 <span id="cb16-168"><a href="#cb16-168" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-169"><a href="#cb16-169" aria-hidden="true" tabindex="-1"></a><span class="fu">### Figures</span></span>
 <span id="cb16-170"><a href="#cb16-170" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-171"><a href="#cb16-171" aria-hidden="true" tabindex="-1"></a>:::: {.columns style="gap: 4.5rem;"}</span>
+<span id="cb16-171"><a href="#cb16-171" aria-hidden="true" tabindex="-1"></a>:::: {.columns}</span>
 <span id="cb16-172"><a href="#cb16-172" aria-hidden="true" tabindex="-1"></a>::: {.column width="50%"}</span>
 <span id="cb16-173"><a href="#cb16-173" aria-hidden="true" tabindex="-1"></a>**Markdown**</span>
 <span id="cb16-174"><a href="#cb16-174" aria-hidden="true" tabindex="-1"></a></span>
@@ -1612,7 +1612,7 @@ Caution
 <span id="cb16-201"><a href="#cb16-201" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-202"><a href="#cb16-202" aria-hidden="true" tabindex="-1"></a><span class="fu">### Tables</span></span>
 <span id="cb16-203"><a href="#cb16-203" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-204"><a href="#cb16-204" aria-hidden="true" tabindex="-1"></a>:::: {.columns style="gap: 4.5rem;"}</span>
+<span id="cb16-204"><a href="#cb16-204" aria-hidden="true" tabindex="-1"></a>:::: {.columns}</span>
 <span id="cb16-205"><a href="#cb16-205" aria-hidden="true" tabindex="-1"></a>::: {.column width="50%"}</span>
 <span id="cb16-206"><a href="#cb16-206" aria-hidden="true" tabindex="-1"></a>**Markdown**</span>
 <span id="cb16-207"><a href="#cb16-207" aria-hidden="true" tabindex="-1"></a></span>
@@ -1641,7 +1641,7 @@ Caution
 <span id="cb16-230"><a href="#cb16-230" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-231"><a href="#cb16-231" aria-hidden="true" tabindex="-1"></a><span class="fu">### Sections</span></span>
 <span id="cb16-232"><a href="#cb16-232" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-233"><a href="#cb16-233" aria-hidden="true" tabindex="-1"></a>:::: {.columns style="gap: 4.5rem;"}</span>
+<span id="cb16-233"><a href="#cb16-233" aria-hidden="true" tabindex="-1"></a>:::: {.columns}</span>
 <span id="cb16-234"><a href="#cb16-234" aria-hidden="true" tabindex="-1"></a>::: {.column width="50%"}</span>
 <span id="cb16-235"><a href="#cb16-235" aria-hidden="true" tabindex="-1"></a>**Markdown**</span>
 <span id="cb16-236"><a href="#cb16-236" aria-hidden="true" tabindex="-1"></a></span>
@@ -1671,7 +1671,7 @@ Caution
 <span id="cb16-260"><a href="#cb16-260" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-261"><a href="#cb16-261" aria-hidden="true" tabindex="-1"></a>CSS classes applied to a block let you style or target content without editing your stylesheet from within the <span class="in">`.qmd`</span> file. Quarto passes the class straight through to the HTML output.</span>
 <span id="cb16-262"><a href="#cb16-262" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-263"><a href="#cb16-263" aria-hidden="true" tabindex="-1"></a>:::: {.columns style="gap: 4.5rem;"}</span>
+<span id="cb16-263"><a href="#cb16-263" aria-hidden="true" tabindex="-1"></a>:::: {.columns}</span>
 <span id="cb16-264"><a href="#cb16-264" aria-hidden="true" tabindex="-1"></a>::: {.column width="50%"}</span>
 <span id="cb16-265"><a href="#cb16-265" aria-hidden="true" tabindex="-1"></a>**Markdown**</span>
 <span id="cb16-266"><a href="#cb16-266" aria-hidden="true" tabindex="-1"></a></span>
@@ -1712,7 +1712,7 @@ Caution
 <span id="cb16-301"><a href="#cb16-301" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`.p-3`</span> <span class="pp">|</span> Add padding <span class="pp">|</span></span>
 <span id="cb16-302"><a href="#cb16-302" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`.mt-4`</span> <span class="pp">|</span> Add top margin <span class="pp">|</span></span>
 <span id="cb16-303"><a href="#cb16-303" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-304"><a href="#cb16-304" aria-hidden="true" tabindex="-1"></a>:::: {.columns style="gap: 4.5rem;"}</span>
+<span id="cb16-304"><a href="#cb16-304" aria-hidden="true" tabindex="-1"></a>:::: {.columns}</span>
 <span id="cb16-305"><a href="#cb16-305" aria-hidden="true" tabindex="-1"></a>::: {.column width="50%"}</span>
 <span id="cb16-306"><a href="#cb16-306" aria-hidden="true" tabindex="-1"></a>**Markdown**</span>
 <span id="cb16-307"><a href="#cb16-307" aria-hidden="true" tabindex="-1"></a></span>
@@ -1737,7 +1737,7 @@ Caution
 <span id="cb16-326"><a href="#cb16-326" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-327"><a href="#cb16-327" aria-hidden="true" tabindex="-1"></a>Callouts draw attention to important information without breaking prose flow. Quarto renders them as styled boxes with an icon — use them for tips, warnings, or critical notes.</span>
 <span id="cb16-328"><a href="#cb16-328" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-329"><a href="#cb16-329" aria-hidden="true" tabindex="-1"></a>:::: {.columns style="gap: 4.5rem;"}</span>
+<span id="cb16-329"><a href="#cb16-329" aria-hidden="true" tabindex="-1"></a>:::: {.columns}</span>
 <span id="cb16-330"><a href="#cb16-330" aria-hidden="true" tabindex="-1"></a>::: {.column width="50%"}</span>
 <span id="cb16-331"><a href="#cb16-331" aria-hidden="true" tabindex="-1"></a>**Markdown**</span>
 <span id="cb16-332"><a href="#cb16-332" aria-hidden="true" tabindex="-1"></a></span>
@@ -1792,7 +1792,7 @@ Caution
 <span id="cb16-381"><a href="#cb16-381" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-382"><a href="#cb16-382" aria-hidden="true" tabindex="-1"></a>Add <span class="in">`collapse="true"`</span> to make a callout collapsible — readers expand it on demand:</span>
 <span id="cb16-383"><a href="#cb16-383" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-384"><a href="#cb16-384" aria-hidden="true" tabindex="-1"></a>:::: {.columns style="gap: 4.5rem;"}</span>
+<span id="cb16-384"><a href="#cb16-384" aria-hidden="true" tabindex="-1"></a>:::: {.columns}</span>
 <span id="cb16-385"><a href="#cb16-385" aria-hidden="true" tabindex="-1"></a>::: {.column width="50%"}</span>
 <span id="cb16-386"><a href="#cb16-386" aria-hidden="true" tabindex="-1"></a>**Markdown**</span>
 <span id="cb16-387"><a href="#cb16-387" aria-hidden="true" tabindex="-1"></a></span>
