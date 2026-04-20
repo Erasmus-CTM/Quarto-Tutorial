@@ -200,3 +200,8 @@ figcaption, .figure-caption {
   stroke: #1a2e69 !important;
 }
 
+/* Deutlicheres Highlighting für den aktiven Navbar-Tab */
+.navbar-nav .nav-link.active {
+  color: #3a13f8 !important;
+  font-weight: bold;
+}

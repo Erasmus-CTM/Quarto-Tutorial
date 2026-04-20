@@ -185,3 +185,10 @@ figcaption, .figure-caption {
   font-size: 16px;                 // ← Schriftgröße (kannst du anpassen)
   // font-family: sans-serif;      // ← auskommentiert – Original bleibt
 }
+
+/* Deutlicheres Highlighting für den aktiven Navbar-Tab */
+.navbar-nav .nav-link.active {
+  color: #b8aa6e !important;
+  font-weight: bold;
+  border-bottom: 2px solid #b8aa6e;
+}
