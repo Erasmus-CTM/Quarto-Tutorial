@@ -173,12 +173,9 @@ Column widths are in 12ths: `g-col-4` = one third, `g-col-6` = half, `g-col-12` 
 
 ````{.markdown}
 ```{quizdown}
----
-shuffleAnswers: true
----
 # Question text?
 1. [x] Correct answer
-2. [ ] Wrong answer
+1. [ ] Wrong answer
 ```
 ````
 

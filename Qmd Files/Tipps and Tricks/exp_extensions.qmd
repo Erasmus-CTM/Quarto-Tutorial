@@ -31,23 +31,23 @@ filters:
 
 ## quizdown — interactive quizzes
 
-**Install:** `quarto add parmsam/quizdown`
+**Install:** `quarto add parmsam/quizdown`  
 **Source:** [@quizdown] — [github.com/parmsam/quarto-quizdown](https://github.com/parmsam/quarto-quizdown)
 
-:::: {.content-visible when-format="html"}
+:::: {.content-visible when-format="html"}  
 ```{quizdown}
 # Which file controls global project settings in Quarto?
 
 1. [x] `_quarto.yml`
-2. [ ] `index.qmd`
-3. [ ] `styles.css`
+1. [ ] `index.qmd`
+1. [ ] `styles.css`
 
 # Select all valid Quarto output formats.
 
-1. [x] HTML
-2. [x] PDF
-3. [x] Word (.docx)
-4. [ ] Excel (.xlsx)
+- [x] HTML
+- [x] PDF
+- [x] Word (.docx)
+- [ ] Excel (.xlsx)
 
 # Put the Quarto render pipeline in the correct order.
 
@@ -56,6 +56,7 @@ filters:
 3. Convert Markdown to HTML/PDF
 4. Apply theme and styles
 ```
+
 ::::
 
 :::: {.content-hidden when-format="html"}
@@ -91,8 +92,8 @@ shuffleQuestions: false # default: false — randomise question order
 ```{quizdown}
 # What is 2 + 2?
 1. [ ] 3
-2. [x] 4
-3. [ ] 5
+1. [x] 4
+1. [ ] 5
 ```
 ````
 
@@ -100,10 +101,22 @@ shuffleQuestions: false # default: false — randomise question order
 ````{.markdown}
 ```{quizdown}
 # Which of these are programming languages?
-1. [x] Python
-2. [ ] Quarto
-3. [x] R
-4. [x] JavaScript
+- [x] Python
+- [ ] Quarto
+- [x] R
+- [x] JavaScript
+```
+````
+
+**Ordering** — put these items in the correct order:
+````{.markdown}
+```{quizdown}
+# Put the Quarto render pipeline in the correct order.
+
+1. Parse `.qmd` source
+2. Execute code chunks
+3. Convert Markdown to HTML/PDF
+4. Apply theme and styles
 ```
 ````
 
@@ -115,7 +128,7 @@ Include an image in a question:
 # What does this logo belong to?
 ![](https://quarto.org/quarto.png)
 1. [x] Quarto
-2. [ ] RMarkdown
+1. [ ] RMarkdown
 ```
 ````
 
@@ -124,8 +137,8 @@ Include inline code in answers:
 ```{quizdown}
 # Which chunk option hides the source code?
 1. [x] `echo: false`
-2. [ ] `eval: false`
-3. [ ] `output: false`
+1. [ ] `eval: false`
+1. [ ] `output: false`
 ```
 ````
 
@@ -135,7 +148,7 @@ Include inline code in answers:
 
 ## Pyodide — live Python in the browser
 
-**Install:** `quarto add coatless-quarto/pyodide`
+**Install:** `quarto add coatless-quarto/pyodide`  
 **Source:** [@pyodide] — [github.com/coatless-quarto/pyodide](https://github.com/coatless-quarto/pyodide)
 
 ::: {.panel-tabset}
@@ -202,7 +215,7 @@ Pyodide runs in WebAssembly. Most pure-Python packages work (`numpy`, `pandas`, 
 
 ## py-exercise — editable exercises with hidden tests
 
-**Install:** `quarto add Erasmus-CTM/py-exercise`
+**Install:** `quarto add Erasmus-CTM/py-exercise`  
 **Source:** [@py-exercise] — [github.com/Erasmus-CTM/py-exercise](https://github.com/Erasmus-CTM/py-exercise)
 
 ::: {.callout-important}
@@ -273,7 +286,7 @@ Write assertion messages as if you are talking to the student:
 
 ## JSXGraph — interactive mathematical graphs
 
-**Install:** `quarto add jsxgraph/jsxgraph`
+**Install:** `quarto add jsxgraph/jsxgraph`  
 **Source:** [@jsxgraph] — [github.com/jsxgraph/jsxgraph-quarto](https://github.com/jsxgraph/jsxgraph-quarto)
 
 ::: {.panel-tabset}
