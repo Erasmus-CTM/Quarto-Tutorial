@@ -9,12 +9,14 @@ website:
   page-navigation: true
   navbar:
     left:
+      - text: "Overview"
+        href: index.qmd
       - text: "Example Page"
         href: "beg/Qmd Files/Example Page/index_beg.html"
       - text: "Getting Started"
         href: "int/Qmd Files/Getting Started/getting_started.html"
       - text: "Tipps and Tricks for Quarto Users"
-        href: "Qmd Files/Tipps and Tricks/index_exp.html"
+        href: "Qmd Files/Tipps and Tricks/index_exp.qmd"
   sidebar:
     - id: tips-sidebar
       style: docked
@@ -36,9 +38,3 @@ format:
   html:
     toc: true
     code-tools: true
-  # pdf:
-  #   toc: true
-  #   documentclass: article
-  #   geometry: margin=2.5cm
-  # docx:
-  #   toc: true

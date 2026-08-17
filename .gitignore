@@ -1,4 +1,5 @@
 /.quarto/
 **/*.quarto_ipynb
 .luarc.json
-**/404_files/
+
+/.luarc.json

@@ -25,14 +25,11 @@ The tutorial is split into three independent levels — visitors self-select the
 ├── Img Files/
 │   └── Getting Started/     ← Screenshots used in the intermediate tutorial
 ├── docs/
-│   ├── index.html           ← Landing page (rendered from root profile)
 │   ├── beg/                 ← Rendered beginner site
 │   ├── int/                 ← Rendered intermediate site
 │   └── exp/                 ← Rendered expert site
 ├── _extensions/             ← Quarto extensions (pyodide, py-exercise, jsxgraph, quizdown)
-├── index.qmd                ← Landing page source
 ├── _quarto.yml              ← Root config: profile group definition
-├── _quarto-root.yml         ← Root profile config (renders index.qmd → docs/)
 ├── _quarto-beg.yml          ← Beginner profile config
 ├── _quarto-int.yml          ← Intermediate profile config
 ├── _quarto-exp.yml          ← Expert profile config
@@ -46,9 +43,13 @@ The tutorial is split into three independent levels — visitors self-select the
 | Extension | Purpose |
 |---|---|
 | [`coatless-quarto/pyodide`](https://github.com/coatless-quarto/pyodide) | Run Python code live in the browser |
-| [`Erasmus-CTM/py-exercise`](https://github.com/Erasmus-CTM/py-exercise) | Editable Python exercises with hidden tests |
+| `Erasmus-CTM/pyodide-interaktiv` *(bundled, not yet public)* | Fork of the above: cells share one Python session per page, real `input()`, Matplotlib animations, and safe infinite loops — runs in a Web Worker |
+| `Erasmus-CTM/py-exercise` *(bundled, not yet public)* | Editable Python exercises with hidden tests |
+| `Erasmus-CTM/math-exercise` *(bundled, not yet public)* | Editable exercises with symbolic/numeric answers, checked with SymPy |
 | [`jsxgraph/jsxgraph`](https://github.com/jsxgraph/jsxgraph) | Interactive mathematical graphs |
 | [`parmsam/quizdown`](https://github.com/parmsam/quizdown) | Interactive multiple-choice quizzes |
+
+`pyodide-interaktiv` and `math-exercise` are planned to be published as installable extensions in the coming week — see `Plans.md` for the follow-up note on updating the install instructions once that happens.
 
 ---
 
@@ -60,7 +61,7 @@ Requires [Quarto](https://quarto.org/docs/get-started/) and Python 3.
 python preview.py
 ```
 
-This renders all four profiles (root, beg, int, exp) and serves them locally at `http://localhost:8000/index.html`.
+This renders all three profiles and serves them locally at `http://localhost:8000/beg/index.html`.
 
 To skip re-rendering (serve existing output only):
 

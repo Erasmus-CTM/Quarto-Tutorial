@@ -4,15 +4,18 @@ preview.py — render all Quarto profiles and open a local preview.
 Usage:  python preview.py
         python preview.py --port 8080
         python preview.py --no-render      (skip rendering, just serve)
+        python preview.py --no-kill        (leave older instances running)
 """
 
 import argparse
 import http.server
 import os
 import re
+import signal
 import subprocess
 import sys
 import threading
+import time
 import webbrowser
 
 # ── Config ────────────────────────────────────────────────────────────────────
@@ -26,7 +29,127 @@ START_PAGE = "index.html"                   # opened in browser after serving
 parser = argparse.ArgumentParser()
 parser.add_argument("--port",      type=int, default=8000)
 parser.add_argument("--no-render", action="store_true")
+parser.add_argument("--no-kill",   action="store_true",
+                    help="do not stop older preview.py instances first")
 args = parser.parse_args()
+
+# ── Stop older instances ──────────────────────────────────────────────────────
+#
+# A running preview server has docs/ as its working directory. On Windows that
+# keeps a handle on the folder, so `quarto render --profile root` — the only
+# profile that writes straight into docs/ — fails with
+#   "os error 32 ... remove '...\docs'".
+# Two servers on the same port would collide as well, so any older instance is
+# stopped before we render or bind.
+
+SELF_PID = os.getpid()
+SCRIPT   = os.path.basename(os.path.abspath(__file__))
+
+
+def _run(cmd):
+    """Run a command, return stdout as text ('' if the command is unavailable)."""
+    try:
+        result = subprocess.run(cmd, capture_output=True, text=True, timeout=20)
+    except (OSError, subprocess.SubprocessError):
+        return ""
+    return result.stdout or ""
+
+
+def _powershell(script):
+    for exe in ("powershell", "pwsh"):
+        out = _run([exe, "-NoProfile", "-Command", script])
+        if out:
+            return out
+    return ""
+
+
+def _ints(text):
+    return {int(word) for word in text.split() if word.isdigit()}
+
+
+def _pids_of_other_instances():
+    """PIDs of other Python processes running this script."""
+    if os.name == "nt":
+        out = _powershell(
+            "Get-CimInstance Win32_Process | Where-Object { "
+            f"$_.Name -like 'python*' -and $_.CommandLine -like '*{SCRIPT}*' "
+            "} | ForEach-Object { $_.ProcessId }"
+        )
+    else:
+        out = _run(["pgrep", "-f", rf"python.*{re.escape(SCRIPT)}"])
+    return _ints(out) - {SELF_PID}
+
+
+def _pids_on_port(port):
+    """PIDs listening on the given TCP port."""
+    if os.name == "nt":
+        out = _powershell(
+            f"Get-NetTCPConnection -LocalPort {port} -State Listen "
+            "-ErrorAction SilentlyContinue | ForEach-Object { $_.OwningProcess }"
+        )
+        if not out:
+            # Fallback without Get-NetTCPConnection: parse netstat. The state
+            # column is localised, so match on the local-address column only.
+            out = "\n".join(
+                parts[-1]
+                for parts in (line.split() for line in _run(["netstat", "-ano"]).splitlines())
+                if len(parts) >= 4 and parts[1].endswith(f":{port}")
+            )
+    else:
+        out = _run(["lsof", "-ti", f"tcp:{port}"])
+    return _ints(out) - {SELF_PID}
+
+
+def _is_python(pid):
+    """True if the PID belongs to a Python process — we kill nothing else."""
+    if os.name == "nt":
+        out = _run(["tasklist", "/FI", f"PID eq {pid}", "/FO", "CSV", "/NH"])
+    else:
+        out = _run(["ps", "-p", str(pid), "-o", "comm="])
+    return "python" in out.lower()
+
+
+def _kill(pid):
+    if os.name == "nt":
+        _run(["taskkill", "/PID", str(pid), "/F"])
+    else:
+        for sig in (signal.SIGTERM, signal.SIGKILL):
+            try:
+                os.kill(pid, sig)
+            except ProcessLookupError:
+                return
+            time.sleep(0.5)
+
+
+def stop_stale_instances(port):
+    """Kill older preview.py instances and any Python process holding the port."""
+    stale = _pids_of_other_instances()
+    for pid in _pids_on_port(port):
+        # Never kill an unrelated program that happens to use the port.
+        if _is_python(pid):
+            stale.add(pid)
+        else:
+            print(f"  ⚠  Port {port} is used by PID {pid}, which is not a Python "
+                  f"process — leaving it alone.")
+
+    if not stale:
+        return
+
+    for pid in sorted(stale):
+        print(f"  ↯  Stopping older instance (PID {pid}) …")
+        _kill(pid)
+
+    # Windows needs a moment to release the handle on docs/.
+    for _ in range(20):
+        time.sleep(0.25)
+        if not (stale & (_pids_of_other_instances() | _pids_on_port(port))):
+            print("  ✓  Older instances stopped.\n")
+            return
+    print("  ⚠  Some processes could not be stopped — close them manually.\n")
+
+
+if not args.no_kill:
+    stop_stale_instances(args.port)
 
 # ── Render ────────────────────────────────────────────────────────────────────
 

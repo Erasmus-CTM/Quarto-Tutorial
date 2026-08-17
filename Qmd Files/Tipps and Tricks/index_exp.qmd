@@ -25,7 +25,7 @@ this section is a curated guide to the parts that are most useful in practice.
 | Control how code runs (`echo`, `eval`, `fold`, …) | [The QMD File](exp_qmd.qmd) |
 | Show content only in certain profiles or formats | [The QMD File → Conditional content](exp_qmd.qmd#conditional-content) |
 | Cross-reference figures, tables, and sections | [The QMD File → Cross-referencing](exp_qmd.qmd#cross-referencing) |
-| Use quizdown, Pyodide, JSXGraph, or py-exercise | [Extensions](exp_extensions.qmd) |
+| Use quizdown, Pyodide, JSXGraph, py-exercise, or math-exercise | [Extensions](exp_extensions.qmd) |
 | Serve the same project in multiple languages | [Multilanguage Projects](exp_multilanguage.qmd) |
 | Look something up quickly | [Cheatsheet](exp_cheatsheet.qmd) |
 

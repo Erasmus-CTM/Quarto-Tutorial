@@ -9,15 +9,18 @@ website:
   title: "Getting Started with Quarto"
   navbar:
     left:
+      - text: "Overview"
+        href: index.qmd
       - text: "Example Page"
         href: "beg/Qmd Files/Example Page/index_beg.html"
       - text: "Getting Started"
-        href: "Qmd Files/Getting Started/getting_started.html"
+        href: "Qmd Files/Getting Started/getting_started.qmd"
       - text: "Tipps and Tricks for Quarto Users"
         href: "exp/Qmd Files/Tipps and Tricks/index_exp.html"
   sidebar:
     - id: getting-started-sidebar
       style: docked
+      collapse-level: 1
       contents:
         - href: "Qmd Files/Getting Started/getting_started.qmd"
           text: "Overview"

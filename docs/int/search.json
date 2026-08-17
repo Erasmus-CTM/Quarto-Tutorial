@@ -15,7 +15,7 @@
     "href": "Qmd Files/Getting Started/getting_started.html#what-would-you-like-to-build",
     "title": "Getting Started with Quarto",
     "section": "What would you like to build?",
-    "text": "What would you like to build?\n\n\n🌐 A Website\nPresent your course, research, or portfolio as a clean multi-page website.\n→ What you need → Create a website\n→ Publish online\n\n\n📄 An Exercise Sheet\nCreate a professional exercise sheet that renders to PDF, HTML, or Word from one file.\n→ What you need\n→ Create a sheet\n→ Other formats\n\n\n📚 A Book\nStructure longer content — lecture notes, a handbook — as a navigable book.\n→ What you need\n→ Create a book",
+    "text": "What would you like to build?\n\n\n🌐 A Website\nPresent your course, research, or portfolio as a clean multi-page website.\n→ What you need\n→ Create a website\n→ Publish online\n\n\n📄 An Exercise Sheet\nCreate a professional exercise sheet that renders to PDF, HTML, or Word from one file.\n→ What you need\n→ Create a sheet\n→ Other formats\n\n\n📚 A Book\nStructure longer content — lecture notes, a handbook — as a navigable book.\n→ What you need\n→ Create a book",
     "crumbs": [
       "Getting Started",
       "Overview"
@@ -133,7 +133,19 @@
     "href": "Qmd Files/Getting Started/beg_extensions.html#see-the-result",
     "title": "Interactive Code with Pyodide",
     "section": "4 — See the result",
-    "text": "4 — See the result\n① Preview your page\nRun quarto preview in the Terminal. The code block appears in the browser with a Run Code button.\n\n② The interactive block in the browser\n\nAt the top of the page Quarto shows PYODIDE STATUS: Ready! when Python has loaded. Students can click Run Code, edit the code, and run it again — all without installing anything.\n\n\n\n\n\n\n\nTipWant students to fill in solutions?\n\n\n\nThe py-exercise extension adds code blocks with hidden automated tests — students see whether their solution passes or fails. You can see a live example on the Example Page of this tutorial.",
+    "text": "4 — See the result\n① Preview your page\nRun quarto preview in the Terminal. The code block appears in the browser with a Run Code button.\n\n② The interactive block in the browser\n\nAt the top of the page Quarto shows PYODIDE STATUS: Ready! when Python has loaded. Students can click Run Code, edit the code, and run it again — all without installing anything.\n\n\n\n\n\n\n\nTipWant students to fill in solutions?\n\n\n\nThe py-exercise extension adds code blocks with hidden automated tests — students see whether their solution passes or fails. The math-exercise extension does the same for symbolic/numeric answers, checked with SymPy instead of unit tests. Both have live examples on the Example Page of this tutorial.",
+    "crumbs": [
+      "Getting Started",
+      "Interactive Code",
+      "Interactive Python with Pyodide"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_extensions.html#level-up-cells-that-share-state-real-input-animations",
+    "href": "Qmd Files/Getting Started/beg_extensions.html#level-up-cells-that-share-state-real-input-animations",
+    "title": "Interactive Code with Pyodide",
+    "section": "5 — Level up: cells that share state, real input(), animations",
+    "text": "5 — Level up: cells that share state, real input(), animations\nThe Code page of this tutorial’s Example Page doesn’t stop at coatless-quarto/pyodide — it runs on pyodide-interaktiv, a fork built for this project that executes Python in a Web Worker instead of on the browser’s main thread. That one change unlocks several things students immediately notice:\n\nReal input() — a cell can pause and wait for typed input without freezing the page.\nAnimations — a Matplotlib FuncAnimation plays as an interactive player, from the same code you would write in a local IDE.\nSafe infinite loops — an accidental while True: no longer locks up the tab; a Stop button cancels the worker.\nAI feedback — every cell gets a Feedback button that explains what went wrong, with hints that get more concrete on each click.\nA responsive page — a long calculation no longer freezes the tab, because it happens off the main thread.\n\n(Cells sharing one Python session per page — a later cell reusing a variable or import from an earlier one — works in both versions.)\nYou can try all of this live on the Code page of the Example Page.\n\n\n\n\n\n\nImportantNot yet quarto add-able\n\n\n\npyodide-interaktiv (and math-exercise) are not published to the public extension registry yet — only coatless-quarto/pyodide is. Until they are, the only way to use the fork in your own project is to copy the folder over by hand:\n① Copy the extension folder\nCopy _extensions/Erasmus-CTM/pyodide-interaktiv/ from this project into your own project’s _extensions/ folder.\n② Reference it by folder name\n---\ntitle: \"My Page\"\nformat: html\nfilters:\n  - pyodide-interaktiv\n---\nThat’s it — no quarto add step needed for a vendored extension.",
     "crumbs": [
       "Getting Started",
       "Interactive Code",
@@ -145,7 +157,7 @@
     "href": "Qmd Files/Getting Started/beg_exercise_2.html",
     "title": "Create an Exercise Sheet",
     "section": "",
-    "text": "① Open the New File dialog\n\nIn VS Code go to File → New File…. A small menu appears. Select Quarto Document.\n\n② Your new file opens with an existing header\n\nVS Code creates a new file with a basic settings block already filled in. Save it with a name like exercises.qmd (File → Save or Ctrl+S).",
+    "text": "① Open the New File dialog\n\nIn VS Code go to File → New File…. A small menu appears. Select Quarto Document.\n\n② Your file opens with an existing header\n\nVS Code creates a new file with a basic settings block already filled in. Save it with a name like exercises.qmd (File → Save or Ctrl+S).",
     "crumbs": [
       "Getting Started",
       "Creating an Exercise Sheet with Quarto",
@@ -157,7 +169,7 @@
     "href": "Qmd Files/Getting Started/beg_exercise_2.html#create-a-new-quarto-file",
     "title": "Create an Exercise Sheet",
     "section": "",
-    "text": "① Open the New File dialog\n\nIn VS Code go to File → New File…. A small menu appears. Select Quarto Document.\n\n② Your new file opens with an existing header\n\nVS Code creates a new file with a basic settings block already filled in. Save it with a name like exercises.qmd (File → Save or Ctrl+S).",
+    "text": "① Open the New File dialog\n\nIn VS Code go to File → New File…. A small menu appears. Select Quarto Document.\n\n② Your file opens with an existing header\n\nVS Code creates a new file with a basic settings block already filled in. Save it with a name like exercises.qmd (File → Save or Ctrl+S).",
     "crumbs": [
       "Getting Started",
       "Creating an Exercise Sheet with Quarto",
@@ -277,7 +289,7 @@
     "href": "index.html",
     "title": "Quarto Tutorial",
     "section": "",
-    "text": "This is a Tutorial for using Quarto in a creating context.\n\nIf you never saw a Quarto page before click here!\n\nIf you want to learn how to create something with Quarto click here!\n\nIf you already know how to create Quarto Documents and want to become better click here!"
+    "text": "This is a Tutorial for using Quarto in a creating context.\n\nIf you never saw a Quarto page before click here!\nIf you want to learn how to create something with Quarto click here!\nIf you already know how to create Quarto Documents and want to become better click here!"
   },
   {
     "objectID": "Qmd Files/Getting Started/beg_book_1.html",

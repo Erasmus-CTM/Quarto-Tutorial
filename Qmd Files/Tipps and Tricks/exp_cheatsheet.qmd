@@ -184,7 +184,7 @@ Column widths are in 12ths: `g-col-4` = one third, `g-col-6` = half, `g-col-12` 
 ````{.markdown}
 ```{pyodide-python}
 #| autorun: false
-#| readonly: false
+#| read-only: false
 print("runs in browser")
 ```
 ````
@@ -193,11 +193,22 @@ print("runs in browser")
 
 ````{.markdown}
 ```{py-exercise}
+#| forbidden-keywords: for, while
 def my_func(x):
     pass        # student fills this in
 
 ## TESTS ##
 assert my_func(2) == 4
+```
+````
+
+### math-exercise
+
+````{.markdown}
+```{math-exercise}
+#| vars: r
+#| mode: equivalent
+Area of a circle with r = 3: _[pi*9]
 ```
 ````
 
