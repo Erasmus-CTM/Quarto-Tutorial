@@ -4,6 +4,9 @@ bibliography: references.bib
 sidebar: example-sidebar
 filters:
   - jsxgraph/jsxgraph
+  - pyodide-interaktiv
+  - py-exercise
+  - math-exercise
 ---
 
 ## Interactive Plot
@@ -52,18 +55,76 @@ board.create('segment', [p, q], {
 });
 ```
 
+## Animation
+
+A Matplotlib `FuncAnimation` plays right in the page — the code is exactly what
+you would write in a local IDE, no extra call needed:
+
+```{pyodide-python}
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+import numpy as np
+
+fig, ax = plt.subplots()
+x = np.linspace(0, 2 * np.pi, 100)
+line, = ax.plot(x, np.sin(x))
+
+def update(frame):
+    line.set_ydata(np.sin(x + frame / 10))
+    return line,
+
+ani = animation.FuncAnimation(fig, update, frames=60, blit=True, interval=33)
+plt.show()
+```
+
+## Editable Exercise
+
+Complete the function — tests run automatically on checking your solution:
+
+```{py-exercise}
+import math
+
+def f(x_deg):
+    """Return sin(x) + cos(x) for x given in degrees."""
+    # Your solution here
+    pass
+
+## TESTS ##
+assert abs(f(0)  - 1.0)           < 1e-4, "f(0) should be 1.0"
+assert abs(f(90) - 1.0)           < 1e-4, "f(90°) should be 1.0"
+assert abs(f(45) - math.sqrt(2))  < 1e-4, "f(45°) should be √2"
+```
+
+## Math Exercise
+
+A different kind of check — symbolic answers, evaluated with SymPy instead of
+unit tests:
+
+```{math-exercise}
+#| label: ep-math-sin
+#| caption: Sine at a special angle
+#| vars: x
+What is $\sin(90°)$, exactly? _[1]
+```
+
 ## Diagram
 
-How does Quarto turn a `.qmd` file into a finished document?
+What actually happens between saving a `.qmd` file and getting a finished document?
 
 ```{mermaid}
 flowchart LR
-    A[".qmd File"] --> B{"Quarto"}
-    B --> C["🌐 HTML Website"]
-    B --> D["📄 PDF"]
-    B --> E["📊 Presentation"]
-    style B fill:#4CAF50,color:#fff,stroke:#388e3c
+    A[".qmd File<br/>Markdown + Code + YAML"] --> B["Execute<br/>Jupyter / Knitr"]
+    B --> C[".md<br/>plain Markdown"]
+    C --> D{"Pandoc"}
+    D --> E["🌐 HTML"]
+    D --> F["📝 Word .docx"]
+    D --> G[".tex LaTeX"]
+    G --> H["LaTeX Engine<br/>TinyTeX"]
+    H --> I["📄 PDF"]
+    style D fill:#4CAF50,color:#fff,stroke:#388e3c
     style A fill:#e3f2fd,stroke:#90caf9
 ```
 
-→ The code that generated the plot above lives on the [Code page](ep_code.qmd).
+Quarto first executes any code cells (Jupyter for Python, Knitr for R), then hands the resulting Markdown to Pandoc to produce the output. Pandoc can write HTML and Word directly, but not PDF — for that it detours through LaTeX first, which a separate engine (**TinyTeX**) then compiles into the finished file. That extra hop is why PDF needs one more install step ([What you need](../../int/Qmd Files/Getting Started/beg_exercise_1.html)) that HTML and Word don't.
+
+→ More static, executable and editable Python examples are on the [Code page](ep_code.qmd).
