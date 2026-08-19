@@ -10,6 +10,8 @@ See the full list at **[quarto.org/docs/extensions](https://quarto.org/docs/exte
 
 **Pyodide** lets students run and edit Python code directly in the browser — no Python installation needed on their computer. You write the code once; they click **Run Code**.
 
+This tutorial uses `pyodide-interaktiv`, a fork of the `coatless-quarto/pyodide` extension built for this project. It runs Python in a **Web Worker** instead of on the browser's main thread, which is what makes real `input()`, animations, a Stop button and AI feedback possible — more on that in the last section.
+
 ::: {.callout-warning}
 ## HTML only
 Interactive code requires **HTML output**. It works in websites (`format: html`) and books, but not in PDF or Word documents.
@@ -17,23 +19,35 @@ Interactive code requires **HTML output**. It works in websites (`format: html`)
 
 ---
 
-## 1 — Install the Pyodide extension
+## 1 — Install the pyodide-interaktiv extension
+
+`pyodide-interaktiv` is published at **[github.com/Erasmus-CTM/pyodide-interaktiv](https://github.com/Erasmus-CTM/pyodide-interaktiv)** — but the repository is currently **private**, which decides how you install it:
+
+::: {.panel-tabset}
+## No repo access (for now)
+
+**① Copy the extension folder**
+
+Copy `_extensions/Erasmus-CTM/pyodide-interaktiv/` from this project into your own project's `_extensions/` folder.
+
+That's it — no `quarto add` step needed for a vendored extension, Quarto picks it up automatically.
+
+## Once the repo is public
+
+Installing will be a single command, like any other extension:
 
 **① Open the Terminal in VS Code**
 
 Open the **Terminal** (the command line interface) via **View → Terminal**. A panel opens at the bottom of the screen. Make sure the path shown matches your project folder.
 
----
-
 **② Run the install command**
 
-![](../../Img Files/Getting Started/terminal_add_pyodide_extension.png)
-
 ```{.bash filename="Terminal"}
-quarto add coatless-quarto/pyodide
+quarto add Erasmus-CTM/pyodide-interaktiv
 ```
 
 Wait until it finishes — it will ask you to confirm once. This only needs to be done **once per project folder**.
+:::
 
 ---
 
@@ -46,7 +60,7 @@ Add a `filters:` line to the header block of your `.qmd` file:
 title: "My Page"
 format: html
 filters:
-  - coatless-quarto/pyodide
+  - pyodide-interaktiv
 ---
 ```
 
@@ -91,9 +105,9 @@ The `py-exercise` extension adds code blocks with hidden automated tests — stu
 
 ---
 
-## 5 — Level up: cells that share state, real `input()`, animations
+## 5 — What pyodide-interaktiv gives you
 
-The **Code** page of this tutorial's Example Page doesn't stop at `coatless-quarto/pyodide` — it runs on `pyodide-interaktiv`, a fork built for this project that executes Python in a **Web Worker** instead of on the browser's main thread. That one change unlocks several things students immediately notice:
+Because `pyodide-interaktiv` executes Python in a **Web Worker** instead of on the browser's main thread, you get several things for free that the base `coatless-quarto/pyodide` extension doesn't have:
 
 - **Real `input()`** — a cell can pause and wait for typed input without freezing the page.
 - **Animations** — a Matplotlib `FuncAnimation` plays as an interactive player, from the same code you would write in a local IDE.
@@ -101,28 +115,6 @@ The **Code** page of this tutorial's Example Page doesn't stop at `coatless-quar
 - **AI feedback** — every cell gets a Feedback button that explains what went wrong, with hints that get more concrete on each click.
 - **A responsive page** — a long calculation no longer freezes the tab, because it happens off the main thread.
 
-(Cells sharing one Python session per page — a later cell reusing a variable or `import` from an earlier one — works in both versions.)
+Cells also share one Python session per page, so a later cell can reuse a variable or `import` from an earlier one.
 
-You can try all of this live on the Code page of the Example Page.
-
-::: {.callout-important}
-## Not yet `quarto add`-able
-`pyodide-interaktiv` (and `math-exercise`) are not published to the public extension registry yet — only `coatless-quarto/pyodide` is. Until they are, the only way to use the fork in your own project is to copy the folder over by hand:
-
-**① Copy the extension folder**
-
-Copy `_extensions/Erasmus-CTM/pyodide-interaktiv/` from this project into your own project's `_extensions/` folder.
-
-**② Reference it by folder name**
-
-```yaml
----
-title: "My Page"
-format: html
-filters:
-  - pyodide-interaktiv
----
-```
-
-That's it — no `quarto add` step needed for a vendored extension.
-:::
+You can try `input()` and cell state-sharing live on the [Code page](../../beg/Qmd Files/Example Page/ep_code.html), and the animation on the [Visualizations page](../../beg/Qmd Files/Example Page/ep_visuals.html) of the Example Page.

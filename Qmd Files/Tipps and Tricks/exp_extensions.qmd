@@ -16,10 +16,9 @@ Most extensions are installed once per project with `quarto add <name>` — the 
 | Extension | What it adds | Install |
 |---|---|---|
 | [quizdown](#quizdown-interactive-quizzes) | Multiple-choice, multi-select and ordering quizzes | `quarto add parmsam/quizdown` |
-| [Pyodide](#pyodide-live-python-in-the-browser) | Editable Python cells that run in the browser | `quarto add coatless-quarto/pyodide` |
-| [pyodide-interaktiv](#pyodide-interaktiv-the-fork-this-tutorial-runs-on) | Same cells, but in a Web Worker — `input()`, animations, Stop, AI feedback | copy the folder (not published yet) |
-| [py-exercise](#py-exercise-editable-exercises-with-hidden-tests) | Coding exercises with hidden `assert` tests | copy the folder (not published yet) |
-| [math-exercise](#math-exercise-symbolic-answers-checked-with-sympy) | Symbolic maths answers checked with SymPy | copy the folder (not published yet) |
+| [pyodide-interaktiv](#pyodide-interaktiv-the-fork-this-tutorial-runs-on) | Same cells, but in a Web Worker — `input()`, animations, Stop, AI feedback | published, private repo — see below |
+| [py-exercise](#py-exercise-editable-exercises-with-hidden-tests) | Coding exercises with hidden `assert` tests | published, private repo — see below |
+| [math-exercise](#math-exercise-symbolic-answers-checked-with-sympy) | Symbolic maths answers checked with SymPy | published, private repo — see below |
 | [JSXGraph](#jsxgraph-interactive-mathematical-graphs) | Interactive mathematical graphs | `quarto add jsxgraph/jsxgraph` |
 
 Extensions can be enabled **globally** in `_quarto.yml` or **per page** in the frontmatter:
@@ -228,10 +227,10 @@ Pyodide runs in WebAssembly. Most pure-Python packages work (`numpy`, `pandas`, 
 
 ### pyodide-interaktiv — the fork this tutorial runs on
 
-**Install:** copy the folder — not published yet (see the *Install* tab)\
-**Source:** [@pyodide-interaktiv] — [github.com/Erasmus-CTM/Pyodide-interaktiv](https://github.com/Erasmus-CTM/Pyodide-interaktiv)
+**Install:** published, private repo — copy the folder for now (see *Install* below)\
+**Source:** [@pyodide-interaktiv] — [github.com/Erasmus-CTM/pyodide-interaktiv](https://github.com/Erasmus-CTM/pyodide-interaktiv)
 
-`pyodide-interaktiv` is a rework of `coatless-quarto/pyodide` that runs Python in a **Web Worker** instead of on the browser's main thread. The cell syntax is identical — `{pyodide-python}` with the same `#|` options — so pages swap between the two by changing one line in `filters:`. What the worker buys you is everything below.
+`pyodide-interaktiv` is a rework of `coatless-quarto/pyodide` that runs Python in a **Web Worker** instead of on the browser's main thread, and adds features on top of that — such as AI feedback on every cell. The cell syntax is identical — `{pyodide-python}` with the same `#|` options — so pages swap between the two by changing one line in `filters:`. Everything below is what the Web Worker and these additions buy you.
 
 ::: {.callout-note}
 ## The cells on this page use the fork
@@ -324,7 +323,7 @@ ani = animation.FuncAnimation(fig, update, frames=60, blit=True, interval=33)
 plt.show()
 ```
 
-A live version of this is on the [Code page](../../beg/Qmd Files/Example Page/ep_code.html) of the Example Page.
+A live version of this is on the [Visualizations page](../../beg/Qmd Files/Example Page/ep_visuals.html) of the Example Page.
 
 ::: {.callout-tip}
 ## Speed is `interval`, not `frames`
@@ -390,9 +389,12 @@ Packages that only appear in an `import` are fetched on demand, so `packages:` i
 ## Install
 
 ::: {.callout-important}
-## Not yet `quarto add`-able
-`pyodide-interaktiv`, `py-exercise` and `math-exercise` are not in the public extension registry yet — only `coatless-quarto/pyodide` is. Until they are published, vendor them by hand.
+## Published, but private
+`pyodide-interaktiv`, `py-exercise` and `math-exercise` are published on GitHub — but as **private** repositories, unlike `coatless-quarto/pyodide`. `quarto add` only works if you have access; everyone else vendors the folder by hand until the repos are made public.
 :::
+
+::: {.panel-tabset}
+## No repo access (for now)
 
 **① Copy the extension folder**
 
@@ -411,6 +413,20 @@ filters:
 
 A vendored extension needs no `quarto add` step, and it is referenced by folder name only — without the `Erasmus-CTM/` prefix that a registry install would add.
 
+## Repo access / once public
+
+```{.bash filename="Terminal"}
+quarto add Erasmus-CTM/pyodide-interaktiv
+```
+
+Then reference it with the full name in `filters:`:
+
+```{.yaml filename="page.qmd"}
+filters:
+  - Erasmus-CTM/pyodide-interaktiv
+```
+:::
+
 ::: {.callout-warning}
 ## One Pyodide extension per page
 `coatless-quarto/pyodide` and `pyodide-interaktiv` both claim `{pyodide-python}`. Listing both in `filters:` loads two runtimes and breaks the cells — pick one.
@@ -424,8 +440,8 @@ Two more limits worth knowing: `embed-resources` does not work (Pyodide ships We
 
 ## py-exercise — editable exercises with hidden tests
 
-**Install:** copy the folder — not published yet\
-**Source:** [@py-exercise] — [github.com/Erasmus-CTM/Py-Exercise](https://github.com/Erasmus-CTM/Py-Exercise)
+**Install:** published, private repo — copy the folder for now, `quarto add Erasmus-CTM/py-exercise` once it's public\
+**Source:** [@py-exercise] — [github.com/Erasmus-CTM/py-exercise](https://github.com/Erasmus-CTM/py-exercise)
 
 ::: {.callout-note}
 ## Works on its own
@@ -557,8 +573,8 @@ The key is in the rendered page, so this deters casual tampering — it is not r
 
 ## math-exercise — symbolic answers checked with SymPy
 
-**Install:** copy the folder — not published yet\
-**Source:** [@math-exercise] — [github.com/Erasmus-CTM/Math-Exercise](https://github.com/Erasmus-CTM/Math-Exercise)
+**Install:** published, private repo — copy the folder for now, `quarto add Erasmus-CTM/math-exercise` once it's public\
+**Source:** [@math-exercise] — [github.com/Erasmus-CTM/math-exercise](https://github.com/Erasmus-CTM/math-exercise)
 
 Where py-exercise checks *code*, math-exercise checks an *answer*. Students type a mathematical expression into an input field and it is compared with SymPy — so any equivalent form counts as correct.
 

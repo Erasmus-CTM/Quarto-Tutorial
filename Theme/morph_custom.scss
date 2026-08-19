@@ -205,3 +205,23 @@ figcaption, .figure-caption {
   color: #3a13f8 !important;
   font-weight: bold;
 }
+
+/* math-exercise: äußerer Rahmen + Überschrift kaum sichtbar im Morph-Theme
+   (beide hängen an --bs-border-color / --bs-body-color, die hier zu blass sind) */
+body:not(.quarto-dark) .math-exercise-cell {
+  border-color: #7f8a99 !important;
+}
+
+body:not(.quarto-dark) .math-exercise-caption {
+  color: #1a2e69 !important;
+  border-bottom-color: #7f8a99 !important;
+}
+
+body:not(.quarto-dark) .math-chevron {
+  color: #1a2e69 !important;
+}
+
+body:not(.quarto-dark) .math-exercise-toggle:hover,
+body:not(.quarto-dark) .math-exercise-toggle:hover .math-chevron {
+  color: var(--bs-primary, #0d6efd) !important;
+}
