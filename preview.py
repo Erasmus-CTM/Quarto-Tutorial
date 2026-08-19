@@ -237,10 +237,49 @@ def fix_root_absolute_paths(docs_dir):
 
     print(f"  ✓  Fixed absolute paths in {fixed} root HTML file(s).\n")
 
+def fix_navbar_brand_links(docs_dir, sub_profiles):
+    """
+    The navbar title/logo ("Quarto Tutorial") is meant to link back to the
+    umbrella landing page (docs/index.html, the 'root' profile). Quarto has
+    no way to express a cross-profile href, so it always points the brand
+    link at each profile's own local index.html instead. Rewrite it to point
+    at the real root page, at the correct relative depth per file.
+    """
+    docs_path = os.path.abspath(docs_dir)
+    root_index = os.path.join(docs_path, "index.html")
+    brand_re = re.compile(r'(<a\b[^>]*\bclass="navbar-brand[^"]*"[^>]*>)')
+    href_re = re.compile(r'href="[^"]*"')
+    fixed = 0
+
+    for profile in sub_profiles:
+        profile_dir = os.path.join(docs_path, profile)
+        if not os.path.isdir(profile_dir):
+            continue
+        for dirpath, _, filenames in os.walk(profile_dir):
+            for filename in filenames:
+                if not filename.endswith('.html'):
+                    continue
+                html_file = os.path.join(dirpath, filename)
+                rel = os.path.relpath(root_index, dirpath).replace('\\', '/')
+
+                with open(html_file, encoding='utf-8') as f:
+                    content = f.read()
+                new_content = brand_re.sub(
+                    lambda m: href_re.sub(f'href="{rel}"', m.group(0), count=1),
+                    content,
+                )
+                if new_content != content:
+                    with open(html_file, 'w', encoding='utf-8') as f:
+                        f.write(new_content)
+                    fixed += 1
+
+    print(f"  ✓  Fixed navbar-brand links in {fixed} HTML file(s).\n")
+
 if not args.no_render:
     docs_abs = os.path.join(os.path.dirname(os.path.abspath(__file__)), DOCS_DIR)
     fix_cross_profile_links(docs_abs, PROFILES)
     fix_root_absolute_paths(docs_abs)
+    fix_navbar_brand_links(docs_abs, [p for p in PROFILES if p != "root"])
 
 # ── Serve ─────────────────────────────────────────────────────────────────────
 

@@ -5,12 +5,10 @@ project:
     - Qmd Files/Tipps and Tricks/*.qmd
 
 website:
-  title: "Quarto Tipps and Tricks"
+  title: "Quarto Tutorial"
   page-navigation: true
   navbar:
     left:
-      - text: "Overview"
-        href: index.qmd
       - text: "Example Page"
         href: "beg/Qmd Files/Example Page/index_beg.html"
       - text: "Getting Started"
