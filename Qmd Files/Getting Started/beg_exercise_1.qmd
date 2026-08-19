@@ -7,6 +7,11 @@ title: "What you need — Exercise Sheet"
 See **[quarto.org/docs/output-formats/pdf-basics.html](https://quarto.org/docs/output-formats/pdf-basics.html)** for more about PDF output options.
 :::
 
+::: {.callout-tip}
+## Prefer a quick reference?
+This chapter as a 3-page [PDF cheatsheet](beg_exercise_cheatsheet.qmd) — setup, writing content, and output formats, condensed for printing or quick lookup.
+:::
+
 To create an exercise sheet you need the same setup as for a website, plus one extra tool if you want PDF output.
 
 ---

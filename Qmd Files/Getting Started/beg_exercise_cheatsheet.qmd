@@ -1,0 +1,119 @@
+---
+title: "Cheatsheet: Creating an Exercise Sheet"
+subtitle: "From installation to multiple output formats"
+format:
+  pdf:
+    geometry: margin=0.9in
+    fontsize: 10pt
+    include-in-header: ../../Theme/pdf_cheatsheet.tex
+    highlight-style: github
+    colorlinks: true
+    linkcolor: cheataccent
+    urlcolor: cheataccent
+---
+
+```{=latex}
+\quickfacts{OUTPUT}{One file (HTML / PDF / Word)}{STRUCTURE}{Single \texttt{.qmd}, no project needed}{BEST FOR}{Handouts, homework, printables}
+```
+
+## 1 — Setup
+
+**Install (once per computer):**
+
+- **VS Code** — [code.visualstudio.com](https://code.visualstudio.com) (tick **"Add to PATH"** during setup)
+- **Quarto CLI** — [quarto.org/docs/get-started](https://quarto.org/docs/get-started/)
+- **Quarto extension** for VS Code — search "Quarto" in the Extensions sidebar
+
+::: {.callout-note}
+## Only if you want PDF output
+`quarto install tinytex` in the Terminal — installs the LaTeX engine Quarto needs for PDF. Skip this if you only want HTML or Word.
+:::
+
+**Create the file:** **File → New File… → Quarto Document** → save it as e.g. `exercises.qmd`. Unlike a website, this is a single file — no project folder structure needed.
+
+```{=latex}
+\begin{spotlight}{Which one do I need?}
+Need one self-contained document to print, email, or hand out --- with a title, deadline, and export to PDF or Word? This is it. For a full multi-page site, see the \textbf{Website} cheatsheet; for a long document with numbered chapters, see the \textbf{Book} cheatsheet.
+\end{spotlight}
+```
+
+{{< pagebreak >}}
+
+## 2 — Writing your exercise sheet
+
+**Page header** sets the title, author, and output format:
+
+```yaml
+---
+title: "Exercise Sheet 1"
+author: "Your Name"
+format: pdf
+---
+```
+
+**Body:** use `##` for each exercise, plain paragraphs for the text, `$...$` for inline math:
+
+```markdown
+## Exercise 1
+
+Calculate the derivative of $f(x) = x^2 + 3x$.
+```
+
+**Code examples:** a plain fence just *displays* code without running it — good for "here's what the answer looks like":
+
+```python
+x = [1, 2, 3, 4]
+print(sum(x))
+```
+
+::: {.callout-note}
+## Want it to actually run?
+Tag the fence `{python}` instead of `python` — it executes via Jupyter and the output is embedded right in the PDF or Word file, no browser needed. That's different from the Website chapter's `pyodide-interaktiv` cells, which only run live in a browser (see the Extensions cheatsheet).
+:::
+
+**Preview vs. Render** (same idea as for a website, just for one file):
+
+| Command | What it does |
+|---|---|
+| `quarto preview exercises.qmd` | Live browser view, updates on save |
+| `quarto render exercises.qmd` | Builds the final output file once |
+
+{{< pagebreak >}}
+
+## 3 — Output formats
+
+One `.qmd` file, several possible outputs — change the `format:` line:
+
+| Format | YAML value | Needs |
+|---|---|---|
+| HTML | `format: html` | Nothing extra |
+| Word | `format: docx` | Nothing extra |
+| PDF | `format: pdf` | TinyTeX (page 1) |
+
+**All formats at once:**
+
+```yaml
+---
+title: "Exercise Sheet 1"
+format:
+  html: default
+  pdf: default
+  docx: default
+---
+```
+
+Run `quarto render` once — Quarto produces all three files in the same folder.
+
+```{=latex}
+\begin{spotlight}{Good to know}
+\begin{itemize}
+\item Only need one of several configured formats right now? \texttt{quarto render exercises.qmd --to pdf} renders just that one.
+\item \texttt{\{\{< pagebreak >\}\}} on its own line forces a new page --- handy to keep one exercise per printed page.
+\item Want your own letterhead or styles in the \texttt{.docx} output? \texttt{format: docx: reference-doc: template.docx} applies a Word template.
+\end{itemize}
+\end{spotlight}
+```
+
+---
+
+Full details & screenshots: [What you need](https://erasmus-ctm.github.io/Quarto-Tutorial/int/Qmd%20Files/Getting%20Started/beg_exercise_1.html) · [Create an Exercise Sheet](https://erasmus-ctm.github.io/Quarto-Tutorial/int/Qmd%20Files/Getting%20Started/beg_exercise_2.html) · [Other Output Formats](https://erasmus-ctm.github.io/Quarto-Tutorial/int/Qmd%20Files/Getting%20Started/beg_exercise_3.html)

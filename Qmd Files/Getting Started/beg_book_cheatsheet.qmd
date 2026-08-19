@@ -1,0 +1,101 @@
+---
+title: "Cheatsheet: Creating a Quarto Book"
+subtitle: "From installation to a published book"
+format:
+  pdf:
+    geometry: margin=0.9in
+    fontsize: 10pt
+    include-in-header: ../../Theme/pdf_cheatsheet.tex
+    highlight-style: github
+    colorlinks: true
+    linkcolor: cheataccent
+    urlcolor: cheataccent
+---
+
+```{=latex}
+\quickfacts{OUTPUT}{Multi-chapter document (HTML / PDF)}{STRUCTURE}{One project, \texttt{chapters:} list decides order}{BEST FOR}{Lecture notes, handbooks, theses}
+```
+
+## 1 — Setup
+
+**Install (once per computer):**
+
+- **VS Code** — [code.visualstudio.com](https://code.visualstudio.com) (tick **"Add to PATH"** during setup)
+- **Quarto CLI** — [quarto.org/docs/get-started](https://quarto.org/docs/get-started/)
+- **Quarto extension** for VS Code — search "Quarto" in the Extensions sidebar
+
+**Create the project:** **File → New File… → Quarto Project → Book Project** → choose your folder. Quarto creates:
+
+- `_quarto.yml` — book title, author, and chapter order
+- `index.qmd` — cover / preface page
+- `intro.qmd`, `summary.qmd` — example chapters (rename or replace)
+- `references.bib` / `references.qmd` — bibliography file and its rendered page
+
+```{=latex}
+\begin{spotlight}{Which one do I need?}
+Writing something long that's read front-to-back, in order --- lecture notes, a handbook, a thesis --- with an automatic table of contents and Previous/Next navigation? This is it. For loosely-linked standalone pages, see the \textbf{Website} cheatsheet; for one short, printable handout, see the \textbf{Exercise Sheet} cheatsheet.
+\end{spotlight}
+```
+
+{{< pagebreak >}}
+
+## 2 — Organizing & writing chapters
+
+**Every chapter is a `.qmd` file.** The order they appear in `_quarto.yml` is the order they appear in the book:
+
+```yaml
+book:
+  title: "My Lecture Notes"
+  author: "Your Name"
+  chapters:
+    - index.qmd
+    - intro.qmd
+    - summary.qmd
+    - references.qmd
+```
+
+**Add a chapter:** create the new `.qmd` file, then add its filename to the `chapters:` list.
+
+Each chapter file itself is written exactly like any other Quarto page — `##` headings, code cells, callouts, citations — see the Website cheatsheet for Markdown basics.
+
+::: {.callout-tip}
+## Tip
+The reader gets a **left sidebar** with all chapters, **Previous / Next** links at the bottom of each page, and a **table of contents** for the current chapter — all generated automatically from the `chapters:` list.
+:::
+
+**Preview vs. Render:**
+
+| Command | What it does | Use it when |
+|---|---|---|
+| `quarto preview` | Opens a live view with sidebar & navigation; updates on save | While you're writing and editing |
+| `quarto render` | Builds the final book into `_book` (or `docs/`, if configured) | Before publishing |
+
+{{< pagebreak >}}
+
+## 3 — Publish with GitHub Pages
+
+A rendered book's `_book` folder works exactly like a website's `_site` folder — the steps are identical:
+
+1. In `_quarto.yml`, under `book:`, add `output-dir: docs`
+2. Render: `quarto render`
+3. Create a **public** repository on [github.com](https://github.com)
+4. Upload the whole project folder (including `docs/`) and commit
+5. Repo → **Settings → Pages** → Branch `main`, folder `/docs` → **Save**
+6. Wait for the green checkmark under **Deployments** — your book is live at
+   `https://<username>.github.io/<repo-name>/`
+
+**Updating your book later:** run `quarto render` again, then re-upload the `docs/` folder to GitHub (or `git push` if you're using Git).
+
+```{=latex}
+\begin{spotlight}{Good to know}
+\begin{itemize}
+\item Group chapters into named sections with \texttt{part:} in the \texttt{chapters:} list, e.g. \texttt{part: "Basics"} followed by its own nested \texttt{chapters:} list.
+\item Add an \texttt{appendices:} list at the book level --- auto-numbered ``Appendix A'', ``Appendix B'', \ldots
+\item Cross-reference any chapter from anywhere in the book: give a heading an id with \texttt{\{\#sec-intro\}}, then link to it with \texttt{@sec-intro}.
+\end{itemize}
+\end{spotlight}
+```
+
+---
+
+Full details & screenshots: [What you need](https://erasmus-ctm.github.io/Quarto-Tutorial/int/Qmd%20Files/Getting%20Started/beg_book_1.html) · [Create a Book](https://erasmus-ctm.github.io/Quarto-Tutorial/int/Qmd%20Files/Getting%20Started/beg_book_2.html) · [Publish a Website](https://erasmus-ctm.github.io/Quarto-Tutorial/int/Qmd%20Files/Getting%20Started/beg_website_3.html) (same steps)

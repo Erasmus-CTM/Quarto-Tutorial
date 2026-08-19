@@ -32,6 +32,8 @@ website:
               text: Create a Website
             - href: "Qmd Files/Getting Started/beg_website_3.qmd"
               text: Publish a Website
+            - href: "Qmd Files/Getting Started/beg_website_cheatsheet.qmd"
+              text: "📄 Cheatsheet (PDF)"
         - section: Creating an Exercise Sheet with Quarto
           contents:
             - href: "Qmd Files/Getting Started/beg_exercise_1.qmd"
@@ -40,16 +42,22 @@ website:
               text: Create an Exercise Sheet
             - href: "Qmd Files/Getting Started/beg_exercise_3.qmd"
               text: Other Output Formats
+            - href: "Qmd Files/Getting Started/beg_exercise_cheatsheet.qmd"
+              text: "📄 Cheatsheet (PDF)"
         - section: Creating a Quarto Book
           contents:
             - href: "Qmd Files/Getting Started/beg_book_1.qmd"
               text: What you need
             - href: "Qmd Files/Getting Started/beg_book_2.qmd"
               text: Create a Book
+            - href: "Qmd Files/Getting Started/beg_book_cheatsheet.qmd"
+              text: "📄 Cheatsheet (PDF)"
         - section: Interactive Code
           contents:
             - href: "Qmd Files/Getting Started/beg_extensions.qmd"
               text: Interactive Python with Pyodide
+            - href: "Qmd Files/Getting Started/beg_extensions_cheatsheet.qmd"
+              text: "📄 Cheatsheet (PDF)"
 
 format:
   html:

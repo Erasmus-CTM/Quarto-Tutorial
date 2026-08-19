@@ -8,6 +8,11 @@ Extensions add extra features to Quarto that are not built in. You install them 
 See the full list at **[quarto.org/docs/extensions](https://quarto.org/docs/extensions/)**.
 :::
 
+::: {.callout-tip}
+## Prefer a quick reference?
+This chapter as a 3-page [PDF cheatsheet](beg_extensions_cheatsheet.qmd) — install & enable, writing cells, and what you get, condensed for printing or quick lookup.
+:::
+
 **Pyodide** lets students run and edit Python code directly in the browser — no Python installation needed on their computer. You write the code once; they click **Run Code**.
 
 This tutorial uses `pyodide-interaktiv`, a fork of the `coatless-quarto/pyodide` extension built for this project. It runs Python in a **Web Worker** instead of on the browser's main thread, which is what makes real `input()`, animations, a Stop button and AI feedback possible — more on that in the last section.

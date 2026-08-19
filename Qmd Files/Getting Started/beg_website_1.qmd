@@ -7,6 +7,11 @@ title: "What you need — Website"
 Full installation instructions are also available at **[quarto.org/docs/get-started](https://quarto.org/docs/get-started/)**.
 :::
 
+::: {.callout-tip}
+## Prefer a quick reference?
+This chapter as a 3-page [PDF cheatsheet](beg_website_cheatsheet.qmd) — setup, writing content, and publishing, condensed for printing or quick lookup.
+:::
+
 You need three things installed. This takes about 10–15 minutes.
 
 ---

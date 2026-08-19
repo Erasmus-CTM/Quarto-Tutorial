@@ -1,0 +1,156 @@
+---
+title: "Cheatsheet: Creating a Quarto Website"
+subtitle: "From installation to a published website"
+format:
+  pdf:
+    geometry: margin=0.9in
+    fontsize: 10pt
+    include-in-header: ../../Theme/pdf_cheatsheet.tex
+    highlight-style: github
+    colorlinks: true
+    linkcolor: cheataccent
+    urlcolor: cheataccent
+---
+
+```{=latex}
+\quickfacts{OUTPUT}{Full multi-page site (HTML)}{STRUCTURE}{One project, many \texttt{.qmd} pages}{PUBLISH}{GitHub Pages (\texttt{docs/} folder)}
+```
+
+## 1 — Setup (once per computer)
+
+**Install:**
+
+- **VS Code** — [code.visualstudio.com](https://code.visualstudio.com) (tick **"Add to PATH"** during setup)
+- **Quarto CLI** — [quarto.org/docs/get-started](https://quarto.org/docs/get-started/)
+- **Quarto extension** for VS Code — search "Quarto" in the Extensions sidebar
+
+**Create the project:**
+
+**File → New File… → Quarto Project → Website Project** → choose your folder. Quarto creates:
+
+- `_quarto.yml` — project-wide settings (see page 2)
+- `index.qmd` — your homepage
+- `about.qmd` — an example second page
+- `styles.css` — optional custom styling
+
+Ready to start editing? See **Preview vs. Render** at the end of page 2 before you do.
+
+```{=latex}
+\begin{spotlight}{Which one do I need?}
+Building something with several linked pages and site-wide navigation --- a course site, documentation, or portfolio? This is it. For one self-contained document to print or hand out, see the \textbf{Exercise Sheet} cheatsheet; for a long, sequentially-read document with numbered chapters, see the \textbf{Book} cheatsheet.
+\end{spotlight}
+```
+
+{{< pagebreak >}}
+
+## 2 — Writing & editing content
+
+Every `.qmd` file is a **YAML header** followed by a **Markdown body**. There are two separate, independent levels of YAML — don't confuse them:
+
+1. **Project-wide, one file:** `_quarto.yml` sets navigation, theme, and defaults for the *entire* site. It exists once per project — you only touch it for site-wide changes, not for every page.
+2. **Per page, every file:** the `---`-fenced header at the *top of each* `.qmd` file. Every page has one; it sets that page's own title and can override the project's defaults just for itself.
+
+Project-wide (`_quarto.yml`):
+
+```yaml
+website:
+  title: "My Site"
+  navbar:
+    left:
+      - text: "About"
+        href: about.qmd
+```
+
+Per page (top of `my-page.qmd`):
+
+```yaml
+---
+title: "My Page"
+format: html
+filters:
+  - parmsam/quizdown
+---
+```
+
+**Markdown body basics:**
+
+| Syntax | Result |
+|---|---|
+| `## Heading` | Section heading |
+| `**bold**`, `*italic*` | **bold**, *italic* |
+| `` `code` `` | inline code |
+| `- item` / `1. item` | Bulleted / numbered list |
+| `> text` | Blockquote |
+| `[text](url)` | Link |
+| `![](path.png)` | Image |
+| `$x^2$`, `$$x^2$$` | Inline / block math |
+| fence tagged `{python}` | Executable code cell (see below) |
+| `::: {.callout-tip} ... :::` | Callout box |
+
+**Callouts** flag information visually:
+
+```markdown
+::: {.callout-tip}
+## Tip
+Use tips for best-practice advice.
+:::
+```
+
+renders as:
+
+::: {.callout-tip}
+## Tip
+Use tips for best-practice advice.
+:::
+
+Other types: `.callout-note`, `.callout-warning`, `.callout-important`.
+
+**Code cells:** open a fence tagged `{python}` (or `{pyodide-python}` for interactive) and close it with a plain fence, e.g.:
+
+```python
+#| echo: false   # hide the code, keep the output
+#| eval: true    # run the cell (default)
+print("Hello!")
+```
+
+Common cell options (as `#|` comments): `echo`, `eval`, `warning`, `error`, `output`.
+
+**Preview vs. Render:**
+
+| Command | What it does | Use it when |
+|---|---|---|
+| **Preview** button, or `quarto preview` | Opens a live local view; updates automatically every time you save a file | While you're writing and editing |
+| `quarto render` | Builds the final static output files into `_site` (or `docs/`, if configured) — no live view opens | Before publishing, or to produce the files to upload |
+
+::: {.callout-note}
+## Tip
+The **Preview** button does both at once: it renders your site and opens the live view. You only need a separate `quarto render` when you want the output files *without* opening a preview — e.g. right before publishing.
+:::
+
+{{< pagebreak >}}
+
+## 3 — Publish with GitHub Pages
+
+1. In `_quarto.yml`, under `project:`, add `output-dir: docs`
+2. Render: `quarto render`
+3. Create a **public** repository on [github.com](https://github.com)
+4. Upload the whole project folder (including `docs/`) and commit
+5. Repo → **Settings → Pages** → Branch `main`, folder `/docs` → **Save**
+6. Wait for the green checkmark under **Deployments** — your site is live at
+   `https://<username>.github.io/<repo-name>/`
+
+**Updating your site later:** run `quarto render` again, then re-upload the `docs/` folder to GitHub (or `git push` if you're using Git).
+
+```{=latex}
+\begin{spotlight}{Good to know}
+\begin{itemize}
+\item \texttt{site-url:} in \texttt{\_quarto.yml} sets the canonical base URL --- needed for correct social-share previews and RSS links.
+\item \texttt{repo-url:} and \texttt{page-footer:} add an automatic ``Edit this page'' / source-code link and a custom footer, site-wide.
+\item Renaming or moving a \texttt{.qmd} file changes its output URL. Plan file names before publishing --- old links to a renamed page will 404.
+\end{itemize}
+\end{spotlight}
+```
+
+---
+
+Full details & screenshots: [What you need](https://erasmus-ctm.github.io/Quarto-Tutorial/int/Qmd%20Files/Getting%20Started/beg_website_1.html) · [Create a Website](https://erasmus-ctm.github.io/Quarto-Tutorial/int/Qmd%20Files/Getting%20Started/beg_website_2.html) · [Publish a Website](https://erasmus-ctm.github.io/Quarto-Tutorial/int/Qmd%20Files/Getting%20Started/beg_website_3.html)

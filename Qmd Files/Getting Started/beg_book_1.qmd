@@ -7,6 +7,11 @@ title: "What you need — Book"
 See the full Quarto book guide at **[quarto.org/docs/books](https://quarto.org/docs/books/)**.
 :::
 
+::: {.callout-tip}
+## Prefer a quick reference?
+This chapter as a 3-page [PDF cheatsheet](beg_book_cheatsheet.qmd) — setup, organizing chapters, and publishing, condensed for printing or quick lookup.
+:::
+
 A Quarto Book is a set of `.qmd` files that are rendered together into a navigable document — perfect for lecture notes, a course handbook, or documentation.
 
 You need the same setup as for a website. If you have not done this yet, follow [What you need — Website](beg_website_1.qmd) first.

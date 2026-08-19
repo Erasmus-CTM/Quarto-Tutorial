@@ -1,0 +1,92 @@
+% Shared LaTeX styling for this tutorial's PDF cheatsheets.
+% Included via `include-in-header:` in each cheatsheet's PDF format options.
+% Reuses the site's navy / accent palette from Theme/morph_custom.scss.
+
+\usepackage{xcolor}
+\definecolor{cheatnavy}{HTML}{1A2E69}
+\definecolor{cheataccent}{HTML}{3A13F8}
+\definecolor{cheatbg}{HTML}{F1F3FA}
+\definecolor{cheatrule}{HTML}{7F8A99}
+
+% -- Compact, no-indent body text, cheat-sheet style -------------------------
+\usepackage{parskip}
+\setlength{\parskip}{0.5em}
+
+% -- Section headings: accent-colored number, navy title, rule underneath ---
+\usepackage{titlesec}
+\titleformat{\section}
+  {\normalfont\Large\bfseries}
+  {\textcolor{cheataccent}{\thesection}}{0.6em}{\color{cheatnavy}}
+  [{\color{cheatrule}\titlerule[0.8pt]}]
+\titlespacing*{\section}{0pt}{1.6em}{0.8em}
+
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\color{cheatnavy}}{}{0em}{}
+\titlespacing*{\subsection}{0pt}{1.1em}{0.4em}
+
+% -- Tighter lists ------------------------------------------------------------
+\usepackage{enumitem}
+\setlist{itemsep=2pt, topsep=4pt, parsep=0pt}
+
+% -- Header / footer ----------------------------------------------------------
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{cheatnavy}\textbf{Quarto Tutorial}}
+\fancyhead[R]{\small\color{cheatnavy}Cheatsheet}
+\fancyfoot[C]{\small\color{cheatrule}\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\footrulewidth}{0pt}
+\renewcommand{\headrule}{{\color{cheataccent}\hrule width\headwidth height\headrulewidth}}
+\fancypagestyle{plain}{\pagestyle{fancy}}
+
+% -- "Quick facts" strip: three short columns under the subtitle ------------
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{colortbl}
+\newcommand{\quickfacts}[6]{%
+  \par\noindent
+  \renewcommand{\arraystretch}{1.2}
+  \arrayrulecolor{cheataccent}
+  \begin{tabular}{@{}p{0.31\linewidth}@{\hspace{0.03\linewidth}}p{0.31\linewidth}@{\hspace{0.03\linewidth}}p{0.31\linewidth}@{}}
+    \toprule
+    \textcolor{cheataccent}{\textbf{\footnotesize #1}} & \textcolor{cheataccent}{\textbf{\footnotesize #3}} & \textcolor{cheataccent}{\textbf{\footnotesize #5}} \\
+    \small #2 & \small #4 & \small #6 \\
+    \bottomrule
+  \end{tabular}
+  \par\vspace{0.8em}
+}
+
+% -- "Spotlight" box: solid accent title bar, distinct from plain callouts --
+\usepackage[most]{tcolorbox}
+\newtcolorbox{spotlight}[1]{
+  colback=cheatbg,
+  colframe=cheataccent,
+  coltitle=white,
+  colbacktitle=cheataccent,
+  fonttitle=\bfseries,
+  title={#1},
+  boxrule=0.8pt,
+  arc=2pt,
+  left=8pt, right=8pt, top=6pt, bottom=6pt
+}
+
+% -- Custom title banner (replaces the default KOMA \maketitle) -------------
+\makeatletter
+\renewcommand{\maketitle}{%
+  \begingroup
+  \centering
+  {\huge\bfseries\color{cheatnavy}\@title\par}
+  \vspace{4pt}
+  {\color{cheataccent}\rule{0.42\linewidth}{1.4pt}\par}
+  \ifdefined\@subtitle
+    \vspace{6pt}
+    {\large\color{cheatnavy}\@subtitle\par}
+  \fi
+  \endgroup
+  \vspace{1.2em}
+}
+\makeatother
+
+% -- Code blocks: subtle branded background ----------------------------------
+\definecolor{shadecolor}{HTML}{F1F3FA}
