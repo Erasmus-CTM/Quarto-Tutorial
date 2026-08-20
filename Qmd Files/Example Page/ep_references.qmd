@@ -26,9 +26,8 @@ The full entry appears below under *References*.
 All interactive features on this site are powered by open-source tools:
 
 - **Quarto** [@quarto] — the publishing system behind this entire site
-- **Pyodide** [@pyodide] — runs Python directly in the browser (see [Code](ep_code.qmd))
+- **pyodide-interaktiv** [@pyodide-interaktiv] — runs Python directly in the browser in a Web Worker, built on top of **Pyodide** [@pyodide] by Droettboom et al. (see [Code](ep_code.qmd))
 - **JSXGraph** [@jsxgraph] — interactive mathematics in the browser (see [Visualizations](ep_visuals.qmd))
 - **quizdown** [@quizdown] — interactive multiple-choice quizzes in the browser (see [Quiz](ep_quiz.qmd))
-<!--  Commented out till Extensions are publicly avaible
 - **py-exercise** [@py-exercise] — editable coding exercises with hidden tests (see [Visualizations](ep_visuals.qmd))
-- **math-exercise** [@math-exercise] — symbolic maths answers checked with SymPy (see [Visualizations](ep_visuals.qmd)) -->
+- **math-exercise** [@math-exercise] — symbolic maths answers checked with SymPy (see [Visualizations](ep_visuals.qmd))

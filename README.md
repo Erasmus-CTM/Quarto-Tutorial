@@ -48,13 +48,14 @@ The tutorial is split into three independent levels — visitors self-select the
 
 | Extension | Purpose |
 |---|---|
-| [`Erasmus-CTM/pyodide-interaktiv`](https://github.com/Erasmus-CTM/pyodide-interaktiv) *(private repo)* | Fork of `coatless-quarto/pyodide`: runs Python live in the browser in a Web Worker — cells share one Python session per page, real `input()`, Matplotlib animations, and safe infinite loops |
-| [`Erasmus-CTM/py-exercise`](https://github.com/Erasmus-CTM/py-exercise) *(private repo)* | Editable Python exercises with hidden tests |
-| [`Erasmus-CTM/math-exercise`](https://github.com/Erasmus-CTM/math-exercise) *(private repo)* | Editable exercises with symbolic/numeric answers, checked with SymPy |
+| [`Erasmus-CTM/pyodide-interaktiv`](https://github.com/Erasmus-CTM/pyodide-interaktiv) | Fork of `coatless-quarto/pyodide`: runs Python live in the browser in a Web Worker — cells share one Python session per page, real `input()`, Matplotlib animations, and safe infinite loops |
+| [`Erasmus-CTM/py-exercise`](https://github.com/Erasmus-CTM/py-exercise) | Editable Python exercises with hidden tests |
+| [`Erasmus-CTM/math-exercise`](https://github.com/Erasmus-CTM/math-exercise) | Editable exercises with symbolic/numeric answers, checked with SymPy |
 | [`jsxgraph/jsxgraph`](https://github.com/jsxgraph/jsxgraph) | Interactive mathematical graphs |
 | [`parmsam/quizdown`](https://github.com/parmsam/quizdown) | Interactive multiple-choice quizzes |
 
-`pyodide-interaktiv`, `py-exercise` and `math-exercise` are now published on GitHub, but the repositories are still **private** — `quarto add` only works with access, everyone else vendors the folder from `_extensions/Erasmus-CTM/` by hand (see the *Interactive Code* chapter of the Intermediate tutorial).
+Each of these Extensions can be added via:  
+`quarto add Gituser/Reponame` (as stated above) within the Quarto CLI.
 
 ---
 

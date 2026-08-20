@@ -26,20 +26,7 @@ Interactive code requires **HTML output**. It works in websites (`format: html`)
 
 ## 1 — Install the pyodide-interaktiv extension
 
-`pyodide-interaktiv` is published at **[github.com/Erasmus-CTM/pyodide-interaktiv](https://github.com/Erasmus-CTM/pyodide-interaktiv)** — but the repository is currently **private**, which decides how you install it:
-
-::: {.panel-tabset}
-## No repo access (for now)
-
-**① Copy the extension folder**
-
-Copy `_extensions/Erasmus-CTM/pyodide-interaktiv/` from this project into your own project's `_extensions/` folder.
-
-That's it — no `quarto add` step needed for a vendored extension, Quarto picks it up automatically.
-
-## Once the repo is public
-
-Installing will be a single command, like any other extension:
+`pyodide-interaktiv` is published at **[github.com/Erasmus-CTM/pyodide-interaktiv](https://github.com/Erasmus-CTM/pyodide-interaktiv)** and installs like any other extension:
 
 **① Open the Terminal in VS Code**
 
@@ -51,8 +38,7 @@ Open the **Terminal** (the command line interface) via **View → Terminal**. A 
 quarto add Erasmus-CTM/pyodide-interaktiv
 ```
 
-Wait until it finishes — it will ask you to confirm once. This only needs to be done **once per project folder**.
-:::
+Wait until it finishes — it will ask you three questions. This only needs to be done **once per project folder**.
 
 ---
 

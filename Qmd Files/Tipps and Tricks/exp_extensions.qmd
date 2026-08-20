@@ -16,9 +16,9 @@ Most extensions are installed once per project with `quarto add <name>` — the 
 | Extension | What it adds | Install |
 |---|---|---|
 | [quizdown](#quizdown-interactive-quizzes) | Multiple-choice, multi-select and ordering quizzes | `quarto add parmsam/quizdown` |
-| [pyodide-interaktiv](#pyodide-interaktiv-the-fork-this-tutorial-runs-on) | Same cells, but in a Web Worker — `input()`, animations, Stop, AI feedback | published, private repo — see below |
-| [py-exercise](#py-exercise-editable-exercises-with-hidden-tests) | Coding exercises with hidden `assert` tests | published, private repo — see below |
-| [math-exercise](#math-exercise-symbolic-answers-checked-with-sympy) | Symbolic maths answers checked with SymPy | published, private repo — see below |
+| [pyodide-interaktiv](#pyodide-interaktiv-the-fork-this-tutorial-runs-on) | Same cells, but in a Web Worker — `input()`, animations, Stop, AI feedback | `quarto add Erasmus-CTM/pyodide-interaktiv` |
+| [py-exercise](#py-exercise-editable-exercises-with-hidden-tests) | Coding exercises with hidden `assert` tests | `quarto add Erasmus-CTM/py-exercise` |
+| [math-exercise](#math-exercise-symbolic-answers-checked-with-sympy) | Symbolic maths answers checked with SymPy | `quarto add Erasmus-CTM/math-exercise` |
 | [JSXGraph](#jsxgraph-interactive-mathematical-graphs) | Interactive mathematical graphs | `quarto add jsxgraph/jsxgraph` |
 
 Extensions can be enabled **globally** in `_quarto.yml` or **per page** in the frontmatter:
@@ -227,7 +227,7 @@ Pyodide runs in WebAssembly. Most pure-Python packages work (`numpy`, `pandas`, 
 
 ### pyodide-interaktiv — the fork this tutorial runs on
 
-**Install:** published, private repo — copy the folder for now (see *Install* below)\
+**Install:** `quarto add Erasmus-CTM/pyodide-interaktiv`\
 **Source:** [@pyodide-interaktiv] — [github.com/Erasmus-CTM/pyodide-interaktiv](https://github.com/Erasmus-CTM/pyodide-interaktiv)
 
 `pyodide-interaktiv` is a rework of `coatless-quarto/pyodide` that runs Python in a **Web Worker** instead of on the browser's main thread, and adds features on top of that — such as AI feedback on every cell. The cell syntax is identical — `{pyodide-python}` with the same `#|` options — so pages swap between the two by changing one line in `filters:`. Everything below is what the Web Worker and these additions buy you.
@@ -388,33 +388,6 @@ Packages that only appear in an `import` are fetched on demand, so `packages:` i
 
 ## Install
 
-::: {.callout-important}
-## Published, but private
-`pyodide-interaktiv`, `py-exercise` and `math-exercise` are published on GitHub — but as **private** repositories, unlike `coatless-quarto/pyodide`. `quarto add` only works if you have access; everyone else vendors the folder by hand until the repos are made public.
-:::
-
-::: {.panel-tabset}
-## No repo access (for now)
-
-**① Copy the extension folder**
-
-Copy `_extensions/Erasmus-CTM/pyodide-interaktiv/` from this project into your own project's `_extensions/` folder.
-
-**② Reference it by folder name**
-
-```{.yaml filename="page.qmd"}
----
-title: "My Page"
-format: html
-filters:
-  - pyodide-interaktiv
----
-```
-
-A vendored extension needs no `quarto add` step, and it is referenced by folder name only — without the `Erasmus-CTM/` prefix that a registry install would add.
-
-## Repo access / once public
-
 ```{.bash filename="Terminal"}
 quarto add Erasmus-CTM/pyodide-interaktiv
 ```
@@ -422,10 +395,13 @@ quarto add Erasmus-CTM/pyodide-interaktiv
 Then reference it with the full name in `filters:`:
 
 ```{.yaml filename="page.qmd"}
+---
+title: "My Page"
+format: html
 filters:
   - Erasmus-CTM/pyodide-interaktiv
+---
 ```
-:::
 
 ::: {.callout-warning}
 ## One Pyodide extension per page
@@ -440,7 +416,7 @@ Two more limits worth knowing: `embed-resources` does not work (Pyodide ships We
 
 ## py-exercise — editable exercises with hidden tests
 
-**Install:** published, private repo — copy the folder for now, `quarto add Erasmus-CTM/py-exercise` once it's public\
+**Install:** `quarto add Erasmus-CTM/py-exercise`\
 **Source:** [@py-exercise] — [github.com/Erasmus-CTM/py-exercise](https://github.com/Erasmus-CTM/py-exercise)
 
 ::: {.callout-note}
@@ -573,7 +549,7 @@ The key is in the rendered page, so this deters casual tampering — it is not r
 
 ## math-exercise — symbolic answers checked with SymPy
 
-**Install:** published, private repo — copy the folder for now, `quarto add Erasmus-CTM/math-exercise` once it's public\
+**Install:** `quarto add Erasmus-CTM/math-exercise`\
 **Source:** [@math-exercise] — [github.com/Erasmus-CTM/math-exercise](https://github.com/Erasmus-CTM/math-exercise)
 
 Where py-exercise checks *code*, math-exercise checks an *answer*. Students type a mathematical expression into an input field and it is compared with SymPy — so any equivalent form counts as correct.

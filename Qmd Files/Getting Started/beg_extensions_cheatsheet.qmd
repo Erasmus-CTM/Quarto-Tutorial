@@ -19,12 +19,11 @@ format:
 Interactive code needs **HTML output** (`format: html`). It works in websites and books, but not in PDF or Word — see the Exercise Sheet cheatsheet for code that has to work everywhere.
 :::
 
-`pyodide-interaktiv` (this tutorial's fork, adding real `input()`, animations, a Stop button, and AI feedback over the base `coatless-quarto/pyodide` extension) is currently a **private** repo:
+`pyodide-interaktiv` (this tutorial's fork, adding real `input()`, animations, a Stop button, and AI feedback over the base `coatless-quarto/pyodide` extension) installs like any other extension:
 
-| Repo access | Install |
-|---|---|
-| **No access (for now)** | Copy `_extensions/Erasmus-CTM/pyodide-interaktiv/` into your own project's `_extensions/` folder — no `quarto add` step needed |
-| **Once public** | `quarto add Erasmus-CTM/pyodide-interaktiv` in the Terminal |
+```{.bash filename="Terminal"}
+quarto add Erasmus-CTM/pyodide-interaktiv
+```
 
 **Enable it** in a page's YAML header:
 
