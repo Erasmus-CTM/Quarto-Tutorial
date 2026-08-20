@@ -169,7 +169,7 @@
     "href": "Qmd Files/Getting Started/beg_extensions.html#install-the-pyodide-interaktiv-extension",
     "title": "Interactive Code with Pyodide",
     "section": "1 — Install the pyodide-interaktiv extension",
-    "text": "1 — Install the pyodide-interaktiv extension\npyodide-interaktiv is published at github.com/Erasmus-CTM/pyodide-interaktiv and installs like any other extension:\n① Open the Terminal in VS Code\nOpen the Terminal (the command line interface) via View → Terminal. A panel opens at the bottom of the screen. Make sure the path shown matches your project folder.\n② Run the install command\n\n\nTerminal\n\nquarto add Erasmus-CTM/pyodide-interaktiv\n\nWait until it finishes — it will ask you to confirm once. This only needs to be done once per project folder.",
+    "text": "1 — Install the pyodide-interaktiv extension\npyodide-interaktiv is published at github.com/Erasmus-CTM/pyodide-interaktiv and installs like any other extension:\n① Open the Terminal in VS Code\nOpen the Terminal (the command line interface) via View → Terminal. A panel opens at the bottom of the screen. Make sure the path shown matches your project folder.\n② Run the install command\n\n\nTerminal\n\nquarto add Erasmus-CTM/pyodide-interaktiv\n\nWait until it finishes — it will ask you three questions. This only needs to be done once per project folder.",
     "crumbs": [
       "Getting Started",
       "Interactive Code",

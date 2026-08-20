@@ -231,7 +231,7 @@
     "href": "Qmd Files/Example Page/ep_references.html#tools-used-in-this-example",
     "title": "References",
     "section": "Tools Used in This Example",
-    "text": "Tools Used in This Example\nAll interactive features on this site are powered by open-source tools:\n\nQuarto (Posit Software, PBC 2022) — the publishing system behind this entire site\nPyodide (Droettboom et al. 2021) — runs Python directly in the browser (see Code)\nJSXGraph (Miller 2023) — interactive mathematics in the browser (see Visualizations)\nquizdown (Sauer 2023) — interactive multiple-choice quizzes in the browser (see Quiz)",
+    "text": "Tools Used in This Example\nAll interactive features on this site are powered by open-source tools:\n\nQuarto (Posit Software, PBC 2022) — the publishing system behind this entire site\npyodide-interaktiv (Erasmus CTM, n.d.c) — runs Python directly in the browser in a Web Worker, built on top of Pyodide (Droettboom et al. 2021) by Droettboom et al. (see Code)\nJSXGraph (Miller 2023) — interactive mathematics in the browser (see Visualizations)\nquizdown (Sauer 2023) — interactive multiple-choice quizzes in the browser (see Quiz)\npy-exercise (Erasmus CTM, n.d.b) — editable coding exercises with hidden tests (see Visualizations)\nmath-exercise (Erasmus CTM, n.d.a) — symbolic maths answers checked with SymPy (see Visualizations)",
     "crumbs": [
       "Example Page",
       "References"
