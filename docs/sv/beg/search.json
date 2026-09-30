@@ -1,0 +1,244 @@
+[
+  {
+    "objectID": "Qmd Files/Example Page/index_beg.html",
+    "href": "Qmd Files/Example Page/index_beg.html",
+    "title": "Vad Quarto kan göra",
+    "section": "",
+    "text": "Quarto gör om vanliga .qmd-filer till interaktiva webbplatser, PDF-filer och presentationer. Du behöver ingen erfarenhet av webbutveckling.\nDen här lilla webbplatsen undersöker sinusfunktionen och visar samtidigt vad Quarto kan.",
+    "crumbs": [
+      "Exempelsida",
+      "Översikt"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/index_beg.html#sidorna-i-korthet",
+    "href": "Qmd Files/Example Page/index_beg.html#sidorna-i-korthet",
+    "title": "Vad Quarto kan göra",
+    "section": "Sidorna i korthet",
+    "text": "Sidorna i korthet\n\n\n\n\nSida\nVad du ser\n\n\n\n\n1\nLayout & formatering\nInforutor, kolumner, flikar\n\n\n2\nKod\nPython: bara utdata, körbar kod, med inmatning\n\n\n3\nVisualiseringar\nInteraktiv graf, animation, uppgifter och diagram\n\n\n4\nQuiz\nFrågor för självkontroll\n\n\n5\nKällor\nCitat och litteraturförteckning",
+    "crumbs": [
+      "Exempelsida",
+      "Översikt"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_references.html",
+    "href": "Qmd Files/Example Page/ep_references.html",
+    "title": "Källor",
+    "section": "",
+    "text": "Quarto kan skapa citat och litteraturförteckningar från vanliga .bib-filer, helt utan extra program.",
+    "crumbs": [
+      "Exempelsida",
+      "Källor"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_references.html#så-fungerar-det",
+    "href": "Qmd Files/Example Page/ep_references.html#så-fungerar-det",
+    "title": "Källor",
+    "section": "Så fungerar det",
+    "text": "Så fungerar det\n\nSkapa en fil references.bib med BibTeX-poster.\nLägg till bibliography: references.bib i sidans YAML-huvud.\nCitera var som helst i texten med [@nyckel].\n\nLitteraturförteckningen visas automatiskt i slutet av sidan.\n\n\n\n\n\n\nTipsExempel\n\n\n\nSkriver du [@quarto] i texten blir det citatet: (Posit Software, PBC 2022)\nHela posten står längst ner i litteraturförteckningen.",
+    "crumbs": [
+      "Exempelsida",
+      "Källor"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_references.html#verktyg-i-det-här-exemplet",
+    "href": "Qmd Files/Example Page/ep_references.html#verktyg-i-det-här-exemplet",
+    "title": "Källor",
+    "section": "Verktyg i det här exemplet",
+    "text": "Verktyg i det här exemplet\nAlla interaktiva delar av de här sidorna bygger på fritt tillgängliga verktyg:\n\nQuarto (Posit Software, PBC 2022): publiceringssystemet bakom alla de här sidorna\npyodide-interaktiv (Erasmus CTM, u.å.c): kör Python direkt i webbläsaren i en Web Worker och bygger på Pyodide (Droettboom m.fl. 2021) av Droettboom m.fl. (se Kod)\nJSXGraph (Miller 2023): interaktiv matematik i webbläsaren (se Visualiseringar)\nquizdown (Sauer 2023): interaktiva flervalsquiz i webbläsaren (se Quiz)\npy-exercise (Erasmus CTM, u.å.b): programmeringsuppgifter med dolda tester (se Visualiseringar)\nmath-exercise (Erasmus CTM, u.å.a): matematiska svar som kontrolleras symboliskt med SymPy (se Visualiseringar)",
+    "crumbs": [
+      "Exempelsida",
+      "Källor"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_layout.html",
+    "href": "Qmd Files/Example Page/ep_layout.html",
+    "title": "Layout & formatering",
+    "section": "",
+    "text": "Quarto ger dig en rik layout utan att du skriver HTML eller CSS.",
+    "crumbs": [
+      "Exempelsida",
+      "Layout & formatering"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_layout.html#inforutor",
+    "href": "Qmd Files/Example Page/ep_layout.html#inforutor",
+    "title": "Layout & formatering",
+    "section": "Inforutor",
+    "text": "Inforutor\n\n\n\n\n\n\nNoteraNotera\n\n\n\nAnvänd notiser för bakgrundsinformation eller definitioner.\n\n\n\n\n\n\n\n\nTipsTips\n\n\n\nAnvänd tips för goda arbetssätt eller praktiska råd.\n\n\n\n\n\n\n\n\nVarningVarning\n\n\n\nAnvänd varningar för att peka på vanliga misstag.\n\n\n\n\n\n\n\n\nViktigtViktigt\n\n\n\nAnvänd viktigt för sådant som studenterna inte får missa.",
+    "crumbs": [
+      "Exempelsida",
+      "Layout & formatering"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_layout.html#kolumner",
+    "href": "Qmd Files/Example Page/ep_layout.html#kolumner",
+    "title": "Layout & formatering",
+    "section": "Kolumner",
+    "text": "Kolumner\n\n\nBegrepp\nSinusfunktionen avbildar en vinkel på y-koordinaten på enhetscirkeln.\n\\[f: \\mathbb{R} \\to [-1, 1]\\]\n\nViktiga värden\n\n\n\n\\(x\\)\n\\(0\\)\n\\(\\frac{\\pi}{6}\\)\n\\(\\frac{\\pi}{2}\\)\n\\(\\pi\\)\n\n\n\n\n\\(\\sin(x)\\)\n\\(0\\)\n\\(0.5\\)\n\\(1\\)\n\\(0\\)",
+    "crumbs": [
+      "Exempelsida",
+      "Layout & formatering"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_layout.html#flikar",
+    "href": "Qmd Files/Example Page/ep_layout.html#flikar",
+    "title": "Layout & formatering",
+    "section": "Flikar",
+    "text": "Flikar\n\nDefinitionFormelEgenskaper\n\n\nSinusfunktionen är en av de grundläggande trigonometriska funktionerna. Den är periodisk med perioden \\(2\\pi\\) och har värdemängden \\([-1, 1]\\).\n\n\nMed Taylorutvecklingen:\n\\[\\sin(x) = \\sum_{n=0}^{\\infty} \\frac{(-1)^n}{(2n+1)!}\\, x^{2n+1}\n           = x - \\frac{x^3}{6} + \\frac{x^5}{120} - \\cdots\\]\n\n\n\nPeriod: \\(2\\pi\\)\nVärdemängd: \\([-1,\\, 1]\\)\nNollställen: \\(x = k\\pi,\\; k \\in \\mathbb{Z}\\)\nMaxima: \\(x = \\frac{\\pi}{2} + 2k\\pi\\)",
+    "crumbs": [
+      "Exempelsida",
+      "Layout & formatering"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_code.html",
+    "href": "Qmd Files/Example Page/ep_code.html",
+    "title": "Kod",
+    "section": "",
+    "text": "Quarto har tre sätt att ta med Python-kod. I webbläsaren körs den med Pyodide (Droettboom m.fl. 2021), alltså utan installation.",
+    "crumbs": [
+      "Exempelsida",
+      "Kod"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_code.html#bara-utdata",
+    "href": "Qmd Files/Example Page/ep_code.html#bara-utdata",
+    "title": "Kod",
+    "section": "Bara utdata",
+    "text": "Bara utdata\nKoden körs automatiskt i bakgrunden, bara resultatet visas:\n\n\nsin(  0°) = 0.0000\nsin( 30°) = 0.5000\nsin( 45°) = 0.7071\nsin( 60°) = 0.8660\nsin( 90°) = 1.0000\nsin(180°) = 0.0000\n\n\n\n\nSå här såg koden för den här utdatan ut:\n\n```python\n#| execute: true # This makes the Code execute during render\n#| echo: false # This makes the Code invisible in the final output\nimport math\n\nangles = [0, 30, 45, 60, 90, 180]\nfor deg in angles:\n    val = math.sin(math.radians(deg))\n    print(f\"sin({deg:3d}°) = {val:.4f}\")\n```",
+    "crumbs": [
+      "Exempelsida",
+      "Kod"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_code.html#körbar-kod",
+    "href": "Qmd Files/Example Page/ep_code.html#körbar-kod",
+    "title": "Kod",
+    "section": "Körbar kod",
+    "text": "Körbar kod\nKlicka på Kör koden, så körs koden direkt i webbläsaren:\n\nAktivera JavaScript för att kunna använda de interaktiva kodcellerna på den här sidan.",
+    "crumbs": [
+      "Exempelsida",
+      "Kod"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_code.html#celler-delar-tillstånd",
+    "href": "Qmd Files/Example Page/ep_code.html#celler-delar-tillstånd",
+    "title": "Kod",
+    "section": "Celler delar tillstånd",
+    "text": "Celler delar tillstånd\nAlla celler på en sida körs i samma Python-tolk. En senare cell kan återanvända en variabel från en tidigare utan att importera eller definiera den på nytt:\n\nAktivera JavaScript för att kunna använda de interaktiva kodcellerna på den här sidan.",
+    "crumbs": [
+      "Exempelsida",
+      "Kod"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_code.html#interaktivt-input",
+    "href": "Qmd Files/Example Page/ep_code.html#interaktivt-input",
+    "title": "Kod",
+    "section": "Interaktivt input()",
+    "text": "Interaktivt input()\nCeller kan använda ett riktigt, väntande input(). Sidan går att använda medan den väntar på din inmatning:\n\nAktivera JavaScript för att kunna använda de interaktiva kodcellerna på den här sidan.\n→ En animation och uppgifter att lösa finns på sidan Visualiseringar.",
+    "crumbs": [
+      "Exempelsida",
+      "Kod"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_quiz.html",
+    "href": "Qmd Files/Example Page/ep_quiz.html",
+    "title": "Quiz",
+    "section": "",
+    "text": "Testa vad du kan om sinusfunktionen och om Quartos funktioner. Quizet bygger på tillägget quarto-quizdown (Sauer 2023) av Parmsam.\n\n---\nshuffleAnswers: true\nshuffleQuestions: false\nlocale: en\n---\n\n# Vad är $\\sin(0)$?\n\n1. [x] $0$\n    &gt; Rätt! Punkten på enhetscirkeln för vinkeln $0$ ligger på x-axeln.\n2. [ ] $1$\n3. [ ] $-1$\n4. [ ] odefinierat\n\n# Vilket är det största värdet av $\\sin(x)$?\n\n1. [ ] $0$\n2. [ ] $\\pi$\n3. [x] $1$\n    &gt; Rätt! Värdemängden är $[-1, 1]$.\n4. [ ] $2$\n\n# Vilken period har $\\sin(x)$?\n\n1. [ ] $\\pi$\n2. [x] $2\\pi$\n    &gt; Rätt! Efter ett helt varv upprepas allt.\n3. [ ] $4\\pi$\n4. [ ] $\\frac{\\pi}{2}$\n\n# Vilket tillägg gör att Python körs direkt i webbläsaren?\n\n1. [x] pyodide-interaktiv\n    &gt; Rätt!\n2. [ ] quizdown\n3. [ ] jsxgraph\n4. [ ] py-exercise\n\n# `pyodide-interaktiv` kör Python i en Web Worker. Vad vinner man på det?\n\n1. [ ] Ingenting, det är bara ett annat namn på samma motor.\n2. [x] Sidan går att använda medan koden körs, och varje cell får en stoppknapp.\n    &gt; Rätt!\n3. [ ] Koden körs på en server i stället för i webbläsaren.\n4. [ ] Python-koden kompileras till JavaScript.\n\n# Vilken filändelse använder Quarto för källfiler?\n\n1. [ ] `.html`\n2. [ ] `.py`\n3. [x] `.qmd`\n    &gt; Rätt!\n4. [ ] `.tex`\n\n\n\n\n\nReferenser\n\nSauer, Patrick. 2023. ”quarto-quizdown: Quizdown Extension for Quarto”. https://github.com/parmsam/quarto-quizdown.",
+    "crumbs": [
+      "Exempelsida",
+      "Quiz"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_visuals.html",
+    "href": "Qmd Files/Example Page/ep_visuals.html",
+    "title": "Visualiseringar",
+    "section": "",
+    "text": "Dra punkten längs x-axeln och läs av värdena för \\(\\sin(x)\\). Grafen ritas med JSXGraph (Miller 2023), i Erasmus-CTM:s version från math-exercise-repot.",
+    "crumbs": [
+      "Exempelsida",
+      "Visualiseringar"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_visuals.html#interaktiv-graf-2",
+    "href": "Qmd Files/Example Page/ep_visuals.html#interaktiv-graf-2",
+    "title": "Visualiseringar",
+    "section": "",
+    "text": "Dra punkten längs x-axeln och läs av värdena för \\(\\sin(x)\\). Grafen ritas med JSXGraph (Miller 2023), i Erasmus-CTM:s version från math-exercise-repot.",
+    "crumbs": [
+      "Exempelsida",
+      "Visualiseringar"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_visuals.html#animation-3",
+    "href": "Qmd Files/Example Page/ep_visuals.html#animation-3",
+    "title": "Visualiseringar",
+    "section": "Animation",
+    "text": "Animation\nEn FuncAnimation från Matplotlib spelas upp direkt på sidan. Koden är precis den du skulle skriva i en lokal utvecklingsmiljö, utan något extra anrop:\n\nAktivera JavaScript för att kunna använda de interaktiva kodcellerna på den här sidan.",
+    "crumbs": [
+      "Exempelsida",
+      "Visualiseringar"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_visuals.html#uppgift-att-redigera",
+    "href": "Qmd Files/Example Page/ep_visuals.html#uppgift-att-redigera",
+    "title": "Visualiseringar",
+    "section": "Uppgift att redigera",
+    "text": "Uppgift att redigera\nGör färdigt funktionen. Testerna körs automatiskt när du kontrollerar din lösning:\n\n  \n    Please enable JavaScript to load the interactive exercise.",
+    "crumbs": [
+      "Exempelsida",
+      "Visualiseringar"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_visuals.html#räkneuppgift",
+    "href": "Qmd Files/Example Page/ep_visuals.html#räkneuppgift",
+    "title": "Visualiseringar",
+    "section": "Räkneuppgift",
+    "text": "Räkneuppgift\nEn annan sorts kontroll: svaret kontrolleras symboliskt med SymPy i stället för med tester:\n\nSinus för en speciell vinkel\n\n\nVad är \\(\\sin(90°)\\), exakt? \n\n\n  ✓ Check\n  ⓘ Input help\n  \n    💬 Feedback\n    ⚙",
+    "crumbs": [
+      "Exempelsida",
+      "Visualiseringar"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_visuals.html#graf-som-uppgift",
+    "href": "Qmd Files/Example Page/ep_visuals.html#graf-som-uppgift",
+    "title": "Visualiseringar",
+    "section": "Graf som uppgift",
+    "text": "Graf som uppgift\nEn graf kan också själv vara svaret. Här kontrolleras vart du drar punkten.\n\n\nSinusfunktionens maximum\n\n\nDra punkten \\(P\\) till maximum för \\(\\sin(x)\\) på intervallet \\([0, 2\\pi]\\) och klicka på \"Check\".\n\n\n  ✓ Check\n  ⓘ Input help\n  \n    💬 Feedback\n    ⚙",
+    "crumbs": [
+      "Exempelsida",
+      "Visualiseringar"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_visuals.html#diagram-3",
+    "href": "Qmd Files/Example Page/ep_visuals.html#diagram-3",
+    "title": "Visualiseringar",
+    "section": "Diagram",
+    "text": "Diagram\nVad händer egentligen mellan att du sparar en .qmd-fil och att dokumentet är färdigt?\n\n\n\n\n\nflowchart LR\n    A[\".qmd-fil&lt;br/&gt;Markdown + kod + YAML\"] --&gt; B[\"Köra&lt;br/&gt;Jupyter / Knitr\"]\n    B --&gt; C[\".md&lt;br/&gt;ren Markdown\"]\n    C --&gt; D{\"Pandoc\"}\n    D --&gt; E[\"🌐 HTML\"]\n    D --&gt; F[\"📝 Word .docx\"]\n    D --&gt; G[\".tex LaTeX\"]\n    G --&gt; H[\"LaTeX-motor&lt;br/&gt;TinyTeX\"]\n    H --&gt; I[\"📄 PDF\"]\n    style D fill:#4CAF50,color:#fff,stroke:#388e3c\n    style A fill:#e3f2fd,stroke:#90caf9\n\n\n\n\n\n\nQuarto kör först alla kodceller (Jupyter för Python, Knitr för R) och lämnar sedan den Markdown som blir resultatet till Pandoc, som skapar utdatan. HTML och Word kan Pandoc skriva direkt, men inte PDF: där går vägen via LaTeX, som ett separat program (TinyTeX) sedan översätter till den färdiga filen. På grund av den omvägen kräver PDF ett installationssteg mer (Vad du behöver) än HTML och Word.\n→ Fler Python-exempel (bara utdata, körbar kod, med inmatning) finns på sidan Kod.",
+    "crumbs": [
+      "Exempelsida",
+      "Visualiseringar"
+    ]
+  }
+]

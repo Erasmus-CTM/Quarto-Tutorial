@@ -1,0 +1,461 @@
+[
+  {
+    "objectID": "Qmd Files/Getting Started/getting_started.html",
+    "href": "Qmd Files/Getting Started/getting_started.html",
+    "title": "Kom i gang med Quarto",
+    "section": "",
+    "text": "NoteOfficiel dokumentation\n\n\n\nDen officielle Quarto-dokumentation på quarto.org/docs/get-started har grundige vejledninger til alle niveauer og er altid et godt sted at læse videre.\nVelkommen! Denne guide fører dig trin for trin gennem, hvordan du laver rigtige Quarto-dokumenter, som en byggevejledning. Du behøver ingen forkundskaber.",
+    "crumbs": [
+      "Oversigt"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/getting_started.html#hvad-vil-du-lave",
+    "href": "Qmd Files/Getting Started/getting_started.html#hvad-vil-du-lave",
+    "title": "Kom i gang med Quarto",
+    "section": "Hvad vil du lave?",
+    "text": "Hvad vil du lave?\n\n\n🌐 Et websted\nPræsenter dit kursus, din forskning eller din portfolio som et overskueligt websted med flere sider.\n→ Det skal du bruge\n→ Opret et websted\n→ Udgiv på nettet\n\n\n📄 Et opgaveark\nLav et professionelt opgaveark, der bliver til PDF, HTML eller Word ud fra én og samme fil.\n→ Det skal du bruge\n→ Opret et opgaveark\n→ Andre formater\n\n\n📚 En bog\nStrukturer længere indhold, for eksempel forelæsningsnoter eller en håndbog, som en bog med navigation.\n→ Det skal du bruge\n→ Opret en bog",
+    "crumbs": [
+      "Oversigt"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/getting_started.html#vil-du-have-interaktiv-python-kode",
+    "href": "Qmd Files/Getting Started/getting_started.html#vil-du-have-interaktiv-python-kode",
+    "title": "Kom i gang med Quarto",
+    "section": "✨ Vil du have interaktiv Python-kode?",
+    "text": "✨ Vil du have interaktiv Python-kode?\nHvis du vil have, at de studerende kan køre og ændre Python-kode direkte i browseren (uden at de installerer noget), så læs guiden om udvidelser.",
+    "crumbs": [
+      "Oversigt"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_website_3.html",
+    "href": "Qmd Files/Getting Started/beg_website_3.html",
+    "title": "Udgiv webstedet",
+    "section": "",
+    "text": "NoteOfficiel dokumentation\n\n\n\nQuarto har flere måder at udgive på. De er alle beskrevet på quarto.org/docs/publishing.\nDenne guide bruger GitHub Pages, en gratis tjeneste, der gør dit websted offentligt tilgængeligt på en github.io-adresse.\nDu skal bruge en gratis konto på github.com. Opret en, hvis du ikke har en i forvejen.",
+    "crumbs": [
+      "Opret et Quarto-websted",
+      "Udgiv webstedet"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_website_3.html#lad-quarto-skrive-til-en-mappe-docs",
+    "href": "Qmd Files/Getting Started/beg_website_3.html#lad-quarto-skrive-til-en-mappe-docs",
+    "title": "Udgiv webstedet",
+    "section": "1 – Lad Quarto skrive til en mappe docs",
+    "text": "1 – Lad Quarto skrive til en mappe docs\n① Åbn _quarto.yml, og tilføj outputmappen\n\nÅbn filen _quarto.yml, og tilføj output-dir: docs i afsnittet project:, præcis som på billedet. GitHub Pages forventer, at webstedets filer ligger i en mappe, der hedder docs.\n\n② Render webstedet\nÅbn terminalen via View → Terminal, og kør:\n\n\nTerminal\n\nquarto render\n\nQuarto bygger hele webstedet i mappen docs/. Du kan se den dukke op i filoversigten til venstre.",
+    "crumbs": [
+      "Opret et Quarto-websted",
+      "Udgiv webstedet"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_website_3.html#opret-et-repository-på-github",
+    "href": "Qmd Files/Getting Started/beg_website_3.html#opret-et-repository-på-github",
+    "title": "Udgiv webstedet",
+    "section": "2 – Opret et repository på GitHub",
+    "text": "2 – Opret et repository på GitHub\n① Gå til GitHub, og opret et nyt repository\n\nLog ind på github.com, klik på + øverst til højre, og vælg New repository. Giv det et navn, det bliver en del af webstedets adresse.\n\n② Vælg Public, og opret\n\nSørg for, at Public er valgt. Lad alle andre indstillinger stå, og klik på Create repository.",
+    "crumbs": [
+      "Opret et Quarto-websted",
+      "Udgiv webstedet"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_website_3.html#upload-dine-filer",
+    "href": "Qmd Files/Getting Started/beg_website_3.html#upload-dine-filer",
+    "title": "Udgiv webstedet",
+    "section": "3 – Upload dine filer",
+    "text": "3 – Upload dine filer\n① Find uploadlinket\n\nDit nye, tomme repository åbnes. Klik på uploading an existing file midt på siden.\n\n② Træk projektfilerne over på siden\nTræk alle filer og mapper fra projektmappen direkte over på GitHubs uploadside. Tag det hele med: docs/, _quarto.yml, index.qmd, styles.css og alle andre filer.\n\n\n\n\n\n\nAdvarsel\n\n\n\nUpload ikke kun indholdet af mappen docs/. Upload indholdet af hele projektmappen, så GitHub har alt, hvad der skal bruges.\n\n\nGitHub viser “Processing your files…”, mens uploaden er i gang.\n\n\n③ Lav et commit af filerne\n\nRul ned efter uploaden. Der finder du dialogen “Commit changes”. Du kan lade beskeden stå som “Initial Push” eller skrive din egen. Klik på Commit changes.",
+    "crumbs": [
+      "Opret et Quarto-websted",
+      "Udgiv webstedet"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_website_3.html#slå-github-pages-til",
+    "href": "Qmd Files/Getting Started/beg_website_3.html#slå-github-pages-til",
+    "title": "Udgiv webstedet",
+    "section": "4 – Slå GitHub Pages til",
+    "text": "4 – Slå GitHub Pages til\n① Åbn Settings for repositoryet\n\nKlik på fanen Settings øverst på repositoryets side.\n\n② Find “Pages” i sidepanelet til venstre\n\nRul ned i sidepanelet til venstre, og klik på Pages.\n\n③ Vælg branchen main og mappen /docs\n\nKlik under Branch på listen, hvor der står None, og vælg main.\n\n\nDer vises endnu en liste til mappen. Klik på den, og vælg /docs.\n\n④ Gem\n\nKlik på Save. GitHub begynder nu at bygge og udgive webstedet.",
+    "crumbs": [
+      "Opret et Quarto-websted",
+      "Udgiv webstedet"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_website_3.html#webstedet-er-udgivet",
+    "href": "Qmd Files/Getting Started/beg_website_3.html#webstedet-er-udgivet",
+    "title": "Udgiv webstedet",
+    "section": "5 – Webstedet er udgivet",
+    "text": "5 – Webstedet er udgivet\n① Vent på udgivelsen\n\nGå tilbage til repositoryets forside. I højre side ser du afsnittet Deployments. Vent, til det viser et grønt flueben, det tager som regel 1–2 minutter.\nKlik på udgivelsen for at finde webstedets offentlige adresse. Den ser ud som https://ditbrugernavn.github.io/dit-repo-navn/.\n\n\n\n\n\n\n\nTipOpdater webstedet senere\n\n\n\nHver gang du har ændret noget:\n\nKør quarto render i terminalen i VS Code (eller klik på knappen Preview, og luk den) for at bygge mappen docs/ igen\nGå til dit repository på GitHub → træk den opdaterede mappe docs/ over på fillisten → Commit\n\nGitHub Pages udgiver automatisk igen inden for et minut eller to.",
+    "crumbs": [
+      "Opret et Quarto-websted",
+      "Udgiv webstedet"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_website_1.html",
+    "href": "Qmd Files/Getting Started/beg_website_1.html",
+    "title": "Det skal du bruge – websted",
+    "section": "",
+    "text": "NoteOfficiel dokumentation\n\n\n\nDen fulde installationsvejledning findes også på quarto.org/docs/get-started.\nDu skal installere tre ting. Det tager cirka 10–15 minutter. Skærmbillederne er de samme på alle sprog (engelsk Windows).",
+    "crumbs": [
+      "Opret et Quarto-websted",
+      "Det skal du bruge"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_website_1.html#installer-vs-code",
+    "href": "Qmd Files/Getting Started/beg_website_1.html#installer-vs-code",
+    "title": "Det skal du bruge – websted",
+    "section": "1 – Installer VS Code",
+    "text": "1 – Installer VS Code\n① Gå til VS Codes websted, og hent installationsprogrammet\n\nGå til code.visualstudio.com, og klik på den store knap Download for Windows. Filen lander i din mappe med overførsler.\n\n② Start installationsprogrammet\n\nDobbeltklik på den hentede fil (den ligner VS Code-logoet med et grønt flueben).\n\n③ Sørg for, at “Add to PATH” er markeret\n\nUnder installationen kommer der en side med afkrydsningsfelter. Sørg for, at “Add to PATH” er markeret, det er vigtigt for, at Quarto virker rigtigt. Klik derefter på Next.\n\n④ Afslut installationen\n\nKlik på Finish. VS Code åbnes automatisk.\n\n\n\n\n\n\nNote🔍 I detaljer: alle sider i installationsprogrammet til VS Code\n\n\n\n\n\nLicensaftale: vælg “I accept”, og klik på Next.\n\nDestinationsmappe: behold standardstien, og klik på Next.\n\nMappe i startmenuen: lad den stå, og klik på Next.\n\nOversigt: se den igennem, og klik på Install.\n\nInstallationen er i gang: vent, til den er færdig.",
+    "crumbs": [
+      "Opret et Quarto-websted",
+      "Det skal du bruge"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_website_1.html#installer-quarto",
+    "href": "Qmd Files/Getting Started/beg_website_1.html#installer-quarto",
+    "title": "Det skal du bruge – websted",
+    "section": "2 – Installer Quarto",
+    "text": "2 – Installer Quarto\n① Gå til Quartos websted, og hent installationsprogrammet\n\nGå til quarto.org/docs/get-started, og klik på knappen Download Quarto CLI under Step 1. Vælg installationsprogrammet til Windows.\n\n② Start installationsprogrammet til Quarto\n\nDobbeltklik på den hentede .msi-fil, og følg installationsprogrammet. Du kan klikke dig igennem alle sider med standardindstillingerne.\n\n③ Afslut\n\nKlik på Finish. Nu er Quarto installeret.\n\n\n\n\n\n\nNote🔍 I detaljer: alle sider i installationsprogrammet til Quarto\n\n\n\n\n\nVelkomstside: klik på Next.\n\nInstallationens omfang: “Install just for you” er fint for de fleste.\n\nDestinationsmappe: behold standardvalget, og klik på Next.\n\nInstallationen er i gang: vent, til den er færdig.",
+    "crumbs": [
+      "Opret et Quarto-websted",
+      "Det skal du bruge"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_website_1.html#installer-quarto-udvidelsen-i-vs-code",
+    "href": "Qmd Files/Getting Started/beg_website_1.html#installer-quarto-udvidelsen-i-vs-code",
+    "title": "Det skal du bruge – websted",
+    "section": "3 – Installer Quarto-udvidelsen i VS Code",
+    "text": "3 – Installer Quarto-udvidelsen i VS Code\n① Søg efter Quarto-udvidelsen, og installer den\n\nKlik i VS Code på symbolet Extensions i sidepanelet til venstre (fire firkanter). Søg efter Quarto, klik på resultatet, og klik på Trust Publisher & Install i den dialogboks, der vises.\n\n\n\n\n\n\n\nTip✅ Færdig – nu kan du gå i gang med at bygge!\n\n\n\nFortsæt med Opret et websted →",
+    "crumbs": [
+      "Opret et Quarto-websted",
+      "Det skal du bruge"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_extensions.html",
+    "href": "Qmd Files/Getting Started/beg_extensions.html",
+    "title": "Interaktiv kode med Pyodide",
+    "section": "",
+    "text": "NoteHvad er udvidelser?\n\n\n\nUdvidelser (extensions) giver Quarto funktioner, der ikke er indbygget. Du installerer dem én gang pr. projektmappe. Hele listen finder du på quarto.org/docs/extensions.\nMed Pyodide kan de studerende køre og ændre Python-kode direkte i browseren uden at installere Python på deres computer. Du skriver koden én gang, de klikker på Kør koden.\nDenne vejledning bruger udvidelsen pyodide-interaktiv til det, en omarbejdning af coatless-quarto/pyodide. Den kører Python i en Web Worker, altså ved siden af siden i stedet for i den. Det er det, der gør rigtig input(), animationer, en stopknap og AI-feedback muligt. Mere om det i sidste afsnit.",
+    "crumbs": [
+      "Interaktiv kode",
+      "Interaktivt Python med Pyodide"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_extensions.html#installer-udvidelsen",
+    "href": "Qmd Files/Getting Started/beg_extensions.html#installer-udvidelsen",
+    "title": "Interaktiv kode med Pyodide",
+    "section": "1 – Installer udvidelsen",
+    "text": "1 – Installer udvidelsen\n① Åbn terminalen i VS Code\nÅbn terminalen (kommandolinjen) via View → Terminal. Der åbnes et panel nederst i vinduet. Kontrollér, at den viste sti er din projektmappe.\n\n② Kør installationskommandoen\nUdvidelsen ligger på github.com/Erasmus-CTM/pyodide-interaktiv og installeres som enhver anden udvidelse:\n\n\nTerminal\n\nquarto add Erasmus-CTM/pyodide-interaktiv\n\nVent, til kommandoen er færdig. Den stiller tre spørgsmål: om du stoler på kilden, om du vil fortsætte, og om du vil se dokumentationen. Det er kun nødvendigt én gang pr. projektmappe. Bagefter ligger udvidelsen i projektets mappe _extensions/.",
+    "crumbs": [
+      "Interaktiv kode",
+      "Interaktivt Python med Pyodide"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_extensions.html#slå-den-til-i-din-fil",
+    "href": "Qmd Files/Getting Started/beg_extensions.html#slå-den-til-i-din-fil",
+    "title": "Interaktiv kode med Pyodide",
+    "section": "2 – Slå den til i din fil",
+    "text": "2 – Slå den til i din fil\nTilføj en linje filters: i hovedet på din .qmd-fil:\n---\ntitle: \"My Page\"\nformat: html\nfilters:\n  - Erasmus-CTM/pyodide-interaktiv\n---",
+    "crumbs": [
+      "Interaktiv kode",
+      "Interaktivt Python med Pyodide"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_extensions.html#tilføj-en-interaktiv-kodeblok",
+    "href": "Qmd Files/Getting Started/beg_extensions.html#tilføj-en-interaktiv-kodeblok",
+    "title": "Interaktiv kode med Pyodide",
+    "section": "3 – Tilføj en interaktiv kodeblok",
+    "text": "3 – Tilføj en interaktiv kodeblok\nI stedet for en almindelig kodeblok skriver du {pyodide-python}:\n```{pyodide-python}\nx = [1, 2, 3, 4, 5]\nprint(sum(x))\n```",
+    "crumbs": [
+      "Interaktiv kode",
+      "Interaktivt Python med Pyodide"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_extensions.html#se-resultatet",
+    "href": "Qmd Files/Getting Started/beg_extensions.html#se-resultatet",
+    "title": "Interaktiv kode med Pyodide",
+    "section": "4 – Se resultatet",
+    "text": "4 – Se resultatet\nKør quarto preview i terminalen. Kodeblokken vises i browseren med en række knapper. Sådan ser den ud, og du kan prøve den med det samme her:\n\nSlå JavaScript til for at kunne bruge de interaktive kodeceller på denne side.\n\nKør koden starter koden (også med Shift + Enter). Ved første klik indlæses Python, det tager nogle sekunder.\nNulstil gendanner din oprindelige kode.\nFeedback beder en AI om feedback (skal sættes op først).\nMens koden kører, vises Stop.\n\nDe studerende kan ændre koden og køre den igen uden at installere noget.",
+    "crumbs": [
+      "Interaktiv kode",
+      "Interaktivt Python med Pyodide"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_extensions.html#hvad-udvidelsen-ellers-kan",
+    "href": "Qmd Files/Getting Started/beg_extensions.html#hvad-udvidelsen-ellers-kan",
+    "title": "Interaktiv kode med Pyodide",
+    "section": "5 – Hvad udvidelsen ellers kan",
+    "text": "5 – Hvad udvidelsen ellers kan\n\nCeller deler variabler. Alle celler på en side hører til én og samme Python-session. En senere celle kan bruge det, en tidligere har defineret eller importeret, men først når den tidligere er kørt.\nRigtig input(). En celle kan stoppe og vente på input.\nAnimationer. En FuncAnimation fra Matplotlib vises som en afspiller, med den samme kode, som du ville skrive på din egen computer.\nUendelige løkker er ufarlige. En while True: ved en fejl låser ikke siden, Stop afbryder.\nAI-feedback. Hintene bliver mere konkrete for hvert klik.\n\ninput() og delte variabler kan du prøve på siden Kode i eksempelsiden og animationen på siden Visualiseringer.\n\n\n\n\n\n\n\nTipSkal de studerende udfylde løsninger?\n\n\n\nUdvidelsen py-exercise giver kodeblokke med skjulte automatiske test: de studerende ser, om deres løsning består. Udvidelsen math-exercise gør det samme for matematiske svar, kontrolleret med SymPy. Begge installeres på samme måde:\n\n\nTerminal\n\nquarto add Erasmus-CTM/py-exercise\nquarto add Erasmus-CTM/math-exercise\n\nEksempler på begge finder du på eksempelsiden i denne vejledning.",
+    "crumbs": [
+      "Interaktiv kode",
+      "Interaktivt Python med Pyodide"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_exercise_3.html",
+    "href": "Qmd Files/Getting Started/beg_exercise_3.html",
+    "title": "Andre outputformater",
+    "section": "",
+    "text": "En af Quartos største fordele: én .qmd-fil → flere outputformater. Du skriver indholdet én gang og ændrer kun én linje for at få PDF, HTML eller Word.",
+    "crumbs": [
+      "Opret et opgaveark med Quarto",
+      "Andre outputformater"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_exercise_3.html#skift-format",
+    "href": "Qmd Files/Getting Started/beg_exercise_3.html#skift-format",
+    "title": "Andre outputformater",
+    "section": "Skift format",
+    "text": "Skift format\nÅbn din .qmd-fil, og ret linjen format: i hovedet øverst.\nTil HTML (ingen ekstra værktøjer, virker i alle browsere):\n---\ntitle: \"Exercise Sheet 1\"\nformat: html\n---\nTil Word (.docx, kan redigeres i Microsoft Word):\n---\ntitle: \"Exercise Sheet 1\"\nformat: docx\n---\nTil PDF (kræver TinyTeX, se Det skal du bruge):\n---\ntitle: \"Exercise Sheet 1\"\nformat: pdf\n---\nKør derefter quarto render i terminalen. Quarto laver filen i det format, du har valgt.",
+    "crumbs": [
+      "Opret et opgaveark med Quarto",
+      "Andre outputformater"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_exercise_3.html#lav-alle-formater-på-én-gang",
+    "href": "Qmd Files/Getting Started/beg_exercise_3.html#lav-alle-formater-på-én-gang",
+    "title": "Andre outputformater",
+    "section": "Lav alle formater på én gang",
+    "text": "Lav alle formater på én gang\nDu kan angive flere formater, så renderer Quarto dem alle i én omgang:\n---\ntitle: \"Exercise Sheet 1\"\nformat:\n  html: default\n  pdf: default\n  docx: default\n---\nKør quarto render én gang, så får du tre outputfiler.\n\n\n\n\n\n\n\nNoteOfficiel dokumentation\n\n\n\nAlle tilgængelige formater og deres indstillinger finder du på quarto.org/docs/output-formats/all-formats.html.",
+    "crumbs": [
+      "Opret et opgaveark med Quarto",
+      "Andre outputformater"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_exercise_1.html",
+    "href": "Qmd Files/Getting Started/beg_exercise_1.html",
+    "title": "Det skal du bruge – opgaveark",
+    "section": "",
+    "text": "NoteOfficiel dokumentation\n\n\n\nMere om indstillingerne for PDF finder du på quarto.org/docs/output-formats/pdf-basics.html.\nTil et opgaveark skal du bruge det samme som til et websted plus ét ekstra værktøj, hvis du vil lave PDF.",
+    "crumbs": [
+      "Opret et opgaveark med Quarto",
+      "Det skal du bruge"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_exercise_1.html#trin-1-vs-code-quarto-udvidelsen",
+    "href": "Qmd Files/Getting Started/beg_exercise_1.html#trin-1-vs-code-quarto-udvidelsen",
+    "title": "Det skal du bruge – opgaveark",
+    "section": "Trin 1 – VS Code + Quarto-udvidelsen",
+    "text": "Trin 1 – VS Code + Quarto-udvidelsen\nHvis du ikke har gjort det endnu, så følg Det skal du bruge – websted, og kom tilbage hertil, når du er færdig.",
+    "crumbs": [
+      "Opret et opgaveark med Quarto",
+      "Det skal du bruge"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_exercise_1.html#trin-2-installer-tinytex-kun-til-pdf",
+    "href": "Qmd Files/Getting Started/beg_exercise_1.html#trin-2-installer-tinytex-kun-til-pdf",
+    "title": "Det skal du bruge – opgaveark",
+    "section": "Trin 2 – Installer TinyTeX (kun til PDF)",
+    "text": "Trin 2 – Installer TinyTeX (kun til PDF)\nQuarto skal bruge et LaTeX-system for at lave PDF-filer. Det nemmeste er TinyTeX, som Quarto kan installere for dig direkte fra VS Code.\nÅbn terminalen (kommandolinjen) i VS Code via View → Terminal, og kør:\n\n\nTerminal\n\nquarto install tinytex\n\nVent, til installationen er færdig, det kan tage nogle minutter.\n\n\n\n\n\n\nNote\n\n\n\nHvis du kun vil lave HTML eller Word, kan du springe dette trin helt over.\n\n\n\n\n\n\n\n\n\nTip✅ Klar!\n\n\n\nFortsæt med Opret et opgaveark →",
+    "crumbs": [
+      "Opret et opgaveark med Quarto",
+      "Det skal du bruge"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_book_2.html",
+    "href": "Qmd Files/Getting Started/beg_book_2.html",
+    "title": "Opret en bog",
+    "section": "",
+    "text": "Opret en ny tom mappe (for eksempel min-bog), og åbn den i VS Code via File → Open Folder. Klik på Yes, I trust the authors, hvis dialogboksen vises.",
+    "crumbs": [
+      "Opret en Quarto-bog",
+      "Opret en bog"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_book_2.html#åbn-en-ny-mappe-i-vs-code",
+    "href": "Qmd Files/Getting Started/beg_book_2.html#åbn-en-ny-mappe-i-vs-code",
+    "title": "Opret en bog",
+    "section": "",
+    "text": "Opret en ny tom mappe (for eksempel min-bog), og åbn den i VS Code via File → Open Folder. Klik på Yes, I trust the authors, hvis dialogboksen vises.",
+    "crumbs": [
+      "Opret en Quarto-bog",
+      "Opret en bog"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_book_2.html#opret-et-bogprojekt",
+    "href": "Qmd Files/Getting Started/beg_book_2.html#opret-et-bogprojekt",
+    "title": "Opret en bog",
+    "section": "2 – Opret et bogprojekt",
+    "text": "2 – Opret et bogprojekt\n① Opret et nyt Quarto-projekt\n\nGå til File → New File…. Der vises en lille menu, vælg Quarto Project.\n\nVælg Book Project og derefter din projektmappe.\n\n② Dine bogfiler er klar\n\nQuarto har oprettet hele bogens struktur:\n\n_quarto.yml: bogens indstillinger og kapitlernes rækkefølge\nindex.qmd: forside eller forord\nintro.qmd, summary.qmd: eksempelkapitler\nreferences.bib: litteraturfil\nreferences.qmd: side med litteraturlisten",
+    "crumbs": [
+      "Opret en Quarto-bog",
+      "Opret en bog"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_book_2.html#se-en-forhåndsvisning-af-bogen",
+    "href": "Qmd Files/Getting Started/beg_book_2.html#se-en-forhåndsvisning-af-bogen",
+    "title": "Opret en bog",
+    "section": "3 – Se en forhåndsvisning af bogen",
+    "text": "3 – Se en forhåndsvisning af bogen\n① Kør quarto preview i terminalen\n\nÅbn terminalen (View → Terminal), og kør:\nquarto preview\nBogen bygges, og en forhåndsvisning åbnes i VS Code og i browseren.\n\n② Se resultatet i browseren\n\nBogen åbnes i browseren med:\n\net sidepanel til venstre med alle kapitler\nlinks til forrige og næste kapitel nederst på hver side\nen indholdsfortegnelse til højre for det aktuelle kapitel",
+    "crumbs": [
+      "Opret en Quarto-bog",
+      "Opret en bog"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_book_2.html#tilføj-og-ret-kapitler",
+    "href": "Qmd Files/Getting Started/beg_book_2.html#tilføj-og-ret-kapitler",
+    "title": "Opret en bog",
+    "section": "4 – Tilføj og ret kapitler",
+    "text": "4 – Tilføj og ret kapitler\nÅbn _quarto.yml for at bestemme, hvilke filer der er kapitler, og i hvilken rækkefølge:\nbook:\n  title: \"My Lecture Notes\"\n  author: \"Your Name\"\n  chapters:\n    - index.qmd\n    - intro.qmd\n    - summary.qmd\n    - references.qmd\nHver post er filnavnet på en .qmd-fil i mappen. Tilføj en linje for et nyt kapitel, og opret den tilhørende .qmd-fil.\n\n\n\n\n\n\n\nTip✅ Din bog kører!\n\n\n\n\nRet i en kapitelfil, og gem, så opdateres forhåndsvisningen med det samme\nKlar til at udgive? Se Udgiv webstedet →. Mappen _book fungerer præcis som mappen _site",
+    "crumbs": [
+      "Opret en Quarto-bog",
+      "Opret en bog"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_book_1.html",
+    "href": "Qmd Files/Getting Started/beg_book_1.html",
+    "title": "Det skal du bruge – bog",
+    "section": "",
+    "text": "NoteOfficiel dokumentation\n\n\n\nDen fulde guide til Quarto-bøger finder du på quarto.org/docs/books.\nEn Quarto-bog er en samling .qmd-filer, der renderes sammen til et dokument med navigation. Det passer godt til forelæsningsnoter, en kursushåndbog eller dokumentation.\nDu skal bruge det samme som til et websted. Hvis du ikke har gjort det endnu, så følg først Det skal du bruge – websted.",
+    "crumbs": [
+      "Opret en Quarto-bog",
+      "Det skal du bruge"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_book_1.html#sådan-er-en-bog-bygget-op",
+    "href": "Qmd Files/Getting Started/beg_book_1.html#sådan-er-en-bog-bygget-op",
+    "title": "Det skal du bruge – bog",
+    "section": "Sådan er en bog bygget op",
+    "text": "Sådan er en bog bygget op\nNår du opretter et bogprojekt, laver Quarto automatisk denne filstruktur:\n\n\n_quarto.yml: angiver titel, forfatter og kapitlernes rækkefølge\nindex.qmd: forside eller forord\nintro.qmd, summary.qmd: eksempelkapitler (omdøb dem, eller erstat dem)\nreferences.bib: litteraturfil til citater\nreferences.qmd: side, hvor litteraturlisten laves automatisk\n\n_quarto.yml binder det hele sammen. For eksempel:\nbook:\n  title: \"My Lecture Notes\"\n  author: \"Your Name\"\n  chapters:\n    - index.qmd\n    - intro.qmd\n    - summary.qmd\n    - references.qmd\nHver .qmd-fil bliver til ét kapitel. Rækkefølgen i listen er rækkefølgen i bogen.\n\n\n\n\n\n\n\nTip✅ Klar!\n\n\n\nFortsæt med Opret en bog →",
+    "crumbs": [
+      "Opret en Quarto-bog",
+      "Det skal du bruge"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_exercise_2.html",
+    "href": "Qmd Files/Getting Started/beg_exercise_2.html",
+    "title": "Opret et opgaveark",
+    "section": "",
+    "text": "① Åbn dialogen New File\n\nGå i VS Code til File → New File…. Der vises en lille menu. Vælg Quarto Document.\n\n② Filen åbnes med et færdigt hoved\n\nVS Code opretter en ny fil, hvor en enkel indstillingsblok allerede er udfyldt. Gem den med et navn som exercises.qmd (File → Save eller Ctrl+S).",
+    "crumbs": [
+      "Opret et opgaveark med Quarto",
+      "Opret et opgaveark"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_exercise_2.html#opret-en-ny-quarto-fil",
+    "href": "Qmd Files/Getting Started/beg_exercise_2.html#opret-en-ny-quarto-fil",
+    "title": "Opret et opgaveark",
+    "section": "",
+    "text": "① Åbn dialogen New File\n\nGå i VS Code til File → New File…. Der vises en lille menu. Vælg Quarto Document.\n\n② Filen åbnes med et færdigt hoved\n\nVS Code opretter en ny fil, hvor en enkel indstillingsblok allerede er udfyldt. Gem den med et navn som exercises.qmd (File → Save eller Ctrl+S).",
+    "crumbs": [
+      "Opret et opgaveark med Quarto",
+      "Opret et opgaveark"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_exercise_2.html#angiv-outputformat",
+    "href": "Qmd Files/Getting Started/beg_exercise_2.html#angiv-outputformat",
+    "title": "Opret et opgaveark",
+    "section": "2 – Angiv outputformat",
+    "text": "2 – Angiv outputformat\n① Ret hovedet\nToppen af filen styrer outputformatet. Ret den til:\n---\ntitle: \"Exercise Sheet 1\"\nauthor: \"Your Name\"\nformat: pdf\n---\nDet fortæller Quarto: lav en PDF med denne titel og forfatter.\n\n\n\n\n\n\nNote\n\n\n\nPDF kræver TinyTeX, se Det skal du bruge, hvis du ikke har installeret det endnu. Til HTML retter du format: pdf til format: html, så skal der ikke bruges ekstra værktøjer.",
+    "crumbs": [
+      "Opret et opgaveark med Quarto",
+      "Opret et opgaveark"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_exercise_2.html#skriv-dine-opgaver",
+    "href": "Qmd Files/Getting Started/beg_exercise_2.html#skriv-dine-opgaver",
+    "title": "Opret et opgaveark",
+    "section": "3 – Skriv dine opgaver",
+    "text": "3 – Skriv dine opgaver\nUnder hovedet skriver du indholdet som almindelig tekst. Brug ## til overskrifter. Lad der være en tom linje mellem afsnittene.\n## Exercise 1\n\nCalculate the derivative of $f(x) = x^2 + 3x$.\n\n## Exercise 2\n\nExplain the difference between a list and a dictionary in Python.",
+    "crumbs": [
+      "Opret et opgaveark med Quarto",
+      "Opret et opgaveark"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_exercise_2.html#tilføj-et-kodeeksempel-valgfrit",
+    "href": "Qmd Files/Getting Started/beg_exercise_2.html#tilføj-et-kodeeksempel-valgfrit",
+    "title": "Opret et opgaveark",
+    "section": "4 – Tilføj et kodeeksempel (valgfrit)",
+    "text": "4 – Tilføj et kodeeksempel (valgfrit)\nSådan viser du Python-kode, der vises, men ikke køres:\n```python\nx = [1, 2, 3, 4]\nprint(sum(x))\n```",
+    "crumbs": [
+      "Opret et opgaveark med Quarto",
+      "Opret et opgaveark"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_exercise_2.html#render-arket",
+    "href": "Qmd Files/Getting Started/beg_exercise_2.html#render-arket",
+    "title": "Opret et opgaveark",
+    "section": "5 – Render arket",
+    "text": "5 – Render arket\nÅbn terminalen via View → Terminal, og kør:\n\n\nTerminal\n\nquarto render exercises.qmd\n\n\nQuarto opretter outputfilen (PDF eller HTML) i den samme mappe. Åbn den fra din filoversigt.\n\n\n\n\n\n\nNote🔍 Forhåndsvisning, mens du skriver\n\n\n\n\n\nI stedet for quarto render kan du bruge:\n\n\nTerminal\n\nquarto preview exercises.qmd\n\nSå åbnes en forhåndsvisning i browseren, som opdateres, hver gang du gemmer filen.\n\n\n\n\n\n\n\n\n\n\nTip✅ Dit opgaveark er færdigt!\n\n\n\n\nVil du eksportere som HTML, Word eller PDF fra den samme fil? Se Andre outputformater →\nVil du have, at de studerende kører og ændrer Python-kode i browseren? Se Interaktiv kode →",
+    "crumbs": [
+      "Opret et opgaveark med Quarto",
+      "Opret et opgaveark"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_website_2.html",
+    "href": "Qmd Files/Getting Started/beg_website_2.html",
+    "title": "Opret et websted",
+    "section": "",
+    "text": "Opret en ny tom mappe på din computer (for eksempel på skrivebordet). Giv den et kort navn uden mellemrum, for eksempel mit-websted.\nKlik i VS Code på File → Open Folder, og vælg den nye mappe.\n\n\n\n\n\n\nAdvarselVS Code spørger: “Do you trust the authors?”\n\n\n\n\nDenne dialogboks vises, første gang du åbner en mappe. Klik på Yes, I trust the authors, ellers kører VS Code i en begrænset tilstand, hvor nogle funktioner ikke virker.",
+    "crumbs": [
+      "Opret et Quarto-websted",
+      "Opret et websted"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_website_2.html#åbn-projektmappen-i-vs-code",
+    "href": "Qmd Files/Getting Started/beg_website_2.html#åbn-projektmappen-i-vs-code",
+    "title": "Opret et websted",
+    "section": "",
+    "text": "Opret en ny tom mappe på din computer (for eksempel på skrivebordet). Giv den et kort navn uden mellemrum, for eksempel mit-websted.\nKlik i VS Code på File → Open Folder, og vælg den nye mappe.\n\n\n\n\n\n\nAdvarselVS Code spørger: “Do you trust the authors?”\n\n\n\n\nDenne dialogboks vises, første gang du åbner en mappe. Klik på Yes, I trust the authors, ellers kører VS Code i en begrænset tilstand, hvor nogle funktioner ikke virker.",
+    "crumbs": [
+      "Opret et Quarto-websted",
+      "Opret et websted"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_website_2.html#opret-et-quarto-webstedsprojekt",
+    "href": "Qmd Files/Getting Started/beg_website_2.html#opret-et-quarto-webstedsprojekt",
+    "title": "Opret et websted",
+    "section": "2 – Opret et Quarto-webstedsprojekt",
+    "text": "2 – Opret et Quarto-webstedsprojekt\n① Opret et nyt Quarto-projekt\n\nGå til File → New File…. Der vises en lille menu, vælg Quarto Project.\n\nVælg Website Project og derefter din projektmappe.\n\n② Dine projektfiler er klar\n\nQuarto har oprettet fire filer:\n\n_quarto.yml: indstillinger som titel, navigation og tema\nindex.qmd: din startside\nabout.qmd: en side nummer to som eksempel\nstyles.css: dit eget design, hvis du vil",
+    "crumbs": [
+      "Opret et Quarto-websted",
+      "Opret et websted"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_website_2.html#se-en-forhåndsvisning-af-webstedet",
+    "href": "Qmd Files/Getting Started/beg_website_2.html#se-en-forhåndsvisning-af-webstedet",
+    "title": "Opret et websted",
+    "section": "3 – Se en forhåndsvisning af webstedet",
+    "text": "3 – Se en forhåndsvisning af webstedet\n① Klik på knappen Preview øverst til højre i editoren\n\nKlik på det lille forhåndsvisningssymbol øverst til højre i kodevinduet. VS Code åbner terminalen automatisk, renderer webstedet og viser en forhåndsvisning i et nyt panel til højre. Du behøver ingen browser.\n\n\n\n\n\n\n\nNote🔍 Andre måder at forhåndsvise og rendere på\n\n\n\n\n\nRendere filer (lave output uden forhåndsvisning)\nHvis du kun vil lave outputfilerne uden at åbne en forhåndsvisning, så åbn terminalen via View → Terminal, og kør:\n\n\nTerminal\n\nquarto render\n\nSå oprettes alle outputfiler i mappen _site (eller docs/, hvis du har indstillet det). Brug det, når du er klar til at udgive, se Udgiv webstedet →.\n\nForhåndsvisning i browseren\nDu har to muligheder:\n\nÅbn de færdige HTML-filer i mappen _site direkte i browseren (dobbeltklik på dem i Stifinder).\nEller kør quarto preview i terminalen. Så startes en lokal server, og webstedet åbnes automatisk i browseren. Browseren opdateres, hver gang du gemmer en fil.\n\n\n\nTerminal\n\nquarto preview\n\n\n\n\n\n\n\n\n\n\n\n\nTip✅ Dit første Quarto-websted kører!\n\n\n\nNæste trin:\n\nRet i index.qmd, og gem, så opdateres forhåndsvisningen med det samme\nRet title: i _quarto.yml for at give webstedet et nyt navn\nKlar til at lægge det på nettet? Fortsæt med Udgiv webstedet →",
+    "crumbs": [
+      "Opret et Quarto-websted",
+      "Opret et websted"
+    ]
+  }
+]

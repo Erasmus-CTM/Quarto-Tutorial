@@ -1,0 +1,9 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Quarto Tutorial",
+    "section": "",
+    "text": "This tutorial shows lecturers what Quarto can do and how to work with it. There are three levels, pick the one that fits you:\n\nNever seen a Quarto page before? Have a look at the example page.\nYou want to learn how to create something with Quarto? Start with Getting Started.\nYou already create Quarto documents and want to get better? Go to Tips & Tricks.\n\n\n\n\n\n\n\nNoteLanguage and level\n\n\n\nSwitch the level in the top bar and the language with the globe. Switching the language keeps you on the same page. How this is built is explained in Tips & Tricks → Multilanguage Projects."
+  }
+]

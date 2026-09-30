@@ -1,0 +1,409 @@
+[
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/index_exp.html",
+    "href": "Qmd Files/Tipps and Tricks/index_exp.html",
+    "title": "Quarto: tips & tricks",
+    "section": "",
+    "text": "Videre med Quarto\nDenne del er til dig, der allerede kan lave Quarto-dokumenter og vil videre. Alle tre niveauer i denne vejledning er bygget med de teknikker, der beskrives her.",
+    "crumbs": [
+      "Eksempelside",
+      "Hvad der dækkes & hvad du bør kunne i forvejen"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/index_exp.html#hvad-der-dækkes-og-hvor-du-finder-det",
+    "href": "Qmd Files/Tipps and Tricks/index_exp.html#hvad-der-dækkes-og-hvor-du-finder-det",
+    "title": "Quarto: tips & tricks",
+    "section": "Hvad der dækkes, og hvor du finder det",
+    "text": "Hvad der dækkes, og hvor du finder det\n\n\n\nJeg vil …\nGå til\n\n\n\n\nStyre outputformater, freeze og profiler\nYML-filen\n\n\nIndstille sidepanelets afsnit og sammenfoldning\nYML-filen → Sidepanel\n\n\nTilpasse webstedets udseende med temaer og CSS\nYML-filen → Typografier\n\n\nStyre, hvordan kode køres (echo, eval, fold, …)\nQMD-filen\n\n\nVise indhold kun i bestemte profiler eller formater\nQMD-filen → Betinget indhold\n\n\nKrydshenvise til figurer, tabeller og afsnit\nQMD-filen → Krydshenvisninger\n\n\nBruge quizdown, Pyodide, JSXGraph, py-exercise eller math-exercise\nUdvidelser\n\n\nTilbyde det samme projekt på flere sprog\nFlersprogede projekter\n\n\nSlå noget op hurtigt\nCheatsheet",
+    "crumbs": [
+      "Eksempelside",
+      "Hvad der dækkes & hvad du bør kunne i forvejen"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/index_exp.html#hvad-du-bør-kunne-i-forvejen",
+    "href": "Qmd Files/Tipps and Tricks/index_exp.html#hvad-du-bør-kunne-i-forvejen",
+    "title": "Quarto: tips & tricks",
+    "section": "Hvad du bør kunne i forvejen",
+    "text": "Hvad du bør kunne i forvejen\nDenne del forudsætter, at du er fortrolig med følgende fra de andre niveauer:\n\nOprette et websted, et opgaveark eller en bog med Quarto: Kom i gang\nKøre Python i browseren med Pyodide: Interaktiv kode\nHvordan interaktivt Quarto-indhold ser ud: Eksempelsiden",
+    "crumbs": [
+      "Eksempelside",
+      "Hvad der dækkes & hvad du bør kunne i forvejen"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_qmd.html",
+    "href": "Qmd Files/Tipps and Tricks/exp_qmd.html",
+    "title": "QMD-filen",
+    "section": "",
+    "text": "En .qmd-fil er en almindelig tekstfil, der kombinerer Markdown til tekst og kodeblokke til beregninger. Dette kapitel gennemgår de indstillinger, der giver dig præcis kontrol over, hvordan kode køres, og hvordan indhold vises.",
+    "crumbs": [
+      "Eksempelside",
+      "QMD-filen"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_qmd.html#indstillinger-for-kodeblokke",
+    "href": "Qmd Files/Tipps and Tricks/exp_qmd.html#indstillinger-for-kodeblokke",
+    "title": "QMD-filen",
+    "section": "Indstillinger for kodeblokke",
+    "text": "Indstillinger for kodeblokke\nSom standard viser Quarto både koden og dens output. Med indstillingerne for kodeblokke kan du ændre det: skjule koden i en færdig rapport, tilføje billedtekster eller springe langsomme beregninger over, uden at røre selve koden.\nHver indstilling skrives som en kommentar med #| øverst i kodeblokken. Blokken nedenfor kører print(\"Hello!\"), men skjuler kildekoden og undertrykker advarsler:\n```{.python}\n#| echo: false\n#| eval: true\n#| output: true\n#| warning: false\nprint(\"Hello!\")\n```\n\n\n\n\n\n\nNoteHvorfor {.python} i stedet for {python}?\n\n\n\nKrøllede parenteser uden punktum, {python}, fortæller Quarto, at blokken skal køres som Python-kode. Det er det, du vil i dit eget dokument, men i en vejledning som denne vil vi kun vise syntaksen.\nMed et punktum, {.python}, bliver blokken kun vist: Quarto farvelægger den som Python, men kører aldrig koden. Alternativt giver det samme effekt at pakke hele eksemplet ind i en blok med fire backticks, ````markdown.\nI dine egne .qmd-filer bruger du {python} (uden punktum), så blokken faktisk køres.\n\n\n\nOversigt over indstillingerne\n\n\n\n\n\n\n\n\nIndstilling\nVærdier\nHvad den styrer\n\n\n\n\necho\ntrue / false / fenced\nVis kildekoden\n\n\neval\ntrue / false\nKør koden\n\n\noutput\ntrue / false / asis\nVis outputtet\n\n\nwarning\ntrue / false\nVis advarsler\n\n\nerror\ntrue / false\nVis fejl (i stedet for at afbryde)\n\n\ninclude\ntrue / false\nfalse: koden køres, men hverken kode eller output vises\n\n\ncode-fold\ntrue / false\nFold koden sammen bag en knap\n\n\ncode-summary\ntekst\nTeksten på knappen, der folder koden ud\n\n\nfig-cap\ntekst\nBilledtekst til figurer\n\n\nfig-align\nleft / center / right\nFigurens justering\n\n\nlabel\ntekst\nKodeblokkens id. Til krydshenvisninger skal det begynde med fig- eller tbl-\n\n\n\n\n\nAlmindelige kombinationer\nDisse tre mønstre dækker de fleste hverdagstilfælde:\n\n\nSkjul koden, vis outputtet\n#| echo: false\nKoden køres i baggrunden, og læseren ser kun resultatet. Perfekt til færdige rapporter.\n\nVis koden, kør den ikke\n#| eval: false\nNyttigt til illustrerende eksempler eller kode, der ikke ville virke i det aktuelle miljø.\n\nKodeblok, der kan foldes ud\n#| code-fold: true\n#| code-summary: \"Show the code\"\nHolder siden overskuelig, men lader nysgerrige læsere folde kildekoden ud.",
+    "crumbs": [
+      "Eksempelside",
+      "QMD-filen"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_qmd.html#globale-standardværdier-for-kodeblokke",
+    "href": "Qmd Files/Tipps and Tricks/exp_qmd.html#globale-standardværdier-for-kodeblokke",
+    "title": "QMD-filen",
+    "section": "Globale standardværdier for kodeblokke",
+    "text": "Globale standardværdier for kodeblokke\nDet er kedeligt og giver let fejl at gentage de samme indstillinger i hver eneste kodeblok. Angiv standardværdier én gang i _quarto.yml. De gælder for alle kodeblokke i projektet, og du tilsidesætter kun, hvor det er nødvendigt:\n\n\n_quarto.yml\n\nexecute:\n  echo: false\n  warning: false",
+    "crumbs": [
+      "Eksempelside",
+      "QMD-filen"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_qmd.html#conditional-content",
+    "href": "Qmd Files/Tipps and Tricks/exp_qmd.html#conditional-content",
+    "title": "QMD-filen",
+    "section": "Betinget indhold",
+    "text": "Betinget indhold\nNogle gange har du brug for forskellig tekst til forskellige målgrupper eller outputformater: en forenklet forklaring til begyndere og flere detaljer til øvede, eller et interaktivt element i HTML, som ikke findes i PDF.\n\nIndhold, der afhænger af profilen\nProfiler defineres i _quarto.yml. Quarto evaluerer dem ved renderingen, og .qmd-kilden er den samme for alle målgrupper.\n\n\nMarkdown\n::: {.content-visible when-profile=\"english\"}\nThis paragraph only appears in the English build.\n:::\n\n::: {.content-hidden when-profile=\"beg\"}\nHidden in the beg profile, visible everywhere else.\n:::\n\nHvad der sker\nquarto render --profile english tager de blokke med, der er mærket when-profile=\"english\". Blokke mærket med et andet sprog, f.eks. when-profile=\"deutsch\", falder væk.\nSådan er siderne i denne vejledning bygget: hver fil indeholder én blok pr. sprog.\n\n\n\n\nIndhold, der afhænger af formatet\n\n\nMarkdown\n::: {.content-visible when-format=\"html\"}\nThis only appears in HTML output.\n:::\n\n::: {.content-visible when-format=\"pdf\"}\nThis only appears in PDF output.\n:::\n\nHvad der sker\nQuarto tjekker outputformatet ved renderingen. Kun den blok, der passer, tages med, resten falder væk uden besked.\nBrug det til at indlejre interaktive HTML-elementer og samtidig tilbyde et statisk alternativ til PDF.",
+    "crumbs": [
+      "Eksempelside",
+      "QMD-filen"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_qmd.html#cross-referencing",
+    "href": "Qmd Files/Tipps and Tricks/exp_qmd.html#cross-referencing",
+    "title": "QMD-filen",
+    "section": "Krydshenvisninger",
+    "text": "Krydshenvisninger\nMed krydshenvisninger skriver du @fig-sine i teksten, og Quarto laver det automatisk om til “Figur 1”, med et link i HTML og det rigtige nummer, også selvom figurerne bytter rækkefølge.\n\nFigurer\n\n\nMarkdown\n```{.python}\n#| label: fig-sine\n#| fig-cap: \"A plot of sin(x)\"\nimport matplotlib.pyplot as plt\nimport numpy as np\nx = np.linspace(0, 2*np.pi, 200)\nplt.plot(x, np.sin(x))\nplt.show()\n```\n\nAs shown in @fig-sine, the sine function...\n\nHvad der sker\nIndstillingen label registrerer figuren, fig-cap angiver billedteksten. @fig-sine i teksten bliver til et klikbart link “Figur 1” i HTML og det rigtige nummer i PDF. Quarto står for optællingen.\nId’er for figurer skal begynde med fig-.\n\n\n\n\n\n\n\n\nNote\n\n\n\nHusk: Brug {python} i stedet for {.python} i dit eget dokument. Varianten med punktum bruges her kun, for at koden ikke skal køres i vejledningen.\n\n\n\n\nTabeller\n\n\nMarkdown\n```{.python}\n#| label: tbl-data\n#| tbl-cap: \"Summary statistics\"\nimport pandas as pd\ndf = pd.DataFrame({\"x\": [1,2,3], \"y\": [4,5,6]})\ndf\n```\n\nThe values in @tbl-data show...\n\nHvad der sker\nVirker på samme måde som for figurer: @tbl-data bliver til “Tabel 1”, overalt hvor du skriver det. Id’er for tabeller skal begynde med tbl-.\n\n\n\n\nAfsnit\n\n\nMarkdown\n## Introduction {#sec-intro}\n\nAs described in @sec-intro...\n\nHvad der sker\nMed {#sec-intro} efter en overskrift kan du henvise til den. @sec-intro bliver til “Afsnit 1” med et link, hvis afsnittene nummereres (number-sections: true). Id’er for afsnit skal begynde med sec-.\n\n\n\n\n\n\n\n\nTipRegler for id’er\n\n\n\n\nId’er for figurer skal begynde med fig-\nId’er for tabeller skal begynde med tbl-\nId’er for afsnit skal begynde med sec-",
+    "crumbs": [
+      "Eksempelside",
+      "QMD-filen"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_qmd.html#egne-div--og-span-elementer",
+    "href": "Qmd Files/Tipps and Tricks/exp_qmd.html#egne-div--og-span-elementer",
+    "title": "QMD-filen",
+    "section": "Egne div- og span-elementer",
+    "text": "Egne div- og span-elementer\nMed CSS-klasser på en blok kan du formgive indhold direkte fra .qmd-filen. Quarto sender klassen direkte videre til HTML-outputtet.\n\n\nMarkdown\n::: {.my-class}\nThis block gets the `my-class` CSS class.\n:::\nTil formgivning inde i en tekstlinje bruger du et span:\nThis word is [highlighted]{.my-highlight} in the text.\n\nResultat\n\nThis block gets the my-class CSS class.\n\nThis word is highlighted in the text.\n\n\n\nIndbyggede hjælpeklasser fra Bootstrap\nDe virker med det samme uden egen CSS:\n\n\n\nKlasse\nEffekt\n\n\n\n\n.text-center\nCentrér teksten\n\n\n.text-muted\nGrå tekst\n\n\n.fw-bold\nFed tekst\n\n\n.border\nTilføj en ramme\n\n\n.bg-light\nLys baggrund\n\n\n.p-3\nTilføj luft inden for rammen\n\n\n.mt-4\nTilføj margen foroven\n\n\n\n\n\nMarkdown\n::: {.border .p-3 .bg-light}\nThis box has a border, padding, and a light background, with no custom CSS.\n:::\n\nResultat\n\nThis box has a border, padding, and a light background, with no custom CSS.",
+    "crumbs": [
+      "Eksempelside",
+      "QMD-filen"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_qmd.html#infobokse",
+    "href": "Qmd Files/Tipps and Tricks/exp_qmd.html#infobokse",
+    "title": "QMD-filen",
+    "section": "Infobokse",
+    "text": "Infobokse\nInfobokse henleder opmærksomheden på vigtig information uden at bryde tekstens flow. Quarto viser dem som formgivne bokse med et ikon. Brug dem til tips, advarsler eller vigtige oplysninger.\n\n\nMarkdown\n::: {.callout-note}\n## Optional title\nInformational note.\n:::\n\n::: {.callout-tip}\nPractical advice.\n:::\n\n::: {.callout-warning}\nSomething to watch out for.\n:::\n\n::: {.callout-important}\nCritical information.\n:::\n\n::: {.callout-caution}\nProceed carefully.\n:::\n\nResultat\n\n\n\n\n\n\nNoteOptional title\n\n\n\nInformational note.\n\n\n\n\n\n\n\n\nTip\n\n\n\nPractical advice.\n\n\n\n\n\n\n\n\nAdvarsel\n\n\n\nSomething to watch out for.\n\n\n\n\n\n\n\n\nVigtigt\n\n\n\nCritical information.\n\n\n\n\n\n\n\n\nForsigtig\n\n\n\nProceed carefully.\n\n\n\n\nTilføj collapse=\"true\" for at gøre en infoboks sammenfoldelig. Læseren folder den ud efter behov:\n\n\nMarkdown\n::: {.callout-note collapse=\"true\"}\n## Click to expand\nHidden detail.\n:::\n\nResultat\n\n\n\n\n\n\nNoteClick to expand\n\n\n\n\n\nHidden detail.",
+    "crumbs": [
+      "Eksempelside",
+      "QMD-filen"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_extensions.html",
+    "href": "Qmd Files/Tipps and Tricks/exp_extensions.html",
+    "title": "Udvidelser",
+    "section": "",
+    "text": "Dette kapitel gennemgår de udvidelser (extensions), der bruges i denne vejledning. En udvidelse installeres én gang pr. projekt med quarto add &lt;navn&gt;. Filerne lander i _extensions/ og bør tages med i git.\nUdvidelser kan slås til globalt i _quarto.yml eller pr. side i filens hoved:",
+    "crumbs": [
+      "Eksempelside",
+      "Udvidelser"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_extensions.html#quizdown",
+    "href": "Qmd Files/Tipps and Tricks/exp_extensions.html#quizdown",
+    "title": "Udvidelser",
+    "section": "quizdown – interaktive quizzer",
+    "text": "quizdown – interaktive quizzer\nInstallation: quarto add parmsam/quizdown Kilde: (Sauer 2023), github.com/parmsam/quarto-quizdown\n\n---\nlocale: en\n---\n\n# Hvilken fil styrer de globale projektindstillinger i Quarto?\n\n1. [x] `_quarto.yml`\n1. [ ] `index.qmd`\n1. [ ] `styles.css`\n\n# Vælg alle gyldige outputformater i Quarto.\n\n- [x] HTML\n- [x] PDF\n- [x] Word (.docx)\n- [ ] Excel (.xlsx)\n\n# Sæt trinnene i Quartos rendering i den rigtige rækkefølge.\n\n1. Indlæse `.qmd`-kilden\n2. Køre kodeblokkene\n3. Omdanne Markdown til HTML/PDF\n4. Lægge tema og typografier på\n\n\nIndstillingerSpørgsmålstyperBilleder & kode\n\n\nGlobale indstillinger for quizzen skrives i en ----blok øverst i quizzen:\n```{quizdown}\n---\nshuffleAnswers: true    # default: true — randomise answer order\nshuffleQuestions: false # default: false — randomise question order\nlocale: en              # language of the buttons\n---\n```\n\n\n\n\n\n\nTip\n\n\n\nshuffleAnswers: true er standard. Svarene blandes, medmindre du udtrykkeligt angiver false.\n\n\n\n\nÉt rigtigt svar, præcis ét svar er rigtigt:\n```{quizdown}\n# What is 2 + 2?\n1. [ ] 3\n1. [x] 4\n1. [ ] 5\n```\nFlere rigtige svar, mere end ét svar er rigtigt:\n```{quizdown}\n# Which of these are programming languages?\n- [x] Python\n- [ ] Quarto\n- [x] R\n- [x] JavaScript\n```\nSortering, elementerne skal sættes i den rigtige rækkefølge:\n```{quizdown}\n# Put the Quarto render pipeline in the correct order.\n\n1. Parse `.qmd` source\n2. Execute code chunks\n3. Convert Markdown to HTML/PDF\n4. Apply theme and styles\n```\n\n\nTag et billede med i et spørgsmål:\n```{quizdown}\n# What does this logo belong to?\n![](https://quarto.org/quarto.png)\n1. [x] Quarto\n1. [ ] RMarkdown\n```\nTag kode med i svarene:\n```{quizdown}\n# Which chunk option hides the source code?\n1. [x] `echo: false`\n1. [ ] `eval: false`\n1. [ ] `output: false`\n```",
+    "crumbs": [
+      "Eksempelside",
+      "Udvidelser"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_extensions.html#pyodide-interaktiv",
+    "href": "Qmd Files/Tipps and Tricks/exp_extensions.html#pyodide-interaktiv",
+    "title": "Udvidelser",
+    "section": "pyodide-interaktiv – Python direkte i browseren",
+    "text": "pyodide-interaktiv – Python direkte i browseren\nInstallation: quarto add Erasmus-CTM/pyodide-interaktiv Kilde: (Erasmus CTM, u.å.c), github.com/Erasmus-CTM/pyodide-interaktiv. Den Python, der ligger bag, er Pyodide (Droettboom m.fl. 2021).\npyodide-interaktiv kører Python i en Web Worker, altså ved siden af siden i stedet for i den. Derfor kan siden bruges under en lang beregning, og hver celle har knappen Stop. Udvidelsen er en omarbejdning af coatless-quarto/pyodide.\n\nEksempelDelt tilstandinput()Grafer & animationAI-feedbackIndstillingerMarkørcellerBegrænsninger\n\n\n\nSlå JavaScript til for at kunne bruge de interaktive kodeceller på denne side.\nHver celle har Kør koden (også Shift + Enter), Nulstil, Kopiér, Feedback og + Kodeblok. Den sidste tilføjer en tom, redigerbar celle, praktisk under et skrivebeskyttet eksempel.\n\n\n\n\n{python}\n{pyodide-python}\n\n\n\n\nKøres\nved renderingen\nnår siden læses (i browseren)\n\n\nLæseren kan ændre\nNej\nJa\n\n\nKræver installeret Python\nJa (forfatteren)\nNej\n\n\nOutputtet ligger i HTML-filen\nJa\nNej, det beregnes direkte\n\n\n\n\n\n\n\n\n\nAdvarselTilgængelige pakker\n\n\n\nPyodide kører i WebAssembly. Mange pakker findes (numpy, pandas, matplotlib, sympy), men ikke alle pakker med C-udvidelser.\n\n\n\n\nAlle celler på en side deler én Python-session. En senere celle kan bruge alt, hvad en tidligere har defineret, når den tidligere er kørt:\n\nSlå JavaScript til for at kunne bruge de interaktive kodeceller på denne side.\n\nSlå JavaScript til for at kunne bruge de interaktive kodeceller på denne side.\nKører man den nederste celle først, får man en NameError. Sig derfor til læserne, at de skal køre cellerne oppefra og ned.\nCeller, der skal køres, før læseren gør noget, bruger context: setup. Celler, hvor resultatet vises, men koden er skjult, bruger context: output.\n\n\n\n\n\n\nNotepy-exercise kan ikke se disse variabler\n\n\n\nEn opgave fra py-exercise kører i sit eget, tomme navnerum. Det, der er defineret i en {pyodide-python}-celle, findes ikke der. Alt, hvad opgaven skal bruge, skal stå i selve opgaven.\n\n\n\n\nEn celle kan stoppe og vente på input, uden at siden fryser:\n\nSlå JavaScript til for at kunne bruge de interaktive kodeceller på denne side.\n\n\n\n\n\n\nAdvarselinput() kræver cross-origin isolation\n\n\n\nVentende input bygger på SharedArrayBuffer, som browsere kun giver til sider, der er cross-origin-isolerede. En service worker, der følger med udvidelsen, sætter de nødvendige headere automatisk på dit eget domæne. Læringsplatforme som Moodle blokerer som regel service workers. Der er input() ikke tilgængelig, og siden siger det. Alt andet virker.\n\n\n\n\nKoden opfører sig som på din egen computer: plt.show() starter visningen. Uden kaldet vises der ingenting. En statisk graf vises først som billede og erstattes derefter af en interaktiv visning med værktøjslinje (zoome, flytte, nulstille, gemme). Hvis det ikke lykkes, bliver billedet stående.\nEn animation kræver ikke noget ekstra kald:\n\nSlå JavaScript til for at kunne bruge de interaktive kodeceller på denne side.\nEn udgave, du kan prøve, finder du på siden Visualiseringer i eksempelsiden.\n\n\n\n\n\n\nTipHastigheden styres af interval, ikke af frames\n\n\n\ninterval er tiden mellem to billeder i millisekunder, 33 ms er cirka 30 billeder i sekundet. Matplotlibs standardværdi på 200 ms ser tydeligt hakkende ud. frames angiver kun, hvor mange billeder der tegnes, så en større værdi gør animationen længere, ikke mere jævn. Hvert billede beregnes på forhånd og indlejres, så lange animationer koster regnetid.\n\n\nTil særlige tilfælde styrer zeige_animation(ani, format=\"gif\") og zeige_animation(ani, fps=30) format og billedfrekvens direkte.\n\n\nHver interaktiv celle har knappen Feedback, som sender den aktuelle kode og dens output til en sprogmodel og viser svaret under cellen. Symbolet ⚙ øverst i dokumentet åbner indstillingerne:\n\n\n\n\n\n\n\nFelt\nBetydning\n\n\n\n\nUdbyderskabelon\nudfylder Base URL og en eksempelmodel for OpenRouter, Cerebras, Groq, OpenAI eller Ollama\n\n\nBase URL\nAPI’ets adresse, f.eks. https://openrouter.ai/api/v1\n\n\nAPI-nøgle\nbliver i browseren, havner aldrig i den færdige side\n\n\nModel\nfritekst. Hent modeller viser udbyderens modeller, som standard kun de gratis\n\n\nFeedbacktilstand\nDirekte API eller Kopiér prompten\n\n\nLagring\nlocalStorage (varig) eller sessionStorage (pr. fane)\n\n\n\nUden API-nøgle giver tilstanden Kopiér prompten en færdig tekst, du kan indsætte i ChatGPT, Claude og lignende.\nHintene bliver mere konkrete for hvert klik på den samme celle. Der er tre niveauer: 1 = et forsigtigt skub, 2 = peger på problemet, 3 = beskriver løsningsvejen med ord. Færdig løsningskode gives aldrig. Slå det fra med feedback-hints: false.\n\n\npage.qmd\n\npyodide:\n  feedback: true            # show Feedback buttons (default: true)\n  feedback-storage: local   # local | session\n  feedback-hints: true      # progressive hints (default: true)\n\n\n\n\n\n\n\nVigtigt\n\n\n\nAPI-nøglen ligger i læserens browser. Skriv aldrig en nøgle i .qmd-filen, den ville blive udgivet sammen med webstedet.\n\n\n\n\nPr. celle:\n\n\n\n\n\n\n\n\nIndstilling\nStandard\nBeskrivelse\n\n\n\n\ncontext\ninteractive\ninteractive, output eller setup\n\n\nread-only\nfalse\neditoren er låst (ingen Feedback-knap)\n\n\nautorun\n—\ntrue: kører af sig selv, når Pyodide er startet\n\n\ncode-fold\n—\ntrue: cellen starter foldet sammen, false: foldet ud. Uden værdi gælder dokumentets code-fold:\n\n\npdf-fallback\n—\ntrue: i PDF, Word osv. vises cellen som almindelig, farvelagt Python-kode\n\n\n&lt;format&gt;-autoexec\n—\ntrue: for netop det format (f.eks. pdf-autoexec) køres cellen faktisk ved renderingen, og outputtet vises\n\n\nlabel\n—\nentydigt id for cellen\n\n\nclasses\n—\nekstra CSS-klasser\n\n\nfig-cap\n—\nbilledtekst til grafer\n\n\nfig-width / fig-height\n7 / 5\ngrafens størrelse i tommer\n\n\n\nPr. dokument:\n\n\npage.qmd\n\npyodide:\n  packages: [numpy, pandas]   # installed at startup via micropip\n  show-startup-message: true\n  pdf-fallback: false         # PDF/Word: show cells as Python code\n  pdf-autoexec: false         # PDF: run cells at render time\n  lang: de                    # interface language (default: en)\n\nPakker, der kun forekommer i en import, hentes efter behov. packages: er altså til dem, der skal være klar før første kørsel. requests og urllib3 har erstatninger, så pd.read_csv(url) virker.\nSproget i brugerfladen følger Quartos egen lang:. Med følger en, de, sv, no/nb og da. Et flersproget projekt behøver derfor ingen ekstra indstilling, se Flersprogede projekter.\ncode-fold: er Quartos almindelige indstilling. Med code-tools: true folder sidens knap “Vis al kode” også Pyodide-cellerne sammen og ud. &lt;format&gt;-autoexec kræver en Python-installation på den computer, der renderer.\n\n\nEn figur fra en {pyodide-python}-celle kan ikke krydshenvises med @fig-.... Hvis du har brug for en nummereret figur, der kan linkes til, så skriv en almindelig {python}-celle, og gør den interaktiv i HTML med en kommentar # pyodide: ...:\n```{python}\n#| label: fig-parabola\n#| fig-cap: \"The parabola $y=x^2$.\"\n# pyodide: autorun, read-only=false\nx = np.linspace(-2, 2, 200)\nplt.plot(x, x**2)\nplt.show()\n```\nMarkøren tager de samme indstillinger som tabellen i fanen “Indstillinger” og fjernes fra den viste kode. PDF og Word beholder Quartos rigtige figur. I HTML overtager den interaktive celle pladsen, mens billedteksten og målet for krydshenvisningen bliver stående. Cellen kræver en rigtig Python ved renderingen, som enhver {python}-celle.\n\n\n\nStop: På cross-origin-isolerede sider afbryder Stop skånsomt, og variablerne bevares. Ellers genstarter Stop Python, variablerne går tabt, og cellerne med setup, output og autorun kører igen af sig selv.\nKun én celle kan regne ad gangen.\nNår du går til en anden side i projektet, indlæses Python igen.\nembed-resources: true giver en enkelt fil, der virker, men ikke en, der virker offline: Pyodide hentes stadig fra nettet. Filen skal leveres over http(s), det er ikke nok at dobbeltklikke på den lokale fil.",
+    "crumbs": [
+      "Eksempelside",
+      "Udvidelser"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_extensions.html#py-exercise",
+    "href": "Qmd Files/Tipps and Tricks/exp_extensions.html#py-exercise",
+    "title": "Udvidelser",
+    "section": "py-exercise – redigerbare opgaver med skjulte test",
+    "text": "py-exercise – redigerbare opgaver med skjulte test\nInstallation: quarto add Erasmus-CTM/py-exercise Kilde: (Erasmus CTM, u.å.b), github.com/Erasmus-CTM/py-exercise\n\n\n\n\n\n\nNoteVirker på egen hånd\n\n\n\npy-exercise behøver ingen Pyodide-udvidelse ved siden af sig. På egen hånd indlæser den Pyodide og editoren fra nettet, når læseren kører en opgave første gang:\n\n\nexercises.qmd — standalone\n\nfilters:\n  - Erasmus-CTM/py-exercise\n\nHvis siden også har pyodide-interaktiv, så angiv den først. Så genbruger py-exercise dens Python i stedet for at starte en til:\n\n\npage.qmd — combined\n\nfilters:\n  - Erasmus-CTM/pyodide-interaktiv\n  - Erasmus-CTM/py-exercise\n\n\n\n\nEksempelSyntaksIndstillingerBegræns løsningerAflevering\n\n\n\n  \n    Please enable JavaScript to load the interactive exercise.\n  \n\n\n\n\n```{py-exercise}\ndef my_function(x):\n    \"\"\"Docstring shown to the reader.\"\"\"\n    # Student fills this in\n    pass\n\n## TESTS ##\nassert my_function(2) == 4, \"Feedback shown on failure\"\nassert my_function(0) == 0\n```\nRegler:\n\nSkriv funktionsskelettet med en docstring øverst.\n## TESTS ## er skillelinjen. Alt under den er skjult for læseren.\nTeksten efter kommaet i en assert er den feedback, der vises, når testen fejler.\n\n\n\n\n\n\n\nTip\n\n\n\nSkriv beskederne i assert, som om du taler til den studerende: \"my_function(2) should return 4. Did you multiply correctly?\"\n\n\n\n\nPr. opgave:\n\n\n\n\n\n\n\n\nIndstilling\nStandard\nBeskrivelse\n\n\n\n\nlabel\npy-exercise-N\nentydigt id for opgaven\n\n\ncaption\n—\ntitel over opgaven\n\n\nforbidden-imports\n—\nkommaseparerede importer, som løsningen ikke må bruge\n\n\nforbidden-keywords\n—\nkommaseparerede nøgleord, som løsningen ikke må bruge\n\n\nshow-test-hints\ntrue\nvis beskeden i assert, når en test fejler\n\n\n\nPr. dokument, de samme nøgler for alle opgaver på siden:\n\n\nexercises.qmd\n\npy-exercise:\n  forbidden-imports: [os, sys, subprocess]\n  forbidden-keywords: [for, while, sorted]\n  show-test-hints: true\n  lang: de                   # interface language (default: en)\n\nBrugerfladen findes på tysk og engelsk. Også her er Quartos egen lang: nok. På andre sprog vises knapperne på engelsk.\n\n\nForbudte konstruktioner kontrolleres, før koden køres. En overtrædelse meldes i stedet for et testresultat:\n```{py-exercise}\n#| caption: Fibonacci, recursively\n#| forbidden-keywords: for, while\ndef fib(n):\n    pass\n\n## TESTS ##\nassert fib(6) == 8,   \"fib(6) should be 8\"\nassert fib(10) == 55, \"fib(10) should be 55\"\n```\nTypiske anvendelser: forbyde for/while for at fremtvinge rekursion eller comprehensions, forbyde sorted, så de studerende selv skriver algoritmen, forbyde os/sys/subprocess i et åbent læringsmiljø.\n\n\nMed submission: true får siden et hoved, der spørger efter et studie-id og et quiz-id. Når testene er bestået, kan den studerende hente resultatet som en JSON-fil, XOR-kodet med submission-key og pakket i Base64, så resultaterne ikke kan læses uden nøglen.\n\n\nexercises.qmd\n\npy-exercise:\n  submission: true\n  submission-key: \"sose25-quiz1\"\n\n\n\n\n\n\n\nAdvarsel\n\n\n\nNøglen ligger i den færdige side. Det afskrækker fra simpelt snyd, men er ikke rigtig kryptering. Se det som en praktisk måde at indsamle resultater på, ikke som en sikring, der holder til eksamen.",
+    "crumbs": [
+      "Eksempelside",
+      "Udvidelser"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_extensions.html#math-exercise",
+    "href": "Qmd Files/Tipps and Tricks/exp_extensions.html#math-exercise",
+    "title": "Udvidelser",
+    "section": "math-exercise – svar, der kontrolleres med SymPy",
+    "text": "math-exercise – svar, der kontrolleres med SymPy\nInstallation: quarto add Erasmus-CTM/math-exercise Kilde: (Erasmus CTM, u.å.a), github.com/Erasmus-CTM/math-exercise\nHvor py-exercise kontrollerer kode, kontrollerer math-exercise et svar. De studerende skriver et matematisk udtryk i et felt, og SymPy sammenligner det med løsningen. I standardtilstanden tæller enhver ækvivalent form derfor som rigtig.\n\n\n\n\n\n\nNoteVirker på egen hånd\n\n\n\nLigesom py-exercise indlæser math-exercise selv Pyodide og SymPy ved første klik på Check, hvis der ikke er nogen Pyodide-udvidelse. Hvis der er en, så angiv den først:\n\n\npage.qmd\n\nfilters:\n  - Erasmus-CTM/pyodide-interaktiv\n  - Erasmus-CTM/math-exercise\n\n\n\n\nEksempelSyntaksIndstillingerKontroltilstandeSkrivemåde & delpointSpørgsmålspuljerFeedback\n\n\n\nArealet af en cirkel\n\n\nEn cirkel har radius \\(r = 3\\). Angiv arealet eksakt (skriv pi for π):\n\n\\(A =\\) \n\n\n  ✓ Check\n  ⓘ Input help\n  \n    💬 Feedback\n    ⚙\n  \n\n\n\n\n\npi*9, 9*pi og 3**2*pi accepteres alle, de er det samme udtryk.\n\n\n```{math-exercise}\n#| label: my-exercise\n#| caption: Exercise title\n#| vars: x\nQuestion text with an input field: _[correct_answer]\n```\nSvaret inde i [...] er et SymPy-udtryk, f.eks. pi * 9 eller x**2 + 2*x + 1.\n\n\n\nMarkør\nFelt\n\n\n\n\n_[svar]\nsmalt (cirka 10 tegn)\n\n\n__[svar]\nmellem (cirka 20 tegn)\n\n\n___[svar]\nbredt, to linjer\n\n\nvec[a,b,c]\nvektor i parentes, ét felt pr. komponent\n\n\nmat[a,b;c,d]\nmatrix i parentes, ét felt pr. element\n\n\n\nEn vektors komponenter adskilles med komma. I matricer adskiller komma kolonner og semikolon rækker. Vektorer er søjlevektorer, #| vecdir: row gør dem til rækkevektorer. Hver komponent kontrolleres og markeres for sig.\n```{math-exercise}\n#| vars: x\nEnter a vector: vec[x+1,2*x]\nEnter a matrix: mat[1,0;0,x]\n```\nFlere felter i én opgave kontrolleres samlet med Check.\n\n\n\n\n\n\nVigtigt\n\n\n\nHvert symbol, der bruges i svaret, skal stå i vars. Ellers ved SymPy ikke, hvad x skal være.\n\n\n\n\n\n\n\n\n\n\n\n\nIndstilling\nStandard\nBeskrivelse\n\n\n\n\nlabel\nmath-exercise-N\nentydigt id for opgaven\n\n\ncaption\n—\ntitel over opgaven\n\n\nvars\n—\nSymPy-symboler, f.eks. x, y, r\n\n\nmode\nequivalent\nkontroltilstand, se fanen “Kontroltilstande”\n\n\nreject\n—\nudtryk, der skal afvises, selvom det er rigtigt (kun equivalent/exact)\n\n\nform\n—\nkrævet skrivemåde: factored, expanded, single_fraction, lowest_terms (kun equivalent/exact)\n\n\ntolerance\n—\nkun numeric: tilladt afvigelse, absolut (0.5) eller relativ (5%)\n\n\ndecplaces\n—\nkun numeric: afrund begge sider til N decimaler før sammenligningen\n\n\nsigfigs\n—\nkun numeric: afrund begge sider til N betydende cifre før sammenligningen\n\n\npartial-credit\nfalse\ngiv delpoint\n\n\nform-credit\n0.5\npoint for et ækvivalent svar i forkert skrivemåde\n\n\npool\nfalse\nbehandl blokken som en samling varianter\n\n\nvecdir\ncol\nretning for alle vec[...]: col eller row\n\n\nfield-labels\n—\nfelternes navne, f.eks. S, E, M\n\n\nchecker\n—\ndin egen kontrolkode til mode: custom\n\n\npackages\n—\nPyodide-pakker til din egen kontrolkode, f.eks. networkx\n\n\nresponse\n—\nhent svaret fra et JSXGraph-board: jsxgraph:&lt;assessment_id&gt;\n\n\nembed-response\nfalse\nflyt boardet ind i opgaveboksen\n\n\ncontext\n—\nkontekst til AI-feedback, se fanen “Feedback”\n\n\n\n\n\npage.qmd\n\nmath-exercise:\n  lang: de     # interface language (default: en)\n\nBrugerfladen findes på engelsk, tysk og norsk (bokmål). Også her er Quartos egen lang: nok. På andre sprog vises knapperne på engelsk.\n\n\nequivalent (standard): accepterer enhver matematisk ækvivalent form. For [pi * 9] godkendes pi*9, 9*pi og 3**2 * pi.\nequivalent med reject: accepterer ækvivalente former undtagen den angivne. Det er det, der gør forenklingsopgaver mulige, hvor ingen bare skal kunne skrive spørgsmålet af.\n```{math-exercise}\n#| vars: x\n#| reject: (x+1)**2\nExpand: $(x+1)^2 =$ __[x**2 + 2*x + 1]\n```\n(x+1)^2 afvises, x^2 + 2x + 1 accepteres.\nexact: den strengeste tilstand, accepterer kun løsningens ene skrivemåde. Uforkortede brøker afvises: for _[3/4] er 3/4 rigtigt og 6/8 forkert.\nnumeric: sammenligner talværdier i stedet for udtryk, til afrundings- og tilnærmelsesopgaver.\n```{math-exercise}\n#| mode: numeric\n#| tolerance: 0.01\nApproximate π: _[3.14159]\n```\nAlt, hvad der afviger fra \\(3.14159\\) med højst \\(0.01\\), accepteres: 3.14 og 3.15 er rigtige, 3.2 er forkert.\nstring og string_ci: sammenligner den indtastede tekst bogstaveligt, string_ci uden hensyn til store og små bogstaver. Til fagudtryk og enheder.\nset: svaret er en kommasepareret liste, rækkefølgen er ligegyldig.\n```{math-exercise}\n#| mode: set\nSolve $x^2 = 4$. All solutions: __[2, -2]\n```\n-2, 2 og 2,-2 er rigtige. En manglende eller dobbelt løsning gør svaret forkert.\ncustom: du skriver selv kontrolkoden, som en funktion check(response, symbols). Den returnerer True/False, et pointtal fra 0 til 1 eller en dictionary med score og feedback.\n```{math-exercise}\n#| vars: x\n#| mode: custom\n#| checker: |\n#|   def check(response, symbols):\n#|       f = response[\"expressions\"][0]\n#|       x = symbols[\"x\"]\n#|       return simplify(diff(f, x) - 2*x) == 0\n\nGive an antiderivative of $2x$: $F(x) =$ __[]\n```\nHer er enhver funktion rigtig, hvis afledede er \\(2x\\), altså \\(x^2 + c\\) med en vilkårlig konstant \\(c\\).\n\n\n\n\n\n\nAdvarsel\n\n\n\nKontrolkoden ligger i den færdige side og er synlig for de studerende.\n\n\n\n\nMed form kræver du en bestemt skrivemåde, ud over at svaret er rigtigt:\n\n\n\nVærdi\nKrævet form\n\n\n\n\nfactored\nfuldstændigt faktoriseret, f.eks. (x+1)*(x+2)\n\n\nexpanded\nfuldstændigt ganget ud, f.eks. x**2 + 3*x + 2\n\n\nsingle_fraction\nén enkelt brøk i stedet for en sum af brøker\n\n\nlowest_terms\nen fuldstændigt forkortet brøk\n\n\n\n```{math-exercise}\n#| vars: x\n#| form: factored\nFactor $x^2 + 3x + 2$: __[(x+1)*(x+2)]\n```\n(x+1)*(x+2) accepteres. x**2 + 3*x + 2 er matematisk rigtigt, men ikke faktoriseret, og meldes som rigtigt, men ikke på faktoriseret form.\nDelpoint slås til med partial-credit: true:\n\nFor flere felter tages gennemsnittet, tomme felter tæller som nul.\nFor set er pointtallet \\(\\frac{2M}{E + S}\\), hvor \\(M\\) er antallet af elementer, der passer, \\(E\\) antallet af forventede og \\(S\\) antallet af afleverede. Både manglende og overflødige elementer sænker pointtallet.\nEt ækvivalent svar i forkert skrivemåde får form-credit.\n\nUden indstillingen er et svar ganske enkelt rigtigt eller forkert.\n\n\nMed pool: true og --- som skillelinje indeholder én blok flere varianter. Ved hvert sidebesøg vælges én tilfældigt og beholdes i sessionen. Knappen ↻ indlæser en anden.\n```{math-exercise}\n#| label: circle-pool\n#| caption: Area of a circle\n#| pool: true\nRadius r = 3 cm. $A =$ _[pi*9] cm²\n\n---\n\nRadius r = 5 cm. $A =$ _[pi*25] cm²\n\n---\n\nRadius r = 7 cm. $A =$ _[pi*49] cm²\n```\nAlle varianter deler de samme indstillinger (vars, mode, reject).\n\n\nHver opgave har en sammenfoldelig indtastningshjælp med de skrivemåder, de studerende har brug for: x^2 eller x**2, sqrt(x), root(x, n), pi, E, Abs(x), oo, integrate(f, x), diff(f, x).\nVed første klik åbner knappen Feedback opsætningen (udbyder, Base URL, API-nøgle, model). Indstillingerne gemmes i localStorage og gælder for alle sider i projektet.\nHintene bliver mere konkrete for hvert klik. I modsætning til pyodide-interaktiv er der fire niveauer, og det fjerde viser løsningen:\n\n\n\n\n\n\n\nKlik\nAdfærd\n\n\n\n\n1\nét spørgsmål, der peger mod den første sandsynlige fejl. Ingen formel, ingen metode, ingen mellemværdi\n\n\n2\net begrebsmæssigt hint, der siger, hvad man skal se på. Ingen formler, ingen udregning\n\n\n3\nvejledning i højst tre trin. En generel formel er tilladt, opgavens værdier og resultatet forbliver skjult\n\n\n4 og senere\nen kortfattet fuldstændig løsning med udregning og resultat\n\n\n\nFor at AI’en kan forstå opgaven rigtigt, får den kontekst:\n\nAutomatisk: teksten siden den seneste overskrift før opgaven (op til 1500 tegn).\nUdtrykkeligt: blokke med et id og klassen .math-exercise-context, som opgaven henviser til med #| context: id.\nSlet ingen: med #| context: none.\n\n::: {#fp16 .math-exercise-context}\nIEEE-754 half precision: 1 sign bit, 5 exponent bits (bias 15),\n10 mantissa bits.\n:::\n\n```{math-exercise}\n#| label: fp-decode\n#| context: fp16\nDecode 0x3C00 as a half-precision float: _[1]\n```\n\n\n\n\n\n\nVigtigtDatabeskyttelse\n\n\n\nEt klik på Feedback sender kontekst, opgavetekst og den studerendes svar til den indstillede udbyder. Det forventede svar sendes ikke.",
+    "crumbs": [
+      "Eksempelside",
+      "Udvidelser"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_extensions.html#jsxgraph",
+    "href": "Qmd Files/Tipps and Tricks/exp_extensions.html#jsxgraph",
+    "title": "Udvidelser",
+    "section": "JSXGraph – interaktive matematiske grafer",
+    "text": "JSXGraph – interaktive matematiske grafer\nInstallation: følger med quarto add Erasmus-CTM/math-exercise Kilde: (Miller 2023), github.com/jsxgraph/jsxgraph-quarto\nDenne vejledning bruger den version af JSXGraph, der ligger i repositoriet for math-exercise. Den bygger på udvidelsen jsxgraph-quarto og tilføjer en bro til opgaver: en graf kan levere svaret på en opgave i math-exercise. Selve JSXGraph indlæses fra nettet, når siden læses.\n\n\npage.qmd\n\nfilters:\n  - jsxgraph\n  - math-exercise\n\n\n\n\n\n\n\nNote\n\n\n\nI dette projekt ligger udvidelsen i _extensions/jsxgraph/jsxgraph/. Derfor står der jsxgraph/jsxgraph i hovedet på denne side.\n\n\n\nEksempelSyntaksAlmindelige elementerGraf som svar\n\n\n\nTræk punktet \\(x\\) langs aksen.\n\n\n```jsxgraph\nvar board = JXG.JSXGraph.initBoard(BOARDID, {\n    boundingbox: [-5, 5, 5, -5],   // [xmin, ymax, xmax, ymin]\n    axis: true,\n    keepaspectratio: false,\n    showNavigation: false\n});\n```\n\n\n\n\n\n\nVigtigt\n\n\n\nBrug altid den bogstavelige streng BOARDID. Udvidelsen erstatter den med et entydigt id. Et fast id ødelægger sider med flere grafer.\n\n\nIndstillinger skrives som attributter på blokken, f.eks. bredde og højde:\n```{.jsxgraph width=\"600\" height=\"300\"}\n...\n```\n\n\n// Function graph\nboard.create('functiongraph', [Math.sin], { strokeColor: '#0d6efd' });\n\n// Draggable point\nvar p = board.create('point', [2, 1], { name: 'P', size: 4 });\n\n// Glider: point constrained to a line or curve\nvar g = board.create('glider', [1, 0, board.defaultAxes.x], { name: 'x' });\n\n// Slider\nvar s = board.create('slider', [[0,-3],[4,-3],[0,1,2*Math.PI]], { name: 'a' });\n\n// Use slider value\nboard.create('functiongraph', [function(x) { return Math.sin(s.Value()*x); }]);\n\n// Text label\nboard.create('text', [1, 2, function() { return 'x = ' + g.X().toFixed(2); }]);\n\n// Segment\nboard.create('segment', [p1, p2], { strokeColor: '#198754', dash: 2 });\n\n\nMed assessment_id og JXG.QuartoAssessment.register(...) melder en graf sin tilstand til en opgave. Opgaven henter den med response: jsxgraph:&lt;assessment_id&gt; og kontrollerer den med sin egen kontrolkode:\n\n\nPunkt over linjen\n\n\nTræk punktet \\(P\\) ind i området over linjen \\(y = x\\).\n\n\n  ✓ Check\n  ⓘ Input help\n  \n    💬 Feedback\n    ⚙\n  \n\n\n\n\n\nKildekoden til det:\n```{.jsxgraph assessment_id=\"exp-board\"}\nvar board = JXG.JSXGraph.initBoard(BOARDID, {\n    boundingbox: [-5, 5, 5, -5], axis: true, showNavigation: false\n});\nboard.create('line', [[0, 0], [1, 1]], { strokeColor: '#0d6efd', fixed: true });\nvar point = board.create('point', [2, -1], { name: 'P', size: 5 });\n\nJXG.QuartoAssessment.register({\n  board: board,\n  response: function () {\n    return { point: [point.X(), point.Y()] };\n  }\n});\n```\n\n```{math-exercise}\n#| mode: custom\n#| response: jsxgraph:exp-board\n#| embed-response: true\n#| checker: |\n#|   def check(response, symbols):\n#|       x, y = response[\"point\"]\n#|       return {\"score\": 1 if y &gt; x else 0}\n\nDrag the point $P$ into the region above the line $y = x$.\n```\nresponse må returnere alle data, der kan skrives som JSON. embed-response: true flytter grafen ind i opgaveboksen. Til opgaver, hvor de studerende bygger en graf af knuder og kanter, findes den færdige editor JXG.QuartoGraphEditor.",
+    "crumbs": [
+      "Eksempelside",
+      "Udvidelser"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_cheatsheet.html",
+    "href": "Qmd Files/Tipps and Tricks/exp_cheatsheet.html",
+    "title": "Cheatsheet",
+    "section": "",
+    "text": "Et hurtigt opslagsværk for alt, hvad der gennemgås i denne del.",
+    "crumbs": [
+      "Eksempelside",
+      "Cheatsheet"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_cheatsheet.html#yaml-indstillinger-i-_quarto.yml",
+    "href": "Qmd Files/Tipps and Tricks/exp_cheatsheet.html#yaml-indstillinger-i-_quarto.yml",
+    "title": "Cheatsheet",
+    "section": "YAML: indstillinger i _quarto.yml",
+    "text": "YAML: indstillinger i _quarto.yml\n\nProjekt\nproject:\n  type: website       # website | book | manuscript | default\n  output-dir: docs    # where rendered files go\n\n\nExecute (globale standardværdier for kode)\nexecute:\n  echo: true          # show source code\n  eval: true          # run the code\n  warning: false      # hide warnings\n  error: false        # stop on errors\n  freeze: auto        # auto | true | false\n\n\nFormat\nformat:\n  html:\n    toc: true\n    toc-depth: 3\n    theme:              # one name (theme: cosmo) or a list\n      - cosmo\n      - custom.scss\n    code-fold: true\n    code-tools: true\n    number-sections: false\n  pdf:\n    toc: true\n    documentclass: article\n    geometry: margin=2.5cm\n  docx:\n    toc: true\n\n\nWebsted\nwebsite:\n  title: \"My Site\"\n  navbar:\n    left:\n      - text: \"Home\"\n        href: index.qmd\n      - text: \"External\"\n        href: https://example.com\n    right:\n      - icon: github\n        href: https://github.com/your/repo\n  sidebar:\n    - id: my-sidebar\n      style: docked        # docked | floating\n      contents:\n        - href: page.qmd\n          text: Page Title\n        - section: \"Group\"\n          contents:\n            - href: sub.qmd\n              text: Sub-page\n\n\nProfiler\nprofile:\n  default: [web, deutsch]\n  group:\n    - [web, print]          # exactly one of each group is active\n    - [deutsch, english]\nquarto render --profile print,english",
+    "crumbs": [
+      "Eksempelside",
+      "Cheatsheet"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_cheatsheet.html#qmd-indstillinger-for-kodeblokke",
+    "href": "Qmd Files/Tipps and Tricks/exp_cheatsheet.html#qmd-indstillinger-for-kodeblokke",
+    "title": "Cheatsheet",
+    "section": "QMD: indstillinger for kodeblokke",
+    "text": "QMD: indstillinger for kodeblokke\n#| echo: false          # hide source code\n#| eval: false          # don't run (show code only)\n#| output: false        # hide output\n#| warning: false       # hide warnings\n#| include: false       # hide everything (the code still runs)\n#| code-fold: true      # true | false: collapsible code block\n#| code-summary: \"Show the code\"\n#| fig-cap: \"My figure\"\n#| fig-align: center    # left | center | right\n#| label: fig-myplot    # for cross-referencing\n\nId’er til krydshenvisninger\n\n\n\nType\nPræfiks\nHenvisning\n\n\n\n\nFigur\nfig-\n@fig-myplot\n\n\nTabel\ntbl-\n@tbl-mydata\n\n\nAfsnit\nsec- (på overskriften)\n@sec-intro",
+    "crumbs": [
+      "Eksempelside",
+      "Cheatsheet"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_cheatsheet.html#qmd-betinget-indhold",
+    "href": "Qmd Files/Tipps and Tricks/exp_cheatsheet.html#qmd-betinget-indhold",
+    "title": "Cheatsheet",
+    "section": "QMD: betinget indhold",
+    "text": "QMD: betinget indhold\n::: {.content-visible when-profile=\"english\"}\nOnly visible in English.\n:::\n\n::: {.content-hidden when-format=\"pdf\"}\nNot in PDF.\n:::",
+    "crumbs": [
+      "Eksempelside",
+      "Cheatsheet"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_cheatsheet.html#qmd-markdown-elementer",
+    "href": "Qmd Files/Tipps and Tricks/exp_cheatsheet.html#qmd-markdown-elementer",
+    "title": "Cheatsheet",
+    "section": "QMD: Markdown-elementer",
+    "text": "QMD: Markdown-elementer\n\nInfobokse\n::: {.callout-note}\n::: {.callout-tip}\n::: {.callout-warning}\n::: {.callout-important}\n::: {.callout-caution}\n\n::: {.callout-tip collapse=\"true\"}\n## Title\nHidden by default.\n:::\n\n\nShortcodes\n{{&lt; include other-file.qmd &gt;}}   ← embed another file\n{{&lt; pagebreak &gt;}}                ← force page break (PDF)\n{{&lt; kbd Ctrl+C &gt;}}               ← keyboard shortcut styling\n\n\nGitterlayout\n::: {.grid}\n::: {.g-col-6}\nLeft column (half width)\n:::\n::: {.g-col-6}\nRight column (half width)\n:::\n:::\nKolonnebredder angives i tolvtedele: g-col-4 = en tredjedel, g-col-6 = halvdelen, g-col-12 = hele bredden.",
+    "crumbs": [
+      "Eksempelside",
+      "Cheatsheet"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_cheatsheet.html#udvidelser-syntaks-kort-fortalt",
+    "href": "Qmd Files/Tipps and Tricks/exp_cheatsheet.html#udvidelser-syntaks-kort-fortalt",
+    "title": "Cheatsheet",
+    "section": "Udvidelser: syntaks kort fortalt",
+    "text": "Udvidelser: syntaks kort fortalt\nquarto add parmsam/quizdown\nquarto add Erasmus-CTM/pyodide-interaktiv\nquarto add Erasmus-CTM/py-exercise\nquarto add Erasmus-CTM/math-exercise      # brings jsxgraph along\nfilters:                 # mind the order\n  - parmsam/quizdown\n  - Erasmus-CTM/pyodide-interaktiv\n  - Erasmus-CTM/py-exercise\n  - jsxgraph\n  - Erasmus-CTM/math-exercise\n\nquizdown\n```{quizdown}\n---\nlocale: en\n---\n# Question text?\n1. [x] Correct answer\n1. [ ] Wrong answer\n```\n\n\npyodide-interaktiv\n```{pyodide-python}\n#| autorun: false\n#| read-only: false\n#| code-fold: false\n#| context: interactive   # interactive | output | setup\nprint(\"runs in browser\")\n```\nAlle celler på en side deler variabler. plt.show() starter visningen af grafer og animationer.\n\n\npy-exercise\n```{py-exercise}\n#| caption: Title\n#| forbidden-keywords: for, while\ndef my_func(x):\n    pass        # student fills this in\n\n## TESTS ##\nassert my_func(2) == 4, \"Feedback on failure\"\n```\n\n\nmath-exercise\n```{math-exercise}\n#| label: circle\n#| vars: r\n#| mode: equivalent\nArea of a circle with r = 3: _[pi*9]\n```\n\n\n\nFelt\nBetydning\n\n\n\n\n_[a] / __[a] / ___[a]\nsmalt / mellem / bredt\n\n\nvec[a,b,c]\nvektor\n\n\nmat[a,b;c,d]\nmatrix (komma: kolonne, semikolon: række)\n\n\n\n\n\n\n\n\n\n\nmode\nKontrollerer\n\n\n\n\nequivalent\nmatematisk ækvivalent (standard), med reject og form\n\n\nexact\npræcis denne skrivemåde\n\n\nnumeric\ntalværdi, med tolerance, decplaces eller sigfigs\n\n\nstring / string_ci\ntekst bogstaveligt / uden hensyn til store og små bogstaver\n\n\nset\nliste uden rækkefølge\n\n\ncustom\ndin egen kontrolkode i checker\n\n\n\nFlere indstillinger: pool: true, partial-credit: true, field-labels, context.\n\n\nJSXGraph\n```jsxgraph\nvar board = JXG.JSXGraph.initBoard(BOARDID, {\n    boundingbox: [-5, 5, 5, -5], axis: true\n});\nboard.create('functiongraph', [Math.sin]);\n```\nSom svar på en opgave: en blok med {.jsxgraph assessment_id=\"board\"} og JXG.QuartoAssessment.register(...), og i opgaven #| mode: custom og #| response: jsxgraph:board.",
+    "crumbs": [
+      "Eksempelside",
+      "Cheatsheet"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_cheatsheet.html#css-hjælpeklasser-fra-bootstrap",
+    "href": "Qmd Files/Tipps and Tricks/exp_cheatsheet.html#css-hjælpeklasser-fra-bootstrap",
+    "title": "Cheatsheet",
+    "section": "CSS: hjælpeklasser fra Bootstrap",
+    "text": "CSS: hjælpeklasser fra Bootstrap\n\n\n\nKlasse\nEffekt\n\n\n\n\n.text-center\nCentrér tekst\n\n\n.text-muted\nGrå tekst\n\n\n.text-white\nHvid tekst\n\n\n.fw-bold\nFed\n\n\n.border\nRamme\n\n\n.rounded\nAfrundede hjørner\n\n\n.shadow\nSkygge\n\n\n.bg-light\nLys baggrund\n\n\n.bg-primary\nBaggrund i primærfarven\n\n\n.p-{0-5}\nLuft indenfor på alle sider\n\n\n.m-{0-5}\nMargen på alle sider\n\n\n.mt-{0-5} / .mb-{0-5}\nMargen foroven / forneden\n\n\n.d-flex\nFlexbox-beholder\n\n\n.gap-{0-5}\nAfstand mellem flex-elementer\n\n\n.justify-content-center\nCentrér flex-elementer",
+    "crumbs": [
+      "Eksempelside",
+      "Cheatsheet"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_cheatsheet.html#css-scss-variabler",
+    "href": "Qmd Files/Tipps and Tricks/exp_cheatsheet.html#css-scss-variabler",
+    "title": "Cheatsheet",
+    "section": "CSS: SCSS-variabler",
+    "text": "CSS: SCSS-variabler\n/*-- scss:defaults --*/\n$primary:            #0d6efd;\n$body-bg:            #ffffff;\n$body-color:         #212529;\n$font-family-base:   \"Inter\", sans-serif;\n$font-size-base:     1rem;\n$headings-font-weight: 600;\n$border-radius:      0.375rem;\n$border-color:       #dee2e6;\n\n/*-- scss:rules --*/\n/* your custom CSS here */",
+    "crumbs": [
+      "Eksempelside",
+      "Cheatsheet"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_multilanguage.html",
+    "href": "Qmd Files/Tipps and Tricks/exp_multilanguage.html",
+    "title": "Flersprogede projekter",
+    "section": "",
+    "text": "Quarto har ikke noget indbygget oversættelsessystem, men med profiler kan man bygge et projekt på flere sprog. Denne vejledning går et skridt videre: den har to akser, sprog (tysk, engelsk, svensk, norsk, dansk) og niveau (Beginner/Intermediate/Expert). Hver kombination renderes til sin egen mappe.",
+    "crumbs": [
+      "Eksempelside",
+      "Flersprogede projekter"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_multilanguage.html#ideen-kort-fortalt",
+    "href": "Qmd Files/Tipps and Tricks/exp_multilanguage.html#ideen-kort-fortalt",
+    "title": "Flersprogede projekter",
+    "section": "Ideen kort fortalt",
+    "text": "Ideen kort fortalt\n                 beg                int                exp\ndeutsch   docs/de/beg/...    docs/de/int/...    docs/de/exp/...     + docs/de/index.html\nenglish   docs/en/beg/...    docs/en/int/...    docs/en/exp/...     + docs/en/index.html\nsvenska   docs/sv/beg/...    docs/sv/int/...    docs/sv/exp/...     + docs/sv/index.html\nnorsk     docs/no/beg/...    docs/no/int/...    docs/no/exp/...     + docs/no/index.html\ndansk     docs/da/beg/...    docs/da/int/...    docs/da/exp/...     + docs/da/index.html\n\nÉn .qmd pr. side, med alle sprog i den samme fil (se nedenfor).\nNiveauprofilen (_quarto-beg.yml …) afgør, hvilke sider der renderes.\nSprogprofilen (_quarto-english.yml …) afgør, hvad tingene hedder: menulinje, sidepaneler, lang.\nEt lille script på siden binder det sammen: når du skifter sprog, bliver du på den samme side, når du skifter niveau, kommer du til det niveaus startside.",
+    "crumbs": [
+      "Eksempelside",
+      "Flersprogede projekter"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_multilanguage.html#trin-1-to-profilgrupper",
+    "href": "Qmd Files/Tipps and Tricks/exp_multilanguage.html#trin-1-to-profilgrupper",
+    "title": "Flersprogede projekter",
+    "section": "Trin 1 – To profilgrupper",
+    "text": "Trin 1 – To profilgrupper\n\n\n_quarto.yml\n\nprofile:\n  default: [beg, deutsch]\n  group:\n    - [beg, int, exp, root]   # level (root = start page per language)\n    - [deutsch, english, svenska, norsk, dansk]   # language\n\nPræcis én profil fra hver gruppe er aktiv. Angiv flere profiler adskilt med komma:\nquarto render --profile int,english --output-dir docs/en/int\nQuarto læser så _quarto.yml, _quarto-int.yml og _quarto-english.yml og fletter dem.",
+    "crumbs": [
+      "Eksempelside",
+      "Flersprogede projekter"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_multilanguage.html#trin-2-hvad-står-hvor",
+    "href": "Qmd Files/Tipps and Tricks/exp_multilanguage.html#trin-2-hvad-står-hvor",
+    "title": "Flersprogede projekter",
+    "section": "Trin 2 – Hvad står hvor?",
+    "text": "Trin 2 – Hvad står hvor?\n\n\n_quarto-int.yml\n\nproject:\n  render:\n    - \"Qmd Files/Getting Started/*.qmd\"\n\n\n\n_quarto-english.yml (shortened)\n\nlang: en\nwebsite:\n  title: \"Quarto Tutorial\"\n  navbar:\n    left:\n      - text: \"Getting Started\"\n        href: \"#niveau-int\"          # placeholder, see step 4\n    right:\n      - icon: globe\n        menu:\n          - text: \"Deutsch\"\n            href: \"#sprache-de\"\n          - text: \"English\"\n            href: \"#sprache-en\"\n          # … Svenska, Norsk, Dansk\n  sidebar:                            # sidebars of ALL levels\n    - id: getting-started-sidebar\n      contents:\n        - text: \"What you need\"\n          href: \"Qmd Files/Getting Started/beg_website_1.qmd\"\n    - id: tips-sidebar\n      ...\n\nSidepanelerne for alle niveauer ligger i sprogfilen, fordi deres tekster skal oversættes. Quarto viser på hver side kun det sidepanel, hvor siden er nævnt. Poster for sider, der ikke renderes i denne kørsel, gør ingen skade.",
+    "crumbs": [
+      "Eksempelside",
+      "Flersprogede projekter"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_multilanguage.html#trin-3-alle-sprog-i-én-fil",
+    "href": "Qmd Files/Tipps and Tricks/exp_multilanguage.html#trin-3-alle-sprog-i-én-fil",
+    "title": "Flersprogede projekter",
+    "section": "Trin 3 – Alle sprog i én fil",
+    "text": "Trin 3 – Alle sprog i én fil\n---\ntitle: \"Erste Schritte mit Quarto\"\ntitle-en: \"Getting Started with Quarto\"\n---\n\n:::: {.content-visible when-profile=\"deutsch\"}\nWillkommen! ...\n::::\n\n:::: {.content-visible when-profile=\"english\"}\nWelcome! ...\n::::\n\nDet lille filter sprache.lua gør title-en: (eller title-sv:, title-no:, title-da:) til titlen i kørslen for det sprog.\nIndholdet på de andre sprog bliver fjernet, ikke bare skjult. Derfor finder søgningen kun det aktuelle sprog.\nKodeceller i alle blokke køres i hver kørsel. Hvis du beregner noget, så skriv koden én gang uden for blokkene, og oversæt kun teksten omkring.",
+    "crumbs": [
+      "Eksempelside",
+      "Flersprogede projekter"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_multilanguage.html#trin-4-navigation-uden-efterbehandling",
+    "href": "Qmd Files/Tipps and Tricks/exp_multilanguage.html#trin-4-navigation-uden-efterbehandling",
+    "title": "Flersprogede projekter",
+    "section": "Trin 4 – Navigation uden efterbehandling",
+    "text": "Trin 4 – Navigation uden efterbehandling\nQuarto kan ikke linke på tværs af profiler: set fra kørslen int,english findes hverken docs/de/ eller docs/en/beg/. Derfor omskrev preview.py tidligere hver HTML-fil efter renderingen.\nNu indeholder menulinjen kun pladsholdere (#sprache-de, #niveau-beg). Scriptet navigation.html (som tilføjes på hver side med include-after-body) læser sin egen sti, f.eks. /en/int/Qmd Files/…, og udfylder:\n\n\n\nPladsholder\nMål\n\n\n\n\n#sprache-de\nden samme side, /en/ → /de/\n\n\n#niveau-beg\nstartsiden for Beginner på det aktuelle sprog\n\n\ntitlen øverst til venstre\nstartsiden for det aktuelle sprog\n\n\n\nLinks i teksten til en bestemt side på et andet niveau virker uden scriptet, som en relativ sti ind i den færdige mappestruktur, f.eks. ../../../int/Qmd Files/Getting Started/getting_started.html.",
+    "crumbs": [
+      "Eksempelside",
+      "Flersprogede projekter"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_multilanguage.html#trin-5-byg-det-hele",
+    "href": "Qmd Files/Tipps and Tricks/exp_multilanguage.html#trin-5-byg-det-hele",
+    "title": "Flersprogede projekter",
+    "section": "Trin 5 – Byg det hele",
+    "text": "Trin 5 – Byg det hele\npython build.py            # 5 languages × (start page + 3 levels) = 20 runs, then preview\npython build.py --no-serve # build only\nFor hvert sprog renderer scriptet først startsiden (root), derefter de tre niveauer i undermapper, og skriver docs/index.html, som sender videre til mappen for browserens sprog (engelsk, hvis sproget mangler).\n\n\n\n\n\n\nAdvarselBegrænsninger\n\n\n\n\nSøgning: hver kørsel har sit eget søgeindeks. Søgningen finder kun sider på det aktuelle niveau på det aktuelle sprog.\nquarto preview viser en enkelt kombination, der gør pladsholderlinkene ingenting.\nStørrelse: hver side findes én gang pr. sprog i den samme fil. Til meget store projekter er separate mapper pr. sprog lettere at vedligeholde. Navigationen fra trin 4 virker på samme måde, så længe filnavnene passer sammen.",
+    "crumbs": [
+      "Eksempelside",
+      "Flersprogede projekter"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_yml.html",
+    "href": "Qmd Files/Tipps and Tricks/exp_yml.html",
+    "title": "YML-filen",
+    "section": "",
+    "text": "Filen _quarto.yml er kontrolcentret i dit Quarto-projekt. Alt, hvad du indstiller her, gælder globalt, medmindre det tilsidesættes i en bestemt .qmd-fil eller profil.",
+    "crumbs": [
+      "Eksempelside",
+      "YML-filen"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_yml.html#outputformater",
+    "href": "Qmd Files/Tipps and Tricks/exp_yml.html#outputformater",
+    "title": "YML-filen",
+    "section": "Outputformater",
+    "text": "Outputformater\nQuarto kan rendere den samme kilde til flere formater på én gang:\n\n\n_quarto.yml\n\nformat:\n  html:\n    toc: true\n    theme: cosmo\n  pdf:\n    toc: true\n    documentclass: article\n  docx:\n    toc: true\n\nAlle formater: quarto render Ét format: quarto render --to pdf\n\n\n\n\n\n\nTip\n\n\n\nEnhver formatindstilling kan tilsidesættes pr. side i hovedet på .qmd-filen.",
+    "crumbs": [
+      "Eksempelside",
+      "YML-filen"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_yml.html#execute-freeze-1",
+    "href": "Qmd Files/Tipps and Tricks/exp_yml.html#execute-freeze-1",
+    "title": "YML-filen",
+    "section": "Execute & freeze",
+    "text": "Execute & freeze\n\n\n_quarto.yml\n\nexecute:\n  echo: true        # show source code\n  eval: true        # run the code\n  warning: false    # suppress warnings\n  freeze: auto      # re-run only when source changes\n\n\n\n\nVærdi for freeze\nAdfærd\n\n\n\n\nfalse\nKør altid igen\n\n\ntrue\nKør aldrig igen, brug gemt output\n\n\nauto\nKør kun igen, når .qmd-filen ændres\n\n\n\nFrosne resultater gemmes i _freeze/. Tag mappen med i dine commits, så samarbejdspartnere ikke behøver at køre det hele igen.\n\n\n\n\n\n\nAdvarsel\n\n\n\nfreeze: auto holder øje med .qmd-filen, ikke med dine datafiler. Hvis du opdaterer en CSV-fil, men ikke .qmd-filen, så slet den tilhørende mappe i _freeze/ for at fremtvinge en ny kørsel.",
+    "crumbs": [
+      "Eksempelside",
+      "YML-filen"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_yml.html#profiler",
+    "href": "Qmd Files/Tipps and Tricks/exp_yml.html#profiler",
+    "title": "YML-filen",
+    "section": "Profiler",
+    "text": "Profiler\nMed profiler kan du have flere byggevarianter af ét projekt, til forskellige målgrupper, sprog eller formater.\n\n\n_quarto.yml\n\nprofile:\n  default: web\n  group:\n    - [web, print]\n\nPræcis én profil i en gruppe er aktiv ad gangen. Hver profil har sin egen konfigurationsfil _quarto-&lt;navn&gt;.yml, som tilsidesætter eller udvider grundkonfigurationen:\n\n\n_quarto-print.yml\n\nproject:\n  output-dir: docs/print\nformat:\n  pdf:\n    toc: true\n\nRender en bestemt profil:\nquarto render --profile print\n\n\n\n\n\n\nTip\n\n\n\nDenne vejledning har to grupper af profiler: niveauet (beg, int, exp) og sproget (deutsch, english, svenska, norsk, dansk). I hver kørsel er én fra hver gruppe aktiv, f.eks. quarto render --profile int,english. Mere om det i Flersprogede projekter.",
+    "crumbs": [
+      "Eksempelside",
+      "YML-filen"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_yml.html#sidebar",
+    "href": "Qmd Files/Tipps and Tricks/exp_yml.html#sidebar",
+    "title": "YML-filen",
+    "section": "Sidepanel",
+    "text": "Sidepanel\n\nGrundopsætning\n\n\n_quarto.yml\n\nwebsite:\n  sidebar:\n    - id: my-sidebar\n      style: docked       # docked | floating\n      collapse-level: 1   # how many levels are expanded by default\n      contents:\n        - href: page.qmd\n          text: \"Page Title\"\n\n\n\nAfsnit: grupper, der kan foldes sammen\nBrug section: til at lave grupper i sidepanelet, der kan foldes sammen. Et afsnit kan have sin egen oversigtsside (href) eller bare være en etiket:\ncontents:\n  - section: \"Chapter 1\"          # label only, no page\n    contents:\n      - href: ch1/part1.qmd\n        text: Part 1\n\n  - section: \"Chapter 2\"\n    href: ch2/index.qmd           # clicking the section title opens this page\n    contents:\n      - href: ch2/part1.qmd\n        text: Part 1\n\n\nSammenfoldningsniveau\ncollapse-level styrer, hvor mange niveauer der er foldet ud, når siden indlæses:\n\n\n\nVærdi\nEffekt\n\n\n\n\n1\nKun det øverste niveau vises, alle afsnit er foldet sammen\n\n\n2\nAfsnit på første niveau er foldet ud (standard)\n\n\n3\nOgså afsnit på andet niveau er foldet ud\n\n\n\nsidebar:\n  collapse-level: 1   # start collapsed, readers expand what they need\n\n\nFastgjort eller flydende sidepanel\nstyle: docked viser sidepanelet som en fast kolonne med sin egen baggrund. style: floating lægger det ved siden af teksten uden baggrund:\nwebsite:\n  sidebar:\n    style: floating\nFor at skjule sidepanelet på en enkelt side bruger du hovedet i den .qmd-fil:\n\n\npage.qmd\n\n---\nsidebar: false\n---",
+    "crumbs": [
+      "Eksempelside",
+      "YML-filen"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Tipps and Tricks/exp_yml.html#styles--css",
+    "href": "Qmd Files/Tipps and Tricks/exp_yml.html#styles--css",
+    "title": "YML-filen",
+    "section": "Typografier & CSS",
+    "text": "Typografier & CSS\n\nVælg et tema\nQuarto bruger temaer fra Bootswatch til HTML:\n\n\n_quarto.yml\n\nformat:\n  html:\n    theme: cosmo\n\nPopulære temaer: default, cosmo, flatly, lumen, minty, sandstone, simplex, slate (mørkt), solar (mørkt), superhero (mørkt).\n\n\nSkift mellem lyst og mørkt\n\n\n_quarto.yml\n\nformat:\n  html:\n    theme:\n      light: flatly\n      dark: darkly\n\nQuarto tilføjer automatisk en knap til at skifte i menulinjen.\n\n\nEgen CSS oven på et tema\n\n\n_quarto.yml\n\nformat:\n  html:\n    theme:\n      - cosmo\n      - custom.scss\n\nOpret custom.scss ved siden af _quarto.yml:\n\n\ncustom.scss\n\n/*-- scss:defaults --*/\n/* Override Bootstrap design tokens */\n$primary: #0d6efd;\n$font-size-base: 1rem;\n$headings-font-weight: 600;\n\n/*-- scss:rules --*/\n/* Regular CSS rules */\nh2 {\n  border-bottom: 2px solid $primary;\n  padding-bottom: 0.25rem;\n}\n\nQuarto kræver de to afsnitsmarkører:\n\n\n\nAfsnit\nFormål\n\n\n\n\n/*-- scss:defaults --*/\nTilsidesætte Bootstraps SCSS-variabler\n\n\n/*-- scss:rules --*/\nSkrive almindelige CSS-regler\n\n\n\n\n\nVigtige SCSS-variabler\n/*-- scss:defaults --*/\n$primary:             #0d6efd;\n$body-bg:             #ffffff;\n$body-color:          #212529;\n$font-family-base:    \"Inter\", sans-serif;\n$font-size-base:      1rem;\n$headings-font-weight: 600;\n$border-radius:       0.375rem;\n\n\nRegler for mørk tilstand\n\n\ncustom.scss\n\n/*-- scss:rules --*/\n[data-bs-theme=\"dark\"] .my-box {\n  background-color: #1e1e2e;\n}\n\n\n\nEget ikon i en infoboks, et praktisk CSS-eksempel\nEn infoboks kan få sit helt eget ikon ved at kombinere en egen CSS-klasse med nogle få regler.\nInfoboksen nedenfor er det færdige resultat. Ikonet 🎨 tilføjes udelukkende med CSS:\n\n\n\n\n\n\nTipEget ikon med CSS\n\n\n\nDenne infoboks bruger klassen .palette-callout. Ikonet 🎨 indsættes med ::before, og standardikonet (SVG) skjules med display: none.\n\n\nKoden, der giver det:\n::: {.callout-tip .palette-callout}\n## Custom icon via CSS\nContent here.\n:::\n\n\ncustom.scss\n\n/*-- scss:rules --*/\n.palette-callout &gt; .callout-header .callout-icon-container::before {\n  content: \"🎨\";\n  font-size: 1.1rem;\n  margin-right: 0.4rem;\n}\n.palette-callout &gt; .callout-header .callout-icon-container svg {\n  display: none;\n}\n\n\n\n\n\n\n\nTipRigtig godt at vide: inspicér med F12\n\n\n\n\n\nFør du kan ændre en typografi, skal du vide, hvilken CSS-klasse du skal ramme.\n① Åbn den renderede HTML-side i en browser.\n② Tryk på F12, klik på pilsymbolet, og hold musemarkøren over det element, du vil formgive.\n③ I HTML-panelet ser du elementet og dets klasser:\n&lt;h2 class=\"anchored\" id=\"my-section\"&gt;My Section&lt;/h2&gt;\n④ I panelet Styles ser du, hvilke CSS-regler der gælder, og hvilket typografiark de kommer fra.\n⑤ Klik på en værdi for at ændre den direkte. Siden opdateres med det samme, så du kan eksperimentere, før du skriver kode.\n\n\n\n\n\n\n\n\n\nNote Ikoner virker også i infoboksenes overskrifter\n\n\n\nEgne ikoner fra Theme/Icons/ vises overalt, hvor Quarto accepterer HTML i teksten, også i infoboksenes overskrifter. &lt;i class=\"python\"&gt;&lt;/i&gt; ovenfor laves udelukkende af denne CSS-regel i SCSS-filen:\ni.python {\n  content: url(\"Theme/Icons/python.svg\");\n  display: inline-block;\n  height: 1em;\n  width: 1em;\n  margin-right: 0.25em;\n}",
+    "crumbs": [
+      "Eksempelside",
+      "YML-filen"
+    ]
+  }
+]

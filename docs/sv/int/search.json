@@ -1,0 +1,461 @@
+[
+  {
+    "objectID": "Qmd Files/Getting Started/getting_started.html",
+    "href": "Qmd Files/Getting Started/getting_started.html",
+    "title": "Kom igång med Quarto",
+    "section": "",
+    "text": "NoteraOfficiell dokumentation\n\n\n\nDen officiella Quarto-dokumentationen på quarto.org/docs/get-started innehåller utförliga handledningar för alla nivåer och är alltid ett bra ställe att läsa vidare på.\nVälkommen! Den här guiden tar dig steg för steg genom hur du skapar riktiga Quarto-dokument, som en bygganvisning. Du behöver inga förkunskaper.",
+    "crumbs": [
+      "Översikt"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/getting_started.html#vad-vill-du-bygga",
+    "href": "Qmd Files/Getting Started/getting_started.html#vad-vill-du-bygga",
+    "title": "Kom igång med Quarto",
+    "section": "Vad vill du bygga?",
+    "text": "Vad vill du bygga?\n\n\n🌐 En webbplats\nPresentera din kurs, din forskning eller din portfolio som en prydlig webbplats med flera sidor.\n→ Vad du behöver\n→ Skapa en webbplats\n→ Publicera på nätet\n\n\n📄 Ett övningsblad\nSkapa ett proffsigt övningsblad som blir PDF, HTML eller Word från en och samma fil.\n→ Vad du behöver\n→ Skapa ett övningsblad\n→ Andra format\n\n\n📚 En bok\nStrukturera längre innehåll, till exempel föreläsningsanteckningar eller en handbok, som en bok med navigering.\n→ Vad du behöver\n→ Skapa en bok",
+    "crumbs": [
+      "Översikt"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/getting_started.html#vill-du-ha-interaktiv-python-kod",
+    "href": "Qmd Files/Getting Started/getting_started.html#vill-du-ha-interaktiv-python-kod",
+    "title": "Kom igång med Quarto",
+    "section": "✨ Vill du ha interaktiv Python-kod?",
+    "text": "✨ Vill du ha interaktiv Python-kod?\nOm du vill att studenterna ska kunna köra och ändra Python-kod direkt i webbläsaren (utan att de installerar något), läs guiden om tillägg.",
+    "crumbs": [
+      "Översikt"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_website_3.html",
+    "href": "Qmd Files/Getting Started/beg_website_3.html",
+    "title": "Publicera webbplatsen",
+    "section": "",
+    "text": "NoteraOfficiell dokumentation\n\n\n\nQuarto har flera sätt att publicera. Alla beskrivs på quarto.org/docs/publishing.\nDen här guiden använder GitHub Pages, en gratis tjänst som gör din webbplats offentligt tillgänglig på en github.io-adress.\nDu behöver ett gratis konto på github.com. Skapa ett om du inte redan har ett.",
+    "crumbs": [
+      "Skapa en Quarto-webbplats",
+      "Publicera webbplatsen"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_website_3.html#låt-quarto-skriva-till-en-mapp-docs",
+    "href": "Qmd Files/Getting Started/beg_website_3.html#låt-quarto-skriva-till-en-mapp-docs",
+    "title": "Publicera webbplatsen",
+    "section": "1 – Låt Quarto skriva till en mapp docs",
+    "text": "1 – Låt Quarto skriva till en mapp docs\n① Öppna _quarto.yml och lägg till utdatamappen\n\nÖppna filen _quarto.yml och lägg till output-dir: docs i avsnittet project:, precis som på bilden. GitHub Pages förväntar sig att webbplatsens filer ligger i en mapp som heter docs.\n\n② Rendera webbplatsen\nÖppna terminalen via View → Terminal och kör:\n\n\nTerminal\n\nquarto render\n\nQuarto bygger hela webbplatsen i mappen docs/. Du ser den dyka upp i filutforskaren till vänster.",
+    "crumbs": [
+      "Skapa en Quarto-webbplats",
+      "Publicera webbplatsen"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_website_3.html#skapa-ett-repository-på-github",
+    "href": "Qmd Files/Getting Started/beg_website_3.html#skapa-ett-repository-på-github",
+    "title": "Publicera webbplatsen",
+    "section": "2 – Skapa ett repository på GitHub",
+    "text": "2 – Skapa ett repository på GitHub\n① Gå till GitHub och skapa ett nytt repository\n\nLogga in på github.com, klicka på + uppe till höger och välj New repository. Ge det ett namn, det blir en del av webbplatsens adress.\n\n② Välj Public och skapa\n\nSe till att Public är valt. Låt alla andra inställningar vara och klicka på Create repository.",
+    "crumbs": [
+      "Skapa en Quarto-webbplats",
+      "Publicera webbplatsen"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_website_3.html#ladda-upp-dina-filer",
+    "href": "Qmd Files/Getting Started/beg_website_3.html#ladda-upp-dina-filer",
+    "title": "Publicera webbplatsen",
+    "section": "3 – Ladda upp dina filer",
+    "text": "3 – Ladda upp dina filer\n① Hitta uppladdningslänken\n\nDitt nya tomma repository öppnas. Klicka på uploading an existing file mitt på sidan.\n\n② Dra projektfilerna till sidan\nDra alla filer och mappar från projektmappen direkt till GitHubs uppladdningssida. Ta med allt: docs/, _quarto.yml, index.qmd, styles.css och alla andra filer.\n\n\n\n\n\n\nVarning\n\n\n\nLadda inte bara upp innehållet i mappen docs/. Ladda upp hela projektmappens innehåll, så att GitHub har allt som behövs.\n\n\nGitHub visar “Processing your files…” medan uppladdningen pågår.\n\n\n③ Gör en commit av filerna\n\nRulla nedåt efter uppladdningen. Där finns dialogen “Commit changes”. Du kan låta meddelandet vara “Initial Push” eller skriva ett eget. Klicka på Commit changes.",
+    "crumbs": [
+      "Skapa en Quarto-webbplats",
+      "Publicera webbplatsen"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_website_3.html#aktivera-github-pages",
+    "href": "Qmd Files/Getting Started/beg_website_3.html#aktivera-github-pages",
+    "title": "Publicera webbplatsen",
+    "section": "4 – Aktivera GitHub Pages",
+    "text": "4 – Aktivera GitHub Pages\n① Öppna repositoryts Settings\n\nKlicka på fliken Settings högst upp på repositoryts sida.\n\n② Hitta “Pages” i sidofältet till vänster\n\nRulla nedåt i sidofältet till vänster och klicka på Pages.\n\n③ Välj branchen main och mappen /docs\n\nKlicka under Branch på listan där det står None och välj main.\n\n\nEn andra lista för mappen visas. Klicka på den och välj /docs.\n\n④ Spara\n\nKlicka på Save. GitHub börjar nu bygga och publicera webbplatsen.",
+    "crumbs": [
+      "Skapa en Quarto-webbplats",
+      "Publicera webbplatsen"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_website_3.html#webbplatsen-är-publicerad",
+    "href": "Qmd Files/Getting Started/beg_website_3.html#webbplatsen-är-publicerad",
+    "title": "Publicera webbplatsen",
+    "section": "5 – Webbplatsen är publicerad",
+    "text": "5 – Webbplatsen är publicerad\n① Vänta på publiceringen\n\nGå tillbaka till repositoryts startsida. Till höger finns avsnittet Deployments. Vänta tills det visar en grön bock, det tar oftast 1–2 minuter.\nKlicka på publiceringen för att hitta webbplatsens offentliga adress. Den ser ut som https://dittanvändarnamn.github.io/ditt-repo-namn/.\n\n\n\n\n\n\n\nTipsUppdatera webbplatsen senare\n\n\n\nVarje gång du har ändrat något:\n\nKör quarto render i terminalen i VS Code (eller klicka på knappen Preview och stäng den) för att bygga om mappen docs/\nGå till ditt repository på GitHub → dra den uppdaterade mappen docs/ till fillistan → Commit\n\nGitHub Pages publicerar om automatiskt inom en eller två minuter.",
+    "crumbs": [
+      "Skapa en Quarto-webbplats",
+      "Publicera webbplatsen"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_website_1.html",
+    "href": "Qmd Files/Getting Started/beg_website_1.html",
+    "title": "Vad du behöver – webbplats",
+    "section": "",
+    "text": "NoteraOfficiell dokumentation\n\n\n\nFullständiga installationsanvisningar finns också på quarto.org/docs/get-started.\nDu behöver installera tre saker. Det tar ungefär 10–15 minuter. Skärmbilderna är desamma på alla språk (engelskt Windows).",
+    "crumbs": [
+      "Skapa en Quarto-webbplats",
+      "Vad du behöver"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_website_1.html#installera-vs-code",
+    "href": "Qmd Files/Getting Started/beg_website_1.html#installera-vs-code",
+    "title": "Vad du behöver – webbplats",
+    "section": "1 – Installera VS Code",
+    "text": "1 – Installera VS Code\n① Gå till VS Codes webbplats och ladda ner installationsprogrammet\n\nGå till code.visualstudio.com och klicka på den stora knappen Download for Windows. Filen hamnar i din mapp för nedladdningar.\n\n② Starta installationsprogrammet\n\nDubbelklicka på den nedladdade filen (den ser ut som VS Code-logotypen med en grön bock).\n\n③ Se till att “Add to PATH” är ikryssat\n\nUnder installationen visas en sida med kryssrutor. Se till att “Add to PATH” är ikryssat, det är viktigt för att Quarto ska fungera som det ska. Klicka sedan på Next.\n\n④ Avsluta installationen\n\nKlicka på Finish. VS Code öppnas automatiskt.\n\n\n\n\n\n\nNotera🔍 I detalj: alla sidor i installationsprogrammet för VS Code\n\n\n\n\n\nLicensavtal: välj “I accept” och klicka på Next.\n\nMålmapp: behåll standardsökvägen och klicka på Next.\n\nMapp i startmenyn: låt den vara och klicka på Next.\n\nSammanfattning: läs igenom och klicka på Install.\n\nInstallationen pågår: vänta tills den är klar.",
+    "crumbs": [
+      "Skapa en Quarto-webbplats",
+      "Vad du behöver"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_website_1.html#installera-quarto",
+    "href": "Qmd Files/Getting Started/beg_website_1.html#installera-quarto",
+    "title": "Vad du behöver – webbplats",
+    "section": "2 – Installera Quarto",
+    "text": "2 – Installera Quarto\n① Gå till Quartos webbplats och ladda ner installationsprogrammet\n\nGå till quarto.org/docs/get-started och klicka på knappen Download Quarto CLI under Step 1. Välj installationsprogrammet för Windows.\n\n② Starta installationsprogrammet för Quarto\n\nDubbelklicka på den nedladdade .msi-filen och följ installationsprogrammet. Du kan klicka dig igenom alla sidor med standardinställningarna.\n\n③ Avsluta\n\nKlicka på Finish. Nu är Quarto installerat.\n\n\n\n\n\n\nNotera🔍 I detalj: alla sidor i installationsprogrammet för Quarto\n\n\n\n\n\nVälkomstsida: klicka på Next.\n\nInstallationens omfattning: “Install just for you” räcker för de flesta.\n\nMålmapp: behåll standardvärdet och klicka på Next.\n\nInstallationen pågår: vänta tills den är klar.",
+    "crumbs": [
+      "Skapa en Quarto-webbplats",
+      "Vad du behöver"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_website_1.html#installera-quarto-tillägget-i-vs-code",
+    "href": "Qmd Files/Getting Started/beg_website_1.html#installera-quarto-tillägget-i-vs-code",
+    "title": "Vad du behöver – webbplats",
+    "section": "3 – Installera Quarto-tillägget i VS Code",
+    "text": "3 – Installera Quarto-tillägget i VS Code\n① Sök efter Quarto-tillägget och installera det\n\nKlicka i VS Code på symbolen Extensions i sidofältet till vänster (fyra rutor). Sök efter Quarto, klicka på träffen och klicka på Trust Publisher & Install i dialogrutan som visas.\n\n\n\n\n\n\n\nTips✅ Klart – nu kan du börja bygga!\n\n\n\nFortsätt med Skapa en webbplats →",
+    "crumbs": [
+      "Skapa en Quarto-webbplats",
+      "Vad du behöver"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_extensions.html",
+    "href": "Qmd Files/Getting Started/beg_extensions.html",
+    "title": "Interaktiv kod med Pyodide",
+    "section": "",
+    "text": "NoteraVad är tillägg?\n\n\n\nTillägg (extensions) ger Quarto funktioner som inte är inbyggda. Du installerar dem en gång per projektmapp. Hela listan finns på quarto.org/docs/extensions.\nMed Pyodide kan studenterna köra och ändra Python-kod direkt i webbläsaren, utan att installera Python på sin dator. Du skriver koden en gång, de klickar på Kör koden.\nDen här handledningen använder tillägget pyodide-interaktiv till det, en omarbetning av coatless-quarto/pyodide. Det kör Python i en Web Worker, alltså bredvid sidan i stället för i den. Det är det som gör riktigt input(), animationer, en stoppknapp och AI-feedback möjligt. Mer om det i sista avsnittet.",
+    "crumbs": [
+      "Interaktiv kod",
+      "Interaktiv Python med Pyodide"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_extensions.html#installera-tillägget",
+    "href": "Qmd Files/Getting Started/beg_extensions.html#installera-tillägget",
+    "title": "Interaktiv kod med Pyodide",
+    "section": "1 – Installera tillägget",
+    "text": "1 – Installera tillägget\n① Öppna terminalen i VS Code\nÖppna terminalen (kommandoraden) via View → Terminal. En panel öppnas längst ner i fönstret. Kontrollera att sökvägen som visas är din projektmapp.\n\n② Kör installationskommandot\nTillägget finns på github.com/Erasmus-CTM/pyodide-interaktiv och installeras som vilket annat tillägg som helst:\n\n\nTerminal\n\nquarto add Erasmus-CTM/pyodide-interaktiv\n\nVänta tills kommandot är klart. Det ställer tre frågor: om du litar på källan, om du vill fortsätta och om du vill se dokumentationen. Det här behövs bara en gång per projektmapp. Efteråt ligger tillägget i projektets mapp _extensions/.",
+    "crumbs": [
+      "Interaktiv kod",
+      "Interaktiv Python med Pyodide"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_extensions.html#aktivera-det-i-din-fil",
+    "href": "Qmd Files/Getting Started/beg_extensions.html#aktivera-det-i-din-fil",
+    "title": "Interaktiv kod med Pyodide",
+    "section": "2 – Aktivera det i din fil",
+    "text": "2 – Aktivera det i din fil\nLägg till en rad filters: i huvudet på din .qmd-fil:\n---\ntitle: \"My Page\"\nformat: html\nfilters:\n  - Erasmus-CTM/pyodide-interaktiv\n---",
+    "crumbs": [
+      "Interaktiv kod",
+      "Interaktiv Python med Pyodide"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_extensions.html#lägg-till-ett-interaktivt-kodblock",
+    "href": "Qmd Files/Getting Started/beg_extensions.html#lägg-till-ett-interaktivt-kodblock",
+    "title": "Interaktiv kod med Pyodide",
+    "section": "3 – Lägg till ett interaktivt kodblock",
+    "text": "3 – Lägg till ett interaktivt kodblock\nI stället för ett vanligt kodblock skriver du {pyodide-python}:\n```{pyodide-python}\nx = [1, 2, 3, 4, 5]\nprint(sum(x))\n```",
+    "crumbs": [
+      "Interaktiv kod",
+      "Interaktiv Python med Pyodide"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_extensions.html#se-resultatet-2",
+    "href": "Qmd Files/Getting Started/beg_extensions.html#se-resultatet-2",
+    "title": "Interaktiv kod med Pyodide",
+    "section": "4 – Se resultatet",
+    "text": "4 – Se resultatet\nKör quarto preview i terminalen. Kodblocket visas i webbläsaren med en rad knappar. Så här ser det ut, och du kan prova det direkt här:\n\nAktivera JavaScript för att kunna använda de interaktiva kodcellerna på den här sidan.\n\nKör koden startar koden (också med Shift + Enter). Vid första klicket laddas Python, det tar några sekunder.\nÅterställ återställer din ursprungliga kod.\nFeedback ber en AI om återkoppling (måste ställas in först).\nMedan koden körs visas Stoppa.\n\nStudenterna kan ändra koden och köra den igen utan att installera något.",
+    "crumbs": [
+      "Interaktiv kod",
+      "Interaktiv Python med Pyodide"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_extensions.html#vad-tillägget-mer-kan",
+    "href": "Qmd Files/Getting Started/beg_extensions.html#vad-tillägget-mer-kan",
+    "title": "Interaktiv kod med Pyodide",
+    "section": "5 – Vad tillägget mer kan",
+    "text": "5 – Vad tillägget mer kan\n\nCeller delar variabler. Alla celler på en sida hör till en och samma Python-session. En senare cell kan använda det som en tidigare har definierat eller importerat, men först när den tidigare har körts.\nRiktigt input(). En cell kan stanna och vänta på inmatning.\nAnimationer. En FuncAnimation från Matplotlib visas som en spelare, med samma kod som du skulle skriva på din egen dator.\nOändliga loopar är ofarliga. Ett while True: av misstag låser inte sidan, Stoppa avbryter.\nAI-feedback. Ledtrådarna blir mer konkreta för varje klick.\n\ninput() och delade variabler kan du prova på sidan Kod i exempelsidan, och animationen på sidan Visualiseringar.\n\n\n\n\n\n\n\nTipsSka studenterna fylla i lösningar?\n\n\n\nTillägget py-exercise ger kodblock med dolda automatiska tester: studenterna ser om deras lösning klarar testerna. Tillägget math-exercise gör samma sak för matematiska svar, kontrollerade med SymPy. Båda installeras på samma sätt:\n\n\nTerminal\n\nquarto add Erasmus-CTM/py-exercise\nquarto add Erasmus-CTM/math-exercise\n\nExempel på båda finns på exempelsidan i den här handledningen.",
+    "crumbs": [
+      "Interaktiv kod",
+      "Interaktiv Python med Pyodide"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_exercise_3.html",
+    "href": "Qmd Files/Getting Started/beg_exercise_3.html",
+    "title": "Andra utdataformat",
+    "section": "",
+    "text": "En av Quartos största fördelar: en .qmd-fil → flera utdataformat. Du skriver innehållet en gång och ändrar bara en rad för att få PDF, HTML eller Word.",
+    "crumbs": [
+      "Skapa ett övningsblad med Quarto",
+      "Andra utdataformat"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_exercise_3.html#byt-format",
+    "href": "Qmd Files/Getting Started/beg_exercise_3.html#byt-format",
+    "title": "Andra utdataformat",
+    "section": "Byt format",
+    "text": "Byt format\nÖppna din .qmd-fil och ändra raden format: i huvudet högst upp.\nFör HTML (inga extra verktyg, fungerar i alla webbläsare):\n---\ntitle: \"Exercise Sheet 1\"\nformat: html\n---\nFör Word (.docx, kan redigeras i Microsoft Word):\n---\ntitle: \"Exercise Sheet 1\"\nformat: docx\n---\nFör PDF (kräver TinyTeX, se Vad du behöver):\n---\ntitle: \"Exercise Sheet 1\"\nformat: pdf\n---\nKör sedan quarto render i terminalen. Quarto skapar filen i det format du har valt.",
+    "crumbs": [
+      "Skapa ett övningsblad med Quarto",
+      "Andra utdataformat"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_exercise_3.html#skapa-alla-format-på-en-gång",
+    "href": "Qmd Files/Getting Started/beg_exercise_3.html#skapa-alla-format-på-en-gång",
+    "title": "Andra utdataformat",
+    "section": "Skapa alla format på en gång",
+    "text": "Skapa alla format på en gång\nDu kan ange flera format, då renderar Quarto alla i ett svep:\n---\ntitle: \"Exercise Sheet 1\"\nformat:\n  html: default\n  pdf: default\n  docx: default\n---\nKör quarto render en gång så får du tre utdatafiler.\n\n\n\n\n\n\n\nNoteraOfficiell dokumentation\n\n\n\nAlla tillgängliga format och deras inställningar finns på quarto.org/docs/output-formats/all-formats.html.",
+    "crumbs": [
+      "Skapa ett övningsblad med Quarto",
+      "Andra utdataformat"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_exercise_1.html",
+    "href": "Qmd Files/Getting Started/beg_exercise_1.html",
+    "title": "Vad du behöver – övningsblad",
+    "section": "",
+    "text": "NoteraOfficiell dokumentation\n\n\n\nMer om inställningarna för PDF finns på quarto.org/docs/output-formats/pdf-basics.html.\nFör ett övningsblad behöver du samma saker som för en webbplats, plus ett extra verktyg om du vill skapa PDF.",
+    "crumbs": [
+      "Skapa ett övningsblad med Quarto",
+      "Vad du behöver"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_exercise_1.html#steg-1-vs-code-quarto-tillägget",
+    "href": "Qmd Files/Getting Started/beg_exercise_1.html#steg-1-vs-code-quarto-tillägget",
+    "title": "Vad du behöver – övningsblad",
+    "section": "Steg 1 – VS Code + Quarto-tillägget",
+    "text": "Steg 1 – VS Code + Quarto-tillägget\nOm du inte har gjort det än, följ Vad du behöver – webbplats och kom tillbaka hit när du är klar.",
+    "crumbs": [
+      "Skapa ett övningsblad med Quarto",
+      "Vad du behöver"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_exercise_1.html#steg-2-installera-tinytex-bara-för-pdf",
+    "href": "Qmd Files/Getting Started/beg_exercise_1.html#steg-2-installera-tinytex-bara-för-pdf",
+    "title": "Vad du behöver – övningsblad",
+    "section": "Steg 2 – Installera TinyTeX (bara för PDF)",
+    "text": "Steg 2 – Installera TinyTeX (bara för PDF)\nQuarto behöver ett LaTeX-system för att skapa PDF-filer. Enklast är TinyTeX, som Quarto kan installera åt dig direkt från VS Code.\nÖppna terminalen (kommandoraden) i VS Code via View → Terminal och kör:\n\n\nTerminal\n\nquarto install tinytex\n\nVänta tills installationen är klar, det kan ta några minuter.\n\n\n\n\n\n\nNotera\n\n\n\nOm du bara vill skapa HTML eller Word kan du hoppa över det här steget helt.\n\n\n\n\n\n\n\n\n\nTips✅ Klart!\n\n\n\nFortsätt med Skapa ett övningsblad →",
+    "crumbs": [
+      "Skapa ett övningsblad med Quarto",
+      "Vad du behöver"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_book_2.html",
+    "href": "Qmd Files/Getting Started/beg_book_2.html",
+    "title": "Skapa en bok",
+    "section": "",
+    "text": "Skapa en ny tom mapp (till exempel min-bok) och öppna den i VS Code via File → Open Folder. Klicka på Yes, I trust the authors om dialogrutan visas.",
+    "crumbs": [
+      "Skapa en Quarto-bok",
+      "Skapa en bok"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_book_2.html#öppna-en-ny-mapp-i-vs-code",
+    "href": "Qmd Files/Getting Started/beg_book_2.html#öppna-en-ny-mapp-i-vs-code",
+    "title": "Skapa en bok",
+    "section": "",
+    "text": "Skapa en ny tom mapp (till exempel min-bok) och öppna den i VS Code via File → Open Folder. Klicka på Yes, I trust the authors om dialogrutan visas.",
+    "crumbs": [
+      "Skapa en Quarto-bok",
+      "Skapa en bok"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_book_2.html#skapa-ett-bokprojekt",
+    "href": "Qmd Files/Getting Started/beg_book_2.html#skapa-ett-bokprojekt",
+    "title": "Skapa en bok",
+    "section": "2 – Skapa ett bokprojekt",
+    "text": "2 – Skapa ett bokprojekt\n① Skapa ett nytt Quarto-projekt\n\nGå till File → New File…. En liten meny visas, välj Quarto Project.\n\nVälj Book Project och sedan din projektmapp.\n\n② Bokens filer är klara\n\nQuarto har skapat hela bokens struktur:\n\n_quarto.yml: bokens inställningar och kapitlens ordning\nindex.qmd: omslag eller förord\nintro.qmd, summary.qmd: exempelkapitel\nreferences.bib: litteraturfil\nreferences.qmd: sida med litteraturförteckningen",
+    "crumbs": [
+      "Skapa en Quarto-bok",
+      "Skapa en bok"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_book_2.html#förhandsgranska-boken",
+    "href": "Qmd Files/Getting Started/beg_book_2.html#förhandsgranska-boken",
+    "title": "Skapa en bok",
+    "section": "3 – Förhandsgranska boken",
+    "text": "3 – Förhandsgranska boken\n① Kör quarto preview i terminalen\n\nÖppna terminalen (View → Terminal) och kör:\nquarto preview\nBoken byggs och en förhandsgranskning öppnas i VS Code och i webbläsaren.\n\n② Se resultatet i webbläsaren\n\nBoken öppnas i webbläsaren med:\n\nett sidofält till vänster med alla kapitel\nlänkar till föregående och nästa kapitel längst ner på varje sida\nen innehållsförteckning till höger för det aktuella kapitlet",
+    "crumbs": [
+      "Skapa en Quarto-bok",
+      "Skapa en bok"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_book_2.html#lägg-till-och-ändra-kapitel",
+    "href": "Qmd Files/Getting Started/beg_book_2.html#lägg-till-och-ändra-kapitel",
+    "title": "Skapa en bok",
+    "section": "4 – Lägg till och ändra kapitel",
+    "text": "4 – Lägg till och ändra kapitel\nÖppna _quarto.yml för att bestämma vilka filer som är kapitel och i vilken ordning:\nbook:\n  title: \"My Lecture Notes\"\n  author: \"Your Name\"\n  chapters:\n    - index.qmd\n    - intro.qmd\n    - summary.qmd\n    - references.qmd\nVarje post är filnamnet på en .qmd-fil i mappen. Lägg till en rad för ett nytt kapitel och skapa den tillhörande .qmd-filen.\n\n\n\n\n\n\n\nTips✅ Din bok är igång!\n\n\n\n\nÄndra i en kapitelfil och spara, så uppdateras förhandsgranskningen direkt\nRedo att publicera? Se Publicera webbplatsen →. Mappen _book fungerar precis som mappen _site",
+    "crumbs": [
+      "Skapa en Quarto-bok",
+      "Skapa en bok"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_book_1.html",
+    "href": "Qmd Files/Getting Started/beg_book_1.html",
+    "title": "Vad du behöver – bok",
+    "section": "",
+    "text": "NoteraOfficiell dokumentation\n\n\n\nDen fullständiga guiden till Quarto-böcker finns på quarto.org/docs/books.\nEn Quarto-bok är en samling .qmd-filer som renderas tillsammans till ett dokument med navigering. Det passar bra för föreläsningsanteckningar, en kurshandbok eller dokumentation.\nDu behöver samma saker som för en webbplats. Om du inte har gjort det än, följ först Vad du behöver – webbplats.",
+    "crumbs": [
+      "Skapa en Quarto-bok",
+      "Vad du behöver"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_book_1.html#så-är-en-bok-uppbyggd",
+    "href": "Qmd Files/Getting Started/beg_book_1.html#så-är-en-bok-uppbyggd",
+    "title": "Vad du behöver – bok",
+    "section": "Så är en bok uppbyggd",
+    "text": "Så är en bok uppbyggd\nNär du skapar ett bokprojekt skapar Quarto den här filstrukturen automatiskt:\n\n\n_quarto.yml: anger titel, författare och kapitlens ordning\nindex.qmd: omslag eller förord\nintro.qmd, summary.qmd: exempelkapitel (byt namn på dem eller ersätt dem)\nreferences.bib: litteraturfil för citat\nreferences.qmd: sida där litteraturförteckningen skapas automatiskt\n\n_quarto.yml binder ihop allt. Till exempel:\nbook:\n  title: \"My Lecture Notes\"\n  author: \"Your Name\"\n  chapters:\n    - index.qmd\n    - intro.qmd\n    - summary.qmd\n    - references.qmd\nVarje .qmd-fil blir ett kapitel. Ordningen i listan är ordningen i boken.\n\n\n\n\n\n\n\nTips✅ Klart!\n\n\n\nFortsätt med Skapa en bok →",
+    "crumbs": [
+      "Skapa en Quarto-bok",
+      "Vad du behöver"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_exercise_2.html",
+    "href": "Qmd Files/Getting Started/beg_exercise_2.html",
+    "title": "Skapa ett övningsblad",
+    "section": "",
+    "text": "① Öppna dialogen New File\n\nGå i VS Code till File → New File…. En liten meny visas. Välj Quarto Document.\n\n② Filen öppnas med ett färdigt huvud\n\nVS Code skapar en ny fil där ett enkelt inställningsblock redan är ifyllt. Spara den med ett namn som exercises.qmd (File → Save eller Ctrl+S).",
+    "crumbs": [
+      "Skapa ett övningsblad med Quarto",
+      "Skapa ett övningsblad"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_exercise_2.html#skapa-en-ny-quarto-fil",
+    "href": "Qmd Files/Getting Started/beg_exercise_2.html#skapa-en-ny-quarto-fil",
+    "title": "Skapa ett övningsblad",
+    "section": "",
+    "text": "① Öppna dialogen New File\n\nGå i VS Code till File → New File…. En liten meny visas. Välj Quarto Document.\n\n② Filen öppnas med ett färdigt huvud\n\nVS Code skapar en ny fil där ett enkelt inställningsblock redan är ifyllt. Spara den med ett namn som exercises.qmd (File → Save eller Ctrl+S).",
+    "crumbs": [
+      "Skapa ett övningsblad med Quarto",
+      "Skapa ett övningsblad"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_exercise_2.html#ange-utdataformat",
+    "href": "Qmd Files/Getting Started/beg_exercise_2.html#ange-utdataformat",
+    "title": "Skapa ett övningsblad",
+    "section": "2 – Ange utdataformat",
+    "text": "2 – Ange utdataformat\n① Ändra i huvudet\nBörjan av filen styr utdataformatet. Ändra den till:\n---\ntitle: \"Exercise Sheet 1\"\nauthor: \"Your Name\"\nformat: pdf\n---\nDet säger till Quarto: skapa en PDF med den här titeln och författaren.\n\n\n\n\n\n\nNotera\n\n\n\nPDF kräver TinyTeX, se Vad du behöver om du inte har installerat det än. För HTML ändrar du format: pdf till format: html, då behövs inga extra verktyg.",
+    "crumbs": [
+      "Skapa ett övningsblad med Quarto",
+      "Skapa ett övningsblad"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_exercise_2.html#skriv-dina-uppgifter",
+    "href": "Qmd Files/Getting Started/beg_exercise_2.html#skriv-dina-uppgifter",
+    "title": "Skapa ett övningsblad",
+    "section": "3 – Skriv dina uppgifter",
+    "text": "3 – Skriv dina uppgifter\nUnder huvudet skriver du innehållet som vanlig text. Använd ## för rubriker. Lämna en tom rad mellan styckena.\n## Exercise 1\n\nCalculate the derivative of $f(x) = x^2 + 3x$.\n\n## Exercise 2\n\nExplain the difference between a list and a dictionary in Python.",
+    "crumbs": [
+      "Skapa ett övningsblad med Quarto",
+      "Skapa ett övningsblad"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_exercise_2.html#lägg-till-ett-kodexempel-valfritt",
+    "href": "Qmd Files/Getting Started/beg_exercise_2.html#lägg-till-ett-kodexempel-valfritt",
+    "title": "Skapa ett övningsblad",
+    "section": "4 – Lägg till ett kodexempel (valfritt)",
+    "text": "4 – Lägg till ett kodexempel (valfritt)\nSå här visar du Python-kod som visas men inte körs:\n```python\nx = [1, 2, 3, 4]\nprint(sum(x))\n```",
+    "crumbs": [
+      "Skapa ett övningsblad med Quarto",
+      "Skapa ett övningsblad"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_exercise_2.html#rendera-bladet",
+    "href": "Qmd Files/Getting Started/beg_exercise_2.html#rendera-bladet",
+    "title": "Skapa ett övningsblad",
+    "section": "5 – Rendera bladet",
+    "text": "5 – Rendera bladet\nÖppna terminalen via View → Terminal och kör:\n\n\nTerminal\n\nquarto render exercises.qmd\n\n\nQuarto skapar utdatafilen (PDF eller HTML) i samma mapp. Öppna den från filutforskaren.\n\n\n\n\n\n\nNotera🔍 Förhandsgranska medan du skriver\n\n\n\n\n\nI stället för quarto render kan du använda:\n\n\nTerminal\n\nquarto preview exercises.qmd\n\nDå öppnas en förhandsgranskning i webbläsaren som uppdateras varje gång du sparar filen.\n\n\n\n\n\n\n\n\n\n\nTips✅ Ditt övningsblad är klart!\n\n\n\n\nVill du exportera som HTML, Word eller PDF från samma fil? Se Andra utdataformat →\nVill du att studenterna ska köra och ändra Python-kod i webbläsaren? Se Interaktiv kod →",
+    "crumbs": [
+      "Skapa ett övningsblad med Quarto",
+      "Skapa ett övningsblad"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_website_2.html",
+    "href": "Qmd Files/Getting Started/beg_website_2.html",
+    "title": "Skapa en webbplats",
+    "section": "",
+    "text": "Skapa en ny tom mapp på datorn (till exempel på skrivbordet). Ge den ett kort namn utan mellanslag, till exempel min-webbplats.\nKlicka i VS Code på File → Open Folder och välj den nya mappen.\n\n\n\n\n\n\nVarningVS Code frågar: “Do you trust the authors?”\n\n\n\n\nDen här dialogrutan visas första gången du öppnar en mapp. Klicka på Yes, I trust the authors, annars körs VS Code i ett begränsat läge där vissa funktioner inte fungerar.",
+    "crumbs": [
+      "Skapa en Quarto-webbplats",
+      "Skapa en webbplats"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_website_2.html#öppna-projektmappen-i-vs-code",
+    "href": "Qmd Files/Getting Started/beg_website_2.html#öppna-projektmappen-i-vs-code",
+    "title": "Skapa en webbplats",
+    "section": "",
+    "text": "Skapa en ny tom mapp på datorn (till exempel på skrivbordet). Ge den ett kort namn utan mellanslag, till exempel min-webbplats.\nKlicka i VS Code på File → Open Folder och välj den nya mappen.\n\n\n\n\n\n\nVarningVS Code frågar: “Do you trust the authors?”\n\n\n\n\nDen här dialogrutan visas första gången du öppnar en mapp. Klicka på Yes, I trust the authors, annars körs VS Code i ett begränsat läge där vissa funktioner inte fungerar.",
+    "crumbs": [
+      "Skapa en Quarto-webbplats",
+      "Skapa en webbplats"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_website_2.html#skapa-ett-quarto-webbplatsprojekt",
+    "href": "Qmd Files/Getting Started/beg_website_2.html#skapa-ett-quarto-webbplatsprojekt",
+    "title": "Skapa en webbplats",
+    "section": "2 – Skapa ett Quarto-webbplatsprojekt",
+    "text": "2 – Skapa ett Quarto-webbplatsprojekt\n① Skapa ett nytt Quarto-projekt\n\nGå till File → New File…. En liten meny visas, välj Quarto Project.\n\nVälj Website Project och sedan din projektmapp.\n\n② Dina projektfiler är klara\n\nQuarto har skapat fyra filer:\n\n_quarto.yml: inställningar som titel, navigering och tema\nindex.qmd: din startsida\nabout.qmd: en andra sida som exempel\nstyles.css: egen formgivning, om du vill",
+    "crumbs": [
+      "Skapa en Quarto-webbplats",
+      "Skapa en webbplats"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_website_2.html#förhandsgranska-webbplatsen",
+    "href": "Qmd Files/Getting Started/beg_website_2.html#förhandsgranska-webbplatsen",
+    "title": "Skapa en webbplats",
+    "section": "3 – Förhandsgranska webbplatsen",
+    "text": "3 – Förhandsgranska webbplatsen\n① Klicka på knappen Preview uppe till höger i redigeraren\n\nKlicka på den lilla förhandsgranskningssymbolen uppe till höger i kodfönstret. VS Code öppnar terminalen automatiskt, renderar webbplatsen och visar en förhandsgranskning i en ny panel till höger. Du behöver ingen webbläsare.\n\n\n\n\n\n\n\nNotera🔍 Andra sätt att förhandsgranska och rendera\n\n\n\n\n\nRendera filer (skapa utdata utan förhandsgranskning)\nOm du bara vill skapa utdatafilerna utan att öppna någon förhandsgranskning, öppna terminalen via View → Terminal och kör:\n\n\nTerminal\n\nquarto render\n\nDå skapas alla utdatafiler i mappen _site (eller docs/ om du har ställt in det). Använd det här när du är redo att publicera, se Publicera webbplatsen →.\n\nFörhandsgranska i webbläsaren\nDu har två möjligheter:\n\nÖppna de skapade HTML-filerna i mappen _site direkt i webbläsaren (dubbelklicka på dem i Utforskaren).\nEller kör quarto preview i terminalen. Då startas en lokal server och webbplatsen öppnas automatiskt i webbläsaren. Webbläsaren uppdateras varje gång du sparar en fil.\n\n\n\nTerminal\n\nquarto preview\n\n\n\n\n\n\n\n\n\n\n\n\nTips✅ Din första Quarto-webbplats är igång!\n\n\n\nNästa steg:\n\nÄndra i index.qmd och spara, så uppdateras förhandsgranskningen direkt\nÄndra title: i _quarto.yml för att byta namn på webbplatsen\nRedo att lägga ut den på nätet? Fortsätt med Publicera webbplatsen →",
+    "crumbs": [
+      "Skapa en Quarto-webbplats",
+      "Skapa en webbplats"
+    ]
+  }
+]

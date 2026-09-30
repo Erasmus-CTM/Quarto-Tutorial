@@ -1,0 +1,9 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Quarto-vejledning",
+    "section": "",
+    "text": "Denne vejledning viser undervisere, hvad Quarto kan, og hvordan man arbejder med det. Der er tre niveauer, vælg det, der passer til dig:\n\nHar du aldrig set en Quarto-side? Kig på eksempelsiden.\nVil du lære at lave noget med Quarto? Begynd med Kom i gang.\nLaver du allerede Quarto-dokumenter og vil blive bedre? Gå til Tips & tricks.\n\n\n\n\n\n\n\nNoteSprog og niveau\n\n\n\nSkift niveau i menulinjen øverst og sprog med globussen. Når du skifter sprog, bliver du på den samme side. Hvordan det er bygget, forklares i Tips & tricks → Flersprogede projekter."
+  }
+]

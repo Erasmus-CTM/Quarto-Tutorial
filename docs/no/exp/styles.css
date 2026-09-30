@@ -1,0 +1,28 @@
+/* Navbar-Symbole wie in den anderen Tutorials (Kurvendiskussion, Matrizen, Statistik).
+   Braucht die Font-Awesome-Webschrift aus include-in-header in _quarto.yml. */
+
+/* Verstecke die originalen Bootstrap Icons */
+.quarto-navbar-tools .bi {
+    display: none;
+}
+
+/* Such-Icon */
+.quarto-search-toggle::before {
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    content: "\f002"; /* fa-magnifying-glass */
+}
+
+/* Theme-Toggle-Icon */
+.quarto-color-scheme-toggle::before {
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    content: "\f042"; /* fa-circle-half-stroke */
+}
+
+/* Reader-Mode-Icon (im Reader-Mode-Button) */
+.quarto-reader-toggle-btn::before {
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    content: "\f5da"; /* fa-book-open-reader */
+}

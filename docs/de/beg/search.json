@@ -1,0 +1,244 @@
+[
+  {
+    "objectID": "Qmd Files/Example Page/index_beg.html",
+    "href": "Qmd Files/Example Page/index_beg.html",
+    "title": "Was Quarto kann",
+    "section": "",
+    "text": "Quarto macht aus einfachen .qmd-Dateien interaktive Websites, PDFs und Präsentationen, ganz ohne Kenntnisse in Webentwicklung.\nDiese kleine Seite beschäftigt sich mit der Sinusfunktion und zeigt nebenbei, was Quarto kann.",
+    "crumbs": [
+      "Beispielseite",
+      "Überblick"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/index_beg.html#die-seiten-im-überblick",
+    "href": "Qmd Files/Example Page/index_beg.html#die-seiten-im-überblick",
+    "title": "Was Quarto kann",
+    "section": "Die Seiten im Überblick",
+    "text": "Die Seiten im Überblick\n\n\n\n\nSeite\nWas du siehst\n\n\n\n\n1\nLayout & Formatierung\nHinweiskästen, Spalten, Reiter\n\n\n2\nCode\nPython: nur Ausgabe, ausführbar, mit Eingabe\n\n\n3\nVisualisierungen\nInteraktive Grafik, Animation, Aufgaben und Diagramm\n\n\n4\nQuiz\nFragen zur Selbstkontrolle\n\n\n5\nQuellen\nZitate und Literaturverzeichnis",
+    "crumbs": [
+      "Beispielseite",
+      "Überblick"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_references.html",
+    "href": "Qmd Files/Example Page/ep_references.html",
+    "title": "Quellen",
+    "section": "",
+    "text": "Quarto kann Zitate und Literaturverzeichnisse aus gewöhnlichen .bib-Dateien erzeugen, ganz ohne Zusatzprogramme.",
+    "crumbs": [
+      "Beispielseite",
+      "Quellen"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_references.html#so-funktioniert-es",
+    "href": "Qmd Files/Example Page/ep_references.html#so-funktioniert-es",
+    "title": "Quellen",
+    "section": "So funktioniert es",
+    "text": "So funktioniert es\n\nLege eine Datei references.bib mit BibTeX-Einträgen an.\nErgänze bibliography: references.bib im YAML-Kopf der Seite.\nZitiere an beliebiger Stelle im Text mit [@schlüssel].\n\nDas Literaturverzeichnis erscheint automatisch am Ende der Seite.\n\n\n\n\n\n\nTippBeispiel\n\n\n\nSchreibst du [@quarto] in deinen Text, entsteht daraus das Zitat: (Posit Software, PBC 2022)\nDer vollständige Eintrag steht unten unter Literatur.",
+    "crumbs": [
+      "Beispielseite",
+      "Quellen"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_references.html#werkzeuge-in-diesem-beispiel",
+    "href": "Qmd Files/Example Page/ep_references.html#werkzeuge-in-diesem-beispiel",
+    "title": "Quellen",
+    "section": "Werkzeuge in diesem Beispiel",
+    "text": "Werkzeuge in diesem Beispiel\nAlle interaktiven Elemente dieser Seiten beruhen auf frei verfügbaren Werkzeugen:\n\nQuarto (Posit Software, PBC 2022): das Publikationssystem hinter allen diesen Seiten\npyodide-interaktiv (Erasmus CTM, o. J.c): führt Python direkt im Browser in einem Web Worker aus und baut auf Pyodide (Droettboom u. a. 2021) von Droettboom et al. auf (siehe Code)\nJSXGraph (Miller 2023): interaktive Mathematik im Browser (siehe Visualisierungen)\nquizdown (Sauer 2023): interaktive Multiple-Choice-Quizze im Browser (siehe Quiz)\npy-exercise (Erasmus CTM, o. J.b): Programmieraufgaben mit versteckten Tests (siehe Visualisierungen)\nmath-exercise (Erasmus CTM, o. J.a): mathematische Antworten, symbolisch geprüft mit SymPy (siehe Visualisierungen)",
+    "crumbs": [
+      "Beispielseite",
+      "Quellen"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_layout.html",
+    "href": "Qmd Files/Example Page/ep_layout.html",
+    "title": "Layout & Formatierung",
+    "section": "",
+    "text": "Quarto kann aufwendige Layouts, ohne dass du HTML oder CSS schreibst.",
+    "crumbs": [
+      "Beispielseite",
+      "Layout & Formatierung"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_layout.html#hinweiskästen",
+    "href": "Qmd Files/Example Page/ep_layout.html#hinweiskästen",
+    "title": "Layout & Formatierung",
+    "section": "Hinweiskästen",
+    "text": "Hinweiskästen\n\n\n\n\n\n\nHinweisHinweis\n\n\n\nHinweise eignen sich für Hintergrundwissen oder Definitionen.\n\n\n\n\n\n\n\n\nTippTipp\n\n\n\nTipps eignen sich für bewährtes Vorgehen und praktische Ratschläge.\n\n\n\n\n\n\n\n\nWarnungWarnung\n\n\n\nWarnungen markieren häufige Fehler.\n\n\n\n\n\n\n\n\nWichtigWichtig\n\n\n\nWichtig ist für Dinge, die Studierende auf keinen Fall übersehen dürfen.",
+    "crumbs": [
+      "Beispielseite",
+      "Layout & Formatierung"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_layout.html#spalten",
+    "href": "Qmd Files/Example Page/ep_layout.html#spalten",
+    "title": "Layout & Formatierung",
+    "section": "Spalten",
+    "text": "Spalten\n\n\nIdee\nDie Sinusfunktion ordnet einem Winkel die y-Koordinate auf dem Einheitskreis zu.\n\\[f: \\mathbb{R} \\to [-1, 1]\\]\n\nWichtige Werte\n\n\n\n\\(x\\)\n\\(0\\)\n\\(\\frac{\\pi}{6}\\)\n\\(\\frac{\\pi}{2}\\)\n\\(\\pi\\)\n\n\n\n\n\\(\\sin(x)\\)\n\\(0\\)\n\\(0{,}5\\)\n\\(1\\)\n\\(0\\)",
+    "crumbs": [
+      "Beispielseite",
+      "Layout & Formatierung"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_layout.html#reiter",
+    "href": "Qmd Files/Example Page/ep_layout.html#reiter",
+    "title": "Layout & Formatierung",
+    "section": "Reiter",
+    "text": "Reiter\n\nDefinitionFormelEigenschaften\n\n\nDie Sinusfunktion ist eine der grundlegenden trigonometrischen Funktionen. Sie ist periodisch mit Periode \\(2\\pi\\) und hat den Wertebereich \\([-1, 1]\\).\n\n\nAls Taylorreihe:\n\\[\\sin(x) = \\sum_{n=0}^{\\infty} \\frac{(-1)^n}{(2n+1)!}\\, x^{2n+1}\n           = x - \\frac{x^3}{6} + \\frac{x^5}{120} - \\cdots\\]\n\n\n\nPeriode: \\(2\\pi\\)\nWertebereich: \\([-1,\\, 1]\\)\nNullstellen: \\(x = k\\pi,\\; k \\in \\mathbb{Z}\\)\nMaxima: \\(x = \\frac{\\pi}{2} + 2k\\pi\\)",
+    "crumbs": [
+      "Beispielseite",
+      "Layout & Formatierung"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_code.html",
+    "href": "Qmd Files/Example Page/ep_code.html",
+    "title": "Code",
+    "section": "",
+    "text": "Quarto kennt drei Wege, Python-Code einzubinden. Im Browser läuft er mit Pyodide (Droettboom u. a. 2021), also ohne Installation.",
+    "crumbs": [
+      "Beispielseite",
+      "Code"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_code.html#nur-die-ausgabe",
+    "href": "Qmd Files/Example Page/ep_code.html#nur-die-ausgabe",
+    "title": "Code",
+    "section": "Nur die Ausgabe",
+    "text": "Nur die Ausgabe\nDer Code läuft automatisch im Hintergrund, zu sehen ist nur das Ergebnis:\n\n\nsin(  0°) = 0.0000\nsin( 30°) = 0.5000\nsin( 45°) = 0.7071\nsin( 60°) = 0.8660\nsin( 90°) = 1.0000\nsin(180°) = 0.0000\n\n\n\n\nSo sah der Code für diese Ausgabe aus:\n\n```python\n#| execute: true # führt den Code beim Rendern aus\n#| echo: false # blendet den Code in der fertigen Seite aus\nimport math\n\nangles = [0, 30, 45, 60, 90, 180]\nfor deg in angles:\n    val = math.sin(math.radians(deg))\n    print(f\"sin({deg:3d}°) = {val:.4f}\")\n```",
+    "crumbs": [
+      "Beispielseite",
+      "Code"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_code.html#ausführbarer-code",
+    "href": "Qmd Files/Example Page/ep_code.html#ausführbarer-code",
+    "title": "Code",
+    "section": "Ausführbarer Code",
+    "text": "Ausführbarer Code\nKlicke auf Code ausführen, dann läuft der Code direkt im Browser:\n\nBitte JavaScript aktivieren, um die interaktiven Code-Zellen dieser Seite zu nutzen.",
+    "crumbs": [
+      "Beispielseite",
+      "Code"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_code.html#zellen-teilen-sich-ihren-zustand",
+    "href": "Qmd Files/Example Page/ep_code.html#zellen-teilen-sich-ihren-zustand",
+    "title": "Code",
+    "section": "Zellen teilen sich ihren Zustand",
+    "text": "Zellen teilen sich ihren Zustand\nAlle Zellen einer Seite laufen im selben Python-Interpreter. Eine spätere Zelle kann eine Variable aus einer früheren weiterverwenden, ohne sie neu zu importieren oder zu definieren:\n\nBitte JavaScript aktivieren, um die interaktiven Code-Zellen dieser Seite zu nutzen.",
+    "crumbs": [
+      "Beispielseite",
+      "Code"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_code.html#interaktives-input",
+    "href": "Qmd Files/Example Page/ep_code.html#interaktives-input",
+    "title": "Code",
+    "section": "Interaktives input()",
+    "text": "Interaktives input()\nZellen können ein echtes, wartendes input() benutzen. Die Seite bleibt bedienbar, während sie auf deine Eingabe wartet:\n\nBitte JavaScript aktivieren, um die interaktiven Code-Zellen dieser Seite zu nutzen.\n→ Eine Animation und Aufgaben zum Bearbeiten findest du auf der Seite Visualisierungen.",
+    "crumbs": [
+      "Beispielseite",
+      "Code"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_quiz.html",
+    "href": "Qmd Files/Example Page/ep_quiz.html",
+    "title": "Quiz",
+    "section": "",
+    "text": "Teste dein Wissen über die Sinusfunktion und über Quarto, umgesetzt mit der Extension quarto-quizdown (Sauer 2023) von Parmsam.\n\n---\nshuffleAnswers: true\nshuffleQuestions: false\nlocale: de\n---\n\n# Was ist $\\sin(0)$?\n\n1. [x] $0$\n    &gt; Richtig! Der Punkt auf dem Einheitskreis zum Winkel $0$ liegt auf der x-Achse.\n2. [ ] $1$\n3. [ ] $-1$\n4. [ ] nicht definiert\n\n# Was ist der größte Wert von $\\sin(x)$?\n\n1. [ ] $0$\n2. [ ] $\\pi$\n3. [x] $1$\n    &gt; Richtig! Der Wertebereich ist $[-1, 1]$.\n4. [ ] $2$\n\n# Welche Periode hat $\\sin(x)$?\n\n1. [ ] $\\pi$\n2. [x] $2\\pi$\n    &gt; Richtig! Nach einer vollen Umdrehung wiederholt sich alles.\n3. [ ] $4\\pi$\n4. [ ] $\\frac{\\pi}{2}$\n\n# Welche Extension lässt Python live im Browser laufen?\n\n1. [x] pyodide-interaktiv\n    &gt; Richtig!\n2. [ ] quizdown\n3. [ ] jsxgraph\n4. [ ] py-exercise\n\n# `pyodide-interaktiv` führt Python in einem Web Worker aus. Was bringt das?\n\n1. [ ] Nichts, es ist nur ein anderer Name für dieselbe Engine.\n2. [x] Die Seite reagiert weiter, während Code läuft, und jede Zelle hat einen Stopp-Knopf.\n    &gt; Richtig!\n3. [ ] Der Code läuft auf einem Server statt im Browser.\n4. [ ] Python-Code wird zu JavaScript übersetzt.\n\n# Welche Dateiendung haben Quarto-Quelldateien?\n\n1. [ ] `.html`\n2. [ ] `.py`\n3. [x] `.qmd`\n    &gt; Richtig!\n4. [ ] `.tex`\n\n\n\n\n\nLiteratur\n\nSauer, Patrick. 2023. „quarto-quizdown: Quizdown Extension for Quarto“. https://github.com/parmsam/quarto-quizdown.",
+    "crumbs": [
+      "Beispielseite",
+      "Quiz"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_visuals.html",
+    "href": "Qmd Files/Example Page/ep_visuals.html",
+    "title": "Visualisierungen",
+    "section": "",
+    "text": "Ziehe den Punkt auf der x-Achse und lies die Werte von \\(\\sin(x)\\) ab. Die Grafik entsteht mit JSXGraph (Miller 2023), in der Fassung von Erasmus-CTM aus dem Repository von math-exercise.",
+    "crumbs": [
+      "Beispielseite",
+      "Visualisierungen"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_visuals.html#interaktive-grafik",
+    "href": "Qmd Files/Example Page/ep_visuals.html#interaktive-grafik",
+    "title": "Visualisierungen",
+    "section": "",
+    "text": "Ziehe den Punkt auf der x-Achse und lies die Werte von \\(\\sin(x)\\) ab. Die Grafik entsteht mit JSXGraph (Miller 2023), in der Fassung von Erasmus-CTM aus dem Repository von math-exercise.",
+    "crumbs": [
+      "Beispielseite",
+      "Visualisierungen"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_visuals.html#animation",
+    "href": "Qmd Files/Example Page/ep_visuals.html#animation",
+    "title": "Visualisierungen",
+    "section": "Animation",
+    "text": "Animation\nEine FuncAnimation aus Matplotlib läuft direkt in der Seite. Der Code ist genau der, den du auch in einer lokalen Entwicklungsumgebung schreiben würdest, ohne zusätzlichen Aufruf:\n\nBitte JavaScript aktivieren, um die interaktiven Code-Zellen dieser Seite zu nutzen.",
+    "crumbs": [
+      "Beispielseite",
+      "Visualisierungen"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_visuals.html#aufgabe-zum-bearbeiten",
+    "href": "Qmd Files/Example Page/ep_visuals.html#aufgabe-zum-bearbeiten",
+    "title": "Visualisierungen",
+    "section": "Aufgabe zum Bearbeiten",
+    "text": "Aufgabe zum Bearbeiten\nVervollständige die Funktion. Beim Überprüfen laufen die Tests automatisch:\n\n  \n    Bitte JavaScript aktivieren, um die interaktive Aufgabe zu laden.",
+    "crumbs": [
+      "Beispielseite",
+      "Visualisierungen"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_visuals.html#rechenaufgabe",
+    "href": "Qmd Files/Example Page/ep_visuals.html#rechenaufgabe",
+    "title": "Visualisierungen",
+    "section": "Rechenaufgabe",
+    "text": "Rechenaufgabe\nEine andere Art der Kontrolle: Die Antwort wird symbolisch mit SymPy geprüft, nicht mit Tests:\n\nSinus an einem besonderen Winkel\n\n\nWas ist \\(\\sin(90°)\\), exakt? \n\n\n  ✓ Überprüfen\n  ⓘ Eingabe-Hilfe\n  \n    💬 Feedback\n    ⚙",
+    "crumbs": [
+      "Beispielseite",
+      "Visualisierungen"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_visuals.html#grafik-als-aufgabe",
+    "href": "Qmd Files/Example Page/ep_visuals.html#grafik-als-aufgabe",
+    "title": "Visualisierungen",
+    "section": "Grafik als Aufgabe",
+    "text": "Grafik als Aufgabe\nEine Grafik kann auch selbst die Antwort sein. Hier wird geprüft, wohin du den Punkt ziehst.\n\n\nHochpunkt der Sinusfunktion\n\n\nZiehe den Punkt \\(P\\) auf den Hochpunkt von \\(\\sin(x)\\) im Intervall \\([0, 2\\pi]\\) und klicke auf „Überprüfen“.\n\n\n  ✓ Überprüfen\n  ⓘ Eingabe-Hilfe\n  \n    💬 Feedback\n    ⚙",
+    "crumbs": [
+      "Beispielseite",
+      "Visualisierungen"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_visuals.html#diagramm",
+    "href": "Qmd Files/Example Page/ep_visuals.html#diagramm",
+    "title": "Visualisierungen",
+    "section": "Diagramm",
+    "text": "Diagramm\nWas passiert eigentlich zwischen dem Speichern einer .qmd-Datei und dem fertigen Dokument?\n\n\n\n\n\nflowchart LR\n    A[\".qmd-Datei&lt;br/&gt;Markdown + Code + YAML\"] --&gt; B[\"Ausführen&lt;br/&gt;Jupyter / Knitr\"]\n    B --&gt; C[\".md&lt;br/&gt;reines Markdown\"]\n    C --&gt; D{\"Pandoc\"}\n    D --&gt; E[\"🌐 HTML\"]\n    D --&gt; F[\"📝 Word .docx\"]\n    D --&gt; G[\".tex LaTeX\"]\n    G --&gt; H[\"LaTeX-System&lt;br/&gt;TinyTeX\"]\n    H --&gt; I[\"📄 PDF\"]\n    style D fill:#4CAF50,color:#fff,stroke:#388e3c\n    style A fill:#e3f2fd,stroke:#90caf9\n\n\n\n\n\n\nQuarto führt zuerst alle Codezellen aus (Jupyter für Python, Knitr für R) und übergibt das entstandene Markdown an Pandoc, das daraus die Ausgabe erzeugt. HTML und Word schreibt Pandoc direkt, PDF nicht: Dafür geht der Weg über LaTeX, das ein eigenes Programm (TinyTeX) zur fertigen Datei übersetzt. Wegen dieses Umwegs braucht PDF einen Installationsschritt mehr (Was du brauchst) als HTML und Word.\n→ Weitere Python-Beispiele (nur Ausgabe, ausführbar, mit Eingabe) findest du auf der Seite Code.",
+    "crumbs": [
+      "Beispielseite",
+      "Visualisierungen"
+    ]
+  }
+]

@@ -1,0 +1,461 @@
+[
+  {
+    "objectID": "Qmd Files/Getting Started/getting_started.html",
+    "href": "Qmd Files/Getting Started/getting_started.html",
+    "title": "Erste Schritte mit Quarto",
+    "section": "",
+    "text": "HinweisOffizielle Dokumentation\n\n\n\nDie offizielle Quarto-Dokumentation unter quarto.org/docs/get-started hat ausführliche Anleitungen für jedes Niveau (auf Englisch). Dort lohnt es sich immer, genauer nachzulesen.\nWillkommen! Diese Anleitung führt dich Schritt für Schritt zu echten Quarto-Dokumenten, wie eine Bauanleitung. Vorkenntnisse brauchst du keine.",
+    "crumbs": [
+      "Überblick"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/getting_started.html#was-möchtest-du-bauen",
+    "href": "Qmd Files/Getting Started/getting_started.html#was-möchtest-du-bauen",
+    "title": "Erste Schritte mit Quarto",
+    "section": "Was möchtest du bauen?",
+    "text": "Was möchtest du bauen?\n\n\n🌐 Eine Website\nStelle deinen Kurs, deine Forschung oder dein Portfolio als übersichtliche Website mit mehreren Seiten vor.\n→ Was du brauchst\n→ Website erstellen\n→ Veröffentlichen\n\n\n📄 Ein Übungsblatt\nErstelle ein Übungsblatt, das aus einer einzigen Datei als PDF, HTML oder Word entsteht.\n→ Was du brauchst\n→ Übungsblatt erstellen\n→ Andere Formate\n\n\n📚 Ein Buch\nGliedere längere Inhalte wie ein Skript oder Handbuch als Buch mit Navigation.\n→ Was du brauchst\n→ Buch erstellen",
+    "crumbs": [
+      "Überblick"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/getting_started.html#interaktiver-python-code-gewünscht",
+    "href": "Qmd Files/Getting Started/getting_started.html#interaktiver-python-code-gewünscht",
+    "title": "Erste Schritte mit Quarto",
+    "section": "✨ Interaktiver Python-Code gewünscht?",
+    "text": "✨ Interaktiver Python-Code gewünscht?\nSollen Studierende Python-Code direkt im Browser ausführen und verändern können, ohne selbst etwas zu installieren? Dann schau dir die Anleitung zu Extensions an.",
+    "crumbs": [
+      "Überblick"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_website_3.html",
+    "href": "Qmd Files/Getting Started/beg_website_3.html",
+    "title": "Website veröffentlichen",
+    "section": "",
+    "text": "HinweisOffizielle Dokumentation\n\n\n\nQuarto kennt mehrere Wege zum Veröffentlichen. Alle stehen unter quarto.org/docs/publishing.\nDiese Anleitung nutzt GitHub Pages, einen kostenlosen Dienst, der deine Website unter einer github.io-Adresse öffentlich erreichbar macht.\nDu brauchst ein kostenloses Konto bei github.com. Lege eins an, falls du noch keins hast.",
+    "crumbs": [
+      "Eine Quarto-Website erstellen",
+      "Website veröffentlichen"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_website_3.html#quarto-in-einen-ordner-docs-schreiben-lassen",
+    "href": "Qmd Files/Getting Started/beg_website_3.html#quarto-in-einen-ordner-docs-schreiben-lassen",
+    "title": "Website veröffentlichen",
+    "section": "1 – Quarto in einen Ordner docs schreiben lassen",
+    "text": "1 – Quarto in einen Ordner docs schreiben lassen\n① _quarto.yml öffnen und den Ausgabeordner eintragen\n\nÖffne deine _quarto.yml und ergänze im Abschnitt project: die Zeile output-dir: docs, genau wie im Bild. GitHub Pages erwartet die Dateien der Website in einem Ordner namens docs.\n\n② Website bauen\nÖffne das Terminal über View → Terminal und gib ein:\n\n\nTerminal\n\nquarto render\n\nQuarto baut die ganze Website in den Ordner docs/. Er erscheint links in der Dateiübersicht.",
+    "crumbs": [
+      "Eine Quarto-Website erstellen",
+      "Website veröffentlichen"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_website_3.html#ein-repository-auf-github-anlegen",
+    "href": "Qmd Files/Getting Started/beg_website_3.html#ein-repository-auf-github-anlegen",
+    "title": "Website veröffentlichen",
+    "section": "2 – Ein Repository auf GitHub anlegen",
+    "text": "2 – Ein Repository auf GitHub anlegen\n① Auf GitHub ein neues Repository anlegen\n\nMelde dich bei github.com an, klicke oben rechts auf das + und wähle New repository. Gib ihm einen Namen, er wird Teil der Adresse deiner Website.\n\n② Auf Public stellen und anlegen\n\nAchte darauf, dass Public ausgewählt ist. Alles andere bleibt, wie es ist. Klicke auf Create repository.",
+    "crumbs": [
+      "Eine Quarto-Website erstellen",
+      "Website veröffentlichen"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_website_3.html#dateien-hochladen",
+    "href": "Qmd Files/Getting Started/beg_website_3.html#dateien-hochladen",
+    "title": "Website veröffentlichen",
+    "section": "3 – Dateien hochladen",
+    "text": "3 – Dateien hochladen\n① Den Link zum Hochladen finden\n\nDein neues, leeres Repository öffnet sich. Klicke in der Mitte der Seite auf uploading an existing file.\n\n② Projektdateien auf die Seite ziehen\nZiehe alle Dateien und Ordner aus deinem Projektordner direkt auf die Upload-Seite von GitHub. Nimm alles mit: docs/, _quarto.yml, index.qmd, styles.css und alle weiteren Dateien.\n\n\n\n\n\n\nWarnung\n\n\n\nLade nicht nur den Inhalt von docs/ hoch, sondern den Inhalt des ganzen Projektordners, damit GitHub alles hat, was es braucht.\n\n\nWährend des Hochladens zeigt GitHub „Processing your files…“ an.\n\n\n③ Dateien committen\n\nScrolle nach dem Hochladen nach unten. Dort steht das Feld „Commit changes“. Du kannst die Nachricht „Initial Push“ lassen oder eine eigene schreiben. Klicke auf Commit changes.",
+    "crumbs": [
+      "Eine Quarto-Website erstellen",
+      "Website veröffentlichen"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_website_3.html#github-pages-einschalten",
+    "href": "Qmd Files/Getting Started/beg_website_3.html#github-pages-einschalten",
+    "title": "Website veröffentlichen",
+    "section": "4 – GitHub Pages einschalten",
+    "text": "4 – GitHub Pages einschalten\n① Die Einstellungen des Repositorys öffnen\n\nKlicke oben auf der Seite deines Repositorys auf den Reiter Settings.\n\n② In der linken Leiste „Pages“ suchen\n\nScrolle in der linken Leiste nach unten und klicke auf Pages.\n\n③ Branch main und Ordner /docs auswählen\n\nKlicke unter Branch auf das Auswahlfeld, in dem None steht, und wähle main.\n\n\nDaneben erscheint ein zweites Auswahlfeld für den Ordner. Klicke darauf und wähle /docs.\n\n④ Speichern\n\nKlicke auf Save. GitHub beginnt jetzt, deine Seite zu bauen und bereitzustellen.",
+    "crumbs": [
+      "Eine Quarto-Website erstellen",
+      "Website veröffentlichen"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_website_3.html#deine-seite-ist-online",
+    "href": "Qmd Files/Getting Started/beg_website_3.html#deine-seite-ist-online",
+    "title": "Website veröffentlichen",
+    "section": "5 – Deine Seite ist online",
+    "text": "5 – Deine Seite ist online\n① Auf die Bereitstellung warten\n\nGeh zurück auf die Hauptseite deines Repositorys. Rechts steht der Abschnitt Deployments. Warte, bis dort ein grüner Haken erscheint, das dauert meist 1–2 Minuten.\nKlicke auf die Bereitstellung, dort steht die öffentliche Adresse deiner Website. Sie sieht aus wie https://deinname.github.io/dein-repo-name/.\n\n\n\n\n\n\n\nTippDie Seite später aktualisieren\n\n\n\nImmer wenn du etwas geändert hast:\n\nGib im Terminal von VS Code quarto render ein (oder klicke auf den Vorschau-Knopf und schließe die Vorschau wieder), damit der Ordner docs/ neu gebaut wird\nÖffne dein Repository auf GitHub → ziehe den aktualisierten Ordner docs/ auf die Dateiliste → Commit\n\nGitHub Pages stellt die Seite innerhalb von ein bis zwei Minuten von selbst neu bereit.",
+    "crumbs": [
+      "Eine Quarto-Website erstellen",
+      "Website veröffentlichen"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_website_1.html",
+    "href": "Qmd Files/Getting Started/beg_website_1.html",
+    "title": "Was du brauchst – Website",
+    "section": "",
+    "text": "HinweisOffizielle Dokumentation\n\n\n\nDie vollständige Installationsanleitung gibt es auch unter quarto.org/docs/get-started.\nDu musst drei Dinge installieren. Das dauert etwa 10–15 Minuten. Die Bildschirmfotos sind in allen Sprachen dieselben (englisches Windows).",
+    "crumbs": [
+      "Eine Quarto-Website erstellen",
+      "Was du brauchst"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_website_1.html#vs-code-installieren",
+    "href": "Qmd Files/Getting Started/beg_website_1.html#vs-code-installieren",
+    "title": "Was du brauchst – Website",
+    "section": "1 – VS Code installieren",
+    "text": "1 – VS Code installieren\n① Auf der VS-Code-Website das Installationsprogramm herunterladen\n\nÖffne code.visualstudio.com und klicke auf den großen Knopf Download for Windows. Die Datei landet in deinem Download-Ordner.\n\n② Installationsprogramm starten\n\nDoppelklicke auf die heruntergeladene Datei (das VS-Code-Symbol mit grünem Haken).\n\n③ „Add to PATH“ muss angehakt sein\n\nWährend der Installation erscheint eine Seite mit Kästchen. Achte darauf, dass „Add to PATH“ angehakt ist, sonst funktioniert Quarto später nicht richtig. Dann auf Next klicken.\n\n④ Installation abschließen\n\nKlicke auf Finish. VS Code öffnet sich von selbst.\n\n\n\n\n\n\nHinweis🔍 Im Detail: jede Seite des VS-Code-Installationsprogramms\n\n\n\n\n\nLizenzvereinbarung: „I accept“ auswählen und auf Next klicken.\n\nZielordner: den vorgeschlagenen Pfad lassen und auf Next klicken.\n\nStartmenü-Ordner: so lassen und auf Next klicken.\n\nZusammenfassung: durchsehen und auf Install klicken.\n\nFortschritt der Installation: warten, bis sie fertig ist.",
+    "crumbs": [
+      "Eine Quarto-Website erstellen",
+      "Was du brauchst"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_website_1.html#quarto-installieren",
+    "href": "Qmd Files/Getting Started/beg_website_1.html#quarto-installieren",
+    "title": "Was du brauchst – Website",
+    "section": "2 – Quarto installieren",
+    "text": "2 – Quarto installieren\n① Auf der Quarto-Website das Installationsprogramm herunterladen\n\nÖffne quarto.org/docs/get-started und klicke unter Step 1 auf Download Quarto CLI. Wähle das Installationsprogramm für Windows.\n\n② Quarto-Installation starten\n\nDoppelklicke auf die heruntergeladene .msi-Datei. Alle Seiten kannst du mit den Voreinstellungen durchklicken.\n\n③ Fertig\n\nKlicke auf Finish. Quarto ist jetzt installiert.\n\n\n\n\n\n\nHinweis🔍 Im Detail: jede Seite des Quarto-Installationsprogramms\n\n\n\n\n\nWillkommensseite: auf Next klicken.\n\nUmfang der Installation: „Install just for you“ passt für die meisten.\n\nZielordner: den Vorschlag lassen und auf Next klicken.\n\nFortschritt der Installation: warten, bis sie fertig ist.",
+    "crumbs": [
+      "Eine Quarto-Website erstellen",
+      "Was du brauchst"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_website_1.html#die-quarto-erweiterung-in-vs-code-installieren",
+    "href": "Qmd Files/Getting Started/beg_website_1.html#die-quarto-erweiterung-in-vs-code-installieren",
+    "title": "Was du brauchst – Website",
+    "section": "3 – Die Quarto-Erweiterung in VS Code installieren",
+    "text": "3 – Die Quarto-Erweiterung in VS Code installieren\n① Erweiterung suchen und installieren\n\nKlicke in VS Code links auf das Symbol Extensions (vier Quadrate). Suche nach Quarto, klicke auf das Ergebnis und im folgenden Fenster auf Trust Publisher & Install.\n\n\n\n\n\n\n\nTipp✅ Geschafft, du kannst loslegen!\n\n\n\nWeiter geht es mit Website erstellen →",
+    "crumbs": [
+      "Eine Quarto-Website erstellen",
+      "Was du brauchst"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_extensions.html",
+    "href": "Qmd Files/Getting Started/beg_extensions.html",
+    "title": "Interaktiver Code mit Pyodide",
+    "section": "",
+    "text": "HinweisWas sind Extensions?\n\n\n\nExtensions ergänzen Quarto um Funktionen, die nicht eingebaut sind. Du installierst sie einmal je Projektordner. Die vollständige Liste steht unter quarto.org/docs/extensions.\nMit Pyodide führen Studierende Python-Code direkt im Browser aus und verändern ihn, ohne Python auf ihrem Rechner zu installieren. Du schreibst den Code einmal, sie klicken auf Code ausführen.\nDieses Tutorial benutzt dafür die Extension pyodide-interaktiv, eine Überarbeitung von coatless-quarto/pyodide. Sie führt Python in einem Web Worker aus, also neben der Seite statt in ihr. Das macht echtes input(), Animationen, einen Knopf „Stopp“ und KI-Feedback möglich, mehr dazu im letzten Abschnitt.",
+    "crumbs": [
+      "Interaktiver Code",
+      "Interaktives Python mit Pyodide"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_extensions.html#die-extension-installieren",
+    "href": "Qmd Files/Getting Started/beg_extensions.html#die-extension-installieren",
+    "title": "Interaktiver Code mit Pyodide",
+    "section": "1 – Die Extension installieren",
+    "text": "1 – Die Extension installieren\n① Das Terminal in VS Code öffnen\nÖffne das Terminal (die Kommandozeile) über View → Terminal. Unten im Fenster geht ein Bereich auf. Achte darauf, dass der angezeigte Pfad dein Projektordner ist.\n\n② Den Installationsbefehl eingeben\nDie Extension liegt unter github.com/Erasmus-CTM/pyodide-interaktiv und wird wie jede andere installiert:\n\n\nTerminal\n\nquarto add Erasmus-CTM/pyodide-interaktiv\n\nWarte, bis der Befehl fertig ist. Er stellt dabei drei Fragen: ob du der Quelle vertraust, ob du fortfahren willst und ob du die Dokumentation ansehen möchtest. Das ist nur einmal je Projektordner nötig. Danach liegt die Extension im Ordner _extensions/ deines Projekts.",
+    "crumbs": [
+      "Interaktiver Code",
+      "Interaktives Python mit Pyodide"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_extensions.html#in-deiner-datei-einschalten",
+    "href": "Qmd Files/Getting Started/beg_extensions.html#in-deiner-datei-einschalten",
+    "title": "Interaktiver Code mit Pyodide",
+    "section": "2 – In deiner Datei einschalten",
+    "text": "2 – In deiner Datei einschalten\nErgänze im Kopf deiner .qmd-Datei eine Zeile filters::\n---\ntitle: \"Meine Seite\"\nformat: html\nfilters:\n  - Erasmus-CTM/pyodide-interaktiv\n---",
+    "crumbs": [
+      "Interaktiver Code",
+      "Interaktives Python mit Pyodide"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_extensions.html#einen-interaktiven-codeblock-einfügen",
+    "href": "Qmd Files/Getting Started/beg_extensions.html#einen-interaktiven-codeblock-einfügen",
+    "title": "Interaktiver Code mit Pyodide",
+    "section": "3 – Einen interaktiven Codeblock einfügen",
+    "text": "3 – Einen interaktiven Codeblock einfügen\nStatt eines gewöhnlichen Codeblocks schreibst du {pyodide-python}:\n```{pyodide-python}\nx = [1, 2, 3, 4, 5]\nprint(sum(x))\n```",
+    "crumbs": [
+      "Interaktiver Code",
+      "Interaktives Python mit Pyodide"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_extensions.html#das-ergebnis-ansehen",
+    "href": "Qmd Files/Getting Started/beg_extensions.html#das-ergebnis-ansehen",
+    "title": "Interaktiver Code mit Pyodide",
+    "section": "4 – Das Ergebnis ansehen",
+    "text": "4 – Das Ergebnis ansehen\nGib im Terminal quarto preview ein. Im Browser erscheint der Codeblock mit einer Leiste aus Knöpfen. So sieht er aus, du kannst ihn gleich hier ausprobieren:\n\nBitte JavaScript aktivieren, um die interaktiven Code-Zellen dieser Seite zu nutzen.\n\nCode ausführen startet den Code (auch mit Shift + Enter). Beim ersten Klick lädt Python, das dauert einige Sekunden.\nZurücksetzen stellt deinen ursprünglichen Code wieder her.\nFeedback holt eine Rückmeldung von einer KI (muss erst eingerichtet werden).\nWährend der Code läuft, erscheint Stopp.\n\nStudierende können den Code ändern und erneut ausführen, ohne etwas zu installieren.",
+    "crumbs": [
+      "Interaktiver Code",
+      "Interaktives Python mit Pyodide"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_extensions.html#was-die-extension-noch-kann",
+    "href": "Qmd Files/Getting Started/beg_extensions.html#was-die-extension-noch-kann",
+    "title": "Interaktiver Code mit Pyodide",
+    "section": "5 – Was die Extension noch kann",
+    "text": "5 – Was die Extension noch kann\n\nZellen teilen sich ihre Variablen. Alle Zellen einer Seite gehören zu einer Python-Sitzung. Eine spätere Zelle kann benutzen, was eine frühere definiert oder importiert hat, aber erst, nachdem die frühere ausgeführt wurde.\nEchtes input(). Eine Zelle kann anhalten und auf eine Eingabe warten.\nAnimationen. Eine FuncAnimation aus Matplotlib erscheint als Abspieler, mit demselben Code wie auf dem eigenen Rechner.\nEndlosschleifen sind harmlos. Ein versehentliches while True: blockiert die Seite nicht, Stopp bricht ab.\nKI-Feedback. Die Hinweise werden mit jedem Klick konkreter.\n\ninput() und gemeinsame Variablen kannst du auf der Seite Code der Beispielseite ausprobieren, die Animation auf der Seite Visualisierungen.\n\n\n\n\n\n\n\nTippSollen Studierende Lösungen eintragen?\n\n\n\nDie Extension py-exercise bietet Codeblöcke mit versteckten automatischen Tests: Studierende sehen, ob ihre Lösung besteht. Die Extension math-exercise leistet dasselbe für mathematische Antworten, geprüft mit SymPy. Installiert werden beide genauso:\n\n\nTerminal\n\nquarto add Erasmus-CTM/py-exercise\nquarto add Erasmus-CTM/math-exercise\n\nBeispiele zu beiden stehen auf der Beispielseite dieses Tutorials.",
+    "crumbs": [
+      "Interaktiver Code",
+      "Interaktives Python mit Pyodide"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_exercise_3.html",
+    "href": "Qmd Files/Getting Started/beg_exercise_3.html",
+    "title": "Andere Ausgabeformate",
+    "section": "",
+    "text": "Einer der größten Vorteile von Quarto: eine .qmd-Datei → mehrere Ausgabeformate. Du schreibst den Inhalt einmal und änderst nur eine Zeile, um PDF, HTML oder Word zu bekommen.",
+    "crumbs": [
+      "Ein Übungsblatt mit Quarto erstellen",
+      "Andere Ausgabeformate"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_exercise_3.html#das-format-ändern",
+    "href": "Qmd Files/Getting Started/beg_exercise_3.html#das-format-ändern",
+    "title": "Andere Ausgabeformate",
+    "section": "Das Format ändern",
+    "text": "Das Format ändern\nÖffne deine .qmd-Datei und ändere im Kopf ganz oben die Zeile format:.\nFür HTML (keine weiteren Werkzeuge nötig, läuft in jedem Browser):\n---\ntitle: \"Übungsblatt 1\"\nformat: html\n---\nFür Word (.docx, lässt sich in Microsoft Word bearbeiten):\n---\ntitle: \"Übungsblatt 1\"\nformat: docx\n---\nFür PDF (braucht TinyTeX, siehe Was du brauchst):\n---\ntitle: \"Übungsblatt 1\"\nformat: pdf\n---\nGib danach im Terminal quarto render ein. Quarto erzeugt die Datei im gewählten Format.",
+    "crumbs": [
+      "Ein Übungsblatt mit Quarto erstellen",
+      "Andere Ausgabeformate"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_exercise_3.html#alle-formate-auf-einmal",
+    "href": "Qmd Files/Getting Started/beg_exercise_3.html#alle-formate-auf-einmal",
+    "title": "Andere Ausgabeformate",
+    "section": "Alle Formate auf einmal",
+    "text": "Alle Formate auf einmal\nDu kannst mehrere Formate angeben, Quarto baut sie dann alle in einem Durchgang:\n---\ntitle: \"Übungsblatt 1\"\nformat:\n  html: default\n  pdf: default\n  docx: default\n---\nEin einziges quarto render liefert dir drei Ausgabedateien.\n\n\n\n\n\n\n\nHinweisOffizielle Dokumentation\n\n\n\nAlle verfügbaren Formate und ihre Optionen stehen unter quarto.org/docs/output-formats/all-formats.html.",
+    "crumbs": [
+      "Ein Übungsblatt mit Quarto erstellen",
+      "Andere Ausgabeformate"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_exercise_1.html",
+    "href": "Qmd Files/Getting Started/beg_exercise_1.html",
+    "title": "Was du brauchst – Übungsblatt",
+    "section": "",
+    "text": "HinweisOffizielle Dokumentation\n\n\n\nMehr zu den Möglichkeiten der PDF-Ausgabe steht unter quarto.org/docs/output-formats/pdf-basics.html.\nFür ein Übungsblatt brauchst du dieselbe Ausstattung wie für eine Website und ein zusätzliches Werkzeug, wenn du ein PDF erzeugen willst.",
+    "crumbs": [
+      "Ein Übungsblatt mit Quarto erstellen",
+      "Was du brauchst"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_exercise_1.html#schritt-1-vs-code-und-die-quarto-erweiterung",
+    "href": "Qmd Files/Getting Started/beg_exercise_1.html#schritt-1-vs-code-und-die-quarto-erweiterung",
+    "title": "Was du brauchst – Übungsblatt",
+    "section": "Schritt 1 – VS Code und die Quarto-Erweiterung",
+    "text": "Schritt 1 – VS Code und die Quarto-Erweiterung\nFalls noch nicht geschehen, folge Was du brauchst – Website und komm danach hierher zurück.",
+    "crumbs": [
+      "Ein Übungsblatt mit Quarto erstellen",
+      "Was du brauchst"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_exercise_1.html#schritt-2-tinytex-installieren-nur-für-pdf",
+    "href": "Qmd Files/Getting Started/beg_exercise_1.html#schritt-2-tinytex-installieren-nur-für-pdf",
+    "title": "Was du brauchst – Übungsblatt",
+    "section": "Schritt 2 – TinyTeX installieren (nur für PDF)",
+    "text": "Schritt 2 – TinyTeX installieren (nur für PDF)\nFür PDFs braucht Quarto ein LaTeX-System. Am einfachsten ist TinyTeX, das Quarto direkt aus VS Code heraus für dich installieren kann.\nÖffne in VS Code das Terminal (die Kommandozeile) über View → Terminal und gib ein:\n\n\nTerminal\n\nquarto install tinytex\n\nWarte, bis die Installation fertig ist. Das kann ein paar Minuten dauern.\n\n\n\n\n\n\nHinweis\n\n\n\nWenn du nur HTML oder Word erzeugen willst, kannst du diesen Schritt ganz auslassen.\n\n\n\n\n\n\n\n\n\nTipp✅ Fertig!\n\n\n\nWeiter geht es mit Übungsblatt erstellen →",
+    "crumbs": [
+      "Ein Übungsblatt mit Quarto erstellen",
+      "Was du brauchst"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_book_2.html",
+    "href": "Qmd Files/Getting Started/beg_book_2.html",
+    "title": "Buch erstellen",
+    "section": "",
+    "text": "Lege einen neuen, leeren Ordner an (zum Beispiel my-book) und öffne ihn in VS Code über File → Open Folder. Klicke auf Yes, I trust the authors, falls das Fenster erscheint.",
+    "crumbs": [
+      "Ein Quarto-Buch erstellen",
+      "Buch erstellen"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_book_2.html#einen-neuen-ordner-in-vs-code-öffnen",
+    "href": "Qmd Files/Getting Started/beg_book_2.html#einen-neuen-ordner-in-vs-code-öffnen",
+    "title": "Buch erstellen",
+    "section": "",
+    "text": "Lege einen neuen, leeren Ordner an (zum Beispiel my-book) und öffne ihn in VS Code über File → Open Folder. Klicke auf Yes, I trust the authors, falls das Fenster erscheint.",
+    "crumbs": [
+      "Ein Quarto-Buch erstellen",
+      "Buch erstellen"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_book_2.html#ein-buchprojekt-anlegen",
+    "href": "Qmd Files/Getting Started/beg_book_2.html#ein-buchprojekt-anlegen",
+    "title": "Buch erstellen",
+    "section": "2 – Ein Buchprojekt anlegen",
+    "text": "2 – Ein Buchprojekt anlegen\n① Neues Quarto-Projekt anlegen\n\nGehe auf File → New File…. Es erscheint ein kleines Menü, wähle dort Quarto Project.\n\nWähle Book Project und dann deinen Projektordner.\n\n② Die Dateien deines Buchs sind da\n\nQuarto hat den ganzen Aufbau des Buchs angelegt:\n\n_quarto.yml: Einstellungen des Buchs und Reihenfolge der Kapitel\nindex.qmd: Titelseite bzw. Vorwort\nintro.qmd, summary.qmd: Beispielkapitel\nreferences.bib: Literaturdatei\nreferences.qmd: Seite mit dem Literaturverzeichnis",
+    "crumbs": [
+      "Ein Quarto-Buch erstellen",
+      "Buch erstellen"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_book_2.html#vorschau-des-buchs",
+    "href": "Qmd Files/Getting Started/beg_book_2.html#vorschau-des-buchs",
+    "title": "Buch erstellen",
+    "section": "3 – Vorschau des Buchs",
+    "text": "3 – Vorschau des Buchs\n① quarto preview im Terminal ausführen\n\nÖffne das Terminal (View → Terminal) und gib ein:\nquarto preview\nDas Buch wird gebaut, und eine Vorschau öffnet sich in VS Code und im Browser.\n\n② Das Ergebnis im Browser ansehen\n\nDein Buch öffnet sich im Browser mit:\n\neiner Leiste links, die alle Kapitel auflistet\nZurück / Weiter am Ende jeder Seite\neinem Inhaltsverzeichnis rechts für das aktuelle Kapitel",
+    "crumbs": [
+      "Ein Quarto-Buch erstellen",
+      "Buch erstellen"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_book_2.html#kapitel-hinzufügen-und-ändern",
+    "href": "Qmd Files/Getting Started/beg_book_2.html#kapitel-hinzufügen-und-ändern",
+    "title": "Buch erstellen",
+    "section": "4 – Kapitel hinzufügen und ändern",
+    "text": "4 – Kapitel hinzufügen und ändern\nIn der _quarto.yml legst du fest, welche Dateien Kapitel sind und in welcher Reihenfolge:\nbook:\n  title: \"Mein Vorlesungsskript\"\n  author: \"Dein Name\"\n  chapters:\n    - index.qmd\n    - intro.qmd\n    - summary.qmd\n    - references.qmd\nJeder Eintrag ist der Dateiname einer .qmd-Datei in deinem Ordner. Für ein neues Kapitel ergänzt du eine Zeile und legst die passende .qmd-Datei daneben an.\n\n\n\n\n\n\n\nTipp✅ Dein Buch läuft!\n\n\n\n\nÄndere die .qmd-Datei eines Kapitels und speichere, die Vorschau zeigt es sofort\nBereit zum Veröffentlichen? Siehe Website veröffentlichen →. Der Ordner _book funktioniert genau wie der Ordner _site",
+    "crumbs": [
+      "Ein Quarto-Buch erstellen",
+      "Buch erstellen"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_book_1.html",
+    "href": "Qmd Files/Getting Started/beg_book_1.html",
+    "title": "Was du brauchst – Buch",
+    "section": "",
+    "text": "HinweisOffizielle Dokumentation\n\n\n\nDie vollständige Anleitung zu Quarto-Büchern steht unter quarto.org/docs/books.\nEin Quarto-Buch besteht aus mehreren .qmd-Dateien, die zusammen zu einem Dokument mit Navigation gebaut werden. Das passt gut für ein Vorlesungsskript, ein Kurshandbuch oder eine Dokumentation.\nDu brauchst dieselbe Ausstattung wie für eine Website. Falls noch nicht geschehen, folge zuerst Was du brauchst – Website.",
+    "crumbs": [
+      "Ein Quarto-Buch erstellen",
+      "Was du brauchst"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_book_1.html#wie-ein-buch-aufgebaut-ist",
+    "href": "Qmd Files/Getting Started/beg_book_1.html#wie-ein-buch-aufgebaut-ist",
+    "title": "Was du brauchst – Buch",
+    "section": "Wie ein Buch aufgebaut ist",
+    "text": "Wie ein Buch aufgebaut ist\nWenn du ein Buchprojekt anlegst, erzeugt Quarto von selbst diese Dateien:\n\n\n_quarto.yml: legt Titel, Autor und die Reihenfolge der Kapitel fest\nindex.qmd: Titelseite bzw. Vorwort\nintro.qmd, summary.qmd: Beispielkapitel (die du umbenennst oder ersetzt)\nreferences.bib: Literaturdatei für Zitate\nreferences.qmd: automatisch erzeugte Seite mit dem Literaturverzeichnis\n\nDie _quarto.yml verbindet alles miteinander. Zum Beispiel:\nbook:\n  title: \"Mein Vorlesungsskript\"\n  author: \"Dein Name\"\n  chapters:\n    - index.qmd\n    - intro.qmd\n    - summary.qmd\n    - references.qmd\nJede .qmd-Datei wird ein Kapitel. Die Reihenfolge in der Liste ist die Reihenfolge im Buch.\n\n\n\n\n\n\n\nTipp✅ Fertig!\n\n\n\nWeiter geht es mit Buch erstellen →",
+    "crumbs": [
+      "Ein Quarto-Buch erstellen",
+      "Was du brauchst"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_exercise_2.html",
+    "href": "Qmd Files/Getting Started/beg_exercise_2.html",
+    "title": "Übungsblatt erstellen",
+    "section": "",
+    "text": "① Das Fenster „New File“ öffnen\n\nGehe in VS Code auf File → New File…. Es erscheint ein kleines Menü. Wähle Quarto Document.\n\n② Die Datei öffnet sich mit einem fertigen Kopf\n\nVS Code legt eine neue Datei an, in der ein einfacher Einstellungsblock schon ausgefüllt ist. Speichere sie unter einem Namen wie exercises.qmd (File → Save oder Strg+S).",
+    "crumbs": [
+      "Ein Übungsblatt mit Quarto erstellen",
+      "Übungsblatt erstellen"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_exercise_2.html#eine-neue-quarto-datei-anlegen",
+    "href": "Qmd Files/Getting Started/beg_exercise_2.html#eine-neue-quarto-datei-anlegen",
+    "title": "Übungsblatt erstellen",
+    "section": "",
+    "text": "① Das Fenster „New File“ öffnen\n\nGehe in VS Code auf File → New File…. Es erscheint ein kleines Menü. Wähle Quarto Document.\n\n② Die Datei öffnet sich mit einem fertigen Kopf\n\nVS Code legt eine neue Datei an, in der ein einfacher Einstellungsblock schon ausgefüllt ist. Speichere sie unter einem Namen wie exercises.qmd (File → Save oder Strg+S).",
+    "crumbs": [
+      "Ein Übungsblatt mit Quarto erstellen",
+      "Übungsblatt erstellen"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_exercise_2.html#das-ausgabeformat-festlegen",
+    "href": "Qmd Files/Getting Started/beg_exercise_2.html#das-ausgabeformat-festlegen",
+    "title": "Übungsblatt erstellen",
+    "section": "2 – Das Ausgabeformat festlegen",
+    "text": "2 – Das Ausgabeformat festlegen\n① Den Kopf der Datei ändern\nDer Anfang der Datei bestimmt das Ausgabeformat. Ändere ihn so:\n---\ntitle: \"Übungsblatt 1\"\nauthor: \"Dein Name\"\nformat: pdf\n---\nDas sagt Quarto: Erzeuge ein PDF mit diesem Titel und diesem Namen.\n\n\n\n\n\n\nHinweis\n\n\n\nFür PDF brauchst du TinyTeX, siehe Was du brauchst, falls du es noch nicht installiert hast. Für HTML änderst du format: pdf in format: html, dann brauchst du keine weiteren Werkzeuge.",
+    "crumbs": [
+      "Ein Übungsblatt mit Quarto erstellen",
+      "Übungsblatt erstellen"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_exercise_2.html#die-aufgaben-schreiben",
+    "href": "Qmd Files/Getting Started/beg_exercise_2.html#die-aufgaben-schreiben",
+    "title": "Übungsblatt erstellen",
+    "section": "3 – Die Aufgaben schreiben",
+    "text": "3 – Die Aufgaben schreiben\nUnter den Kopf schreibst du deinen Inhalt als normalen Text. Mit ## beginnt eine Überschrift. Zwischen Absätzen steht eine Leerzeile.\n## Aufgabe 1\n\nBerechne die Ableitung von $f(x) = x^2 + 3x$.\n\n## Aufgabe 2\n\nErkläre den Unterschied zwischen einer Liste und einem Dictionary in Python.",
+    "crumbs": [
+      "Ein Übungsblatt mit Quarto erstellen",
+      "Übungsblatt erstellen"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_exercise_2.html#ein-code-beispiel-einfügen-wenn-du-möchtest",
+    "href": "Qmd Files/Getting Started/beg_exercise_2.html#ein-code-beispiel-einfügen-wenn-du-möchtest",
+    "title": "Übungsblatt erstellen",
+    "section": "4 – Ein Code-Beispiel einfügen (wenn du möchtest)",
+    "text": "4 – Ein Code-Beispiel einfügen (wenn du möchtest)\nSo zeigst du Python-Code, der angezeigt, aber nicht ausgeführt wird:\n```python\nx = [1, 2, 3, 4]\nprint(sum(x))\n```",
+    "crumbs": [
+      "Ein Übungsblatt mit Quarto erstellen",
+      "Übungsblatt erstellen"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_exercise_2.html#das-blatt-bauen",
+    "href": "Qmd Files/Getting Started/beg_exercise_2.html#das-blatt-bauen",
+    "title": "Übungsblatt erstellen",
+    "section": "5 – Das Blatt bauen",
+    "text": "5 – Das Blatt bauen\nÖffne das Terminal über View → Terminal und gib ein:\n\n\nTerminal\n\nquarto render exercises.qmd\n\n\nQuarto legt die Ausgabedatei (PDF oder HTML) im selben Ordner ab. Öffne sie aus dem Datei-Explorer.\n\n\n\n\n\n\nHinweis🔍 Vorschau beim Schreiben\n\n\n\n\n\nStatt quarto render kannst du auch das hier benutzen:\n\n\nTerminal\n\nquarto preview exercises.qmd\n\nDas öffnet im Browser eine Vorschau, die sich bei jedem Speichern der Datei aktualisiert.\n\n\n\n\n\n\n\n\n\n\nTipp✅ Dein Übungsblatt ist fertig!\n\n\n\n\nAus derselben Datei HTML, Word oder PDF erzeugen? Siehe Andere Ausgabeformate →\nSollen Studierende Python-Code im Browser ausführen und verändern? Siehe Interaktiver Code →",
+    "crumbs": [
+      "Ein Übungsblatt mit Quarto erstellen",
+      "Übungsblatt erstellen"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_website_2.html",
+    "href": "Qmd Files/Getting Started/beg_website_2.html",
+    "title": "Website erstellen",
+    "section": "",
+    "text": "Lege auf deinem Rechner einen neuen, leeren Ordner an (zum Beispiel auf dem Desktop). Gib ihm einen kurzen Namen ohne Leerzeichen, etwa my-website.\nKlicke in VS Code auf File → Open Folder und wähle den neuen Ordner aus.\n\n\n\n\n\n\nWarnungVS Code fragt: „Do you trust the authors?“\n\n\n\n\nDieses Fenster erscheint, wenn du einen Ordner zum ersten Mal öffnest. Klicke auf Yes, I trust the authors, sonst läuft VS Code in einem eingeschränkten Modus und manches funktioniert nicht.",
+    "crumbs": [
+      "Eine Quarto-Website erstellen",
+      "Website erstellen"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_website_2.html#projektordner-in-vs-code-öffnen",
+    "href": "Qmd Files/Getting Started/beg_website_2.html#projektordner-in-vs-code-öffnen",
+    "title": "Website erstellen",
+    "section": "",
+    "text": "Lege auf deinem Rechner einen neuen, leeren Ordner an (zum Beispiel auf dem Desktop). Gib ihm einen kurzen Namen ohne Leerzeichen, etwa my-website.\nKlicke in VS Code auf File → Open Folder und wähle den neuen Ordner aus.\n\n\n\n\n\n\nWarnungVS Code fragt: „Do you trust the authors?“\n\n\n\n\nDieses Fenster erscheint, wenn du einen Ordner zum ersten Mal öffnest. Klicke auf Yes, I trust the authors, sonst läuft VS Code in einem eingeschränkten Modus und manches funktioniert nicht.",
+    "crumbs": [
+      "Eine Quarto-Website erstellen",
+      "Website erstellen"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_website_2.html#ein-quarto-website-projekt-anlegen",
+    "href": "Qmd Files/Getting Started/beg_website_2.html#ein-quarto-website-projekt-anlegen",
+    "title": "Website erstellen",
+    "section": "2 – Ein Quarto-Website-Projekt anlegen",
+    "text": "2 – Ein Quarto-Website-Projekt anlegen\n① Neues Quarto-Projekt anlegen\n\nGehe auf File → New File…. Es erscheint ein kleines Menü, wähle dort Quarto Project.\n\nWähle Website Project und dann deinen Projektordner.\n\n② Deine Projektdateien sind da\n\nQuarto hat vier Dateien angelegt:\n\n_quarto.yml: Einstellungen wie Titel, Navigation und Aussehen\nindex.qmd: deine Startseite\nabout.qmd: eine zweite Seite als Beispiel\nstyles.css: eigenes Aussehen, wenn du möchtest",
+    "crumbs": [
+      "Eine Quarto-Website erstellen",
+      "Website erstellen"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_website_2.html#vorschau-der-website",
+    "href": "Qmd Files/Getting Started/beg_website_2.html#vorschau-der-website",
+    "title": "Website erstellen",
+    "section": "3 – Vorschau der Website",
+    "text": "3 – Vorschau der Website\n① Auf den Vorschau-Knopf oben rechts im Editor klicken\n\nKlicke auf das kleine Vorschau-Symbol oben rechts im Editorfenster. VS Code öffnet von selbst das Terminal, baut deine Seite und zeigt rechts eine Vorschau, die sich laufend aktualisiert. Einen Browser brauchst du dafür nicht.\n\n\n\n\n\n\n\nHinweis🔍 Andere Wege zu Vorschau und fertigen Dateien\n\n\n\n\n\nDateien bauen (Ausgabe erzeugen, ohne Vorschau)\nWenn du nur die fertigen Dateien haben möchtest, öffne das Terminal über View → Terminal und gib ein:\n\n\nTerminal\n\nquarto render\n\nDamit entstehen alle Ausgabedateien im Ordner _site (oder in docs/, wenn du das so eingestellt hast). Das brauchst du, wenn du veröffentlichen willst, siehe Website veröffentlichen →.\n\nVorschau im Browser\nDu hast zwei Möglichkeiten:\n\nÖffne die erzeugten HTML-Dateien aus dem Ordner _site direkt im Browser (Doppelklick im Datei-Explorer).\nOder gib im Terminal quarto preview ein. Das startet einen lokalen Server und öffnet deine Seite im Browser. Bei jedem Speichern aktualisiert sie sich.\n\n\n\nTerminal\n\nquarto preview\n\n\n\n\n\n\n\n\n\n\n\n\nTipp✅ Deine erste Quarto-Website läuft!\n\n\n\nWie es weitergeht:\n\nÄndere index.qmd und speichere, die Vorschau zeigt es sofort\nÄndere title: in _quarto.yml, um deine Seite umzubenennen\nBereit für das Internet? Weiter mit Website veröffentlichen →",
+    "crumbs": [
+      "Eine Quarto-Website erstellen",
+      "Website erstellen"
+    ]
+  }
+]

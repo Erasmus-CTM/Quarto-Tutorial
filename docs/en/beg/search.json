@@ -1,0 +1,244 @@
+[
+  {
+    "objectID": "Qmd Files/Example Page/index_beg.html",
+    "href": "Qmd Files/Example Page/index_beg.html",
+    "title": "What Quarto Can Do",
+    "section": "",
+    "text": "Quarto turns plain .qmd files into interactive websites, PDFs, and presentations — no web development experience needed.\nThis mini-site explores the sine function and demonstrates Quarto’s capabilities along the way.",
+    "crumbs": [
+      "Example Page",
+      "Overview"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/index_beg.html#pages-at-a-glance",
+    "href": "Qmd Files/Example Page/index_beg.html#pages-at-a-glance",
+    "title": "What Quarto Can Do",
+    "section": "Pages at a Glance",
+    "text": "Pages at a Glance\n\n\n\n\nPage\nWhat you’ll see\n\n\n\n\n1\nLayout & Formatting\nCallouts, columns, tabs\n\n\n2\nCode\nPython: output only, executable, with input\n\n\n3\nVisualizations\nInteractive plot, animation, exercises & diagram\n\n\n4\nQuiz\nSelf-check questions\n\n\n5\nReferences\nCitations & bibliography",
+    "crumbs": [
+      "Example Page",
+      "Overview"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_references.html",
+    "href": "Qmd Files/Example Page/ep_references.html",
+    "title": "References",
+    "section": "",
+    "text": "Quarto supports citations and bibliographies via standard .bib files — no plugins needed.",
+    "crumbs": [
+      "Example Page",
+      "References"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_references.html#how-it-works",
+    "href": "Qmd Files/Example Page/ep_references.html#how-it-works",
+    "title": "References",
+    "section": "How It Works",
+    "text": "How It Works\n\nCreate a references.bib file with BibTeX entries.\nAdd bibliography: references.bib to the page’s YAML frontmatter.\nCite anywhere in the text using [@key].\n\nThe bibliography is rendered automatically at the end of the page.\n\n\n\n\n\n\nTipExample\n\n\n\nWriting [@quarto] in your text produces the inline citation: (Posit Software, PBC 2022)\nThe full entry appears below under References.",
+    "crumbs": [
+      "Example Page",
+      "References"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_references.html#tools-used-in-this-example",
+    "href": "Qmd Files/Example Page/ep_references.html#tools-used-in-this-example",
+    "title": "References",
+    "section": "Tools Used in This Example",
+    "text": "Tools Used in This Example\nAll interactive features on this site are powered by open-source tools:\n\nQuarto (Posit Software, PBC 2022) — the publishing system behind this entire site\npyodide-interaktiv (Erasmus CTM, n.d.c) — runs Python directly in the browser in a Web Worker, built on top of Pyodide (Droettboom et al. 2021) by Droettboom et al. (see Code)\nJSXGraph (Miller 2023) — interactive mathematics in the browser (see Visualizations)\nquizdown (Sauer 2023) — interactive multiple-choice quizzes in the browser (see Quiz)\npy-exercise (Erasmus CTM, n.d.b) — editable coding exercises with hidden tests (see Visualizations)\nmath-exercise (Erasmus CTM, n.d.a) — symbolic maths answers checked with SymPy (see Visualizations)",
+    "crumbs": [
+      "Example Page",
+      "References"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_layout.html",
+    "href": "Qmd Files/Example Page/ep_layout.html",
+    "title": "Layout & Formatting",
+    "section": "",
+    "text": "Quarto supports rich layout without writing any HTML or CSS.",
+    "crumbs": [
+      "Example Page",
+      "Layout & Formatting"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_layout.html#callouts",
+    "href": "Qmd Files/Example Page/ep_layout.html#callouts",
+    "title": "Layout & Formatting",
+    "section": "Callouts",
+    "text": "Callouts\n\n\n\n\n\n\nNoteNote\n\n\n\nUse notes for background information or definitions.\n\n\n\n\n\n\n\n\nTipTip\n\n\n\nUse tips for best practices or practical advice.\n\n\n\n\n\n\n\n\nWarningWarning\n\n\n\nUse warnings to flag common mistakes.\n\n\n\n\n\n\n\n\nImportantImportant\n\n\n\nUse important for things students must not miss.",
+    "crumbs": [
+      "Example Page",
+      "Layout & Formatting"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_layout.html#columns",
+    "href": "Qmd Files/Example Page/ep_layout.html#columns",
+    "title": "Layout & Formatting",
+    "section": "Columns",
+    "text": "Columns\n\n\nConcept\nThe sine function maps an angle to the y-coordinate on the unit circle.\n\\[f: \\mathbb{R} \\to [-1, 1]\\]\n\nKey values\n\n\n\n\\(x\\)\n\\(0\\)\n\\(\\frac{\\pi}{6}\\)\n\\(\\frac{\\pi}{2}\\)\n\\(\\pi\\)\n\n\n\n\n\\(\\sin(x)\\)\n\\(0\\)\n\\(0.5\\)\n\\(1\\)\n\\(0\\)",
+    "crumbs": [
+      "Example Page",
+      "Layout & Formatting"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_layout.html#tabs",
+    "href": "Qmd Files/Example Page/ep_layout.html#tabs",
+    "title": "Layout & Formatting",
+    "section": "Tabs",
+    "text": "Tabs\n\nDefinitionFormulaProperties\n\n\nThe sine function is one of the fundamental trigonometric functions. It is periodic with period \\(2\\pi\\) and range \\([-1, 1]\\).\n\n\nUsing the Taylor series expansion:\n\\[\\sin(x) = \\sum_{n=0}^{\\infty} \\frac{(-1)^n}{(2n+1)!}\\, x^{2n+1}\n           = x - \\frac{x^3}{6} + \\frac{x^5}{120} - \\cdots\\]\n\n\n\nPeriod: \\(2\\pi\\)\nRange: \\([-1,\\, 1]\\)\nZeros: \\(x = k\\pi,\\; k \\in \\mathbb{Z}\\)\nMaxima: \\(x = \\frac{\\pi}{2} + 2k\\pi\\)",
+    "crumbs": [
+      "Example Page",
+      "Layout & Formatting"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_code.html",
+    "href": "Qmd Files/Example Page/ep_code.html",
+    "title": "Code",
+    "section": "",
+    "text": "Quarto supports three ways to include Python code — all powered by Pyodide (Droettboom et al. 2021), which runs Python directly in the browser.",
+    "crumbs": [
+      "Example Page",
+      "Code"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_code.html#output-only",
+    "href": "Qmd Files/Example Page/ep_code.html#output-only",
+    "title": "Code",
+    "section": "Output Only",
+    "text": "Output Only\nThe code runs automatically in the background; only the result is shown:\n\n\nsin(  0°) = 0.0000\nsin( 30°) = 0.5000\nsin( 45°) = 0.7071\nsin( 60°) = 0.8660\nsin( 90°) = 1.0000\nsin(180°) = 0.0000\n\n\n\n\nThe Code for this Output looked like this:\n\n```python\n#| execute: true # This makes the Code execute during render\n#| echo: false # This makes the Code invisible in the final output\nimport math\n\nangles = [0, 30, 45, 60, 90, 180]\nfor deg in angles:\n    val = math.sin(math.radians(deg))\n    print(f\"sin({deg:3d}°) = {val:.4f}\")\n```",
+    "crumbs": [
+      "Example Page",
+      "Code"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_code.html#executable-code",
+    "href": "Qmd Files/Example Page/ep_code.html#executable-code",
+    "title": "Code",
+    "section": "Executable Code",
+    "text": "Executable Code\nClick Run — the code executes live in the browser:\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.",
+    "crumbs": [
+      "Example Page",
+      "Code"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_code.html#cells-share-state",
+    "href": "Qmd Files/Example Page/ep_code.html#cells-share-state",
+    "title": "Code",
+    "section": "Cells Share State",
+    "text": "Cells Share State\nEvery cell on a page runs in the same Python interpreter — a later cell can reuse a variable from an earlier one without re-importing or redefining it:\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.",
+    "crumbs": [
+      "Example Page",
+      "Code"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_code.html#interactive-input",
+    "href": "Qmd Files/Example Page/ep_code.html#interactive-input",
+    "title": "Code",
+    "section": "Interactive input()",
+    "text": "Interactive input()\nCells support real, blocking input() — the page stays responsive while it waits for you to type:\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.\n→ An animation and exercises to fill in are on the Visualizations page.",
+    "crumbs": [
+      "Example Page",
+      "Code"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_quiz.html",
+    "href": "Qmd Files/Example Page/ep_quiz.html",
+    "title": "Quiz",
+    "section": "",
+    "text": "Test your understanding of the sine function — and Quarto’s features, powered by the quarto-quizdown extension (Sauer 2023) by Parmsam.\n\n---\nshuffleAnswers: true\nshuffleQuestions: false\nlocale: en\n---\n\n# What is $\\sin(0)$?\n\n1. [x] $0$\n    &gt; Correct! The point on the unit circle for angle $0$ lies on the x-axis.\n2. [ ] $1$\n3. [ ] $-1$\n4. [ ] undefined\n\n# What is the maximum value of $\\sin(x)$?\n\n1. [ ] $0$\n2. [ ] $\\pi$\n3. [x] $1$\n    &gt; Correct! The range is $[-1, 1]$.\n4. [ ] $2$\n\n# What is the period of $\\sin(x)$?\n\n1. [ ] $\\pi$\n2. [x] $2\\pi$\n    &gt; Correct! After one full turn everything repeats.\n3. [ ] $4\\pi$\n4. [ ] $\\frac{\\pi}{2}$\n\n# Which extension makes Python run live in the browser?\n\n1. [x] pyodide-interaktiv\n    &gt; Correct!\n2. [ ] quizdown\n3. [ ] jsxgraph\n4. [ ] py-exercise\n\n# `pyodide-interaktiv` runs Python in a Web Worker. What does that buy you?\n\n1. [ ] Nothing — it's just a different name for the same engine.\n2. [x] The page stays responsive during execution, and every cell gets a Stop button.\n    &gt; Correct!\n3. [ ] Code runs on a server instead of in the browser.\n4. [ ] Python code compiles to JavaScript.\n\n# Which file extension does Quarto use for source files?\n\n1. [ ] `.html`\n2. [ ] `.py`\n3. [x] `.qmd`\n    &gt; Correct!\n4. [ ] `.tex`\n\n\n\n\n\nReferences\n\nSauer, Patrick. 2023. “Quarto-Quizdown: Quizdown Extension for Quarto.” https://github.com/parmsam/quarto-quizdown.",
+    "crumbs": [
+      "Example Page",
+      "Quiz"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_visuals.html",
+    "href": "Qmd Files/Example Page/ep_visuals.html",
+    "title": "Visualizations",
+    "section": "",
+    "text": "Drag the point along the x-axis to read off values of \\(\\sin(x)\\). The plot is rendered with JSXGraph (Miller 2023), in the Erasmus-CTM version from the math-exercise repository.",
+    "crumbs": [
+      "Example Page",
+      "Visualizations"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_visuals.html#interactive-plot",
+    "href": "Qmd Files/Example Page/ep_visuals.html#interactive-plot",
+    "title": "Visualizations",
+    "section": "",
+    "text": "Drag the point along the x-axis to read off values of \\(\\sin(x)\\). The plot is rendered with JSXGraph (Miller 2023), in the Erasmus-CTM version from the math-exercise repository.",
+    "crumbs": [
+      "Example Page",
+      "Visualizations"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_visuals.html#animation-1",
+    "href": "Qmd Files/Example Page/ep_visuals.html#animation-1",
+    "title": "Visualizations",
+    "section": "Animation",
+    "text": "Animation\nA Matplotlib FuncAnimation plays right in the page — the code is exactly what you would write in a local IDE, no extra call needed:\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.",
+    "crumbs": [
+      "Example Page",
+      "Visualizations"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_visuals.html#editable-exercise",
+    "href": "Qmd Files/Example Page/ep_visuals.html#editable-exercise",
+    "title": "Visualizations",
+    "section": "Editable Exercise",
+    "text": "Editable Exercise\nComplete the function — tests run automatically on checking your solution:\n\n  \n    Please enable JavaScript to load the interactive exercise.",
+    "crumbs": [
+      "Example Page",
+      "Visualizations"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_visuals.html#math-exercise",
+    "href": "Qmd Files/Example Page/ep_visuals.html#math-exercise",
+    "title": "Visualizations",
+    "section": "Math Exercise",
+    "text": "Math Exercise\nA different kind of check — symbolic answers, evaluated with SymPy instead of unit tests:\n\nSine at a special angle\n\n\nWhat is \\(\\sin(90°)\\), exactly? \n\n\n  ✓ Check\n  ⓘ Input help\n  \n    💬 Feedback\n    ⚙",
+    "crumbs": [
+      "Example Page",
+      "Visualizations"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_visuals.html#graph-as-an-exercise",
+    "href": "Qmd Files/Example Page/ep_visuals.html#graph-as-an-exercise",
+    "title": "Visualizations",
+    "section": "Graph as an exercise",
+    "text": "Graph as an exercise\nA graph can also be the answer itself. Here the check looks at where you drag the point.\n\n\nMaximum of the sine function\n\n\nDrag the point \\(P\\) to the maximum of \\(\\sin(x)\\) on the interval \\([0, 2\\pi]\\) and click \"Check\".\n\n\n  ✓ Check\n  ⓘ Input help\n  \n    💬 Feedback\n    ⚙",
+    "crumbs": [
+      "Example Page",
+      "Visualizations"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Example Page/ep_visuals.html#diagram",
+    "href": "Qmd Files/Example Page/ep_visuals.html#diagram",
+    "title": "Visualizations",
+    "section": "Diagram",
+    "text": "Diagram\nWhat actually happens between saving a .qmd file and getting a finished document?\n\n\n\n\n\nflowchart LR\n    A[\".qmd File&lt;br/&gt;Markdown + Code + YAML\"] --&gt; B[\"Execute&lt;br/&gt;Jupyter / Knitr\"]\n    B --&gt; C[\".md&lt;br/&gt;plain Markdown\"]\n    C --&gt; D{\"Pandoc\"}\n    D --&gt; E[\"🌐 HTML\"]\n    D --&gt; F[\"📝 Word .docx\"]\n    D --&gt; G[\".tex LaTeX\"]\n    G --&gt; H[\"LaTeX Engine&lt;br/&gt;TinyTeX\"]\n    H --&gt; I[\"📄 PDF\"]\n    style D fill:#4CAF50,color:#fff,stroke:#388e3c\n    style A fill:#e3f2fd,stroke:#90caf9\n\n\n\n\n\n\nQuarto first executes any code cells (Jupyter for Python, Knitr for R), then hands the resulting Markdown to Pandoc to produce the output. Pandoc can write HTML and Word directly, but not PDF — for that it detours through LaTeX first, which a separate engine (TinyTeX) then compiles into the finished file. That extra hop is why PDF needs one more install step (What you need) that HTML and Word don’t.\n→ More Python examples (output only, executable, with input) are on the Code page.",
+    "crumbs": [
+      "Example Page",
+      "Visualizations"
+    ]
+  }
+]
