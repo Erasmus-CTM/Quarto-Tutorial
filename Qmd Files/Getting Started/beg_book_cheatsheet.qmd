@@ -1,6 +1,14 @@
 ---
-title: "Cheatsheet: Creating a Quarto Book"
-subtitle: "From installation to a published book"
+title: "Cheatsheet: Ein Quarto-Buch erstellen"
+title-en: "Cheatsheet: Creating a Quarto Book"
+title-sv: "Lathund: Skapa en Quarto-bok"
+title-no: "Cheatsheet: Lag en Quarto-bok"
+title-da: "Cheatsheet: Opret en Quarto-bog"
+subtitle: "Von der Installation bis zum veröffentlichten Buch"
+subtitle-en: "From installation to a published book"
+subtitle-sv: "Från installation till publicerad bok"
+subtitle-no: "Fra installasjon til publisert bok"
+subtitle-da: "Fra installation til udgivet bog"
 format:
   pdf:
     geometry: margin=0.9in
@@ -11,6 +19,100 @@ format:
     linkcolor: cheataccent
     urlcolor: cheataccent
 ---
+
+:::: {.content-visible when-profile="deutsch"}
+
+```{=latex}
+\quickfacts{ERGEBNIS}{Dokument mit mehreren Kapiteln (HTML / PDF)}{AUFBAU}{Ein Projekt, die Liste \texttt{chapters:} bestimmt die Reihenfolge}{GEEIGNET FÜR}{Skripte, Handbücher, Abschlussarbeiten}
+```
+
+## 1 – Einrichten
+
+**Installieren (einmal je Rechner):**
+
+- **VS Code**: [code.visualstudio.com](https://code.visualstudio.com) (bei der Installation **„Add to PATH“** anhaken)
+- **Quarto CLI**: [quarto.org/docs/get-started](https://quarto.org/docs/get-started/)
+- **Quarto-Extension** für VS Code: in der Seitenleiste *Extensions* nach „Quarto“ suchen
+
+**Projekt anlegen:** **File → New File… → Quarto Project → Book Project**, dann den Ordner wählen. Quarto legt an:
+
+- `_quarto.yml`: Titel, Autor und Reihenfolge der Kapitel
+- `index.qmd`: Titelseite bzw. Vorwort
+- `intro.qmd`, `summary.qmd`: Beispielkapitel (umbenennen oder ersetzen)
+- `references.bib` / `references.qmd`: Literaturdatei und die Seite, auf der das Verzeichnis erscheint
+
+```{=latex}
+\begin{spotlight}{Was brauche ich?}
+Du schreibst etwas Langes, das von vorn nach hinten gelesen wird, etwa ein Vorlesungsskript, ein Handbuch oder eine Abschlussarbeit, mit automatischem Inhaltsverzeichnis und Links zum vorigen und nächsten Kapitel? Dann ist das hier richtig. Für lose verlinkte einzelne Seiten nimm das Cheatsheet \textbf{Website}, für einen kurzen Handzettel zum Drucken das Cheatsheet \textbf{Übungsblatt}.
+\end{spotlight}
+```
+
+{{< pagebreak >}}
+
+## 2 – Kapitel ordnen und schreiben
+
+**Jedes Kapitel ist eine `.qmd`-Datei.** Die Reihenfolge in `_quarto.yml` ist die Reihenfolge im Buch:
+
+```yaml
+book:
+  title: "Mein Vorlesungsskript"
+  author: "Dein Name"
+  chapters:
+    - index.qmd
+    - intro.qmd
+    - summary.qmd
+    - references.qmd
+```
+
+**Ein Kapitel ergänzen:** die neue `.qmd`-Datei anlegen und ihren Dateinamen in die Liste `chapters:` eintragen.
+
+Geschrieben wird jedes Kapitel wie jede andere Quarto-Seite, mit `##`-Überschriften, Codezellen, Hinweiskästen und Zitaten. Markdown in Kürze steht im Cheatsheet Website.
+
+::: {.callout-tip}
+## Tipp
+Leser bekommen eine **Seitenleiste** mit allen Kapiteln, Links zum **vorigen und nächsten** Kapitel am Ende jeder Seite und ein **Inhaltsverzeichnis** des aktuellen Kapitels. Alles entsteht automatisch aus der Liste `chapters:`.
+:::
+
+**Vorschau und Rendern:**
+
+| Befehl | Was er tut | Wann |
+|---|---|---|
+| `quarto preview` | Öffnet eine Vorschau mit Seitenleiste und Navigation, aktualisiert sich beim Speichern | Beim Schreiben und Bearbeiten |
+| `quarto render` | Baut das fertige Buch nach `_book` (oder `docs/`, falls eingestellt) | Vor dem Veröffentlichen |
+
+{{< pagebreak >}}
+
+## 3 – Mit GitHub Pages veröffentlichen
+
+Der Ordner `_book` eines gebauten Buchs funktioniert genau wie der Ordner `_site` einer Website. Die Schritte sind dieselben:
+
+1. In `_quarto.yml` unter `project:` die Zeile `output-dir: docs` ergänzen
+2. Rendern: `quarto render`
+3. Auf [github.com](https://github.com) ein **öffentliches** Repository anlegen
+4. Den ganzen Projektordner (mit `docs/`) hochladen und committen
+5. Im Repository **Settings → Pages**: Branch `main`, Ordner `/docs`, dann **Save**
+6. Auf den grünen Haken unter **Deployments** warten. Dein Buch steht dann unter
+   `https://<name>.github.io/<repo>/`
+
+**Das Buch später aktualisieren:** `quarto render` erneut ausführen und den Ordner `docs/` wieder zu GitHub hochladen (oder `git push`, wenn du mit Git arbeitest).
+
+```{=latex}
+\begin{spotlight}{Gut zu wissen}
+\begin{itemize}
+\item Kapitel lassen sich mit \texttt{part:} in der Liste \texttt{chapters:} zu benannten Teilen zusammenfassen, z.\,B. \texttt{part: "Grundlagen"} mit einer eigenen eingerückten Liste \texttt{chapters:}.
+\item Eine Liste \texttt{appendices:} auf der Ebene von \texttt{book:} ergibt automatisch gezählte Anhänge A, B, \ldots
+\item Auf jedes Kapitel lässt sich von überall im Buch verweisen: der Überschrift mit \texttt{\{\#sec-intro\}} eine Kennung geben und mit \texttt{@sec-intro} darauf verweisen.
+\end{itemize}
+\end{spotlight}
+```
+
+---
+
+Ausführlich und mit Bildschirmfotos: [Was du brauchst](https://erasmus-ctm.github.io/Quarto-Tutorial/de/int/Qmd%20Files/Getting%20Started/beg_book_1.html) · [Buch erstellen](https://erasmus-ctm.github.io/Quarto-Tutorial/de/int/Qmd%20Files/Getting%20Started/beg_book_2.html) · [Website veröffentlichen](https://erasmus-ctm.github.io/Quarto-Tutorial/de/int/Qmd%20Files/Getting%20Started/beg_website_3.html) (dieselben Schritte)
+
+::::
+
+:::: {.content-visible when-profile="english"}
 
 ```{=latex}
 \quickfacts{OUTPUT}{Multi-chapter document (HTML / PDF)}{STRUCTURE}{One project, \texttt{chapters:} list decides order}{BEST FOR}{Lecture notes, handbooks, theses}
@@ -76,7 +178,7 @@ The reader gets a **left sidebar** with all chapters, **Previous / Next** links 
 
 A rendered book's `_book` folder works exactly like a website's `_site` folder — the steps are identical:
 
-1. In `_quarto.yml`, under `book:`, add `output-dir: docs`
+1. In `_quarto.yml`, under `project:`, add `output-dir: docs`
 2. Render: `quarto render`
 3. Create a **public** repository on [github.com](https://github.com)
 4. Upload the whole project folder (including `docs/`) and commit
@@ -98,4 +200,276 @@ A rendered book's `_book` folder works exactly like a website's `_site` folder �
 
 ---
 
-Full details & screenshots: [What you need](https://erasmus-ctm.github.io/Quarto-Tutorial/int/Qmd%20Files/Getting%20Started/beg_book_1.html) · [Create a Book](https://erasmus-ctm.github.io/Quarto-Tutorial/int/Qmd%20Files/Getting%20Started/beg_book_2.html) · [Publish a Website](https://erasmus-ctm.github.io/Quarto-Tutorial/int/Qmd%20Files/Getting%20Started/beg_website_3.html) (same steps)
+Full details & screenshots: [What you need](https://erasmus-ctm.github.io/Quarto-Tutorial/en/int/Qmd%20Files/Getting%20Started/beg_book_1.html) · [Create a Book](https://erasmus-ctm.github.io/Quarto-Tutorial/en/int/Qmd%20Files/Getting%20Started/beg_book_2.html) · [Publish a Website](https://erasmus-ctm.github.io/Quarto-Tutorial/en/int/Qmd%20Files/Getting%20Started/beg_website_3.html) (same steps)
+
+::::
+
+:::: {.content-visible when-profile="dansk"}
+```{=latex}
+\quickfacts{RESULTAT}{Dokument med flere kapitler (HTML / PDF)}{STRUKTUR}{Ét projekt, listen \texttt{chapters:} bestemmer rækkefølgen}{GODT TIL}{Forelæsningsnoter, håndbøger, afhandlinger}
+```
+
+## 1 – Opsætning
+
+**Installer (én gang pr. computer):**
+
+- **VS Code**: [code.visualstudio.com](https://code.visualstudio.com) (sæt flueben ved **"Add to PATH"** under installationen)
+- **Quarto CLI**: [quarto.org/docs/get-started](https://quarto.org/docs/get-started/)
+- **Quarto-udvidelsen** til VS Code: søg efter "Quarto" i sidepanelet *Extensions*
+
+**Opret projektet:** **File → New File… → Quarto Project → Book Project**, og vælg derefter mappe. Quarto opretter:
+
+- `_quarto.yml`: bogens titel, forfatter og kapitlernes rækkefølge
+- `index.qmd`: forside eller forord
+- `intro.qmd`, `summary.qmd`: eksempelkapitler (omdøb dem, eller erstat dem)
+- `references.bib` / `references.qmd`: litteraturfilen og den side, hvor listen vises
+
+```{=latex}
+\begin{spotlight}{Hvilken skal jeg bruge?}
+Skriver du noget langt, der læses fra start til slut, for eksempel forelæsningsnoter, en håndbog eller en afhandling, med automatisk indholdsfortegnelse og links til forrige og næste kapitel? Så er det her det rigtige. Til løst forbundne enkeltsider, se cheatsheetet \textbf{Websted}. Til et kort ark til udskrift, se cheatsheetet \textbf{Opgaveark}.
+\end{spotlight}
+```
+
+{{< pagebreak >}}
+
+## 2 – Ordn og skriv kapitler
+
+**Hvert kapitel er en `.qmd`-fil.** Rækkefølgen i `_quarto.yml` er rækkefølgen i bogen:
+
+```yaml
+book:
+  title: "My Lecture Notes"
+  author: "Your Name"
+  chapters:
+    - index.qmd
+    - intro.qmd
+    - summary.qmd
+    - references.qmd
+```
+
+**Tilføj et kapitel:** opret den nye `.qmd`-fil, og tilføj filnavnet i listen `chapters:`.
+
+Hver kapitelfil skrives præcis som enhver anden Quarto-side, med `##`-overskrifter, kodeceller, infobokse og citater. Markdown kort fortalt står i cheatsheetet Websted.
+
+::: {.callout-tip}
+## Tip
+Læseren får et **sidepanel til venstre** med alle kapitler, links til **forrige og næste** kapitel nederst på hver side og en **indholdsfortegnelse** for det aktuelle kapitel. Det hele laves automatisk ud fra listen `chapters:`.
+:::
+
+**Forhåndsvisning og rendering:**
+
+| Kommando | Hvad den gør | Hvornår |
+|---|---|---|
+| `quarto preview` | Åbner en forhåndsvisning med sidepanel og navigation, opdateres, når du gemmer | Mens du skriver og redigerer |
+| `quarto render` | Bygger den færdige bog i `_book` (eller `docs/`, hvis det er indstillet) | Før udgivelse |
+
+{{< pagebreak >}}
+
+## 3 – Udgiv med GitHub Pages
+
+Mappen `_book` for en renderet bog fungerer præcis som mappen `_site` for et websted. Trinnene er de samme:
+
+1. Tilføj `output-dir: docs` under `project:` i `_quarto.yml`
+2. Render: `quarto render`
+3. Opret et **offentligt** repository på [github.com](https://github.com)
+4. Upload hele projektmappen (med `docs/`), og lav et commit
+5. I repositoryet: **Settings → Pages**, Branch `main`, mappe `/docs`, derefter **Save**
+6. Vent på det grønne flueben under **Deployments**. Bogen ligger derefter på
+   `https://<navn>.github.io/<repo>/`
+
+**Opdater bogen senere:** kør `quarto render` igen, og upload mappen `docs/` til GitHub på ny (eller `git push`, hvis du bruger Git).
+
+```{=latex}
+\begin{spotlight}{Godt at vide}
+\begin{itemize}
+\item Saml kapitler i navngivne dele med \texttt{part:} i listen \texttt{chapters:}, f.eks. \texttt{part: "Basics"} efterfulgt af sin egen indrykkede liste \texttt{chapters:}.
+\item En liste \texttt{appendices:} på samme niveau som \texttt{chapters:} giver automatisk nummererede bilag A, B, \ldots
+\item Du kan henvise til et hvilket som helst kapitel fra hele bogen: giv overskriften et id med \texttt{\{\#sec-intro\}}, og henvis til det med \texttt{@sec-intro}.
+\end{itemize}
+\end{spotlight}
+```
+
+---
+
+Udførligt og med skærmbilleder: [Det skal du bruge](https://erasmus-ctm.github.io/Quarto-Tutorial/da/int/Qmd%20Files/Getting%20Started/beg_book_1.html) · [Opret en bog](https://erasmus-ctm.github.io/Quarto-Tutorial/da/int/Qmd%20Files/Getting%20Started/beg_book_2.html) · [Udgiv webstedet](https://erasmus-ctm.github.io/Quarto-Tutorial/da/int/Qmd%20Files/Getting%20Started/beg_website_3.html) (samme trin)
+::::
+
+:::: {.content-visible when-profile="norsk"}
+```{=latex}
+\quickfacts{RESULTAT}{Dokument med flere kapitler (HTML / PDF)}{STRUKTUR}{Ett prosjekt, listen \texttt{chapters:} bestemmer rekkefølgen}{PASSER TIL}{Forelesningsnotater, håndbøker, oppgaver}
+```
+
+## 1 – Oppsett
+
+**Installer (én gang per datamaskin):**
+
+- **VS Code**: [code.visualstudio.com](https://code.visualstudio.com) (kryss av for **"Add to PATH"** under installasjonen)
+- **Quarto CLI**: [quarto.org/docs/get-started](https://quarto.org/docs/get-started/)
+- **Quarto-utvidelsen** for VS Code: søk etter "Quarto" i sidefeltet *Extensions*
+
+**Lag prosjektet:** **File → New File… → Quarto Project → Book Project**, velg deretter mappe. Quarto lager:
+
+- `_quarto.yml`: tittel, forfatter og rekkefølgen på kapitlene
+- `index.qmd`: forside eller forord
+- `intro.qmd`, `summary.qmd`: eksempelkapitler (gi dem nytt navn eller bytt dem ut)
+- `references.bib` / `references.qmd`: litteraturfilen og siden der listen vises
+
+```{=latex}
+\begin{spotlight}{Hvilken trenger jeg?}
+Skriver du noe langt som leses fra begynnelse til slutt, for eksempel forelesningsnotater, en håndbok eller en oppgave, med automatisk innholdsfortegnelse og lenker til forrige og neste kapittel? Da er dette riktig. For løst sammenlenkede enkeltsider, se cheatsheetet \textbf{Nettsted}. For et kort ark til utskrift, se cheatsheetet \textbf{Oppgaveark}.
+\end{spotlight}
+```
+
+{{< pagebreak >}}
+
+## 2 – Ordne og skrive kapitler
+
+**Hvert kapittel er en `.qmd`-fil.** Rekkefølgen i `_quarto.yml` er rekkefølgen i boken:
+
+```yaml
+book:
+  title: "My Lecture Notes"
+  author: "Your Name"
+  chapters:
+    - index.qmd
+    - intro.qmd
+    - summary.qmd
+    - references.qmd
+```
+
+**Legg til et kapittel:** lag den nye `.qmd`-filen og legg filnavnet til i listen `chapters:`.
+
+Hver kapittelfil skrives akkurat som enhver annen Quarto-side, med `##`-overskrifter, kodeceller, infobokser og sitater. Markdown i korte trekk står i cheatsheetet Nettsted.
+
+::: {.callout-tip}
+## Tips
+Leseren får et **sidefelt til venstre** med alle kapitlene, lenker til **forrige og neste** kapittel nederst på hver side og en **innholdsfortegnelse** for det gjeldende kapittelet. Alt lages automatisk fra listen `chapters:`.
+:::
+
+**Forhåndsvise og rendre:**
+
+| Kommando | Hva den gjør | Når |
+|---|---|---|
+| `quarto preview` | Åpner en forhåndsvisning med sidefelt og navigasjon, oppdateres når du lagrer | Mens du skriver og redigerer |
+| `quarto render` | Bygger den ferdige boken i `_book` (eller `docs/`, hvis det er satt opp) | Før publisering |
+
+{{< pagebreak >}}
+
+## 3 – Publiser med GitHub Pages
+
+Mappen `_book` til en ferdig rendret bok fungerer akkurat som mappen `_site` til et nettsted. Trinnene er de samme:
+
+1. Legg til `output-dir: docs` under `project:` i `_quarto.yml`
+2. Rendre: `quarto render`
+3. Opprett et **offentlig** repository på [github.com](https://github.com)
+4. Last opp hele prosjektmappen (med `docs/`) og gjør en commit
+5. I repositoryet: **Settings → Pages**, Branch `main`, mappe `/docs`, deretter **Save**
+6. Vent på den grønne haken under **Deployments**. Boken ligger da på
+   `https://<navn>.github.io/<repo>/`
+
+**Oppdatere boken senere:** kjør `quarto render` på nytt og last opp mappen `docs/` til GitHub igjen (eller `git push` hvis du bruker Git).
+
+```{=latex}
+\begin{spotlight}{Godt å vite}
+\begin{itemize}
+\item Samle kapitler i navngitte deler med \texttt{part:} i listen \texttt{chapters:}, f.eks. \texttt{part: "Basics"} fulgt av en egen innrykket liste \texttt{chapters:}.
+\item En liste \texttt{appendices:} på samme nivå som \texttt{chapters:} gir automatisk nummererte vedlegg A, B, \ldots
+\item Du kan vise til et hvilket som helst kapittel fra hele boken: gi overskriften en id med \texttt{\{\#sec-intro\}} og vis til den med \texttt{@sec-intro}.
+\end{itemize}
+\end{spotlight}
+```
+
+---
+
+Utførlig og med skjermbilder: [Dette trenger du](https://erasmus-ctm.github.io/Quarto-Tutorial/no/int/Qmd%20Files/Getting%20Started/beg_book_1.html) · [Lag en bok](https://erasmus-ctm.github.io/Quarto-Tutorial/no/int/Qmd%20Files/Getting%20Started/beg_book_2.html) · [Publiser nettstedet](https://erasmus-ctm.github.io/Quarto-Tutorial/no/int/Qmd%20Files/Getting%20Started/beg_website_3.html) (samme trinn)
+::::
+
+:::: {.content-visible when-profile="svenska"}
+```{=latex}
+\quickfacts{RESULTAT}{Dokument med flera kapitel (HTML / PDF)}{STRUKTUR}{Ett projekt, listan \texttt{chapters:} bestämmer ordningen}{PASSAR FÖR}{Föreläsningsanteckningar, handböcker, uppsatser}
+```
+
+## 1 – Installation
+
+**Installera (en gång per dator):**
+
+- **VS Code**: [code.visualstudio.com](https://code.visualstudio.com) (kryssa i **"Add to PATH"** under installationen)
+- **Quarto CLI**: [quarto.org/docs/get-started](https://quarto.org/docs/get-started/)
+- **Quarto-tillägget** för VS Code: sök efter "Quarto" i sidofältet *Extensions*
+
+**Skapa projektet:** **File → New File… → Quarto Project → Book Project**, välj sedan mapp. Quarto skapar:
+
+- `_quarto.yml`: bokens titel, författare och kapitlens ordning
+- `index.qmd`: omslag eller förord
+- `intro.qmd`, `summary.qmd`: exempelkapitel (byt namn på dem eller ersätt dem)
+- `references.bib` / `references.qmd`: litteraturfilen och sidan där förteckningen visas
+
+```{=latex}
+\begin{spotlight}{Vilken behöver jag?}
+Skriver du något långt som läses från början till slut, till exempel föreläsningsanteckningar, en handbok eller en uppsats, med automatisk innehållsförteckning och länkar till föregående och nästa kapitel? Då är det här rätt. För löst länkade fristående sidor, se lathunden \textbf{Webbplats}. För ett kort blad att skriva ut, se lathunden \textbf{Övningsblad}.
+\end{spotlight}
+```
+
+{{< pagebreak >}}
+
+## 2 – Ordna och skriva kapitel
+
+**Varje kapitel är en `.qmd`-fil.** Ordningen i `_quarto.yml` är ordningen i boken:
+
+```yaml
+book:
+  title: "My Lecture Notes"
+  author: "Your Name"
+  chapters:
+    - index.qmd
+    - intro.qmd
+    - summary.qmd
+    - references.qmd
+```
+
+**Lägg till ett kapitel:** skapa den nya `.qmd`-filen och lägg till filnamnet i listan `chapters:`.
+
+Varje kapitelfil skrivs precis som vilken annan Quarto-sida som helst, med `##`-rubriker, kodceller, inforutor och citat. Markdown i korthet finns i lathunden Webbplats.
+
+::: {.callout-tip}
+## Tips
+Läsaren får ett **sidofält till vänster** med alla kapitel, länkar till **föregående och nästa** kapitel längst ner på varje sida och en **innehållsförteckning** för det aktuella kapitlet. Allt skapas automatiskt från listan `chapters:`.
+:::
+
+**Förhandsgranska och rendera:**
+
+| Kommando | Vad det gör | När |
+|---|---|---|
+| `quarto preview` | Öppnar en förhandsgranskning med sidofält och navigering, uppdateras när du sparar | Medan du skriver och redigerar |
+| `quarto render` | Bygger den färdiga boken i `_book` (eller `docs/`, om det är inställt) | Före publicering |
+
+{{< pagebreak >}}
+
+## 3 – Publicera med GitHub Pages
+
+Mappen `_book` för en renderad bok fungerar precis som mappen `_site` för en webbplats. Stegen är desamma:
+
+1. Lägg till `output-dir: docs` under `project:` i `_quarto.yml`
+2. Rendera: `quarto render`
+3. Skapa ett **offentligt** repository på [github.com](https://github.com)
+4. Ladda upp hela projektmappen (med `docs/`) och gör en commit
+5. I repositoryt: **Settings → Pages**, Branch `main`, mapp `/docs`, sedan **Save**
+6. Vänta på den gröna bocken under **Deployments**. Boken finns sedan på
+   `https://<namn>.github.io/<repo>/`
+
+**Uppdatera boken senare:** kör `quarto render` igen och ladda upp mappen `docs/` till GitHub på nytt (eller `git push` om du använder Git).
+
+```{=latex}
+\begin{spotlight}{Bra att veta}
+\begin{itemize}
+\item Gruppera kapitel i namngivna delar med \texttt{part:} i listan \texttt{chapters:}, t.ex. \texttt{part: "Basics"} följt av en egen indragen lista \texttt{chapters:}.
+\item En lista \texttt{appendices:} på samma nivå som \texttt{chapters:} ger automatiskt numrerade bilagor A, B, \ldots
+\item Du kan hänvisa till vilket kapitel som helst från hela boken: ge rubriken ett id med \texttt{\{\#sec-intro\}} och hänvisa till det med \texttt{@sec-intro}.
+\end{itemize}
+\end{spotlight}
+```
+
+---
+
+Utförligt och med skärmbilder: [Vad du behöver](https://erasmus-ctm.github.io/Quarto-Tutorial/sv/int/Qmd%20Files/Getting%20Started/beg_book_1.html) · [Skapa en bok](https://erasmus-ctm.github.io/Quarto-Tutorial/sv/int/Qmd%20Files/Getting%20Started/beg_book_2.html) · [Publicera webbplatsen](https://erasmus-ctm.github.io/Quarto-Tutorial/sv/int/Qmd%20Files/Getting%20Started/beg_website_3.html) (samma steg)
+::::

@@ -1,0 +1,107 @@
+# Alles, was von der SPRACHE abhängt: Sprache der Oberfläche, Titel, Navbar- und
+# Seitenleisten-Beschriftungen. Welche Seiten gebaut werden, steht in _quarto-<niveau>.yml.
+lang: de
+
+website:
+  title: "Quarto-Tutorial"
+  reader-mode: true
+  navbar:
+    search: true
+    left:
+      # Platzhalter, navigation.html setzt das Ziel in der aktuellen Sprache ein
+      - text: "Beispielseite"
+        href: "#niveau-beg"
+      - text: "Erste Schritte"
+        href: "#niveau-int"
+      - text: "Tipps & Tricks"
+        href: "#niveau-exp"
+    right:
+      - icon: github
+        href: "https://github.com/Erasmus-CTM/Quarto-Tutorial"
+      - icon: globe
+        aria-label: "Sprache wählen / Choose language"
+        menu:
+          - text: "Deutsch"
+            href: "#sprache-de"
+          - text: "English"
+            href: "#sprache-en"
+          - text: "Svenska"
+            href: "#sprache-sv"
+          - text: "Norsk"
+            href: "#sprache-no"
+          - text: "Dansk"
+            href: "#sprache-da"
+  # Seitenleisten ALLER Niveaus. Quarto zeigt auf jeder Seite nur die, in der sie steht.
+  # Seiten eines anderen Niveaus werden in diesem Lauf nicht gebaut; das stört nicht.
+  sidebar:
+    - id: example-sidebar
+      title: "Beispielseiten"
+      style: docked
+      contents:
+        - text: "Überblick"
+          href: "Qmd Files/Example Page/index_beg.qmd"
+        - text: "Layout & Formatierung"
+          href: "Qmd Files/Example Page/ep_layout.qmd"
+        - text: "Code"
+          href: "Qmd Files/Example Page/ep_code.qmd"
+        - text: "Visualisierungen"
+          href: "Qmd Files/Example Page/ep_visuals.qmd"
+        - text: "Quiz"
+          href: "Qmd Files/Example Page/ep_quiz.qmd"
+        - text: "Quellen"
+          href: "Qmd Files/Example Page/ep_references.qmd"
+    - id: getting-started-sidebar
+      style: docked
+      collapse-level: 1
+      contents:
+        - text: "Überblick"
+          href: "Qmd Files/Getting Started/getting_started.qmd"
+        - section: "Eine Quarto-Website erstellen"
+          contents:
+            - text: "Was du brauchst"
+              href: "Qmd Files/Getting Started/beg_website_1.qmd"
+            - text: "Website erstellen"
+              href: "Qmd Files/Getting Started/beg_website_2.qmd"
+            - text: "Website veröffentlichen"
+              href: "Qmd Files/Getting Started/beg_website_3.qmd"
+            - text: "📄 Cheatsheet (PDF)"
+              href: "Qmd Files/Getting Started/beg_website_cheatsheet.qmd"
+        - section: "Ein Übungsblatt mit Quarto erstellen"
+          contents:
+            - text: "Was du brauchst"
+              href: "Qmd Files/Getting Started/beg_exercise_1.qmd"
+            - text: "Übungsblatt erstellen"
+              href: "Qmd Files/Getting Started/beg_exercise_2.qmd"
+            - text: "Andere Ausgabeformate"
+              href: "Qmd Files/Getting Started/beg_exercise_3.qmd"
+            - text: "📄 Cheatsheet (PDF)"
+              href: "Qmd Files/Getting Started/beg_exercise_cheatsheet.qmd"
+        - section: "Ein Quarto-Buch erstellen"
+          contents:
+            - text: "Was du brauchst"
+              href: "Qmd Files/Getting Started/beg_book_1.qmd"
+            - text: "Buch erstellen"
+              href: "Qmd Files/Getting Started/beg_book_2.qmd"
+            - text: "📄 Cheatsheet (PDF)"
+              href: "Qmd Files/Getting Started/beg_book_cheatsheet.qmd"
+        - section: "Interaktiver Code"
+          contents:
+            - text: "Interaktives Python mit Pyodide"
+              href: "Qmd Files/Getting Started/beg_extensions.qmd"
+            - text: "📄 Cheatsheet (PDF)"
+              href: "Qmd Files/Getting Started/beg_extensions_cheatsheet.qmd"
+    - id: tips-sidebar
+      style: docked
+      contents:
+        - text: "Was dich erwartet & was du schon können solltest"
+          href: "Qmd Files/Tipps and Tricks/index_exp.qmd"
+        - text: "Die YML-Datei"
+          href: "Qmd Files/Tipps and Tricks/exp_yml.qmd"
+        - text: "Die QMD-Datei"
+          href: "Qmd Files/Tipps and Tricks/exp_qmd.qmd"
+        - text: "Extensions"
+          href: "Qmd Files/Tipps and Tricks/exp_extensions.qmd"
+        - text: "Mehrsprachige Projekte"
+          href: "Qmd Files/Tipps and Tricks/exp_multilanguage.qmd"
+        - text: "Cheatsheet"
+          href: "Qmd Files/Tipps and Tricks/exp_cheatsheet.qmd"

@@ -1,33 +1,7 @@
+# Niveau Beginner (Beispielseite): nur WELCHE Seiten gebaut werden.
+# Beschriftungen stehen in _quarto-deutsch.yml / _quarto-english.yml,
+# den Ausgabeordner docs/<sprache>/beg/ setzt build.py.
 project:
-  output-dir: ./docs/beg
   render:
-    - index.qmd
-    - Qmd Files/Example Page/*.qmd
-
-website:
-  title: "Quarto Tutorial"
-  navbar:
-    left:
-      - text: "Example Page"
-        href: "Qmd Files/Example Page/index_beg.qmd"
-      - text: "Getting Started"
-        href: "int/Qmd Files/Getting Started/getting_started.html"
-      - text: "Tipps and Tricks for Quarto Users"
-        href: "exp/Qmd Files/Tipps and Tricks/index_exp.html"
-  sidebar:
-    - id: example-sidebar
-      title: "Example Pages"
-      style: docked
-      contents:
-        - text: "Overview"
-          href: "Qmd Files/Example Page/index_beg.qmd"
-        - text: "Layout & Formatting"
-          href: "Qmd Files/Example Page/ep_layout.qmd"
-        - text: "Code"
-          href: "Qmd Files/Example Page/ep_code.qmd"
-        - text: "Visualizations"
-          href: "Qmd Files/Example Page/ep_visuals.qmd"
-        - text: "Quiz"
-          href: "Qmd Files/Example Page/ep_quiz.qmd"
-        - text: "References"
-          href: "Qmd Files/Example Page/ep_references.qmd"
+    - "Qmd Files/Example Page/*.qmd"
+    - "!Qmd Files/Example Page/example_page.qmd"   # leere Datei, keine Seite

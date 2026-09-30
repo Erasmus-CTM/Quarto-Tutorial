@@ -1,6 +1,14 @@
 ---
-title: "Cheatsheet: Creating an Exercise Sheet"
-subtitle: "From installation to multiple output formats"
+title: "Cheatsheet: Ein Übungsblatt erstellen"
+title-en: "Cheatsheet: Creating an Exercise Sheet"
+title-sv: "Lathund: Skapa ett övningsblad"
+title-no: "Cheatsheet: Lag et oppgaveark"
+title-da: "Cheatsheet: Opret et opgaveark"
+subtitle: "Von der Installation bis zu mehreren Ausgabeformaten"
+subtitle-en: "From installation to multiple output formats"
+subtitle-sv: "Från installation till flera utdataformat"
+subtitle-no: "Fra installasjon til flere utdataformater"
+subtitle-da: "Fra installation til flere outputformater"
 format:
   pdf:
     geometry: margin=0.9in
@@ -11,6 +19,118 @@ format:
     linkcolor: cheataccent
     urlcolor: cheataccent
 ---
+
+:::: {.content-visible when-profile="deutsch"}
+
+```{=latex}
+\quickfacts{ERGEBNIS}{Eine Datei (HTML / PDF / Word)}{AUFBAU}{Eine \texttt{.qmd}-Datei, kein Projekt nötig}{GEEIGNET FÜR}{Handzettel, Hausaufgaben, Ausdrucke}
+```
+
+## 1 – Einrichten
+
+**Installieren (einmal je Rechner):**
+
+- **VS Code**: [code.visualstudio.com](https://code.visualstudio.com) (bei der Installation **„Add to PATH“** anhaken)
+- **Quarto CLI**: [quarto.org/docs/get-started](https://quarto.org/docs/get-started/)
+- **Quarto-Extension** für VS Code: in der Seitenleiste *Extensions* nach „Quarto“ suchen
+
+::: {.callout-note}
+## Nur wenn du ein PDF erzeugen willst
+`quarto install tinytex` im Terminal installiert das LaTeX-System, das Quarto für PDF braucht. Für HTML oder Word ist das nicht nötig.
+:::
+
+**Datei anlegen:** **File → New File… → Quarto Document**, dann zum Beispiel als `uebungen.qmd` speichern. Anders als eine Website ist das eine einzelne Datei, ein Projektordner ist nicht nötig.
+
+```{=latex}
+\begin{spotlight}{Was brauche ich?}
+Du brauchst ein einzelnes Dokument zum Drucken, Verschicken oder Austeilen, mit Titel, Abgabetermin und Ausgabe als PDF oder Word? Dann ist das hier richtig. Für eine Website mit mehreren Seiten nimm das Cheatsheet \textbf{Website}, für ein langes Dokument mit nummerierten Kapiteln das Cheatsheet \textbf{Buch}.
+\end{spotlight}
+```
+
+{{< pagebreak >}}
+
+## 2 – Das Übungsblatt schreiben
+
+**Der Kopf der Datei** legt Titel, Autor und Ausgabeformat fest:
+
+```yaml
+---
+title: "Übungsblatt 1"
+author: "Dein Name"
+format: pdf
+---
+```
+
+**Text:** `##` für jede Aufgabe, gewöhnliche Absätze für den Text, `$...$` für Formeln im Text:
+
+```markdown
+## Aufgabe 1
+
+Berechne die Ableitung von $f(x) = x^2 + 3x$.
+```
+
+**Codebeispiele:** Ein gewöhnlicher Codeblock *zeigt* Code nur, ohne ihn auszuführen. Das passt, wenn du zeigen willst, wie eine Lösung aussieht:
+
+```python
+x = [1, 2, 3, 4]
+print(sum(x))
+```
+
+::: {.callout-note}
+## Soll der Code wirklich laufen?
+Schreibe `{python}` statt `python` an den Codeblock. Dann führt Jupyter ihn beim Rendern aus, und die Ausgabe steht direkt im PDF oder in der Word-Datei, ganz ohne Browser. Das ist etwas anderes als die Zellen von `pyodide-interaktiv`, die nur im Browser laufen (siehe Cheatsheet Extensions).
+:::
+
+**Vorschau und Rendern** (wie bei einer Website, nur für eine Datei):
+
+| Befehl | Was er tut |
+|---|---|
+| `quarto preview uebungen.qmd` | Vorschau im Browser, aktualisiert sich beim Speichern |
+| `quarto render uebungen.qmd` | Baut die fertige Datei einmal |
+
+{{< pagebreak >}}
+
+## 3 – Ausgabeformate
+
+Aus einer `.qmd`-Datei können mehrere Formate entstehen. Dafür änderst du die Zeile `format:`:
+
+| Format | Wert im YAML | Braucht |
+|---|---|---|
+| HTML | `format: html` | nichts weiter |
+| Word | `format: docx` | nichts weiter |
+| PDF | `format: pdf` | TinyTeX (Seite 1) |
+
+**Alle Formate auf einmal:**
+
+```yaml
+---
+title: "Übungsblatt 1"
+format:
+  html: default
+  pdf: default
+  docx: default
+---
+```
+
+Ein einziges `quarto render` erzeugt dann alle drei Dateien im selben Ordner.
+
+```{=latex}
+\begin{spotlight}{Gut zu wissen}
+\begin{itemize}
+\item Du brauchst gerade nur eines der eingestellten Formate? \texttt{quarto render uebungen.qmd --to pdf} baut nur dieses.
+\item \texttt{\{\{< pagebreak >\}\}} in einer eigenen Zeile erzwingt eine neue Seite. So steht auf jeder gedruckten Seite eine Aufgabe.
+\item Eigener Briefkopf oder eigene Formatvorlagen in der \texttt{.docx}-Datei? \texttt{format: docx: reference-doc: vorlage.docx} wendet eine Word-Vorlage an.
+\end{itemize}
+\end{spotlight}
+```
+
+---
+
+Ausführlich und mit Bildschirmfotos: [Was du brauchst](https://erasmus-ctm.github.io/Quarto-Tutorial/de/int/Qmd%20Files/Getting%20Started/beg_exercise_1.html) · [Übungsblatt erstellen](https://erasmus-ctm.github.io/Quarto-Tutorial/de/int/Qmd%20Files/Getting%20Started/beg_exercise_2.html) · [Andere Ausgabeformate](https://erasmus-ctm.github.io/Quarto-Tutorial/de/int/Qmd%20Files/Getting%20Started/beg_exercise_3.html)
+
+::::
+
+:::: {.content-visible when-profile="english"}
 
 ```{=latex}
 \quickfacts{OUTPUT}{One file (HTML / PDF / Word)}{STRUCTURE}{Single \texttt{.qmd}, no project needed}{BEST FOR}{Handouts, homework, printables}
@@ -68,7 +188,7 @@ print(sum(x))
 
 ::: {.callout-note}
 ## Want it to actually run?
-Tag the fence `{python}` instead of `python` — it executes via Jupyter and the output is embedded right in the PDF or Word file, no browser needed. That's different from the Website chapter's `pyodide-interaktiv` cells, which only run live in a browser (see the Extensions cheatsheet).
+Tag the fence `{python}` instead of `python` — it executes via Jupyter and the output is embedded right in the PDF or Word file, no browser needed. That's different from the `pyodide-interaktiv` cells, which only run live in a browser (see the Extensions cheatsheet).
 :::
 
 **Preview vs. Render** (same idea as for a website, just for one file):
@@ -116,4 +236,330 @@ Run `quarto render` once — Quarto produces all three files in the same folder.
 
 ---
 
-Full details & screenshots: [What you need](https://erasmus-ctm.github.io/Quarto-Tutorial/int/Qmd%20Files/Getting%20Started/beg_exercise_1.html) · [Create an Exercise Sheet](https://erasmus-ctm.github.io/Quarto-Tutorial/int/Qmd%20Files/Getting%20Started/beg_exercise_2.html) · [Other Output Formats](https://erasmus-ctm.github.io/Quarto-Tutorial/int/Qmd%20Files/Getting%20Started/beg_exercise_3.html)
+Full details & screenshots: [What you need](https://erasmus-ctm.github.io/Quarto-Tutorial/en/int/Qmd%20Files/Getting%20Started/beg_exercise_1.html) · [Create an Exercise Sheet](https://erasmus-ctm.github.io/Quarto-Tutorial/en/int/Qmd%20Files/Getting%20Started/beg_exercise_2.html) · [Other Output Formats](https://erasmus-ctm.github.io/Quarto-Tutorial/en/int/Qmd%20Files/Getting%20Started/beg_exercise_3.html)
+
+::::
+
+:::: {.content-visible when-profile="dansk"}
+```{=latex}
+\quickfacts{RESULTAT}{Én fil (HTML / PDF / Word)}{STRUKTUR}{Én \texttt{.qmd}-fil, intet projekt nødvendigt}{GODT TIL}{Uddelingsark, hjemmeopgaver, udskrifter}
+```
+
+## 1 – Opsætning
+
+**Installer (én gang pr. computer):**
+
+- **VS Code**: [code.visualstudio.com](https://code.visualstudio.com) (sæt flueben ved **"Add to PATH"** under installationen)
+- **Quarto CLI**: [quarto.org/docs/get-started](https://quarto.org/docs/get-started/)
+- **Quarto-udvidelsen** til VS Code: søg efter "Quarto" i sidepanelet *Extensions*
+
+::: {.callout-note}
+## Kun hvis du vil lave PDF
+`quarto install tinytex` i terminalen installerer det LaTeX-system, Quarto skal bruge til PDF. Spring det over, hvis du kun vil have HTML eller Word.
+:::
+
+**Opret filen:** **File → New File… → Quarto Document**, og gem den for eksempel som `exercises.qmd`. I modsætning til et websted er det en enkelt fil, der skal ikke bruges nogen projektmappe.
+
+```{=latex}
+\begin{spotlight}{Hvilken skal jeg bruge?}
+Skal du bruge et enkelt dokument til at udskrive, sende eller dele ud, med titel, afleveringsfrist og eksport til PDF eller Word? Så er det her det rigtige. Til et websted med flere sider, se cheatsheetet \textbf{Websted}. Til et langt dokument med nummererede kapitler, se cheatsheetet \textbf{Bog}.
+\end{spotlight}
+```
+
+{{< pagebreak >}}
+
+## 2 – Skriv opgavearket
+
+**Filens hoved** angiver titel, forfatter og outputformat:
+
+```yaml
+---
+title: "Exercise Sheet 1"
+author: "Your Name"
+format: pdf
+---
+```
+
+**Tekst:** brug `##` til hver opgave, almindelige afsnit til teksten og `$...$` til formler i teksten:
+
+```markdown
+## Exercise 1
+
+Calculate the derivative of $f(x) = x^2 + 3x$.
+```
+
+**Kodeeksempler:** en almindelig kodeblok *viser* kun koden uden at køre den. Det passer, når du vil vise, hvordan et svar ser ud:
+
+```python
+x = [1, 2, 3, 4]
+print(sum(x))
+```
+
+::: {.callout-note}
+## Skal koden virkelig køres?
+Skriv `{python}` i stedet for `python` ved kodeblokken. Så køres koden via Jupyter, når du renderer, og outputtet lander direkte i PDF- eller Word-filen, uden browser. Det er noget andet end cellerne i `pyodide-interaktiv`, som kun kører i en browser (se cheatsheetet Udvidelser).
+:::
+
+**Forhåndsvisning og rendering** (som for et websted, men for én fil):
+
+| Kommando | Hvad den gør |
+|---|---|
+| `quarto preview exercises.qmd` | Forhåndsvisning i browseren, opdateres, når du gemmer |
+| `quarto render exercises.qmd` | Bygger den færdige fil én gang |
+
+{{< pagebreak >}}
+
+## 3 – Outputformater
+
+Én `.qmd`-fil kan blive til flere formater. Du retter linjen `format:`:
+
+| Format | Værdi i YAML | Kræver |
+|---|---|---|
+| HTML | `format: html` | Intet ekstra |
+| Word | `format: docx` | Intet ekstra |
+| PDF | `format: pdf` | TinyTeX (side 1) |
+
+**Alle formater på én gang:**
+
+```yaml
+---
+title: "Exercise Sheet 1"
+format:
+  html: default
+  pdf: default
+  docx: default
+---
+```
+
+Kør `quarto render` én gang, så laver Quarto alle tre filer i den samme mappe.
+
+```{=latex}
+\begin{spotlight}{Godt at vide}
+\begin{itemize}
+\item Skal du lige nu kun bruge ét af de indstillede formater? \texttt{quarto render exercises.qmd --to pdf} renderer kun det.
+\item \texttt{\{\{< pagebreak >\}\}} på en linje for sig fremtvinger en ny side. Praktisk, hvis hver opgave skal stå på sin egen udskrevne side.
+\item Vil du have dit eget brevhoved eller dine egne typografier i \texttt{.docx}-filen? \texttt{format: docx: reference-doc: template.docx} bruger en Word-skabelon.
+\end{itemize}
+\end{spotlight}
+```
+
+---
+
+Udførligt og med skærmbilleder: [Det skal du bruge](https://erasmus-ctm.github.io/Quarto-Tutorial/da/int/Qmd%20Files/Getting%20Started/beg_exercise_1.html) · [Opret et opgaveark](https://erasmus-ctm.github.io/Quarto-Tutorial/da/int/Qmd%20Files/Getting%20Started/beg_exercise_2.html) · [Andre outputformater](https://erasmus-ctm.github.io/Quarto-Tutorial/da/int/Qmd%20Files/Getting%20Started/beg_exercise_3.html)
+::::
+
+:::: {.content-visible when-profile="norsk"}
+```{=latex}
+\quickfacts{RESULTAT}{Én fil (HTML / PDF / Word)}{STRUKTUR}{Én \texttt{.qmd}-fil, ikke noe prosjekt nødvendig}{PASSER TIL}{Utdelingsark, hjemmeoppgaver, utskrifter}
+```
+
+## 1 – Oppsett
+
+**Installer (én gang per datamaskin):**
+
+- **VS Code**: [code.visualstudio.com](https://code.visualstudio.com) (kryss av for **"Add to PATH"** under installasjonen)
+- **Quarto CLI**: [quarto.org/docs/get-started](https://quarto.org/docs/get-started/)
+- **Quarto-utvidelsen** for VS Code: søk etter "Quarto" i sidefeltet *Extensions*
+
+::: {.callout-note}
+## Bare hvis du vil lage PDF
+`quarto install tinytex` i terminalen installerer LaTeX-systemet Quarto trenger for PDF. Hopp over det hvis du bare vil ha HTML eller Word.
+:::
+
+**Lag filen:** **File → New File… → Quarto Document**, og lagre den for eksempel som `exercises.qmd`. Til forskjell fra et nettsted er dette én enkelt fil, det trengs ingen prosjektmappe.
+
+```{=latex}
+\begin{spotlight}{Hvilken trenger jeg?}
+Trenger du ett enkelt dokument til å skrive ut, sende eller dele ut, med tittel, frist og eksport til PDF eller Word? Da er dette riktig. For et nettsted med flere sider, se cheatsheetet \textbf{Nettsted}. For et langt dokument med nummererte kapitler, se cheatsheetet \textbf{Bok}.
+\end{spotlight}
+```
+
+{{< pagebreak >}}
+
+## 2 – Skrive oppgavearket
+
+**Hodet i filen** angir tittel, forfatter og utdataformat:
+
+```yaml
+---
+title: "Exercise Sheet 1"
+author: "Your Name"
+format: pdf
+---
+```
+
+**Tekst:** bruk `##` for hver oppgave, vanlige avsnitt for teksten og `$...$` for formler i teksten:
+
+```markdown
+## Exercise 1
+
+Calculate the derivative of $f(x) = x^2 + 3x$.
+```
+
+**Kodeeksempler:** en vanlig kodeblokk *viser* bare koden uten å kjøre den. Det passer når du vil vise hvordan et svar ser ut:
+
+```python
+x = [1, 2, 3, 4]
+print(sum(x))
+```
+
+::: {.callout-note}
+## Skal koden virkelig kjøres?
+Skriv `{python}` i stedet for `python` ved kodeblokken. Da kjøres koden via Jupyter når du rendrer, og utdataen havner rett i PDF- eller Word-filen, uten nettleser. Det er noe annet enn cellene i `pyodide-interaktiv`, som bare kjører i en nettleser (se cheatsheetet Utvidelser).
+:::
+
+**Forhåndsvise og rendre** (som for et nettsted, men for én fil):
+
+| Kommando | Hva den gjør |
+|---|---|
+| `quarto preview exercises.qmd` | Forhåndsvisning i nettleseren, oppdateres når du lagrer |
+| `quarto render exercises.qmd` | Bygger den ferdige filen én gang |
+
+{{< pagebreak >}}
+
+## 3 – Utdataformater
+
+Én `.qmd`-fil kan bli til flere formater. Du endrer linjen `format:`:
+
+| Format | Verdi i YAML | Krever |
+|---|---|---|
+| HTML | `format: html` | Ingenting ekstra |
+| Word | `format: docx` | Ingenting ekstra |
+| PDF | `format: pdf` | TinyTeX (side 1) |
+
+**Alle formater på én gang:**
+
+```yaml
+---
+title: "Exercise Sheet 1"
+format:
+  html: default
+  pdf: default
+  docx: default
+---
+```
+
+Kjør `quarto render` én gang, så lager Quarto alle tre filene i samme mappe.
+
+```{=latex}
+\begin{spotlight}{Godt å vite}
+\begin{itemize}
+\item Trenger du akkurat nå bare ett av formatene som er satt opp? \texttt{quarto render exercises.qmd --to pdf} rendrer bare det.
+\item \texttt{\{\{< pagebreak >\}\}} på en egen linje tvinger fram en ny side. Praktisk hvis hver oppgave skal stå på sin egen utskrevne side.
+\item Vil du ha eget brevhode eller egne stiler i \texttt{.docx}-filen? \texttt{format: docx: reference-doc: template.docx} bruker en Word-mal.
+\end{itemize}
+\end{spotlight}
+```
+
+---
+
+Utførlig og med skjermbilder: [Dette trenger du](https://erasmus-ctm.github.io/Quarto-Tutorial/no/int/Qmd%20Files/Getting%20Started/beg_exercise_1.html) · [Lag et oppgaveark](https://erasmus-ctm.github.io/Quarto-Tutorial/no/int/Qmd%20Files/Getting%20Started/beg_exercise_2.html) · [Andre utdataformater](https://erasmus-ctm.github.io/Quarto-Tutorial/no/int/Qmd%20Files/Getting%20Started/beg_exercise_3.html)
+::::
+
+:::: {.content-visible when-profile="svenska"}
+```{=latex}
+\quickfacts{RESULTAT}{En fil (HTML / PDF / Word)}{STRUKTUR}{En \texttt{.qmd}-fil, inget projekt behövs}{PASSAR FÖR}{Utdelat material, hemuppgifter, utskrifter}
+```
+
+## 1 – Installation
+
+**Installera (en gång per dator):**
+
+- **VS Code**: [code.visualstudio.com](https://code.visualstudio.com) (kryssa i **"Add to PATH"** under installationen)
+- **Quarto CLI**: [quarto.org/docs/get-started](https://quarto.org/docs/get-started/)
+- **Quarto-tillägget** för VS Code: sök efter "Quarto" i sidofältet *Extensions*
+
+::: {.callout-note}
+## Bara om du vill skapa PDF
+`quarto install tinytex` i terminalen installerar LaTeX-systemet som Quarto behöver för PDF. Hoppa över det om du bara vill ha HTML eller Word.
+:::
+
+**Skapa filen:** **File → New File… → Quarto Document**, spara den sedan som till exempel `exercises.qmd`. Till skillnad från en webbplats är det en enda fil, ingen projektmapp behövs.
+
+```{=latex}
+\begin{spotlight}{Vilken behöver jag?}
+Behöver du ett enskilt dokument att skriva ut, mejla eller dela ut, med titel, inlämningsdatum och export till PDF eller Word? Då är det här rätt. För en webbplats med flera sidor, se lathunden \textbf{Webbplats}. För ett långt dokument med numrerade kapitel, se lathunden \textbf{Bok}.
+\end{spotlight}
+```
+
+{{< pagebreak >}}
+
+## 2 – Skriva övningsbladet
+
+**Filens huvud** anger titel, författare och utdataformat:
+
+```yaml
+---
+title: "Exercise Sheet 1"
+author: "Your Name"
+format: pdf
+---
+```
+
+**Text:** använd `##` för varje uppgift, vanliga stycken för texten och `$...$` för formler i texten:
+
+```markdown
+## Exercise 1
+
+Calculate the derivative of $f(x) = x^2 + 3x$.
+```
+
+**Kodexempel:** ett vanligt kodblock *visar* bara koden utan att köra den. Det passar när du vill visa hur ett svar ser ut:
+
+```python
+x = [1, 2, 3, 4]
+print(sum(x))
+```
+
+::: {.callout-note}
+## Ska koden verkligen köras?
+Skriv `{python}` i stället för `python` vid kodblocket. Då körs koden via Jupyter när du renderar, och utdatan hamnar direkt i PDF- eller Word-filen, utan webbläsare. Det är något annat än cellerna i `pyodide-interaktiv`, som bara körs i en webbläsare (se lathunden Tillägg).
+:::
+
+**Förhandsgranska och rendera** (som för en webbplats, men för en enda fil):
+
+| Kommando | Vad det gör |
+|---|---|
+| `quarto preview exercises.qmd` | Förhandsgranskning i webbläsaren, uppdateras när du sparar |
+| `quarto render exercises.qmd` | Bygger den färdiga filen en gång |
+
+{{< pagebreak >}}
+
+## 3 – Utdataformat
+
+En `.qmd`-fil kan bli flera olika format. Du ändrar raden `format:`:
+
+| Format | Värde i YAML | Kräver |
+|---|---|---|
+| HTML | `format: html` | Inget extra |
+| Word | `format: docx` | Inget extra |
+| PDF | `format: pdf` | TinyTeX (sida 1) |
+
+**Alla format på en gång:**
+
+```yaml
+---
+title: "Exercise Sheet 1"
+format:
+  html: default
+  pdf: default
+  docx: default
+---
+```
+
+Kör `quarto render` en gång, så skapar Quarto alla tre filerna i samma mapp.
+
+```{=latex}
+\begin{spotlight}{Bra att veta}
+\begin{itemize}
+\item Behöver du just nu bara ett av de inställda formaten? \texttt{quarto render exercises.qmd --to pdf} renderar bara det.
+\item \texttt{\{\{< pagebreak >\}\}} på en egen rad tvingar fram en ny sida. Praktiskt om varje uppgift ska stå på en egen utskriven sida.
+\item Vill du ha eget brevhuvud eller egna formatmallar i \texttt{.docx}-filen? \texttt{format: docx: reference-doc: template.docx} använder en Word-mall.
+\end{itemize}
+\end{spotlight}
+```
+
+---
+
+Utförligt och med skärmbilder: [Vad du behöver](https://erasmus-ctm.github.io/Quarto-Tutorial/sv/int/Qmd%20Files/Getting%20Started/beg_exercise_1.html) · [Skapa ett övningsblad](https://erasmus-ctm.github.io/Quarto-Tutorial/sv/int/Qmd%20Files/Getting%20Started/beg_exercise_2.html) · [Andra utdataformat](https://erasmus-ctm.github.io/Quarto-Tutorial/sv/int/Qmd%20Files/Getting%20Started/beg_exercise_3.html)
+::::

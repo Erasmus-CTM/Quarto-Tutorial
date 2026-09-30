@@ -1,18 +1,95 @@
 ---
-title: "Quarto Tutorial"
+title: "Quarto-Tutorial"
+title-sv: "Quarto-handledning"
+title-no: "Quarto-veiledning"
+title-da: "Quarto-vejledning"
+title-en: "Quarto Tutorial"
 ---
 
-This is a Tutorial for using Quarto in a creating context.
+:::: {.content-visible when-profile="deutsch"}
+Dieses Tutorial zeigt Lehrenden, was Quarto kann und wie man damit arbeitet.
+Es gibt drei Niveaus, du wählst selbst, welches zu dir passt:
 
-* If you never saw a Quarto page before click [here!](beg/Qmd Files/Example Page/index_beg.html)  
+* Du hast noch nie eine Quarto-Seite gesehen? Dann schau dir [die Beispielseite](#niveau-beg) an.
+* Du möchtest *lernen*, selbst etwas mit Quarto zu erstellen? Dann starte mit [den ersten Schritten](#niveau-int).
+* Du erstellst schon Quarto-Dokumente und willst besser werden? Dann geht es zu [Tipps & Tricks](#niveau-exp).
 
-* If you want to *learn* how to create something with Quarto click [here!](int/Qmd Files/Getting Started/getting_started.html)  
+::: {.callout-note}
+## Sprache und Niveau
+Oben in der Leiste wechselst du das **Niveau**, über den Globus die **Sprache**.
+Beim Sprachwechsel bleibst du auf derselben Seite.
+Wie das gebaut ist, steht unter [Tipps & Tricks → Mehrsprachige Projekte](exp/Qmd Files/Tipps and Tricks/exp_multilanguage.html).
+:::
+::::
 
-* If you already know how to create Quarto Documents and want to become better click [here!](exp/Qmd Files/Tipps and Tricks/index_exp.html)  
+:::: {.content-visible when-profile="english"}
+This tutorial shows lecturers what Quarto can do and how to work with it.
+There are three levels, pick the one that fits you:
 
+* Never seen a Quarto page before? Have a look at [the example page](#niveau-beg).
+* You want to *learn* how to create something with Quarto? Start with [Getting Started](#niveau-int).
+* You already create Quarto documents and want to get better? Go to [Tips & Tricks](#niveau-exp).
+
+::: {.callout-note}
+## Language and level
+Switch the **level** in the top bar and the **language** with the globe.
+Switching the language keeps you on the same page.
+How this is built is explained in [Tips & Tricks → Multilanguage Projects](exp/Qmd Files/Tipps and Tricks/exp_multilanguage.html).
+:::
+::::
+
+:::: {.content-visible when-profile="dansk"}
+Denne vejledning viser undervisere, hvad Quarto kan, og hvordan man arbejder med det.
+Der er tre niveauer, vælg det, der passer til dig:
+
+* Har du aldrig set en Quarto-side? Kig på [eksempelsiden](#niveau-beg).
+* Vil du *lære* at lave noget med Quarto? Begynd med [Kom i gang](#niveau-int).
+* Laver du allerede Quarto-dokumenter og vil blive bedre? Gå til [Tips & tricks](#niveau-exp).
+
+::: {.callout-note}
+## Sprog og niveau
+Skift **niveau** i menulinjen øverst og **sprog** med globussen.
+Når du skifter sprog, bliver du på den samme side.
+Hvordan det er bygget, forklares i [Tips & tricks → Flersprogede projekter](exp/Qmd Files/Tipps and Tricks/exp_multilanguage.html).
+:::
+::::
+
+:::: {.content-visible when-profile="norsk"}
+Denne veiledningen viser undervisere hva Quarto kan gjøre og hvordan man arbeider med det.
+Det er tre nivåer, velg det som passer for deg:
+
+* Har du aldri sett en Quarto-side? Ta en titt på [eksempelsiden](#niveau-beg).
+* Vil du *lære* å lage noe med Quarto? Begynn med [Kom i gang](#niveau-int).
+* Lager du allerede Quarto-dokumenter og vil bli bedre? Gå til [Tips & triks](#niveau-exp).
+
+::: {.callout-note}
+## Språk og nivå
+Bytt **nivå** i menylinjen øverst og **språk** med globusen.
+Når du bytter språk, blir du på samme side.
+Hvordan dette er bygget, forklares i [Tips & triks → Flerspråklige prosjekter](exp/Qmd Files/Tipps and Tricks/exp_multilanguage.html).
+:::
+::::
+
+:::: {.content-visible when-profile="svenska"}
+Den här handledningen visar lärare vad Quarto kan göra och hur man arbetar med det.
+Det finns tre nivåer, välj den som passar dig:
+
+* Har du aldrig sett en Quarto-sida? Titta på [exempelsidan](#niveau-beg).
+* Vill du *lära dig* att skapa något med Quarto? Börja med [Kom igång](#niveau-int).
+* Skapar du redan Quarto-dokument och vill bli bättre? Gå till [Tips & tricks](#niveau-exp).
+
+::: {.callout-note}
+## Språk och nivå
+Byt **nivå** i menyraden högst upp och **språk** med jordgloben.
+När du byter språk stannar du på samma sida.
+Hur detta är byggt förklaras i [Tips & tricks → Flerspråkiga projekt](exp/Qmd Files/Tipps and Tricks/exp_multilanguage.html).
+:::
+::::
 
 ```{python}
 #| echo: false
+# Diese Zelle steht außerhalb der Sprachblöcke: Sie läuft in jedem Lauf genau einmal,
+# und das gespeicherte Ergebnis (_freeze) gilt für beide Sprachen.
 import base64, io, os, tempfile
 import numpy as np
 import matplotlib.pyplot as plt

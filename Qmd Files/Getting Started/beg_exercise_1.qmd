@@ -1,7 +1,57 @@
 ---
-title: "What you need — Exercise Sheet"
+title: "Was du brauchst – Übungsblatt"
+title-sv: "Vad du behöver – övningsblad"
+title-no: "Dette trenger du – oppgaveark"
+title-da: "Det skal du bruge – opgaveark"
+title-en: "What you need — Exercise Sheet"
 ---
 
+:::: {.content-visible when-profile="deutsch"}
+::: {.callout-note}
+## Offizielle Dokumentation
+Mehr zu den Möglichkeiten der PDF-Ausgabe steht unter **[quarto.org/docs/output-formats/pdf-basics.html](https://quarto.org/docs/output-formats/pdf-basics.html)**.
+:::
+
+::: {.callout-tip}
+## Lieber eine Kurzfassung?
+Dieses Kapitel gibt es als dreiseitiges [PDF-Cheatsheet](beg_exercise_cheatsheet.qmd): Einrichten, Inhalte schreiben und Ausgabeformate, knapp gefasst zum Ausdrucken oder Nachschlagen.
+:::
+
+Für ein Übungsblatt brauchst du dieselbe Ausstattung wie für eine Website und ein zusätzliches Werkzeug, wenn du ein PDF erzeugen willst.
+
+---
+
+## Schritt 1 – VS Code und die Quarto-Erweiterung
+
+Falls noch nicht geschehen, folge [Was du brauchst – Website](beg_website_1.qmd) und komm danach hierher zurück.
+
+---
+
+## Schritt 2 – TinyTeX installieren (nur für PDF)
+
+Für PDFs braucht Quarto ein LaTeX-System. Am einfachsten ist **TinyTeX**, das Quarto direkt aus VS Code heraus für dich installieren kann.
+
+Öffne in VS Code das **Terminal** (die Kommandozeile) über **View → Terminal** und gib ein:
+
+```{.bash filename="Terminal"}
+quarto install tinytex
+```
+
+Warte, bis die Installation fertig ist. Das kann ein paar Minuten dauern.
+
+::: {.callout-note}
+Wenn du nur **HTML** oder **Word** erzeugen willst, kannst du diesen Schritt ganz auslassen.
+:::
+
+---
+
+::: {.callout-tip}
+## ✅ Fertig!
+Weiter geht es mit [Übungsblatt erstellen →](beg_exercise_2.qmd)
+:::
+::::
+
+:::: {.content-visible when-profile="english"}
 ::: {.callout-note}
 ## Official Documentation
 See **[quarto.org/docs/output-formats/pdf-basics.html](https://quarto.org/docs/output-formats/pdf-basics.html)** for more about PDF output options.
@@ -44,3 +94,139 @@ If you only want to produce **HTML** or **Word** output, you can skip this step 
 ## ✅ Ready!
 Continue with [Create an Exercise Sheet →](beg_exercise_2.qmd)
 :::
+::::
+
+:::: {.content-visible when-profile="dansk"}
+::: {.callout-note}
+## Officiel dokumentation
+Mere om indstillingerne for PDF finder du på **[quarto.org/docs/output-formats/pdf-basics.html](https://quarto.org/docs/output-formats/pdf-basics.html)**.
+:::
+
+::: {.callout-tip}
+## Vil du hellere have en kort udgave?
+Dette kapitel findes som et [PDF-cheatsheet](beg_exercise_cheatsheet.qmd) på tre sider: opsætning, at skrive indhold og outputformater, kort fortalt til udskrift eller hurtigt opslag.
+:::
+
+Til et opgaveark skal du bruge det samme som til et websted plus ét ekstra værktøj, hvis du vil lave PDF.
+
+---
+
+## Trin 1 – VS Code + Quarto-udvidelsen
+
+Hvis du ikke har gjort det endnu, så følg [Det skal du bruge – websted](beg_website_1.qmd), og kom tilbage hertil, når du er færdig.
+
+---
+
+## Trin 2 – Installer TinyTeX (kun til PDF)
+
+Quarto skal bruge et LaTeX-system for at lave PDF-filer. Det nemmeste er **TinyTeX**, som Quarto kan installere for dig direkte fra VS Code.
+
+Åbn **terminalen** (kommandolinjen) i VS Code via **View → Terminal**, og kør:
+
+```{.bash filename="Terminal"}
+quarto install tinytex
+```
+
+Vent, til installationen er færdig, det kan tage nogle minutter.
+
+::: {.callout-note}
+Hvis du kun vil lave **HTML** eller **Word**, kan du springe dette trin helt over.
+:::
+
+---
+
+::: {.callout-tip}
+## ✅ Klar!
+Fortsæt med [Opret et opgaveark →](beg_exercise_2.qmd)
+:::
+::::
+
+:::: {.content-visible when-profile="norsk"}
+::: {.callout-note}
+## Offisiell dokumentasjon
+Mer om innstillingene for PDF finner du på **[quarto.org/docs/output-formats/pdf-basics.html](https://quarto.org/docs/output-formats/pdf-basics.html)**.
+:::
+
+::: {.callout-tip}
+## Vil du heller ha en kortversjon?
+Dette kapittelet finnes som et [PDF-cheatsheet](beg_exercise_cheatsheet.qmd) på tre sider: oppsett, å skrive innhold og utdataformater, kort oppsummert til utskrift eller raskt oppslag.
+:::
+
+Til et oppgaveark trenger du det samme som til et nettsted, pluss ett ekstra verktøy hvis du vil lage PDF.
+
+---
+
+## Trinn 1 – VS Code + Quarto-utvidelsen
+
+Hvis du ikke har gjort det ennå, følger du [Dette trenger du – nettsted](beg_website_1.qmd) og kommer tilbake hit når du er ferdig.
+
+---
+
+## Trinn 2 – Installer TinyTeX (bare for PDF)
+
+Quarto trenger et LaTeX-system for å lage PDF-filer. Det enkleste er **TinyTeX**, som Quarto kan installere for deg direkte fra VS Code.
+
+Åpne **terminalen** (kommandolinjen) i VS Code via **View → Terminal** og kjør:
+
+```{.bash filename="Terminal"}
+quarto install tinytex
+```
+
+Vent til installasjonen er ferdig, det kan ta noen minutter.
+
+::: {.callout-note}
+Hvis du bare vil lage **HTML** eller **Word**, kan du hoppe helt over dette trinnet.
+:::
+
+---
+
+::: {.callout-tip}
+## ✅ Klar!
+Fortsett med [Lag et oppgaveark →](beg_exercise_2.qmd)
+:::
+::::
+
+:::: {.content-visible when-profile="svenska"}
+::: {.callout-note}
+## Officiell dokumentation
+Mer om inställningarna för PDF finns på **[quarto.org/docs/output-formats/pdf-basics.html](https://quarto.org/docs/output-formats/pdf-basics.html)**.
+:::
+
+::: {.callout-tip}
+## Vill du hellre ha en kortversion?
+Det här kapitlet finns som en [PDF-lathund](beg_exercise_cheatsheet.qmd) på tre sidor: installation, att skriva innehåll och utdataformat, kortfattat för utskrift eller snabb uppslagning.
+:::
+
+För ett övningsblad behöver du samma saker som för en webbplats, plus ett extra verktyg om du vill skapa PDF.
+
+---
+
+## Steg 1 – VS Code + Quarto-tillägget
+
+Om du inte har gjort det än, följ [Vad du behöver – webbplats](beg_website_1.qmd) och kom tillbaka hit när du är klar.
+
+---
+
+## Steg 2 – Installera TinyTeX (bara för PDF)
+
+Quarto behöver ett LaTeX-system för att skapa PDF-filer. Enklast är **TinyTeX**, som Quarto kan installera åt dig direkt från VS Code.
+
+Öppna **terminalen** (kommandoraden) i VS Code via **View → Terminal** och kör:
+
+```{.bash filename="Terminal"}
+quarto install tinytex
+```
+
+Vänta tills installationen är klar, det kan ta några minuter.
+
+::: {.callout-note}
+Om du bara vill skapa **HTML** eller **Word** kan du hoppa över det här steget helt.
+:::
+
+---
+
+::: {.callout-tip}
+## ✅ Klart!
+Fortsätt med [Skapa ett övningsblad →](beg_exercise_2.qmd)
+:::
+::::

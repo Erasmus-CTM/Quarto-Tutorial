@@ -1,5 +1,9 @@
 ---
-title: "Visualizations"
+title: "Visualisierungen"
+title-en: "Visualizations"
+title-sv: "Visualiseringar"
+title-no: "Visualiseringer"
+title-da: "Visualiseringer"
 bibliography: references.bib
 sidebar: example-sidebar
 filters:
@@ -9,10 +13,180 @@ filters:
   - math-exercise
 ---
 
+:::: {.content-visible when-profile="deutsch"}
+## Interaktive Grafik
+
+Ziehe den Punkt auf der x-Achse und lies die Werte von $\sin(x)$ ab.
+Die Grafik entsteht mit JSXGraph [@jsxgraph], in der Fassung von Erasmus-CTM aus dem Repository von [math-exercise](https://github.com/Erasmus-CTM/math-exercise).
+
+```jsxgraph
+var board = JXG.JSXGraph.initBoard(BOARDID, {
+    boundingbox: [-7, 1.8, 7, -1.8],
+    axis: true,
+    keepaspectratio: false,
+    showNavigation: false
+});
+
+board.create('functiongraph', [Math.sin], {
+    strokeColor: '#2196F3',
+    strokeWidth: 2.5,
+    name: 'sin(x)'
+});
+
+var xAxis = board.defaultAxes.x;
+
+var p = board.create('glider', [1.571, 0, xAxis], {
+    name: 'x',
+    size: 5,
+    fillColor: '#E91E63',
+    strokeColor: '#c2185b'
+});
+
+var q = board.create('point', [
+    function() { return p.X(); },
+    function() { return Math.sin(p.X()); }
+], {
+    name: function() { return 'sin(x) ≈ ' + Math.sin(p.X()).toFixed(3); },
+    size: 5,
+    fillColor: '#4CAF50',
+    strokeColor: '#388e3c',
+    fixed: true
+});
+
+board.create('segment', [p, q], {
+    strokeColor: '#4CAF50',
+    strokeWidth: 1.5,
+    dash: 2
+});
+```
+
+## Animation
+
+Eine `FuncAnimation` aus Matplotlib läuft direkt in der Seite. Der Code ist genau der,
+den du auch in einer lokalen Entwicklungsumgebung schreiben würdest, ohne zusätzlichen Aufruf:
+
+```{pyodide-python}
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+import numpy as np
+
+fig, ax = plt.subplots()
+x = np.linspace(0, 2 * np.pi, 100)
+line, = ax.plot(x, np.sin(x))
+
+def update(frame):
+    line.set_ydata(np.sin(x + frame / 10))
+    return line,
+
+ani = animation.FuncAnimation(fig, update, frames=60, blit=True, interval=33)
+plt.show()
+```
+
+## Aufgabe zum Bearbeiten
+
+Vervollständige die Funktion. Beim Überprüfen laufen die Tests automatisch:
+
+```{py-exercise}
+import math
+
+def f(x_deg):
+    """Gib sin(x) + cos(x) zurück, x ist in Grad gegeben."""
+    # Deine Lösung hier
+    pass
+
+## TESTS ##
+assert abs(f(0)  - 1.0)           < 1e-4, "f(0) sollte 1.0 sein"
+assert abs(f(90) - 1.0)           < 1e-4, "f(90°) sollte 1.0 sein"
+assert abs(f(45) - math.sqrt(2))  < 1e-4, "f(45°) sollte √2 sein"
+```
+
+## Rechenaufgabe
+
+Eine andere Art der Kontrolle: Die Antwort wird symbolisch mit SymPy geprüft,
+nicht mit Tests:
+
+```{math-exercise}
+#| label: ep-math-sin
+#| caption: Sinus an einem besonderen Winkel
+#| vars: x
+Was ist $\sin(90°)$, exakt? _[1]
+```
+
+## Grafik als Aufgabe
+
+Eine Grafik kann auch selbst die Antwort sein. Hier wird geprüft, wohin du den Punkt ziehst.
+
+```{.jsxgraph assessment_id="ep-hochpunkt"}
+var board = JXG.JSXGraph.initBoard(BOARDID, {
+    boundingbox: [-0.8, 1.6, 7, -1.6],
+    axis: true,
+    keepaspectratio: false,
+    showNavigation: false
+});
+
+var graph = board.create('functiongraph', [Math.sin, 0, 2 * Math.PI], {
+    strokeColor: '#2196F3',
+    strokeWidth: 2.5
+});
+
+var p = board.create('glider', [4, Math.sin(4), graph], {
+    name: 'P',
+    size: 6,
+    fillColor: '#E91E63',
+    strokeColor: '#c2185b'
+});
+
+JXG.QuartoAssessment.register({
+  board: board,
+  response: function () {
+    return { x: p.X(), y: p.Y() };
+  }
+});
+```
+
+```{math-exercise}
+#| label: ep-hochpunkt
+#| caption: Hochpunkt der Sinusfunktion
+#| mode: custom
+#| response: jsxgraph:ep-hochpunkt
+#| embed-response: true
+#| checker: |
+#|   def check(response, symbols):
+#|       if abs(response["x"] - 1.5708) < 0.15:
+#|           return {"score": 1, "feedback": "Richtig, der Hochpunkt liegt bei x = pi/2."}
+#|       return {"score": 0, "feedback": "Das ist noch nicht der höchste Punkt der Kurve."}
+
+Ziehe den Punkt $P$ auf den Hochpunkt von $\sin(x)$ im Intervall $[0, 2\pi]$ und klicke auf „Überprüfen“.
+```
+
+## Diagramm
+
+Was passiert eigentlich zwischen dem Speichern einer `.qmd`-Datei und dem fertigen Dokument?
+
+```{mermaid}
+flowchart LR
+    A[".qmd-Datei<br/>Markdown + Code + YAML"] --> B["Ausführen<br/>Jupyter / Knitr"]
+    B --> C[".md<br/>reines Markdown"]
+    C --> D{"Pandoc"}
+    D --> E["🌐 HTML"]
+    D --> F["📝 Word .docx"]
+    D --> G[".tex LaTeX"]
+    G --> H["LaTeX-System<br/>TinyTeX"]
+    H --> I["📄 PDF"]
+    style D fill:#4CAF50,color:#fff,stroke:#388e3c
+    style A fill:#e3f2fd,stroke:#90caf9
+```
+
+Quarto führt zuerst alle Codezellen aus (Jupyter für Python, Knitr für R) und übergibt das entstandene Markdown an Pandoc, das daraus die Ausgabe erzeugt. HTML und Word schreibt Pandoc direkt, PDF nicht: Dafür geht der Weg über LaTeX, das ein eigenes Programm (**TinyTeX**) zur fertigen Datei übersetzt. Wegen dieses Umwegs braucht PDF einen Installationsschritt mehr ([Was du brauchst](../../../int/Qmd Files/Getting Started/beg_exercise_1.html)) als HTML und Word.
+
+→ Weitere Python-Beispiele (nur Ausgabe, ausführbar, mit Eingabe) findest du auf der Seite [Code](ep_code.qmd).
+::::
+
+:::: {.content-visible when-profile="english"}
 ## Interactive Plot
 
 Drag the point along the x-axis to read off values of $\sin(x)$.
-The plot is rendered with the [JSXGraph Quarto extension](https://github.com/jsxgraph/jsxgraph-quarto) [@jsxgraph].
+The plot is rendered with JSXGraph [@jsxgraph], in the Erasmus-CTM version from the [math-exercise](https://github.com/Erasmus-CTM/math-exercise) repository.
 
 ```jsxgraph
 var board = JXG.JSXGraph.initBoard(BOARDID, {
@@ -101,10 +275,57 @@ A different kind of check — symbolic answers, evaluated with SymPy instead of
 unit tests:
 
 ```{math-exercise}
-#| label: ep-math-sin
+#| label: ep-math-sin-en
 #| caption: Sine at a special angle
 #| vars: x
 What is $\sin(90°)$, exactly? _[1]
+```
+
+## Graph as an exercise
+
+A graph can also be the answer itself. Here the check looks at where you drag the point.
+
+```{.jsxgraph assessment_id="ep-hochpunkt-en"}
+var board = JXG.JSXGraph.initBoard(BOARDID, {
+    boundingbox: [-0.8, 1.6, 7, -1.6],
+    axis: true,
+    keepaspectratio: false,
+    showNavigation: false
+});
+
+var graph = board.create('functiongraph', [Math.sin, 0, 2 * Math.PI], {
+    strokeColor: '#2196F3',
+    strokeWidth: 2.5
+});
+
+var p = board.create('glider', [4, Math.sin(4), graph], {
+    name: 'P',
+    size: 6,
+    fillColor: '#E91E63',
+    strokeColor: '#c2185b'
+});
+
+JXG.QuartoAssessment.register({
+  board: board,
+  response: function () {
+    return { x: p.X(), y: p.Y() };
+  }
+});
+```
+
+```{math-exercise}
+#| label: ep-hochpunkt-en
+#| caption: Maximum of the sine function
+#| mode: custom
+#| response: jsxgraph:ep-hochpunkt-en
+#| embed-response: true
+#| checker: |
+#|   def check(response, symbols):
+#|       if abs(response["x"] - 1.5708) < 0.15:
+#|           return {"score": 1, "feedback": "Correct, the maximum is at x = pi/2."}
+#|       return {"score": 0, "feedback": "That is not yet the highest point of the curve."}
+
+Drag the point $P$ to the maximum of $\sin(x)$ on the interval $[0, 2\pi]$ and click "Check".
 ```
 
 ## Diagram
@@ -125,6 +346,514 @@ flowchart LR
     style A fill:#e3f2fd,stroke:#90caf9
 ```
 
-Quarto first executes any code cells (Jupyter for Python, Knitr for R), then hands the resulting Markdown to Pandoc to produce the output. Pandoc can write HTML and Word directly, but not PDF — for that it detours through LaTeX first, which a separate engine (**TinyTeX**) then compiles into the finished file. That extra hop is why PDF needs one more install step ([What you need](../../int/Qmd Files/Getting Started/beg_exercise_1.html)) that HTML and Word don't.
+Quarto first executes any code cells (Jupyter for Python, Knitr for R), then hands the resulting Markdown to Pandoc to produce the output. Pandoc can write HTML and Word directly, but not PDF — for that it detours through LaTeX first, which a separate engine (**TinyTeX**) then compiles into the finished file. That extra hop is why PDF needs one more install step ([What you need](../../../int/Qmd Files/Getting Started/beg_exercise_1.html)) that HTML and Word don't.
 
-→ More static, executable and editable Python examples are on the [Code page](ep_code.qmd).
+→ More Python examples (output only, executable, with input) are on the [Code page](ep_code.qmd).
+::::
+
+:::: {.content-visible when-profile="dansk"}
+## Interaktiv graf
+
+Træk punktet langs x-aksen, og aflæs værdierne for $\sin(x)$.
+Grafen tegnes med JSXGraph [@jsxgraph], i Erasmus-CTM-versionen fra [math-exercise](https://github.com/Erasmus-CTM/math-exercise)-repositoriet.
+
+```jsxgraph
+var board = JXG.JSXGraph.initBoard(BOARDID, {
+    boundingbox: [-7, 1.8, 7, -1.8],
+    axis: true,
+    keepaspectratio: false,
+    showNavigation: false
+});
+
+board.create('functiongraph', [Math.sin], {
+    strokeColor: '#2196F3',
+    strokeWidth: 2.5,
+    name: 'sin(x)'
+});
+
+var xAxis = board.defaultAxes.x;
+
+var p = board.create('glider', [1.571, 0, xAxis], {
+    name: 'x',
+    size: 5,
+    fillColor: '#E91E63',
+    strokeColor: '#c2185b'
+});
+
+var q = board.create('point', [
+    function() { return p.X(); },
+    function() { return Math.sin(p.X()); }
+], {
+    name: function() { return 'sin(x) ≈ ' + Math.sin(p.X()).toFixed(3); },
+    size: 5,
+    fillColor: '#4CAF50',
+    strokeColor: '#388e3c',
+    fixed: true
+});
+
+board.create('segment', [p, q], {
+    strokeColor: '#4CAF50',
+    strokeWidth: 1.5,
+    dash: 2
+});
+```
+
+## Animation
+
+En `FuncAnimation` fra Matplotlib afspilles direkte på siden. Koden er præcis den,
+du ville skrive i et lokalt udviklingsmiljø, uden noget ekstra kald:
+
+```{pyodide-python}
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+import numpy as np
+
+fig, ax = plt.subplots()
+x = np.linspace(0, 2 * np.pi, 100)
+line, = ax.plot(x, np.sin(x))
+
+def update(frame):
+    line.set_ydata(np.sin(x + frame / 10))
+    return line,
+
+ani = animation.FuncAnimation(fig, update, frames=60, blit=True, interval=33)
+plt.show()
+```
+
+## Opgave, du kan redigere
+
+Gør funktionen færdig. Testene køres automatisk, når du kontrollerer din løsning:
+
+```{py-exercise}
+import math
+
+def f(x_deg):
+    """Returner sin(x) + cos(x), x er givet i grader."""
+    # Din løsning her
+    pass
+
+## TESTS ##
+assert abs(f(0)  - 1.0)           < 1e-4, "f(0) skal være 1.0"
+assert abs(f(90) - 1.0)           < 1e-4, "f(90°) skal være 1.0"
+assert abs(f(45) - math.sqrt(2))  < 1e-4, "f(45°) skal være √2"
+```
+
+## Regneopgave
+
+En anden slags kontrol: svaret kontrolleres symbolsk med SymPy
+i stedet for med test:
+
+```{math-exercise}
+#| label: ep-math-sin-da
+#| caption: Sinus til en særlig vinkel
+#| vars: x
+Hvad er $\sin(90°)$, eksakt? _[1]
+```
+
+## Graf som opgave
+
+En graf kan også selv være svaret. Her kontrolleres det, hvor du trækker punktet hen.
+
+```{.jsxgraph assessment_id="ep-hochpunkt-da"}
+var board = JXG.JSXGraph.initBoard(BOARDID, {
+    boundingbox: [-0.8, 1.6, 7, -1.6],
+    axis: true,
+    keepaspectratio: false,
+    showNavigation: false
+});
+
+var graph = board.create('functiongraph', [Math.sin, 0, 2 * Math.PI], {
+    strokeColor: '#2196F3',
+    strokeWidth: 2.5
+});
+
+var p = board.create('glider', [4, Math.sin(4), graph], {
+    name: 'P',
+    size: 6,
+    fillColor: '#E91E63',
+    strokeColor: '#c2185b'
+});
+
+JXG.QuartoAssessment.register({
+  board: board,
+  response: function () {
+    return { x: p.X(), y: p.Y() };
+  }
+});
+```
+
+```{math-exercise}
+#| label: ep-hochpunkt-da
+#| caption: Sinusfunktionens maksimum
+#| mode: custom
+#| response: jsxgraph:ep-hochpunkt-da
+#| embed-response: true
+#| checker: |
+#|   def check(response, symbols):
+#|       if abs(response["x"] - 1.5708) < 0.15:
+#|           return {"score": 1, "feedback": "Rigtigt, maksimum ligger ved x = pi/2."}
+#|       return {"score": 0, "feedback": "Det er endnu ikke kurvens højeste punkt."}
+
+Træk punktet $P$ hen til maksimum for $\sin(x)$ på intervallet $[0, 2\pi]$, og klik på "Check".
+```
+
+## Diagram
+
+Hvad sker der egentlig, fra du gemmer en `.qmd`-fil, til dokumentet er færdigt?
+
+```{mermaid}
+flowchart LR
+    A[".qmd-fil<br/>Markdown + kode + YAML"] --> B["Køre<br/>Jupyter / Knitr"]
+    B --> C[".md<br/>ren Markdown"]
+    C --> D{"Pandoc"}
+    D --> E["🌐 HTML"]
+    D --> F["📝 Word .docx"]
+    D --> G[".tex LaTeX"]
+    G --> H["LaTeX-motor<br/>TinyTeX"]
+    H --> I["📄 PDF"]
+    style D fill:#4CAF50,color:#fff,stroke:#388e3c
+    style A fill:#e3f2fd,stroke:#90caf9
+```
+
+Quarto kører først alle kodeceller (Jupyter til Python, Knitr til R) og giver derefter den færdige Markdown til Pandoc, som laver outputtet. HTML og Word kan Pandoc skrive direkte, men ikke PDF: der går vejen over LaTeX, som et separat program (**TinyTeX**) derefter oversætter til den færdige fil. På grund af den omvej kræver PDF ét installationstrin mere ([Det skal du bruge](../../../int/Qmd Files/Getting Started/beg_exercise_1.html)) end HTML og Word.
+
+→ Flere Python-eksempler (kun output, kørbar kode, med input) finder du på siden [Kode](ep_code.qmd).
+::::
+
+:::: {.content-visible when-profile="norsk"}
+## Interaktiv graf
+
+Dra punktet langs x-aksen og les av verdiene til $\sin(x)$.
+Grafen tegnes med JSXGraph [@jsxgraph], i Erasmus-CTM-versjonen fra [math-exercise](https://github.com/Erasmus-CTM/math-exercise)-repoet.
+
+```jsxgraph
+var board = JXG.JSXGraph.initBoard(BOARDID, {
+    boundingbox: [-7, 1.8, 7, -1.8],
+    axis: true,
+    keepaspectratio: false,
+    showNavigation: false
+});
+
+board.create('functiongraph', [Math.sin], {
+    strokeColor: '#2196F3',
+    strokeWidth: 2.5,
+    name: 'sin(x)'
+});
+
+var xAxis = board.defaultAxes.x;
+
+var p = board.create('glider', [1.571, 0, xAxis], {
+    name: 'x',
+    size: 5,
+    fillColor: '#E91E63',
+    strokeColor: '#c2185b'
+});
+
+var q = board.create('point', [
+    function() { return p.X(); },
+    function() { return Math.sin(p.X()); }
+], {
+    name: function() { return 'sin(x) ≈ ' + Math.sin(p.X()).toFixed(3); },
+    size: 5,
+    fillColor: '#4CAF50',
+    strokeColor: '#388e3c',
+    fixed: true
+});
+
+board.create('segment', [p, q], {
+    strokeColor: '#4CAF50',
+    strokeWidth: 1.5,
+    dash: 2
+});
+```
+
+## Animasjon
+
+En `FuncAnimation` fra Matplotlib spilles av direkte på siden. Koden er akkurat den
+du ville skrevet i et lokalt utviklingsmiljø, uten noe ekstra kall:
+
+```{pyodide-python}
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+import numpy as np
+
+fig, ax = plt.subplots()
+x = np.linspace(0, 2 * np.pi, 100)
+line, = ax.plot(x, np.sin(x))
+
+def update(frame):
+    line.set_ydata(np.sin(x + frame / 10))
+    return line,
+
+ani = animation.FuncAnimation(fig, update, frames=60, blit=True, interval=33)
+plt.show()
+```
+
+## Oppgave du kan redigere
+
+Gjør funksjonen ferdig. Testene kjøres automatisk når du kontrollerer løsningen din:
+
+```{py-exercise}
+import math
+
+def f(x_deg):
+    """Returner sin(x) + cos(x), x er gitt i grader."""
+    # Din løsning her
+    pass
+
+## TESTS ##
+assert abs(f(0)  - 1.0)           < 1e-4, "f(0) skal være 1.0"
+assert abs(f(90) - 1.0)           < 1e-4, "f(90°) skal være 1.0"
+assert abs(f(45) - math.sqrt(2))  < 1e-4, "f(45°) skal være √2"
+```
+
+## Regneoppgave
+
+En annen type kontroll: svaret kontrolleres symbolsk med SymPy
+i stedet for med tester:
+
+```{math-exercise}
+#| label: ep-math-sin-no
+#| caption: Sinus til en spesiell vinkel
+#| vars: x
+Hva er $\sin(90°)$, eksakt? _[1]
+```
+
+## Graf som oppgave
+
+En graf kan også selv være svaret. Her kontrolleres det hvor du drar punktet.
+
+```{.jsxgraph assessment_id="ep-hochpunkt-no"}
+var board = JXG.JSXGraph.initBoard(BOARDID, {
+    boundingbox: [-0.8, 1.6, 7, -1.6],
+    axis: true,
+    keepaspectratio: false,
+    showNavigation: false
+});
+
+var graph = board.create('functiongraph', [Math.sin, 0, 2 * Math.PI], {
+    strokeColor: '#2196F3',
+    strokeWidth: 2.5
+});
+
+var p = board.create('glider', [4, Math.sin(4), graph], {
+    name: 'P',
+    size: 6,
+    fillColor: '#E91E63',
+    strokeColor: '#c2185b'
+});
+
+JXG.QuartoAssessment.register({
+  board: board,
+  response: function () {
+    return { x: p.X(), y: p.Y() };
+  }
+});
+```
+
+```{math-exercise}
+#| label: ep-hochpunkt-no
+#| caption: Toppunktet til sinusfunksjonen
+#| mode: custom
+#| response: jsxgraph:ep-hochpunkt-no
+#| embed-response: true
+#| checker: |
+#|   def check(response, symbols):
+#|       if abs(response["x"] - 1.5708) < 0.15:
+#|           return {"score": 1, "feedback": "Riktig, toppunktet ligger ved x = pi/2."}
+#|       return {"score": 0, "feedback": "Det er ennå ikke det høyeste punktet på kurven."}
+
+Dra punktet $P$ til toppunktet til $\sin(x)$ på intervallet $[0, 2\pi]$ og klikk på "Sjekk".
+```
+
+## Diagram
+
+Hva skjer egentlig fra du lagrer en `.qmd`-fil til dokumentet er ferdig?
+
+```{mermaid}
+flowchart LR
+    A[".qmd-fil<br/>Markdown + kode + YAML"] --> B["Kjøre<br/>Jupyter / Knitr"]
+    B --> C[".md<br/>ren Markdown"]
+    C --> D{"Pandoc"}
+    D --> E["🌐 HTML"]
+    D --> F["📝 Word .docx"]
+    D --> G[".tex LaTeX"]
+    G --> H["LaTeX-motor<br/>TinyTeX"]
+    H --> I["📄 PDF"]
+    style D fill:#4CAF50,color:#fff,stroke:#388e3c
+    style A fill:#e3f2fd,stroke:#90caf9
+```
+
+Quarto kjører først alle kodecellene (Jupyter for Python, Knitr for R) og gir deretter den ferdige Markdown-teksten til Pandoc, som lager utdataen. HTML og Word kan Pandoc skrive direkte, men ikke PDF: der går veien via LaTeX, som et eget program (**TinyTeX**) så oversetter til den ferdige filen. På grunn av denne omveien krever PDF ett installasjonstrinn mer ([Dette trenger du](../../../int/Qmd Files/Getting Started/beg_exercise_1.html)) enn HTML og Word.
+
+→ Flere Python-eksempler (bare utdata, kjørbar kode, med inndata) finner du på siden [Kode](ep_code.qmd).
+::::
+
+:::: {.content-visible when-profile="svenska"}
+## Interaktiv graf
+
+Dra punkten längs x-axeln och läs av värdena för $\sin(x)$.
+Grafen ritas med JSXGraph [@jsxgraph], i Erasmus-CTM:s version från [math-exercise](https://github.com/Erasmus-CTM/math-exercise)-repot.
+
+```jsxgraph
+var board = JXG.JSXGraph.initBoard(BOARDID, {
+    boundingbox: [-7, 1.8, 7, -1.8],
+    axis: true,
+    keepaspectratio: false,
+    showNavigation: false
+});
+
+board.create('functiongraph', [Math.sin], {
+    strokeColor: '#2196F3',
+    strokeWidth: 2.5,
+    name: 'sin(x)'
+});
+
+var xAxis = board.defaultAxes.x;
+
+var p = board.create('glider', [1.571, 0, xAxis], {
+    name: 'x',
+    size: 5,
+    fillColor: '#E91E63',
+    strokeColor: '#c2185b'
+});
+
+var q = board.create('point', [
+    function() { return p.X(); },
+    function() { return Math.sin(p.X()); }
+], {
+    name: function() { return 'sin(x) ≈ ' + Math.sin(p.X()).toFixed(3); },
+    size: 5,
+    fillColor: '#4CAF50',
+    strokeColor: '#388e3c',
+    fixed: true
+});
+
+board.create('segment', [p, q], {
+    strokeColor: '#4CAF50',
+    strokeWidth: 1.5,
+    dash: 2
+});
+```
+
+## Animation
+
+En `FuncAnimation` från Matplotlib spelas upp direkt på sidan. Koden är precis den
+du skulle skriva i en lokal utvecklingsmiljö, utan något extra anrop:
+
+```{pyodide-python}
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+import numpy as np
+
+fig, ax = plt.subplots()
+x = np.linspace(0, 2 * np.pi, 100)
+line, = ax.plot(x, np.sin(x))
+
+def update(frame):
+    line.set_ydata(np.sin(x + frame / 10))
+    return line,
+
+ani = animation.FuncAnimation(fig, update, frames=60, blit=True, interval=33)
+plt.show()
+```
+
+## Uppgift att redigera
+
+Gör färdigt funktionen. Testerna körs automatiskt när du kontrollerar din lösning:
+
+```{py-exercise}
+import math
+
+def f(x_deg):
+    """Returnera sin(x) + cos(x), x anges i grader."""
+    # Din lösning här
+    pass
+
+## TESTS ##
+assert abs(f(0)  - 1.0)           < 1e-4, "f(0) ska vara 1.0"
+assert abs(f(90) - 1.0)           < 1e-4, "f(90°) ska vara 1.0"
+assert abs(f(45) - math.sqrt(2))  < 1e-4, "f(45°) ska vara √2"
+```
+
+## Räkneuppgift
+
+En annan sorts kontroll: svaret kontrolleras symboliskt med SymPy
+i stället för med tester:
+
+```{math-exercise}
+#| label: ep-math-sin-sv
+#| caption: Sinus för en speciell vinkel
+#| vars: x
+Vad är $\sin(90°)$, exakt? _[1]
+```
+
+## Graf som uppgift
+
+En graf kan också själv vara svaret. Här kontrolleras vart du drar punkten.
+
+```{.jsxgraph assessment_id="ep-hochpunkt-sv"}
+var board = JXG.JSXGraph.initBoard(BOARDID, {
+    boundingbox: [-0.8, 1.6, 7, -1.6],
+    axis: true,
+    keepaspectratio: false,
+    showNavigation: false
+});
+
+var graph = board.create('functiongraph', [Math.sin, 0, 2 * Math.PI], {
+    strokeColor: '#2196F3',
+    strokeWidth: 2.5
+});
+
+var p = board.create('glider', [4, Math.sin(4), graph], {
+    name: 'P',
+    size: 6,
+    fillColor: '#E91E63',
+    strokeColor: '#c2185b'
+});
+
+JXG.QuartoAssessment.register({
+  board: board,
+  response: function () {
+    return { x: p.X(), y: p.Y() };
+  }
+});
+```
+
+```{math-exercise}
+#| label: ep-hochpunkt-sv
+#| caption: Sinusfunktionens maximum
+#| mode: custom
+#| response: jsxgraph:ep-hochpunkt-sv
+#| embed-response: true
+#| checker: |
+#|   def check(response, symbols):
+#|       if abs(response["x"] - 1.5708) < 0.15:
+#|           return {"score": 1, "feedback": "Rätt, maximum ligger vid x = pi/2."}
+#|       return {"score": 0, "feedback": "Det är ännu inte kurvans högsta punkt."}
+
+Dra punkten $P$ till maximum för $\sin(x)$ på intervallet $[0, 2\pi]$ och klicka på "Check".
+```
+
+## Diagram
+
+Vad händer egentligen mellan att du sparar en `.qmd`-fil och att dokumentet är färdigt?
+
+```{mermaid}
+flowchart LR
+    A[".qmd-fil<br/>Markdown + kod + YAML"] --> B["Köra<br/>Jupyter / Knitr"]
+    B --> C[".md<br/>ren Markdown"]
+    C --> D{"Pandoc"}
+    D --> E["🌐 HTML"]
+    D --> F["📝 Word .docx"]
+    D --> G[".tex LaTeX"]
+    G --> H["LaTeX-motor<br/>TinyTeX"]
+    H --> I["📄 PDF"]
+    style D fill:#4CAF50,color:#fff,stroke:#388e3c
+    style A fill:#e3f2fd,stroke:#90caf9
+```
+
+Quarto kör först alla kodceller (Jupyter för Python, Knitr för R) och lämnar sedan den Markdown som blir resultatet till Pandoc, som skapar utdatan. HTML och Word kan Pandoc skriva direkt, men inte PDF: där går vägen via LaTeX, som ett separat program (**TinyTeX**) sedan översätter till den färdiga filen. På grund av den omvägen kräver PDF ett installationssteg mer ([Vad du behöver](../../../int/Qmd Files/Getting Started/beg_exercise_1.html)) än HTML och Word.
+
+→ Fler Python-exempel (bara utdata, körbar kod, med inmatning) finns på sidan [Kod](ep_code.qmd).
+::::

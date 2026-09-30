@@ -1,6 +1,14 @@
 ---
-title: "Cheatsheet: Creating a Quarto Website"
-subtitle: "From installation to a published website"
+title: "Cheatsheet: Eine Quarto-Website erstellen"
+title-en: "Cheatsheet: Creating a Quarto Website"
+title-sv: "Lathund: Skapa en Quarto-webbplats"
+title-no: "Cheatsheet: Lag et Quarto-nettsted"
+title-da: "Cheatsheet: Opret et Quarto-websted"
+subtitle: "Von der Installation bis zur veröffentlichten Website"
+subtitle-en: "From installation to a published website"
+subtitle-sv: "Från installation till publicerad webbplats"
+subtitle-no: "Fra installasjon til publisert nettsted"
+subtitle-da: "Fra installation til udgivet websted"
 format:
   pdf:
     geometry: margin=0.9in
@@ -11,6 +19,155 @@ format:
     linkcolor: cheataccent
     urlcolor: cheataccent
 ---
+
+:::: {.content-visible when-profile="deutsch"}
+
+```{=latex}
+\quickfacts{ERGEBNIS}{Website mit mehreren Seiten (HTML)}{AUFBAU}{Ein Projekt, viele \texttt{.qmd}-Seiten}{VERÖFFENTLICHEN}{GitHub Pages (Ordner \texttt{docs/})}
+```
+
+## 1 – Einrichten (einmal je Rechner)
+
+**Installieren:**
+
+- **VS Code**: [code.visualstudio.com](https://code.visualstudio.com) (bei der Installation **„Add to PATH“** anhaken)
+- **Quarto CLI**: [quarto.org/docs/get-started](https://quarto.org/docs/get-started/)
+- **Quarto-Extension** für VS Code: in der Seitenleiste *Extensions* nach „Quarto“ suchen
+
+**Projekt anlegen:**
+
+**File → New File… → Quarto Project → Website Project**, dann den Ordner wählen. Quarto legt an:
+
+- `_quarto.yml`: Einstellungen für das ganze Projekt (siehe Abschnitt 2)
+- `index.qmd`: deine Startseite
+- `about.qmd`: eine zweite Seite als Beispiel
+- `styles.css`: eigene Gestaltung, wenn du willst
+
+Bevor du losschreibst, lies **Vorschau und Rendern** am Ende von Abschnitt 2.
+
+```{=latex}
+\begin{spotlight}{Was brauche ich?}
+Du baust etwas mit mehreren verlinkten Seiten und einer Navigation für alle Seiten, etwa eine Kursseite, eine Dokumentation oder ein Portfolio? Dann ist das hier richtig. Für ein einzelnes Dokument zum Drucken oder Austeilen nimm das Cheatsheet \textbf{Übungsblatt}, für ein langes Dokument mit nummerierten Kapiteln, das der Reihe nach gelesen wird, das Cheatsheet \textbf{Buch}.
+\end{spotlight}
+```
+
+{{< pagebreak >}}
+
+## 2 – Inhalte schreiben und bearbeiten
+
+Jede `.qmd`-Datei besteht aus einem **YAML-Kopf** und einem **Markdown-Text**. YAML gibt es auf zwei getrennten Ebenen, die du nicht verwechseln solltest:
+
+1. **Für das ganze Projekt, eine Datei:** `_quarto.yml` legt Navigation, Aussehen und Vorgaben für die *gesamte* Website fest. Es gibt sie einmal je Projekt. Du änderst sie nur, wenn sich etwas für alle Seiten ändern soll.
+2. **Je Seite, in jeder Datei:** der mit `---` eingerahmte Kopf *am Anfang jeder* `.qmd`-Datei. Er legt den Titel dieser Seite fest und kann die Vorgaben des Projekts nur für diese Seite überschreiben.
+
+Für das ganze Projekt (`_quarto.yml`):
+
+```yaml
+website:
+  title: "Meine Website"
+  navbar:
+    left:
+      - text: "Über mich"
+        href: about.qmd
+```
+
+Je Seite (Anfang von `meine-seite.qmd`):
+
+```yaml
+---
+title: "Meine Seite"
+format: html
+filters:
+  - parmsam/quizdown
+---
+```
+
+**Markdown in Kürze:**
+
+| Schreibweise | Ergebnis |
+|---|---|
+| `## Überschrift` | Abschnittsüberschrift |
+| `**fett**`, `*kursiv*` | **fett**, *kursiv* |
+| `` `code` `` | Code im Text |
+| `- Punkt` / `1. Punkt` | Aufzählung / nummerierte Liste |
+| `> Text` | Zitat |
+| `[Text](url)` | Link |
+| `![](pfad.png)` | Bild |
+| `$x^2$`, `$$x^2$$` | Formel im Text / abgesetzt |
+| Codeblock mit `{python}` | ausführbare Codezelle (siehe unten) |
+| `::: {.callout-tip} ... :::` | Hinweiskasten |
+
+**Hinweiskästen** heben etwas sichtbar hervor:
+
+```markdown
+::: {.callout-tip}
+## Tipp
+Tipps eignen sich für Empfehlungen.
+:::
+```
+
+wird zu:
+
+::: {.callout-tip}
+## Tipp
+Tipps eignen sich für Empfehlungen.
+:::
+
+Weitere Arten: `.callout-note`, `.callout-warning`, `.callout-important`.
+
+**Codezellen:** Beginne einen Codeblock mit `{python}` (oder `{pyodide-python}` für interaktiven Code) und schließe ihn mit drei Backticks, zum Beispiel:
+
+```python
+#| echo: false   # Code ausblenden, Ausgabe behalten
+#| eval: true    # Zelle ausführen (Standard)
+print("Hallo!")
+```
+
+Häufige Optionen einer Zelle (als Kommentar mit `#|`): `echo`, `eval`, `warning`, `error`, `output`.
+
+**Vorschau und Rendern:**
+
+| Befehl | Was er tut | Wann |
+|---|---|---|
+| Knopf **Preview** oder `quarto preview` | Öffnet eine Vorschau auf deinem Rechner, die sich bei jedem Speichern aktualisiert | Beim Schreiben und Bearbeiten |
+| `quarto render` | Baut die fertigen Dateien nach `_site` (oder `docs/`, falls eingestellt), ohne eine Vorschau zu öffnen | Vor dem Veröffentlichen, oder um die Dateien zum Hochladen zu erzeugen |
+
+::: {.callout-note}
+## Tipp
+Der Knopf **Preview** macht beides: Er rendert die Website und öffnet die Vorschau. Ein eigenes `quarto render` brauchst du nur, wenn du die Dateien *ohne* Vorschau willst, etwa kurz vor dem Veröffentlichen.
+:::
+
+{{< pagebreak >}}
+
+## 3 – Mit GitHub Pages veröffentlichen
+
+1. In `_quarto.yml` unter `project:` die Zeile `output-dir: docs` ergänzen
+2. Rendern: `quarto render`
+3. Auf [github.com](https://github.com) ein **öffentliches** Repository anlegen
+4. Den ganzen Projektordner (mit `docs/`) hochladen und committen
+5. Im Repository **Settings → Pages**: Branch `main`, Ordner `/docs`, dann **Save**
+6. Auf den grünen Haken unter **Deployments** warten. Deine Website steht dann unter
+   `https://<name>.github.io/<repo>/`
+
+**Die Website später aktualisieren:** `quarto render` erneut ausführen und den Ordner `docs/` wieder zu GitHub hochladen (oder `git push`, wenn du mit Git arbeitest).
+
+```{=latex}
+\begin{spotlight}{Gut zu wissen}
+\begin{itemize}
+\item \texttt{site-url:} in \texttt{\_quarto.yml} legt die Adresse der Website fest. Das ist nötig für richtige Vorschauen beim Teilen und für RSS-Links.
+\item \texttt{repo-url:} und \texttt{page-footer:} ergänzen auf allen Seiten einen Link „Edit this page“ bzw. zum Quelltext und eine eigene Fußzeile.
+\item Wer eine \texttt{.qmd}-Datei umbenennt oder verschiebt, ändert ihre Adresse. Lege Dateinamen vor dem Veröffentlichen fest: Alte Links auf eine umbenannte Seite führen ins Leere (404).
+\end{itemize}
+\end{spotlight}
+```
+
+---
+
+Ausführlich und mit Bildschirmfotos: [Was du brauchst](https://erasmus-ctm.github.io/Quarto-Tutorial/de/int/Qmd%20Files/Getting%20Started/beg_website_1.html) · [Website erstellen](https://erasmus-ctm.github.io/Quarto-Tutorial/de/int/Qmd%20Files/Getting%20Started/beg_website_2.html) · [Website veröffentlichen](https://erasmus-ctm.github.io/Quarto-Tutorial/de/int/Qmd%20Files/Getting%20Started/beg_website_3.html)
+
+::::
+
+:::: {.content-visible when-profile="english"}
 
 ```{=latex}
 \quickfacts{OUTPUT}{Full multi-page site (HTML)}{STRUCTURE}{One project, many \texttt{.qmd} pages}{PUBLISH}{GitHub Pages (\texttt{docs/} folder)}
@@ -28,12 +185,12 @@ format:
 
 **File → New File… → Quarto Project → Website Project** → choose your folder. Quarto creates:
 
-- `_quarto.yml` — project-wide settings (see page 2)
+- `_quarto.yml` — project-wide settings (see section 2)
 - `index.qmd` — your homepage
 - `about.qmd` — an example second page
 - `styles.css` — optional custom styling
 
-Ready to start editing? See **Preview vs. Render** at the end of page 2 before you do.
+Ready to start editing? See **Preview vs. Render** at the end of section 2 before you do.
 
 ```{=latex}
 \begin{spotlight}{Which one do I need?}
@@ -153,4 +310,441 @@ The **Preview** button does both at once: it renders your site and opens the liv
 
 ---
 
-Full details & screenshots: [What you need](https://erasmus-ctm.github.io/Quarto-Tutorial/int/Qmd%20Files/Getting%20Started/beg_website_1.html) · [Create a Website](https://erasmus-ctm.github.io/Quarto-Tutorial/int/Qmd%20Files/Getting%20Started/beg_website_2.html) · [Publish a Website](https://erasmus-ctm.github.io/Quarto-Tutorial/int/Qmd%20Files/Getting%20Started/beg_website_3.html)
+Full details & screenshots: [What you need](https://erasmus-ctm.github.io/Quarto-Tutorial/en/int/Qmd%20Files/Getting%20Started/beg_website_1.html) · [Create a Website](https://erasmus-ctm.github.io/Quarto-Tutorial/en/int/Qmd%20Files/Getting%20Started/beg_website_2.html) · [Publish a Website](https://erasmus-ctm.github.io/Quarto-Tutorial/en/int/Qmd%20Files/Getting%20Started/beg_website_3.html)
+
+::::
+
+:::: {.content-visible when-profile="dansk"}
+```{=latex}
+\quickfacts{RESULTAT}{Websted med flere sider (HTML)}{STRUKTUR}{Ét projekt, mange \texttt{.qmd}-sider}{UDGIVELSE}{GitHub Pages (mappen \texttt{docs/})}
+```
+
+## 1 – Opsætning (én gang pr. computer)
+
+**Installer:**
+
+- **VS Code**: [code.visualstudio.com](https://code.visualstudio.com) (sæt flueben ved **"Add to PATH"** under installationen)
+- **Quarto CLI**: [quarto.org/docs/get-started](https://quarto.org/docs/get-started/)
+- **Quarto-udvidelsen** til VS Code: søg efter "Quarto" i sidepanelet *Extensions*
+
+**Opret projektet:**
+
+**File → New File… → Quarto Project → Website Project**, og vælg derefter mappe. Quarto opretter:
+
+- `_quarto.yml`: indstillinger for hele projektet (se afsnit 2)
+- `index.qmd`: din startside
+- `about.qmd`: en side nummer to som eksempel
+- `styles.css`: dit eget design, hvis du vil
+
+Før du begynder at skrive: læs **Forhåndsvisning og rendering** sidst i afsnit 2.
+
+```{=latex}
+\begin{spotlight}{Hvilken skal jeg bruge?}
+Laver du noget med flere sider, der linker til hinanden, og en fælles navigation, for eksempel en kursusside, en dokumentation eller en portfolio? Så er det her det rigtige. Til et enkelt dokument til udskrift eller uddeling, se cheatsheetet \textbf{Opgaveark}. Til et langt dokument med nummererede kapitler, der læses i rækkefølge, se cheatsheetet \textbf{Bog}.
+\end{spotlight}
+```
+
+{{< pagebreak >}}
+
+## 2 – Skriv og rediger indhold
+
+Hver `.qmd`-fil består af et **YAML-hoved** og en **Markdown-tekst**. YAML findes på to adskilte niveauer, som du ikke må forveksle:
+
+1. **For hele projektet, én fil:** `_quarto.yml` bestemmer navigation, udseende og standardværdier for *hele* webstedet. Den findes én gang pr. projekt. Du retter kun i den, når noget skal ændres for alle sider.
+2. **Pr. side, i hver fil:** hovedet mellem `---` *øverst i hver* `.qmd`-fil. Det angiver sidens titel og kan tilsidesætte projektets standardværdier kun for den side.
+
+For hele projektet (`_quarto.yml`):
+
+```yaml
+website:
+  title: "My Site"
+  navbar:
+    left:
+      - text: "About"
+        href: about.qmd
+```
+
+Pr. side (toppen af `my-page.qmd`):
+
+```yaml
+---
+title: "My Page"
+format: html
+filters:
+  - parmsam/quizdown
+---
+```
+
+**Markdown kort fortalt:**
+
+| Skrivemåde | Resultat |
+|---|---|
+| `## Overskrift` | Afsnitsoverskrift |
+| `**fed**`, `*kursiv*` | **fed**, *kursiv* |
+| `` `code` `` | kode i teksten |
+| `- punkt` / `1. punkt` | Punktliste / nummereret liste |
+| `> tekst` | Citat |
+| `[tekst](url)` | Link |
+| `![](billede.png)` | Billede |
+| `$x^2$`, `$$x^2$$` | Formel i teksten / fritstående |
+| kodeblok med `{python}` | kørbar kodecelle (se nedenfor) |
+| `::: {.callout-tip} ... :::` | Infoboks |
+
+**Infobokse** fremhæver information:
+
+```markdown
+::: {.callout-tip}
+## Tip
+Brug tips til gode råd.
+:::
+```
+
+bliver til:
+
+::: {.callout-tip}
+## Tip
+Brug tips til gode råd.
+:::
+
+Andre typer: `.callout-note`, `.callout-warning`, `.callout-important`.
+
+**Kodeceller:** begynd en kodeblok med `{python}` (eller `{pyodide-python}` til interaktiv kode), og afslut den med tre backticks, for eksempel:
+
+```python
+#| echo: false   # hide the code, keep the output
+#| eval: true    # run the cell (default)
+print("Hello!")
+```
+
+Almindelige celleindstillinger (som kommentarer med `#|`): `echo`, `eval`, `warning`, `error`, `output`.
+
+**Forhåndsvisning og rendering:**
+
+| Kommando | Hvad den gør | Hvornår |
+|---|---|---|
+| Knappen **Preview** eller `quarto preview` | Åbner en forhåndsvisning på din computer, som opdateres, hver gang du gemmer | Mens du skriver og redigerer |
+| `quarto render` | Bygger de færdige filer i `_site` (eller `docs/`, hvis det er indstillet) uden at åbne en forhåndsvisning | Før udgivelse, eller for at lave de filer, der skal uploades |
+
+::: {.callout-note}
+## Tip
+Knappen **Preview** gør begge dele: den renderer webstedet og åbner forhåndsvisningen. En separat `quarto render` skal du kun bruge, når du vil have filerne *uden* forhåndsvisning, for eksempel lige før udgivelse.
+:::
+
+{{< pagebreak >}}
+
+## 3 – Udgiv med GitHub Pages
+
+1. Tilføj `output-dir: docs` under `project:` i `_quarto.yml`
+2. Render: `quarto render`
+3. Opret et **offentligt** repository på [github.com](https://github.com)
+4. Upload hele projektmappen (med `docs/`), og lav et commit
+5. I repositoryet: **Settings → Pages**, Branch `main`, mappe `/docs`, derefter **Save**
+6. Vent på det grønne flueben under **Deployments**. Webstedet ligger derefter på
+   `https://<navn>.github.io/<repo>/`
+
+**Opdater webstedet senere:** kør `quarto render` igen, og upload mappen `docs/` til GitHub på ny (eller `git push`, hvis du bruger Git).
+
+```{=latex}
+\begin{spotlight}{Godt at vide}
+\begin{itemize}
+\item \texttt{site-url:} i \texttt{\_quarto.yml} angiver webstedets adresse. Den skal bruges til korrekte forhåndsvisninger ved deling og til RSS-links.
+\item \texttt{repo-url:} og \texttt{page-footer:} tilføjer et link ''Edit this page'' eller til kildekoden og en egen sidefod på alle sider.
+\item Hvis du omdøber eller flytter en \texttt{.qmd}-fil, ændres dens adresse. Bestem filnavnene før udgivelse: gamle links til en omdøbt side fører ingen steder hen (404).
+\end{itemize}
+\end{spotlight}
+```
+
+---
+
+Udførligt og med skærmbilleder: [Det skal du bruge](https://erasmus-ctm.github.io/Quarto-Tutorial/da/int/Qmd%20Files/Getting%20Started/beg_website_1.html) · [Opret et websted](https://erasmus-ctm.github.io/Quarto-Tutorial/da/int/Qmd%20Files/Getting%20Started/beg_website_2.html) · [Udgiv webstedet](https://erasmus-ctm.github.io/Quarto-Tutorial/da/int/Qmd%20Files/Getting%20Started/beg_website_3.html)
+::::
+
+:::: {.content-visible when-profile="norsk"}
+```{=latex}
+\quickfacts{RESULTAT}{Nettsted med flere sider (HTML)}{STRUKTUR}{Ett prosjekt, mange \texttt{.qmd}-sider}{PUBLISERING}{GitHub Pages (mappen \texttt{docs/})}
+```
+
+## 1 – Oppsett (én gang per datamaskin)
+
+**Installer:**
+
+- **VS Code**: [code.visualstudio.com](https://code.visualstudio.com) (kryss av for **"Add to PATH"** under installasjonen)
+- **Quarto CLI**: [quarto.org/docs/get-started](https://quarto.org/docs/get-started/)
+- **Quarto-utvidelsen** for VS Code: søk etter "Quarto" i sidefeltet *Extensions*
+
+**Lag prosjektet:**
+
+**File → New File… → Quarto Project → Website Project**, velg deretter mappe. Quarto lager:
+
+- `_quarto.yml`: innstillinger for hele prosjektet (se del 2)
+- `index.qmd`: startsiden din
+- `about.qmd`: en side nummer to som eksempel
+- `styles.css`: egen utforming, hvis du vil
+
+Før du begynner å skrive: les **Forhåndsvise og rendre** på slutten av del 2.
+
+```{=latex}
+\begin{spotlight}{Hvilken trenger jeg?}
+Lager du noe med flere sider som lenker til hverandre, og en felles navigasjon, for eksempel en kursside, en dokumentasjon eller en portefølje? Da er dette riktig. For ett enkelt dokument til utskrift eller utdeling, se cheatsheetet \textbf{Oppgaveark}. For et langt dokument med nummererte kapitler som leses i rekkefølge, se cheatsheetet \textbf{Bok}.
+\end{spotlight}
+```
+
+{{< pagebreak >}}
+
+## 2 – Skrive og redigere innhold
+
+Hver `.qmd`-fil består av et **YAML-hode** og en **Markdown-tekst**. YAML finnes på to atskilte nivåer som du ikke må blande sammen:
+
+1. **For hele prosjektet, én fil:** `_quarto.yml` bestemmer navigasjon, utseende og standardverdier for *hele* nettstedet. Den finnes én gang per prosjekt. Du endrer den bare når noe skal endres for alle sidene.
+2. **Per side, i hver fil:** hodet mellom `---` *øverst i hver* `.qmd`-fil. Det angir tittelen på siden og kan overstyre standardverdiene i prosjektet bare for denne siden.
+
+For hele prosjektet (`_quarto.yml`):
+
+```yaml
+website:
+  title: "My Site"
+  navbar:
+    left:
+      - text: "About"
+        href: about.qmd
+```
+
+Per side (toppen av `my-page.qmd`):
+
+```yaml
+---
+title: "My Page"
+format: html
+filters:
+  - parmsam/quizdown
+---
+```
+
+**Markdown i korte trekk:**
+
+| Skrivemåte | Resultat |
+|---|---|
+| `## Overskrift` | Overskrift for en del |
+| `**fet**`, `*kursiv*` | **fet**, *kursiv* |
+| `` `code` `` | kode i teksten |
+| `- punkt` / `1. punkt` | Punktliste / nummerert liste |
+| `> tekst` | Sitat |
+| `[tekst](url)` | Lenke |
+| `![](bilde.png)` | Bilde |
+| `$x^2$`, `$$x^2$$` | Formel i teksten / frittstående |
+| kodeblokk med `{python}` | kjørbar kodecelle (se under) |
+| `::: {.callout-tip} ... :::` | Infoboks |
+
+**Infobokser** løfter fram informasjon:
+
+```markdown
+::: {.callout-tip}
+## Tips
+Bruk tips til gode råd.
+:::
+```
+
+blir til:
+
+::: {.callout-tip}
+## Tips
+Bruk tips til gode råd.
+:::
+
+Andre typer: `.callout-note`, `.callout-warning`, `.callout-important`.
+
+**Kodeceller:** begynn en kodeblokk med `{python}` (eller `{pyodide-python}` for interaktiv kode) og avslutt den med tre backticks, for eksempel:
+
+```python
+#| echo: false   # hide the code, keep the output
+#| eval: true    # run the cell (default)
+print("Hello!")
+```
+
+Vanlige celleinnstillinger (som kommentarer med `#|`): `echo`, `eval`, `warning`, `error`, `output`.
+
+**Forhåndsvise og rendre:**
+
+| Kommando | Hva den gjør | Når |
+|---|---|---|
+| Knappen **Preview** eller `quarto preview` | Åpner en forhåndsvisning på datamaskinen din som oppdateres hver gang du lagrer | Mens du skriver og redigerer |
+| `quarto render` | Bygger de ferdige filene i `_site` (eller `docs/`, hvis det er satt opp) uten å åpne noen forhåndsvisning | Før publisering, eller for å lage filene som skal lastes opp |
+
+::: {.callout-note}
+## Tips
+Knappen **Preview** gjør begge deler: den rendrer nettstedet og åpner forhåndsvisningen. En egen `quarto render` trenger du bare når du vil ha filene *uten* forhåndsvisning, for eksempel rett før publisering.
+:::
+
+{{< pagebreak >}}
+
+## 3 – Publiser med GitHub Pages
+
+1. Legg til `output-dir: docs` under `project:` i `_quarto.yml`
+2. Rendre: `quarto render`
+3. Opprett et **offentlig** repository på [github.com](https://github.com)
+4. Last opp hele prosjektmappen (med `docs/`) og gjør en commit
+5. I repositoryet: **Settings → Pages**, Branch `main`, mappe `/docs`, deretter **Save**
+6. Vent på den grønne haken under **Deployments**. Nettstedet ligger da på
+   `https://<navn>.github.io/<repo>/`
+
+**Oppdatere nettstedet senere:** kjør `quarto render` på nytt og last opp mappen `docs/` til GitHub igjen (eller `git push` hvis du bruker Git).
+
+```{=latex}
+\begin{spotlight}{Godt å vite}
+\begin{itemize}
+\item \texttt{site-url:} i \texttt{\_quarto.yml} angir adressen til nettstedet. Den trengs for riktige forhåndsvisninger ved deling og for RSS-lenker.
+\item \texttt{repo-url:} og \texttt{page-footer:} legger til en lenke ''Edit this page'' eller til kildekoden og en egen bunntekst på alle sidene.
+\item Hvis du gir en \texttt{.qmd}-fil nytt navn eller flytter den, endres adressen. Bestem filnavnene før publisering: gamle lenker til en side med nytt navn fører ingen steder (404).
+\end{itemize}
+\end{spotlight}
+```
+
+---
+
+Utførlig og med skjermbilder: [Dette trenger du](https://erasmus-ctm.github.io/Quarto-Tutorial/no/int/Qmd%20Files/Getting%20Started/beg_website_1.html) · [Lag et nettsted](https://erasmus-ctm.github.io/Quarto-Tutorial/no/int/Qmd%20Files/Getting%20Started/beg_website_2.html) · [Publiser nettstedet](https://erasmus-ctm.github.io/Quarto-Tutorial/no/int/Qmd%20Files/Getting%20Started/beg_website_3.html)
+::::
+
+:::: {.content-visible when-profile="svenska"}
+```{=latex}
+\quickfacts{RESULTAT}{Webbplats med flera sidor (HTML)}{STRUKTUR}{Ett projekt, många \texttt{.qmd}-sidor}{PUBLICERING}{GitHub Pages (mappen \texttt{docs/})}
+```
+
+## 1 – Installation (en gång per dator)
+
+**Installera:**
+
+- **VS Code**: [code.visualstudio.com](https://code.visualstudio.com) (kryssa i **"Add to PATH"** under installationen)
+- **Quarto CLI**: [quarto.org/docs/get-started](https://quarto.org/docs/get-started/)
+- **Quarto-tillägget** för VS Code: sök efter "Quarto" i sidofältet *Extensions*
+
+**Skapa projektet:**
+
+**File → New File… → Quarto Project → Website Project**, välj sedan mapp. Quarto skapar:
+
+- `_quarto.yml`: inställningar för hela projektet (se avsnitt 2)
+- `index.qmd`: din startsida
+- `about.qmd`: en andra sida som exempel
+- `styles.css`: egen formgivning, om du vill
+
+Innan du börjar skriva: läs **Förhandsgranska och rendera** i slutet av avsnitt 2.
+
+```{=latex}
+\begin{spotlight}{Vilken behöver jag?}
+Bygger du något med flera länkade sidor och en gemensam navigering, till exempel en kurssida, en dokumentation eller en portfolio? Då är det här rätt. För ett enskilt dokument att skriva ut eller dela ut, se lathunden \textbf{Övningsblad}. För ett långt dokument med numrerade kapitel som läses i ordning, se lathunden \textbf{Bok}.
+\end{spotlight}
+```
+
+{{< pagebreak >}}
+
+## 2 – Skriva och redigera innehåll
+
+Varje `.qmd`-fil består av ett **YAML-huvud** och en **Markdown-text**. YAML finns på två skilda nivåer som du inte ska blanda ihop:
+
+1. **För hela projektet, en fil:** `_quarto.yml` bestämmer navigering, utseende och standardvärden för *hela* webbplatsen. Den finns en gång per projekt. Du ändrar den bara när något ska ändras för alla sidor.
+2. **Per sida, i varje fil:** huvudet mellan `---` *högst upp i varje* `.qmd`-fil. Det anger sidans titel och kan ändra projektets standardvärden bara för den sidan.
+
+För hela projektet (`_quarto.yml`):
+
+```yaml
+website:
+  title: "My Site"
+  navbar:
+    left:
+      - text: "About"
+        href: about.qmd
+```
+
+Per sida (början av `my-page.qmd`):
+
+```yaml
+---
+title: "My Page"
+format: html
+filters:
+  - parmsam/quizdown
+---
+```
+
+**Markdown i korthet:**
+
+| Skrivsätt | Resultat |
+|---|---|
+| `## Rubrik` | Avsnittsrubrik |
+| `**fet**`, `*kursiv*` | **fet**, *kursiv* |
+| `` `code` `` | kod i texten |
+| `- punkt` / `1. punkt` | Punktlista / numrerad lista |
+| `> text` | Citat |
+| `[text](url)` | Länk |
+| `![](bild.png)` | Bild |
+| `$x^2$`, `$$x^2$$` | Formel i texten / fristående |
+| kodblock med `{python}` | körbar kodcell (se nedan) |
+| `::: {.callout-tip} ... :::` | Inforuta |
+
+**Inforutor** lyfter fram information:
+
+```markdown
+::: {.callout-tip}
+## Tips
+Använd tips för goda råd.
+:::
+```
+
+blir:
+
+::: {.callout-tip}
+## Tips
+Använd tips för goda råd.
+:::
+
+Andra typer: `.callout-note`, `.callout-warning`, `.callout-important`.
+
+**Kodceller:** börja ett kodblock med `{python}` (eller `{pyodide-python}` för interaktiv kod) och avsluta det med tre backtick, till exempel:
+
+```python
+#| echo: false   # hide the code, keep the output
+#| eval: true    # run the cell (default)
+print("Hello!")
+```
+
+Vanliga cellinställningar (som kommentarer med `#|`): `echo`, `eval`, `warning`, `error`, `output`.
+
+**Förhandsgranska och rendera:**
+
+| Kommando | Vad det gör | När |
+|---|---|---|
+| Knappen **Preview** eller `quarto preview` | Öppnar en förhandsgranskning på din dator som uppdateras varje gång du sparar | Medan du skriver och redigerar |
+| `quarto render` | Bygger de färdiga filerna i `_site` (eller `docs/`, om det är inställt) utan att öppna någon förhandsgranskning | Före publicering, eller för att skapa filerna som ska laddas upp |
+
+::: {.callout-note}
+## Tips
+Knappen **Preview** gör båda delarna: den renderar webbplatsen och öppnar förhandsgranskningen. Ett separat `quarto render` behöver du bara när du vill ha filerna *utan* förhandsgranskning, till exempel precis före publicering.
+:::
+
+{{< pagebreak >}}
+
+## 3 – Publicera med GitHub Pages
+
+1. Lägg till `output-dir: docs` under `project:` i `_quarto.yml`
+2. Rendera: `quarto render`
+3. Skapa ett **offentligt** repository på [github.com](https://github.com)
+4. Ladda upp hela projektmappen (med `docs/`) och gör en commit
+5. I repositoryt: **Settings → Pages**, Branch `main`, mapp `/docs`, sedan **Save**
+6. Vänta på den gröna bocken under **Deployments**. Webbplatsen finns sedan på
+   `https://<namn>.github.io/<repo>/`
+
+**Uppdatera webbplatsen senare:** kör `quarto render` igen och ladda upp mappen `docs/` till GitHub på nytt (eller `git push` om du använder Git).
+
+```{=latex}
+\begin{spotlight}{Bra att veta}
+\begin{itemize}
+\item \texttt{site-url:} i \texttt{\_quarto.yml} anger webbplatsens adress. Den behövs för korrekta förhandsvisningar vid delning och för RSS-länkar.
+\item \texttt{repo-url:} och \texttt{page-footer:} lägger till en länk ''Edit this page'' respektive till källkoden och en egen sidfot på alla sidor.
+\item Om du byter namn på eller flyttar en \texttt{.qmd}-fil ändras dess adress. Bestäm filnamnen före publicering: gamla länkar till en omdöpt sida leder ingenstans (404).
+\end{itemize}
+\end{spotlight}
+```
+
+---
+
+Utförligt och med skärmbilder: [Vad du behöver](https://erasmus-ctm.github.io/Quarto-Tutorial/sv/int/Qmd%20Files/Getting%20Started/beg_website_1.html) · [Skapa en webbplats](https://erasmus-ctm.github.io/Quarto-Tutorial/sv/int/Qmd%20Files/Getting%20Started/beg_website_2.html) · [Publicera webbplatsen](https://erasmus-ctm.github.io/Quarto-Tutorial/sv/int/Qmd%20Files/Getting%20Started/beg_website_3.html)
+::::

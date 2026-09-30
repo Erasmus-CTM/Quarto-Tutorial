@@ -1,7 +1,62 @@
 ---
-title: "Getting Started with Quarto"
+title: "Erste Schritte mit Quarto"
+title-sv: "Kom igång med Quarto"
+title-no: "Kom i gang med Quarto"
+title-da: "Kom i gang med Quarto"
+title-en: "Getting Started with Quarto"
 ---
 
+:::: {.content-visible when-profile="deutsch"}
+::: {.callout-note}
+## Offizielle Dokumentation
+Die offizielle Quarto-Dokumentation unter **[quarto.org/docs/get-started](https://quarto.org/docs/get-started/)** hat ausführliche Anleitungen für jedes Niveau (auf Englisch). Dort lohnt es sich immer, genauer nachzulesen.
+:::
+
+Willkommen! Diese Anleitung führt dich Schritt für Schritt zu echten Quarto-Dokumenten, wie eine Bauanleitung.
+Vorkenntnisse brauchst du keine.
+
+---
+
+## Was möchtest du bauen?
+
+::: {.grid}
+
+::: {.g-col-4}
+### 🌐 Eine Website
+Stelle deinen Kurs, deine Forschung oder dein Portfolio als übersichtliche Website mit mehreren Seiten vor.
+
+→ [Was du brauchst](beg_website_1.qmd)\
+→ [Website erstellen](beg_website_2.qmd)\
+→ [Veröffentlichen](beg_website_3.qmd)
+:::
+
+::: {.g-col-4}
+### 📄 Ein Übungsblatt
+Erstelle ein Übungsblatt, das aus einer einzigen Datei als PDF, HTML oder Word entsteht.
+
+→ [Was du brauchst](beg_exercise_1.qmd)\
+→ [Übungsblatt erstellen](beg_exercise_2.qmd)\
+→ [Andere Formate](beg_exercise_3.qmd)
+:::
+
+::: {.g-col-4}
+### 📚 Ein Buch
+Gliedere längere Inhalte wie ein Skript oder Handbuch als Buch mit Navigation.
+
+→ [Was du brauchst](beg_book_1.qmd)\
+→ [Buch erstellen](beg_book_2.qmd)
+:::
+
+:::
+
+---
+
+## ✨ Interaktiver Python-Code gewünscht?
+
+Sollen Studierende Python-Code direkt im Browser ausführen und verändern können, ohne selbst etwas zu installieren? Dann schau dir die [Anleitung zu Extensions](beg_extensions.qmd) an.
+::::
+
+:::: {.content-visible when-profile="english"}
 ::: {.callout-note}
 ## Official Documentation
 The official Quarto documentation at **[quarto.org/docs/get-started](https://quarto.org/docs/get-started/)** contains detailed tutorials for all skill levels — always a great place to look for more detail.
@@ -20,25 +75,25 @@ No prior experience needed.
 ### 🌐 A Website
 Present your course, research, or portfolio as a clean multi-page website.
 
-→ [What you need](beg_website_1.qmd)  
-→ [Create a website](beg_website_2.qmd)  
-→ [Publish online](beg_website_3.qmd)  
+→ [What you need](beg_website_1.qmd)\
+→ [Create a website](beg_website_2.qmd)\
+→ [Publish online](beg_website_3.qmd)
 :::
 
 ::: {.g-col-4}
 ### 📄 An Exercise Sheet
 Create a professional exercise sheet that renders to PDF, HTML, or Word from one file.
 
-→ [What you need](beg_exercise_1.qmd)  
-→ [Create a sheet](beg_exercise_2.qmd)  
-→ [Other formats](beg_exercise_3.qmd)  
+→ [What you need](beg_exercise_1.qmd)\
+→ [Create a sheet](beg_exercise_2.qmd)\
+→ [Other formats](beg_exercise_3.qmd)
 :::
 
 ::: {.g-col-4}
 ### 📚 A Book
 Structure longer content — lecture notes, a handbook — as a navigable book.
 
-→ [What you need](beg_book_1.qmd)  
+→ [What you need](beg_book_1.qmd)\
 → [Create a book](beg_book_2.qmd)
 :::
 
@@ -49,3 +104,154 @@ Structure longer content — lecture notes, a handbook — as a navigable book.
 ## ✨ Want interactive Python code?
 
 If you want students to run and edit Python code directly in the browser (no installation needed for them), check out the [Extensions guide](beg_extensions.qmd).
+::::
+
+:::: {.content-visible when-profile="dansk"}
+::: {.callout-note}
+## Officiel dokumentation
+Den officielle Quarto-dokumentation på **[quarto.org/docs/get-started](https://quarto.org/docs/get-started/)** har grundige vejledninger til alle niveauer og er altid et godt sted at læse videre.
+:::
+
+Velkommen! Denne guide fører dig trin for trin gennem, hvordan du laver rigtige Quarto-dokumenter, som en byggevejledning.
+Du behøver ingen forkundskaber.
+
+---
+
+## Hvad vil du lave?
+
+::: {.grid}
+
+::: {.g-col-4}
+### 🌐 Et websted
+Præsenter dit kursus, din forskning eller din portfolio som et overskueligt websted med flere sider.
+
+→ [Det skal du bruge](beg_website_1.qmd)\
+→ [Opret et websted](beg_website_2.qmd)\
+→ [Udgiv på nettet](beg_website_3.qmd)
+:::
+
+::: {.g-col-4}
+### 📄 Et opgaveark
+Lav et professionelt opgaveark, der bliver til PDF, HTML eller Word ud fra én og samme fil.
+
+→ [Det skal du bruge](beg_exercise_1.qmd)\
+→ [Opret et opgaveark](beg_exercise_2.qmd)\
+→ [Andre formater](beg_exercise_3.qmd)
+:::
+
+::: {.g-col-4}
+### 📚 En bog
+Strukturer længere indhold, for eksempel forelæsningsnoter eller en håndbog, som en bog med navigation.
+
+→ [Det skal du bruge](beg_book_1.qmd)\
+→ [Opret en bog](beg_book_2.qmd)
+:::
+
+:::
+
+---
+
+## ✨ Vil du have interaktiv Python-kode?
+
+Hvis du vil have, at de studerende kan køre og ændre Python-kode direkte i browseren (uden at de installerer noget), så læs [guiden om udvidelser](beg_extensions.qmd).
+::::
+
+:::: {.content-visible when-profile="norsk"}
+::: {.callout-note}
+## Offisiell dokumentasjon
+Den offisielle Quarto-dokumentasjonen på **[quarto.org/docs/get-started](https://quarto.org/docs/get-started/)** har grundige veiledninger for alle nivåer og er alltid et godt sted å lese videre.
+:::
+
+Velkommen! Denne guiden tar deg trinn for trinn gjennom hvordan du lager ekte Quarto-dokumenter, som en byggeveiledning.
+Du trenger ingen forkunnskaper.
+
+---
+
+## Hva vil du lage?
+
+::: {.grid}
+
+::: {.g-col-4}
+### 🌐 Et nettsted
+Presenter kurset ditt, forskningen din eller porteføljen din som et ryddig nettsted med flere sider.
+
+→ [Dette trenger du](beg_website_1.qmd)\
+→ [Lag et nettsted](beg_website_2.qmd)\
+→ [Publiser på nett](beg_website_3.qmd)
+:::
+
+::: {.g-col-4}
+### 📄 Et oppgaveark
+Lag et profesjonelt oppgaveark som blir til PDF, HTML eller Word fra én og samme fil.
+
+→ [Dette trenger du](beg_exercise_1.qmd)\
+→ [Lag et oppgaveark](beg_exercise_2.qmd)\
+→ [Andre formater](beg_exercise_3.qmd)
+:::
+
+::: {.g-col-4}
+### 📚 En bok
+Strukturer lengre innhold, for eksempel forelesningsnotater eller en håndbok, som en bok med navigasjon.
+
+→ [Dette trenger du](beg_book_1.qmd)\
+→ [Lag en bok](beg_book_2.qmd)
+:::
+
+:::
+
+---
+
+## ✨ Vil du ha interaktiv Python-kode?
+
+Hvis du vil at studentene skal kunne kjøre og endre Python-kode direkte i nettleseren (uten at de installerer noe), kan du lese [guiden om utvidelser](beg_extensions.qmd).
+::::
+
+:::: {.content-visible when-profile="svenska"}
+::: {.callout-note}
+## Officiell dokumentation
+Den officiella Quarto-dokumentationen på **[quarto.org/docs/get-started](https://quarto.org/docs/get-started/)** innehåller utförliga handledningar för alla nivåer och är alltid ett bra ställe att läsa vidare på.
+:::
+
+Välkommen! Den här guiden tar dig steg för steg genom hur du skapar riktiga Quarto-dokument, som en bygganvisning.
+Du behöver inga förkunskaper.
+
+---
+
+## Vad vill du bygga?
+
+::: {.grid}
+
+::: {.g-col-4}
+### 🌐 En webbplats
+Presentera din kurs, din forskning eller din portfolio som en prydlig webbplats med flera sidor.
+
+→ [Vad du behöver](beg_website_1.qmd)\
+→ [Skapa en webbplats](beg_website_2.qmd)\
+→ [Publicera på nätet](beg_website_3.qmd)
+:::
+
+::: {.g-col-4}
+### 📄 Ett övningsblad
+Skapa ett proffsigt övningsblad som blir PDF, HTML eller Word från en och samma fil.
+
+→ [Vad du behöver](beg_exercise_1.qmd)\
+→ [Skapa ett övningsblad](beg_exercise_2.qmd)\
+→ [Andra format](beg_exercise_3.qmd)
+:::
+
+::: {.g-col-4}
+### 📚 En bok
+Strukturera längre innehåll, till exempel föreläsningsanteckningar eller en handbok, som en bok med navigering.
+
+→ [Vad du behöver](beg_book_1.qmd)\
+→ [Skapa en bok](beg_book_2.qmd)
+:::
+
+:::
+
+---
+
+## ✨ Vill du ha interaktiv Python-kod?
+
+Om du vill att studenterna ska kunna köra och ändra Python-kod direkt i webbläsaren (utan att de installerar något), läs [guiden om tillägg](beg_extensions.qmd).
+::::

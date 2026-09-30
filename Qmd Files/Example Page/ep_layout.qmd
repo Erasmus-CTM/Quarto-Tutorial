@@ -1,8 +1,79 @@
 ---
-title: "Layout & Formatting"
+title: "Layout & Formatierung"
+title-en: "Layout & Formatting"
+title-sv: "Layout & formatering"
+title-no: "Layout & formatering"
+title-da: "Layout & formatering"
 sidebar: example-sidebar
 ---
 
+:::: {.content-visible when-profile="deutsch"}
+Quarto kann aufwendige Layouts, ohne dass du HTML oder CSS schreibst.
+
+## Hinweiskästen
+
+::: {.callout-note}
+## Hinweis
+**Hinweise** eignen sich für Hintergrundwissen oder Definitionen.
+:::
+
+::: {.callout-tip}
+## Tipp
+**Tipps** eignen sich für bewährtes Vorgehen und praktische Ratschläge.
+:::
+
+::: {.callout-warning}
+## Warnung
+**Warnungen** markieren häufige Fehler.
+:::
+
+::: {.callout-important}
+## Wichtig
+**Wichtig** ist für Dinge, die Studierende auf keinen Fall übersehen dürfen.
+:::
+
+## Spalten
+
+::: {.columns}
+::: {.column width="50%"}
+**Idee**
+
+Die Sinusfunktion ordnet einem Winkel die
+y-Koordinate auf dem Einheitskreis zu.
+
+$$f: \mathbb{R} \to [-1, 1]$$
+:::
+::: {.column width="50%"}
+**Wichtige Werte**
+
+| $x$ | $0$ | $\frac{\pi}{6}$ | $\frac{\pi}{2}$ | $\pi$ |
+|-----|-----|--------|--------|-------|
+| $\sin(x)$ | $0$ | $0{,}5$ | $1$ | $0$ |
+:::
+:::
+
+## Reiter
+
+::: {.panel-tabset}
+## Definition
+Die Sinusfunktion ist eine der grundlegenden trigonometrischen Funktionen.
+Sie ist periodisch mit Periode $2\pi$ und hat den Wertebereich $[-1, 1]$.
+
+## Formel
+Als Taylorreihe:
+
+$$\sin(x) = \sum_{n=0}^{\infty} \frac{(-1)^n}{(2n+1)!}\, x^{2n+1}
+           = x - \frac{x^3}{6} + \frac{x^5}{120} - \cdots$$
+
+## Eigenschaften
+- **Periode:** $2\pi$
+- **Wertebereich:** $[-1,\, 1]$
+- **Nullstellen:** $x = k\pi,\; k \in \mathbb{Z}$
+- **Maxima:** $x = \frac{\pi}{2} + 2k\pi$
+:::
+::::
+
+:::: {.content-visible when-profile="english"}
 Quarto supports rich layout without writing any HTML or CSS.
 
 ## Callouts
@@ -29,7 +100,7 @@ Use **important** for things students must not miss.
 
 ## Columns
 
-:::: {.columns}
+::: {.columns}
 ::: {.column width="50%"}
 **Concept**
 
@@ -45,7 +116,7 @@ $$f: \mathbb{R} \to [-1, 1]$$
 |-----|-----|--------|--------|-------|
 | $\sin(x)$ | $0$ | $0.5$ | $1$ | $0$ |
 :::
-::::
+:::
 
 ## Tabs
 
@@ -66,3 +137,202 @@ $$\sin(x) = \sum_{n=0}^{\infty} \frac{(-1)^n}{(2n+1)!}\, x^{2n+1}
 - **Zeros:** $x = k\pi,\; k \in \mathbb{Z}$
 - **Maxima:** $x = \frac{\pi}{2} + 2k\pi$
 :::
+::::
+
+:::: {.content-visible when-profile="dansk"}
+Quarto giver dig et rigt layout, uden at du skriver HTML eller CSS.
+
+## Infobokse
+
+::: {.callout-note}
+## Bemærk
+Brug **noter** til baggrundsinformation eller definitioner.
+:::
+
+::: {.callout-tip}
+## Tip
+Brug **tips** til gode arbejdsmåder eller praktiske råd.
+:::
+
+::: {.callout-warning}
+## Advarsel
+Brug **advarsler** til at pege på typiske fejl.
+:::
+
+::: {.callout-important}
+## Vigtigt
+Brug **vigtigt** til det, de studerende ikke må gå glip af.
+:::
+
+## Kolonner
+
+::: {.columns}
+::: {.column width="50%"}
+**Begreb**
+
+Sinusfunktionen afbilder en vinkel på
+y-koordinaten på enhedscirklen.
+
+$$f: \mathbb{R} \to [-1, 1]$$
+:::
+::: {.column width="50%"}
+**Vigtige værdier**
+
+| $x$ | $0$ | $\frac{\pi}{6}$ | $\frac{\pi}{2}$ | $\pi$ |
+|-----|-----|--------|--------|-------|
+| $\sin(x)$ | $0$ | $0.5$ | $1$ | $0$ |
+:::
+:::
+
+## Faner
+
+::: {.panel-tabset}
+## Definition
+Sinusfunktionen er en af de grundlæggende trigonometriske funktioner.
+Den er periodisk med perioden $2\pi$ og har værdimængden $[-1, 1]$.
+
+## Formel
+Med Taylorrækken:
+
+$$\sin(x) = \sum_{n=0}^{\infty} \frac{(-1)^n}{(2n+1)!}\, x^{2n+1}
+           = x - \frac{x^3}{6} + \frac{x^5}{120} - \cdots$$
+
+## Egenskaber
+- **Periode:** $2\pi$
+- **Værdimængde:** $[-1,\, 1]$
+- **Nulpunkter:** $x = k\pi,\; k \in \mathbb{Z}$
+- **Maksima:** $x = \frac{\pi}{2} + 2k\pi$
+:::
+::::
+
+:::: {.content-visible when-profile="norsk"}
+Quarto gir deg en rik layout uten at du skriver HTML eller CSS.
+
+## Infobokser
+
+::: {.callout-note}
+## Merk
+Bruk **merknader** til bakgrunnsinformasjon eller definisjoner.
+:::
+
+::: {.callout-tip}
+## Tips
+Bruk **tips** til gode arbeidsmåter eller praktiske råd.
+:::
+
+::: {.callout-warning}
+## Advarsel
+Bruk **advarsler** til å peke på vanlige feil.
+:::
+
+::: {.callout-important}
+## Viktig
+Bruk **viktig** til det studentene ikke må gå glipp av.
+:::
+
+## Kolonner
+
+::: {.columns}
+::: {.column width="50%"}
+**Begrep**
+
+Sinusfunksjonen avbilder en vinkel på
+y-koordinaten på enhetssirkelen.
+
+$$f: \mathbb{R} \to [-1, 1]$$
+:::
+::: {.column width="50%"}
+**Viktige verdier**
+
+| $x$ | $0$ | $\frac{\pi}{6}$ | $\frac{\pi}{2}$ | $\pi$ |
+|-----|-----|--------|--------|-------|
+| $\sin(x)$ | $0$ | $0.5$ | $1$ | $0$ |
+:::
+:::
+
+## Faner
+
+::: {.panel-tabset}
+## Definisjon
+Sinusfunksjonen er en av de grunnleggende trigonometriske funksjonene.
+Den er periodisk med periode $2\pi$ og har verdimengden $[-1, 1]$.
+
+## Formel
+Med Taylor-rekken:
+
+$$\sin(x) = \sum_{n=0}^{\infty} \frac{(-1)^n}{(2n+1)!}\, x^{2n+1}
+           = x - \frac{x^3}{6} + \frac{x^5}{120} - \cdots$$
+
+## Egenskaper
+- **Periode:** $2\pi$
+- **Verdimengde:** $[-1,\, 1]$
+- **Nullpunkter:** $x = k\pi,\; k \in \mathbb{Z}$
+- **Maksima:** $x = \frac{\pi}{2} + 2k\pi$
+:::
+::::
+
+:::: {.content-visible when-profile="svenska"}
+Quarto ger dig en rik layout utan att du skriver HTML eller CSS.
+
+## Inforutor
+
+::: {.callout-note}
+## Notera
+Använd **notiser** för bakgrundsinformation eller definitioner.
+:::
+
+::: {.callout-tip}
+## Tips
+Använd **tips** för goda arbetssätt eller praktiska råd.
+:::
+
+::: {.callout-warning}
+## Varning
+Använd **varningar** för att peka på vanliga misstag.
+:::
+
+::: {.callout-important}
+## Viktigt
+Använd **viktigt** för sådant som studenterna inte får missa.
+:::
+
+## Kolumner
+
+::: {.columns}
+::: {.column width="50%"}
+**Begrepp**
+
+Sinusfunktionen avbildar en vinkel på
+y-koordinaten på enhetscirkeln.
+
+$$f: \mathbb{R} \to [-1, 1]$$
+:::
+::: {.column width="50%"}
+**Viktiga värden**
+
+| $x$ | $0$ | $\frac{\pi}{6}$ | $\frac{\pi}{2}$ | $\pi$ |
+|-----|-----|--------|--------|-------|
+| $\sin(x)$ | $0$ | $0.5$ | $1$ | $0$ |
+:::
+:::
+
+## Flikar
+
+::: {.panel-tabset}
+## Definition
+Sinusfunktionen är en av de grundläggande trigonometriska funktionerna.
+Den är periodisk med perioden $2\pi$ och har värdemängden $[-1, 1]$.
+
+## Formel
+Med Taylorutvecklingen:
+
+$$\sin(x) = \sum_{n=0}^{\infty} \frac{(-1)^n}{(2n+1)!}\, x^{2n+1}
+           = x - \frac{x^3}{6} + \frac{x^5}{120} - \cdots$$
+
+## Egenskaper
+- **Period:** $2\pi$
+- **Värdemängd:** $[-1,\, 1]$
+- **Nollställen:** $x = k\pi,\; k \in \mathbb{Z}$
+- **Maxima:** $x = \frac{\pi}{2} + 2k\pi$
+:::
+::::

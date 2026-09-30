@@ -1,9 +1,41 @@
 ---
-title: "What Quarto Can Do"
-subtitle: "A hands-on example — built entirely with Quarto"
+title: "Was Quarto kann"
+title-en: "What Quarto Can Do"
+title-sv: "Vad Quarto kan göra"
+title-no: "Hva Quarto kan gjøre"
+title-da: "Hvad Quarto kan"
+subtitle: "Ein Beispiel zum Ausprobieren, komplett mit Quarto gebaut"
+subtitle-en: "A hands-on example — built entirely with Quarto"
+subtitle-sv: "Ett praktiskt exempel, helt byggt med Quarto"
+subtitle-no: "Et praktisk eksempel, bygget helt med Quarto"
+subtitle-da: "Et praktisk eksempel, bygget helt med Quarto"
 sidebar: example-sidebar
 ---
 
+:::: {.content-visible when-profile="deutsch"}
+Quarto macht aus einfachen `.qmd`-Dateien interaktive Websites, PDFs und Präsentationen,
+ganz ohne Kenntnisse in Webentwicklung.
+
+Diese kleine Seite beschäftigt sich mit der **Sinusfunktion** und zeigt nebenbei, was Quarto kann.
+
+::: {.callout-tip}
+## Mit Quarto gebaut
+Jedes Element dieser Seite, also ausführbarer Code, interaktive Grafiken und Quizze,
+ist als reiner Text geschrieben und von Quarto umgewandelt worden.
+:::
+
+## Die Seiten im Überblick
+
+| | Seite | Was du siehst |
+|:-:|------|-----------------|
+| 1 | [Layout & Formatierung](ep_layout.qmd) | Hinweiskästen, Spalten, Reiter |
+| 2 | [Code](ep_code.qmd) | Python: nur Ausgabe, ausführbar, mit Eingabe |
+| 3 | [Visualisierungen](ep_visuals.qmd) | Interaktive Grafik, Animation, Aufgaben und Diagramm |
+| 4 | [Quiz](ep_quiz.qmd) | Fragen zur Selbstkontrolle |
+| 5 | [Quellen](ep_references.qmd) | Zitate und Literaturverzeichnis |
+::::
+
+:::: {.content-visible when-profile="english"}
 Quarto turns plain `.qmd` files into interactive websites, PDFs, and presentations —
 no web development experience needed.
 
@@ -20,7 +52,77 @@ was written in plain text and rendered by Quarto.
 | | Page | What you'll see |
 |:-:|------|-----------------|
 | 1 | [Layout & Formatting](ep_layout.qmd) | Callouts, columns, tabs |
-| 2 | [Code](ep_code.qmd) | Static, executable, and editable Python |
-| 3 | [Visualizations](ep_visuals.qmd) | Interactive plot & diagram |
+| 2 | [Code](ep_code.qmd) | Python: output only, executable, with input |
+| 3 | [Visualizations](ep_visuals.qmd) | Interactive plot, animation, exercises & diagram |
 | 4 | [Quiz](ep_quiz.qmd) | Self-check questions |
 | 5 | [References](ep_references.qmd) | Citations & bibliography |
+::::
+
+:::: {.content-visible when-profile="dansk"}
+Quarto laver almindelige `.qmd`-filer om til interaktive websteder, PDF-filer og præsentationer.
+Du behøver ingen erfaring med webudvikling.
+
+Dette lille websted undersøger **sinusfunktionen** og viser samtidig, hvad Quarto kan.
+
+::: {.callout-tip}
+## Bygget med Quarto
+Hvert element på dette websted, altså kørbar kode, interaktive grafer og quizzer,
+er skrevet som almindelig tekst og omdannet af Quarto.
+:::
+
+## Siderne i overblik
+
+| | Side | Hvad du ser |
+|:-:|------|-----------------|
+| 1 | [Layout & formatering](ep_layout.qmd) | Infobokse, kolonner, faner |
+| 2 | [Kode](ep_code.qmd) | Python: kun output, kørbar kode, med input |
+| 3 | [Visualiseringer](ep_visuals.qmd) | Interaktiv graf, animation, opgaver og diagram |
+| 4 | [Quiz](ep_quiz.qmd) | Spørgsmål til selvkontrol |
+| 5 | [Kilder](ep_references.qmd) | Citater og litteraturliste |
+::::
+
+:::: {.content-visible when-profile="norsk"}
+Quarto gjør vanlige `.qmd`-filer om til interaktive nettsteder, PDF-filer og presentasjoner.
+Du trenger ingen erfaring med webutvikling.
+
+Dette lille nettstedet utforsker **sinusfunksjonen** og viser samtidig hva Quarto kan.
+
+::: {.callout-tip}
+## Bygget med Quarto
+Hvert element på dette nettstedet, altså kjørbar kode, interaktive grafer og quizer,
+er skrevet som vanlig tekst og omgjort av Quarto.
+:::
+
+## Sidene i korte trekk
+
+| | Side | Hva du ser |
+|:-:|------|-----------------|
+| 1 | [Layout & formatering](ep_layout.qmd) | Infobokser, kolonner, faner |
+| 2 | [Kode](ep_code.qmd) | Python: bare utdata, kjørbar kode, med inndata |
+| 3 | [Visualiseringer](ep_visuals.qmd) | Interaktiv graf, animasjon, oppgaver og diagram |
+| 4 | [Quiz](ep_quiz.qmd) | Spørsmål for egenkontroll |
+| 5 | [Kilder](ep_references.qmd) | Sitater og litteraturliste |
+::::
+
+:::: {.content-visible when-profile="svenska"}
+Quarto gör om vanliga `.qmd`-filer till interaktiva webbplatser, PDF-filer och presentationer.
+Du behöver ingen erfarenhet av webbutveckling.
+
+Den här lilla webbplatsen undersöker **sinusfunktionen** och visar samtidigt vad Quarto kan.
+
+::: {.callout-tip}
+## Byggt med Quarto
+Varje del av den här webbplatsen, alltså körbar kod, interaktiva grafer och quiz,
+är skriven som vanlig text och omvandlad av Quarto.
+:::
+
+## Sidorna i korthet
+
+| | Sida | Vad du ser |
+|:-:|------|-----------------|
+| 1 | [Layout & formatering](ep_layout.qmd) | Inforutor, kolumner, flikar |
+| 2 | [Kod](ep_code.qmd) | Python: bara utdata, körbar kod, med inmatning |
+| 3 | [Visualiseringar](ep_visuals.qmd) | Interaktiv graf, animation, uppgifter och diagram |
+| 4 | [Quiz](ep_quiz.qmd) | Frågor för självkontroll |
+| 5 | [Källor](ep_references.qmd) | Citat och litteraturförteckning |
+::::

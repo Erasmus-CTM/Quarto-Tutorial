@@ -1,7 +1,160 @@
 ---
-title: "Publish your Website"
+title: "Website veröffentlichen"
+title-sv: "Publicera webbplatsen"
+title-no: "Publiser nettstedet"
+title-da: "Udgiv webstedet"
+title-en: "Publish your Website"
 ---
 
+:::: {.content-visible when-profile="deutsch"}
+::: {.callout-note}
+## Offizielle Dokumentation
+Quarto kennt mehrere Wege zum Veröffentlichen. Alle stehen unter **[quarto.org/docs/publishing](https://quarto.org/docs/publishing/)**.
+:::
+
+Diese Anleitung nutzt **GitHub Pages**, einen kostenlosen Dienst, der deine Website unter einer `github.io`-Adresse öffentlich erreichbar macht.
+
+Du brauchst ein kostenloses Konto bei [github.com](https://github.com). Lege eins an, falls du noch keins hast.
+
+---
+
+## 1 – Quarto in einen Ordner `docs` schreiben lassen
+
+**① `_quarto.yml` öffnen und den Ausgabeordner eintragen**
+
+![](../../Img Files/Getting Started/github_pages_Change_Output_dir_in_yml.png)
+
+Öffne deine `_quarto.yml` und ergänze im Abschnitt `project:` die Zeile `output-dir: docs`, genau wie im Bild. GitHub Pages erwartet die Dateien der Website in einem Ordner namens `docs`.
+
+---
+
+**② Website bauen**
+
+Öffne das **Terminal** über **View → Terminal** und gib ein:
+
+```{.bash filename="Terminal"}
+quarto render
+```
+
+Quarto baut die ganze Website in den Ordner `docs/`. Er erscheint links in der Dateiübersicht.
+
+---
+
+## 2 – Ein Repository auf GitHub anlegen
+
+**① Auf GitHub ein neues Repository anlegen**
+
+![](../../Img Files/Getting Started/github_pages_create_new_repo_1.png)
+
+Melde dich bei [github.com](https://github.com) an, klicke oben rechts auf das **+** und wähle **New repository**. Gib ihm einen Namen, er wird Teil der Adresse deiner Website.
+
+---
+
+**② Auf Public stellen und anlegen**
+
+![](../../Img Files/Getting Started/github_pages_create_new_repo_2.png)
+
+Achte darauf, dass **Public** ausgewählt ist. Alles andere bleibt, wie es ist. Klicke auf **Create repository**.
+
+---
+
+## 3 – Dateien hochladen
+
+**① Den Link zum Hochladen finden**
+
+![](../../Img Files/Getting Started/github_pages_upload_existing_files.png)
+
+Dein neues, leeres Repository öffnet sich. Klicke in der Mitte der Seite auf **uploading an existing file**.
+
+---
+
+**② Projektdateien auf die Seite ziehen**
+
+Ziehe alle Dateien und Ordner aus deinem Projektordner direkt auf die Upload-Seite von GitHub. Nimm alles mit: `docs/`, `_quarto.yml`, `index.qmd`, `styles.css` und alle weiteren Dateien.
+
+::: {.callout-warning}
+Lade **nicht** nur den Inhalt von `docs/` hoch, sondern den Inhalt des ganzen Projektordners, damit GitHub alles hat, was es braucht.
+:::
+
+Während des Hochladens zeigt GitHub **„Processing your files...“** an.
+
+![](../../Img Files/Getting Started/github_pages_commiting_github.png)
+
+---
+
+**③ Dateien committen**
+
+![](../../Img Files/Getting Started/github_pages_dont_forget_to_press_commit.png)
+
+Scrolle nach dem Hochladen nach unten. Dort steht das Feld **„Commit changes“**. Du kannst die Nachricht „Initial Push“ lassen oder eine eigene schreiben. Klicke auf **Commit changes**.
+
+---
+
+## 4 – GitHub Pages einschalten
+
+**① Die Einstellungen des Repositorys öffnen**
+
+![](../../Img Files/Getting Started/github_pages_find_settings_top_right.png)
+
+Klicke oben auf der Seite deines Repositorys auf den Reiter **Settings**.
+
+---
+
+**② In der linken Leiste „Pages“ suchen**
+
+![](../../Img Files/Getting Started/github_pages_sidebar_look_for_pages.png)
+
+Scrolle in der linken Leiste nach unten und klicke auf **Pages**.
+
+---
+
+**③ Branch `main` und Ordner `/docs` auswählen**
+
+![](../../Img Files/Getting Started/github_pages_select_branch_main.png)
+
+Klicke unter **Branch** auf das Auswahlfeld, in dem **None** steht, und wähle **main**.
+
+---
+
+![](../../Img Files/Getting Started/github_pages_select_folder_docs.png)
+
+Daneben erscheint ein zweites Auswahlfeld für den Ordner. Klicke darauf und wähle **/docs**.
+
+---
+
+**④ Speichern**
+
+![](../../Img Files/Getting Started/github_pages_should_look_like.png)
+
+Klicke auf **Save**. GitHub beginnt jetzt, deine Seite zu bauen und bereitzustellen.
+
+---
+
+## 5 – Deine Seite ist online
+
+**① Auf die Bereitstellung warten**
+
+![](../../Img Files/Getting Started/github_pages_the_hosted_website_refreshes_auto_deployment_right_side.png)
+
+Geh zurück auf die Hauptseite deines Repositorys. Rechts steht der Abschnitt **Deployments**. Warte, bis dort ein grüner Haken erscheint, das dauert meist 1–2 Minuten.
+
+Klicke auf die Bereitstellung, dort steht die öffentliche Adresse deiner Website. Sie sieht aus wie `https://deinname.github.io/dein-repo-name/`.
+
+---
+
+::: {.callout-tip}
+## Die Seite später aktualisieren
+
+Immer wenn du etwas geändert hast:
+
+1. Gib im Terminal von VS Code `quarto render` ein (oder klicke auf den Vorschau-Knopf und schließe die Vorschau wieder), damit der Ordner `docs/` neu gebaut wird
+2. Öffne dein Repository auf GitHub → ziehe den aktualisierten Ordner `docs/` auf die Dateiliste → Commit
+
+GitHub Pages stellt die Seite innerhalb von ein bis zwei Minuten von selbst neu bereit.
+:::
+::::
+
+:::: {.content-visible when-profile="english"}
 ::: {.callout-note}
 ## Official Documentation
 Quarto supports several publishing options. See all of them at **[quarto.org/docs/publishing](https://quarto.org/docs/publishing/)**.
@@ -147,3 +300,448 @@ Whenever you make changes:
 
 GitHub Pages will redeploy automatically within a minute or two.
 :::
+::::
+
+:::: {.content-visible when-profile="dansk"}
+::: {.callout-note}
+## Officiel dokumentation
+Quarto har flere måder at udgive på. De er alle beskrevet på **[quarto.org/docs/publishing](https://quarto.org/docs/publishing/)**.
+:::
+
+Denne guide bruger **GitHub Pages**, en gratis tjeneste, der gør dit websted offentligt tilgængeligt på en `github.io`-adresse.
+
+Du skal bruge en gratis konto på [github.com](https://github.com). Opret en, hvis du ikke har en i forvejen.
+
+---
+
+## 1 – Lad Quarto skrive til en mappe `docs`
+
+**① Åbn `_quarto.yml`, og tilføj outputmappen**
+
+![](../../Img Files/Getting Started/github_pages_Change_Output_dir_in_yml.png)
+
+Åbn filen `_quarto.yml`, og tilføj `output-dir: docs` i afsnittet `project:`, præcis som på billedet. GitHub Pages forventer, at webstedets filer ligger i en mappe, der hedder `docs`.
+
+---
+
+**② Render webstedet**
+
+Åbn **terminalen** via **View → Terminal**, og kør:
+
+```{.bash filename="Terminal"}
+quarto render
+```
+
+Quarto bygger hele webstedet i mappen `docs/`. Du kan se den dukke op i filoversigten til venstre.
+
+---
+
+## 2 – Opret et repository på GitHub
+
+**① Gå til GitHub, og opret et nyt repository**
+
+![](../../Img Files/Getting Started/github_pages_create_new_repo_1.png)
+
+Log ind på [github.com](https://github.com), klik på **+** øverst til højre, og vælg **New repository**. Giv det et navn, det bliver en del af webstedets adresse.
+
+---
+
+**② Vælg Public, og opret**
+
+![](../../Img Files/Getting Started/github_pages_create_new_repo_2.png)
+
+Sørg for, at **Public** er valgt. Lad alle andre indstillinger stå, og klik på **Create repository**.
+
+---
+
+## 3 – Upload dine filer
+
+**① Find uploadlinket**
+
+![](../../Img Files/Getting Started/github_pages_upload_existing_files.png)
+
+Dit nye, tomme repository åbnes. Klik på **uploading an existing file** midt på siden.
+
+---
+
+**② Træk projektfilerne over på siden**
+
+Træk alle filer og mapper fra projektmappen direkte over på GitHubs uploadside. Tag det hele med: `docs/`, `_quarto.yml`, `index.qmd`, `styles.css` og alle andre filer.
+
+::: {.callout-warning}
+Upload **ikke** kun indholdet af mappen `docs/`. Upload indholdet af hele projektmappen, så GitHub har alt, hvad der skal bruges.
+:::
+
+GitHub viser **"Processing your files..."**, mens uploaden er i gang.
+
+![](../../Img Files/Getting Started/github_pages_commiting_github.png)
+
+---
+
+**③ Lav et commit af filerne**
+
+![](../../Img Files/Getting Started/github_pages_dont_forget_to_press_commit.png)
+
+Rul ned efter uploaden. Der finder du dialogen **"Commit changes"**. Du kan lade beskeden stå som "Initial Push" eller skrive din egen. Klik på **Commit changes**.
+
+---
+
+## 4 – Slå GitHub Pages til
+
+**① Åbn Settings for repositoryet**
+
+![](../../Img Files/Getting Started/github_pages_find_settings_top_right.png)
+
+Klik på fanen **Settings** øverst på repositoryets side.
+
+---
+
+**② Find "Pages" i sidepanelet til venstre**
+
+![](../../Img Files/Getting Started/github_pages_sidebar_look_for_pages.png)
+
+Rul ned i sidepanelet til venstre, og klik på **Pages**.
+
+---
+
+**③ Vælg branchen `main` og mappen `/docs`**
+
+![](../../Img Files/Getting Started/github_pages_select_branch_main.png)
+
+Klik under **Branch** på listen, hvor der står **None**, og vælg **main**.
+
+---
+
+![](../../Img Files/Getting Started/github_pages_select_folder_docs.png)
+
+Der vises endnu en liste til mappen. Klik på den, og vælg **/docs**.
+
+---
+
+**④ Gem**
+
+![](../../Img Files/Getting Started/github_pages_should_look_like.png)
+
+Klik på **Save**. GitHub begynder nu at bygge og udgive webstedet.
+
+---
+
+## 5 – Webstedet er udgivet
+
+**① Vent på udgivelsen**
+
+![](../../Img Files/Getting Started/github_pages_the_hosted_website_refreshes_auto_deployment_right_side.png)
+
+Gå tilbage til repositoryets forside. I højre side ser du afsnittet **Deployments**. Vent, til det viser et grønt flueben, det tager som regel 1–2 minutter.
+
+Klik på udgivelsen for at finde webstedets offentlige adresse. Den ser ud som `https://ditbrugernavn.github.io/dit-repo-navn/`.
+
+---
+
+::: {.callout-tip}
+## Opdater webstedet senere
+
+Hver gang du har ændret noget:
+
+1. Kør `quarto render` i terminalen i VS Code (eller klik på knappen Preview, og luk den) for at bygge mappen `docs/` igen
+2. Gå til dit repository på GitHub → træk den opdaterede mappe `docs/` over på fillisten → Commit
+
+GitHub Pages udgiver automatisk igen inden for et minut eller to.
+:::
+::::
+
+:::: {.content-visible when-profile="norsk"}
+::: {.callout-note}
+## Offisiell dokumentasjon
+Quarto har flere måter å publisere på. Alle er beskrevet på **[quarto.org/docs/publishing](https://quarto.org/docs/publishing/)**.
+:::
+
+Denne guiden bruker **GitHub Pages**, en gratis tjeneste som gjør nettstedet ditt offentlig tilgjengelig på en `github.io`-adresse.
+
+Du trenger en gratis konto på [github.com](https://github.com). Opprett en hvis du ikke har en fra før.
+
+---
+
+## 1 – La Quarto skrive til en mappe `docs`
+
+**① Åpne `_quarto.yml` og legg til utdatamappen**
+
+![](../../Img Files/Getting Started/github_pages_Change_Output_dir_in_yml.png)
+
+Åpne filen `_quarto.yml` og legg til `output-dir: docs` i delen `project:`, akkurat som på bildet. GitHub Pages forventer at filene til nettstedet ligger i en mappe som heter `docs`.
+
+---
+
+**② Rendre nettstedet**
+
+Åpne **terminalen** via **View → Terminal** og kjør:
+
+```{.bash filename="Terminal"}
+quarto render
+```
+
+Quarto bygger hele nettstedet i mappen `docs/`. Du ser den dukke opp i filutforskeren til venstre.
+
+---
+
+## 2 – Opprett et repository på GitHub
+
+**① Gå til GitHub og opprett et nytt repository**
+
+![](../../Img Files/Getting Started/github_pages_create_new_repo_1.png)
+
+Logg inn på [github.com](https://github.com), klikk på **+** øverst til høyre og velg **New repository**. Gi det et navn, det blir en del av adressen til nettstedet.
+
+---
+
+**② Velg Public og opprett**
+
+![](../../Img Files/Getting Started/github_pages_create_new_repo_2.png)
+
+Pass på at **Public** er valgt. La alle andre innstillinger stå og klikk på **Create repository**.
+
+---
+
+## 3 – Last opp filene dine
+
+**① Finn opplastingslenken**
+
+![](../../Img Files/Getting Started/github_pages_upload_existing_files.png)
+
+Det nye, tomme repositoryet åpnes. Klikk på **uploading an existing file** midt på siden.
+
+---
+
+**② Dra prosjektfilene over på siden**
+
+Dra alle filer og mapper fra prosjektmappen direkte over på opplastingssiden til GitHub. Ta med alt: `docs/`, `_quarto.yml`, `index.qmd`, `styles.css` og alle andre filer.
+
+::: {.callout-warning}
+Last **ikke** bare opp innholdet i mappen `docs/`. Last opp innholdet i hele prosjektmappen, slik at GitHub har alt som trengs.
+:::
+
+GitHub viser **"Processing your files..."** mens opplastingen pågår.
+
+![](../../Img Files/Getting Started/github_pages_commiting_github.png)
+
+---
+
+**③ Gjør en commit av filene**
+
+![](../../Img Files/Getting Started/github_pages_dont_forget_to_press_commit.png)
+
+Rull nedover etter opplastingen. Der finner du dialogen **"Commit changes"**. Du kan la meldingen stå som "Initial Push" eller skrive din egen. Klikk på **Commit changes**.
+
+---
+
+## 4 – Slå på GitHub Pages
+
+**① Åpne Settings for repositoryet**
+
+![](../../Img Files/Getting Started/github_pages_find_settings_top_right.png)
+
+Klikk på fanen **Settings** øverst på siden til repositoryet.
+
+---
+
+**② Finn "Pages" i sidefeltet til venstre**
+
+![](../../Img Files/Getting Started/github_pages_sidebar_look_for_pages.png)
+
+Rull nedover i sidefeltet til venstre og klikk på **Pages**.
+
+---
+
+**③ Velg branchen `main` og mappen `/docs`**
+
+![](../../Img Files/Getting Started/github_pages_select_branch_main.png)
+
+Klikk under **Branch** på listen der det står **None**, og velg **main**.
+
+---
+
+![](../../Img Files/Getting Started/github_pages_select_folder_docs.png)
+
+Det kommer en liste til for mappen. Klikk på den og velg **/docs**.
+
+---
+
+**④ Lagre**
+
+![](../../Img Files/Getting Started/github_pages_should_look_like.png)
+
+Klikk på **Save**. GitHub begynner nå å bygge og publisere nettstedet.
+
+---
+
+## 5 – Nettstedet er publisert
+
+**① Vent på publiseringen**
+
+![](../../Img Files/Getting Started/github_pages_the_hosted_website_refreshes_auto_deployment_right_side.png)
+
+Gå tilbake til hovedsiden til repositoryet. Til høyre ser du delen **Deployments**. Vent til den viser en grønn hake, det tar vanligvis 1–2 minutter.
+
+Klikk på publiseringen for å finne den offentlige adressen til nettstedet. Den ser ut som `https://brukernavnetditt.github.io/ditt-repo-navn/`.
+
+---
+
+::: {.callout-tip}
+## Oppdatere nettstedet senere
+
+Hver gang du har endret noe:
+
+1. Kjør `quarto render` i terminalen i VS Code (eller klikk på knappen Preview og lukk den) for å bygge mappen `docs/` på nytt
+2. Gå til repositoryet ditt på GitHub → dra den oppdaterte mappen `docs/` over på fillisten → Commit
+
+GitHub Pages publiserer på nytt automatisk i løpet av ett til to minutter.
+:::
+::::
+
+:::: {.content-visible when-profile="svenska"}
+::: {.callout-note}
+## Officiell dokumentation
+Quarto har flera sätt att publicera. Alla beskrivs på **[quarto.org/docs/publishing](https://quarto.org/docs/publishing/)**.
+:::
+
+Den här guiden använder **GitHub Pages**, en gratis tjänst som gör din webbplats offentligt tillgänglig på en `github.io`-adress.
+
+Du behöver ett gratis konto på [github.com](https://github.com). Skapa ett om du inte redan har ett.
+
+---
+
+## 1 – Låt Quarto skriva till en mapp `docs`
+
+**① Öppna `_quarto.yml` och lägg till utdatamappen**
+
+![](../../Img Files/Getting Started/github_pages_Change_Output_dir_in_yml.png)
+
+Öppna filen `_quarto.yml` och lägg till `output-dir: docs` i avsnittet `project:`, precis som på bilden. GitHub Pages förväntar sig att webbplatsens filer ligger i en mapp som heter `docs`.
+
+---
+
+**② Rendera webbplatsen**
+
+Öppna **terminalen** via **View → Terminal** och kör:
+
+```{.bash filename="Terminal"}
+quarto render
+```
+
+Quarto bygger hela webbplatsen i mappen `docs/`. Du ser den dyka upp i filutforskaren till vänster.
+
+---
+
+## 2 – Skapa ett repository på GitHub
+
+**① Gå till GitHub och skapa ett nytt repository**
+
+![](../../Img Files/Getting Started/github_pages_create_new_repo_1.png)
+
+Logga in på [github.com](https://github.com), klicka på **+** uppe till höger och välj **New repository**. Ge det ett namn, det blir en del av webbplatsens adress.
+
+---
+
+**② Välj Public och skapa**
+
+![](../../Img Files/Getting Started/github_pages_create_new_repo_2.png)
+
+Se till att **Public** är valt. Låt alla andra inställningar vara och klicka på **Create repository**.
+
+---
+
+## 3 – Ladda upp dina filer
+
+**① Hitta uppladdningslänken**
+
+![](../../Img Files/Getting Started/github_pages_upload_existing_files.png)
+
+Ditt nya tomma repository öppnas. Klicka på **uploading an existing file** mitt på sidan.
+
+---
+
+**② Dra projektfilerna till sidan**
+
+Dra alla filer och mappar från projektmappen direkt till GitHubs uppladdningssida. Ta med allt: `docs/`, `_quarto.yml`, `index.qmd`, `styles.css` och alla andra filer.
+
+::: {.callout-warning}
+Ladda **inte** bara upp innehållet i mappen `docs/`. Ladda upp hela projektmappens innehåll, så att GitHub har allt som behövs.
+:::
+
+GitHub visar **"Processing your files..."** medan uppladdningen pågår.
+
+![](../../Img Files/Getting Started/github_pages_commiting_github.png)
+
+---
+
+**③ Gör en commit av filerna**
+
+![](../../Img Files/Getting Started/github_pages_dont_forget_to_press_commit.png)
+
+Rulla nedåt efter uppladdningen. Där finns dialogen **"Commit changes"**. Du kan låta meddelandet vara "Initial Push" eller skriva ett eget. Klicka på **Commit changes**.
+
+---
+
+## 4 – Aktivera GitHub Pages
+
+**① Öppna repositoryts Settings**
+
+![](../../Img Files/Getting Started/github_pages_find_settings_top_right.png)
+
+Klicka på fliken **Settings** högst upp på repositoryts sida.
+
+---
+
+**② Hitta "Pages" i sidofältet till vänster**
+
+![](../../Img Files/Getting Started/github_pages_sidebar_look_for_pages.png)
+
+Rulla nedåt i sidofältet till vänster och klicka på **Pages**.
+
+---
+
+**③ Välj branchen `main` och mappen `/docs`**
+
+![](../../Img Files/Getting Started/github_pages_select_branch_main.png)
+
+Klicka under **Branch** på listan där det står **None** och välj **main**.
+
+---
+
+![](../../Img Files/Getting Started/github_pages_select_folder_docs.png)
+
+En andra lista för mappen visas. Klicka på den och välj **/docs**.
+
+---
+
+**④ Spara**
+
+![](../../Img Files/Getting Started/github_pages_should_look_like.png)
+
+Klicka på **Save**. GitHub börjar nu bygga och publicera webbplatsen.
+
+---
+
+## 5 – Webbplatsen är publicerad
+
+**① Vänta på publiceringen**
+
+![](../../Img Files/Getting Started/github_pages_the_hosted_website_refreshes_auto_deployment_right_side.png)
+
+Gå tillbaka till repositoryts startsida. Till höger finns avsnittet **Deployments**. Vänta tills det visar en grön bock, det tar oftast 1–2 minuter.
+
+Klicka på publiceringen för att hitta webbplatsens offentliga adress. Den ser ut som `https://dittanvändarnamn.github.io/ditt-repo-namn/`.
+
+---
+
+::: {.callout-tip}
+## Uppdatera webbplatsen senare
+
+Varje gång du har ändrat något:
+
+1. Kör `quarto render` i terminalen i VS Code (eller klicka på knappen Preview och stäng den) för att bygga om mappen `docs/`
+2. Gå till ditt repository på GitHub → dra den uppdaterade mappen `docs/` till fillistan → Commit
+
+GitHub Pages publicerar om automatiskt inom en eller två minuter.
+:::
+::::

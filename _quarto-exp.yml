@@ -1,36 +1,12 @@
+# Niveau Expert (Tipps & Tricks): nur WELCHE Seiten gebaut werden.
+# Beschriftungen stehen in _quarto-deutsch.yml / _quarto-english.yml,
+# den Ausgabeordner docs/<sprache>/exp/ setzt build.py.
 project:
-  output-dir: ./docs/exp
   render:
-    - index.qmd
-    - Qmd Files/Tipps and Tricks/*.qmd
+    - "Qmd Files/Tipps and Tricks/*.qmd"
 
 website:
-  title: "Quarto Tutorial"
   page-navigation: true
-  navbar:
-    left:
-      - text: "Example Page"
-        href: "beg/Qmd Files/Example Page/index_beg.html"
-      - text: "Getting Started"
-        href: "int/Qmd Files/Getting Started/getting_started.html"
-      - text: "Tipps and Tricks for Quarto Users"
-        href: "Qmd Files/Tipps and Tricks/index_exp.qmd"
-  sidebar:
-    - id: tips-sidebar
-      style: docked
-      contents:
-        - href: "Qmd Files/Tipps and Tricks/index_exp.qmd"
-          text: "What's covered & What you should know already"
-        - href: "Qmd Files/Tipps and Tricks/exp_yml.qmd"
-          text: The YML File
-        - href: "Qmd Files/Tipps and Tricks/exp_qmd.qmd"
-          text: The QMD File
-        - href: "Qmd Files/Tipps and Tricks/exp_extensions.qmd"
-          text: Extensions
-        - href: "Qmd Files/Tipps and Tricks/exp_multilanguage.qmd"
-          text: Multilanguage Projects
-        - href: "Qmd Files/Tipps and Tricks/exp_cheatsheet.qmd"
-          text: Cheatsheet
 
 format:
   html:

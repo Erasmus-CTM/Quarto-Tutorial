@@ -1,16 +1,34 @@
 project:
   type: website
 
-execute: 
+execute:
   freeze: auto
+
+# title-en: im Seitenkopf wird im englischen Lauf zum Titel
+filters:
+  - sprache.lua
 
 format:
   html:
     theme:
       light: [morph, Theme/morph_custom.scss]
       dark:  [slate, Theme/slate_custom.scss]
+    # Navbar-Symbole (Suche, Dunkelmodus, Lesemodus) wie in den anderen Tutorials
+    css: styles.css
+    include-in-header:
+      - text: |
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    include-after-body:
+      # Sprach- und Niveauwechsel (setzt die Platzhalter-Links der Navbar)
+      - navigation.html
+      # Knopf „Alle ausklappen“ in der Seitenleiste (nur wo es Abschnitte gibt)
+      - seitenleiste_ausklappen.html
 
+# Zwei Achsen: aus jeder Gruppe ist immer genau ein Profil aktiv.
+#   quarto render --profile int,english --output-dir docs/en/int
+# Alle Kombinationen baut build.py.
 profile:
-  default: beg
-  group: [beg, int, exp, root]
-
+  default: [beg, deutsch]
+  group:
+    - [beg, int, exp, root]   # Niveau (root = Startseite je Sprache)
+    - [deutsch, english, svenska, norsk, dansk]   # Sprache

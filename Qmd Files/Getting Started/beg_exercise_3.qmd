@@ -1,7 +1,74 @@
 ---
-title: "Other Output Formats"
+title: "Andere Ausgabeformate"
+title-sv: "Andra utdataformat"
+title-no: "Andre utdataformater"
+title-da: "Andre outputformater"
+title-en: "Other Output Formats"
 ---
 
+:::: {.content-visible when-profile="deutsch"}
+Einer der größten Vorteile von Quarto: **eine `.qmd`-Datei → mehrere Ausgabeformate**.
+Du schreibst den Inhalt einmal und änderst nur eine Zeile, um PDF, HTML oder Word zu bekommen.
+
+---
+
+## Das Format ändern
+
+Öffne deine `.qmd`-Datei und ändere im Kopf ganz oben die Zeile `format:`.
+
+**Für HTML** (keine weiteren Werkzeuge nötig, läuft in jedem Browser):
+```yaml
+---
+title: "Übungsblatt 1"
+format: html
+---
+```
+
+**Für Word** (`.docx`, lässt sich in Microsoft Word bearbeiten):
+```yaml
+---
+title: "Übungsblatt 1"
+format: docx
+---
+```
+
+**Für PDF** (braucht TinyTeX, siehe [Was du brauchst](beg_exercise_1.qmd)):
+```yaml
+---
+title: "Übungsblatt 1"
+format: pdf
+---
+```
+
+Gib danach im Terminal `quarto render` ein. Quarto erzeugt die Datei im gewählten Format.
+
+---
+
+## Alle Formate auf einmal
+
+Du kannst mehrere Formate angeben, Quarto baut sie dann alle in einem Durchgang:
+
+```yaml
+---
+title: "Übungsblatt 1"
+format:
+  html: default
+  pdf: default
+  docx: default
+---
+```
+
+Ein einziges `quarto render` liefert dir drei Ausgabedateien.
+
+---
+
+::: {.callout-note}
+## Offizielle Dokumentation
+Alle verfügbaren Formate und ihre Optionen stehen unter **[quarto.org/docs/output-formats/all-formats.html](https://quarto.org/docs/output-formats/all-formats.html)**.
+:::
+::::
+
+:::: {.content-visible when-profile="english"}
 One of Quarto's biggest advantages: **one `.qmd` file → multiple output formats**.
 You write the content once and change only one line to get PDF, HTML, or Word.
 
@@ -61,3 +128,199 @@ Run `quarto render` once and you get three output files.
 ## Official Documentation
 See all available formats and their options at **[quarto.org/docs/output-formats/all-formats.html](https://quarto.org/docs/output-formats/all-formats.html)**.
 :::
+::::
+
+:::: {.content-visible when-profile="dansk"}
+En af Quartos største fordele: **én `.qmd`-fil → flere outputformater**.
+Du skriver indholdet én gang og ændrer kun én linje for at få PDF, HTML eller Word.
+
+---
+
+## Skift format
+
+Åbn din `.qmd`-fil, og ret linjen `format:` i hovedet øverst.
+
+**Til HTML** (ingen ekstra værktøjer, virker i alle browsere):
+
+```yaml
+---
+title: "Exercise Sheet 1"
+format: html
+---
+```
+
+**Til Word** (`.docx`, kan redigeres i Microsoft Word):
+
+```yaml
+---
+title: "Exercise Sheet 1"
+format: docx
+---
+```
+
+**Til PDF** (kræver TinyTeX, se [Det skal du bruge](beg_exercise_1.qmd)):
+
+```yaml
+---
+title: "Exercise Sheet 1"
+format: pdf
+---
+```
+
+Kør derefter `quarto render` i terminalen. Quarto laver filen i det format, du har valgt.
+
+---
+
+## Lav alle formater på én gang
+
+Du kan angive flere formater, så renderer Quarto dem alle i én omgang:
+
+```yaml
+---
+title: "Exercise Sheet 1"
+format:
+  html: default
+  pdf: default
+  docx: default
+---
+```
+
+Kør `quarto render` én gang, så får du tre outputfiler.
+
+---
+
+::: {.callout-note}
+## Officiel dokumentation
+Alle tilgængelige formater og deres indstillinger finder du på **[quarto.org/docs/output-formats/all-formats.html](https://quarto.org/docs/output-formats/all-formats.html)**.
+:::
+::::
+
+:::: {.content-visible when-profile="norsk"}
+En av de største fordelene med Quarto: **én `.qmd`-fil → flere utdataformater**.
+Du skriver innholdet én gang og endrer bare én linje for å få PDF, HTML eller Word.
+
+---
+
+## Bytt format
+
+Åpne `.qmd`-filen din og endre linjen `format:` i hodet øverst.
+
+**For HTML** (ingen ekstra verktøy, virker i alle nettlesere):
+
+```yaml
+---
+title: "Exercise Sheet 1"
+format: html
+---
+```
+
+**For Word** (`.docx`, kan redigeres i Microsoft Word):
+
+```yaml
+---
+title: "Exercise Sheet 1"
+format: docx
+---
+```
+
+**For PDF** (krever TinyTeX, se [Dette trenger du](beg_exercise_1.qmd)):
+
+```yaml
+---
+title: "Exercise Sheet 1"
+format: pdf
+---
+```
+
+Kjør deretter `quarto render` i terminalen. Quarto lager filen i det formatet du har valgt.
+
+---
+
+## Lag alle formatene på én gang
+
+Du kan oppgi flere formater, da rendrer Quarto alle i én omgang:
+
+```yaml
+---
+title: "Exercise Sheet 1"
+format:
+  html: default
+  pdf: default
+  docx: default
+---
+```
+
+Kjør `quarto render` én gang, så får du tre utdatafiler.
+
+---
+
+::: {.callout-note}
+## Offisiell dokumentasjon
+Alle tilgjengelige formater og innstillingene deres finner du på **[quarto.org/docs/output-formats/all-formats.html](https://quarto.org/docs/output-formats/all-formats.html)**.
+:::
+::::
+
+:::: {.content-visible when-profile="svenska"}
+En av Quartos största fördelar: **en `.qmd`-fil → flera utdataformat**.
+Du skriver innehållet en gång och ändrar bara en rad för att få PDF, HTML eller Word.
+
+---
+
+## Byt format
+
+Öppna din `.qmd`-fil och ändra raden `format:` i huvudet högst upp.
+
+**För HTML** (inga extra verktyg, fungerar i alla webbläsare):
+
+```yaml
+---
+title: "Exercise Sheet 1"
+format: html
+---
+```
+
+**För Word** (`.docx`, kan redigeras i Microsoft Word):
+
+```yaml
+---
+title: "Exercise Sheet 1"
+format: docx
+---
+```
+
+**För PDF** (kräver TinyTeX, se [Vad du behöver](beg_exercise_1.qmd)):
+
+```yaml
+---
+title: "Exercise Sheet 1"
+format: pdf
+---
+```
+
+Kör sedan `quarto render` i terminalen. Quarto skapar filen i det format du har valt.
+
+---
+
+## Skapa alla format på en gång
+
+Du kan ange flera format, då renderar Quarto alla i ett svep:
+
+```yaml
+---
+title: "Exercise Sheet 1"
+format:
+  html: default
+  pdf: default
+  docx: default
+---
+```
+
+Kör `quarto render` en gång så får du tre utdatafiler.
+
+---
+
+::: {.callout-note}
+## Officiell dokumentation
+Alla tillgängliga format och deras inställningar finns på **[quarto.org/docs/output-formats/all-formats.html](https://quarto.org/docs/output-formats/all-formats.html)**.
+:::
+::::

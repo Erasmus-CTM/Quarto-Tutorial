@@ -1,10 +1,346 @@
 ---
-title: "The YML File"
+title: "Die YML-Datei"
+title-en: "The YML File"
+title-sv: "YML-filen"
+title-no: "YML-filen"
+title-da: "YML-filen"
 sidebar: tips-sidebar
 ---
 
+```{=html}
+<style>
+.palette-callout > .callout-header .callout-icon-container {
+  display: flex;
+  align-items: center;
+}
+.palette-callout > .callout-header .callout-icon-container::before {
+  content: "🎨";
+  font-size: 1.1rem;
+  margin-right: 0.4rem;
+  font-style: normal;
+}
+.palette-callout > .callout-header .callout-icon-container svg {
+  display: none;
+}
+</style>
+```
+
+:::: {.content-visible when-profile="deutsch"}
+Die Datei `_quarto.yml` ist die Schaltzentrale deines Quarto-Projekts.
+Was du hier einstellst, gilt für das ganze Projekt, solange es nicht in einer einzelnen `.qmd`-Datei oder in einem Profil überschrieben wird.
+
+::: {.callout-note}
+## Offizielle Referenz
+**[quarto.org/docs/reference/projects/websites](https://quarto.org/docs/reference/projects/websites.html)**
+:::
+
+---
+
+## Ausgabeformate
+
+Quarto kann dieselbe Quelle in mehrere Formate zugleich bauen:
+
+```{.yaml filename="_quarto.yml"}
+format:
+  html:
+    toc: true
+    theme: cosmo
+  pdf:
+    toc: true
+    documentclass: article
+  docx:
+    toc: true
+```
+
+Alle Formate bauen: `quarto render`
+Ein Format bauen: `quarto render --to pdf`
+
+::: {.callout-tip}
+Jede Format-Option lässt sich je Seite im Kopf der `.qmd`-Datei überschreiben.
+:::
+
+---
+
+## Ausführen und `freeze`
+
+```{.yaml filename="_quarto.yml"}
+execute:
+  echo: true        # Quellcode zeigen
+  eval: true        # Code ausführen
+  warning: false    # Warnungen unterdrücken
+  freeze: auto      # nur neu ausführen, wenn sich die Quelle ändert
+```
+
+| Wert von `freeze` | Verhalten |
+|---|---|
+| `false` | immer neu ausführen |
+| `true` | nie neu ausführen, gespeicherte Ausgabe benutzen |
+| `auto` | nur neu ausführen, wenn sich die `.qmd`-Datei ändert |
+
+Die gespeicherten Ergebnisse liegen in `_freeze/`. Nimm den Ordner mit ins Git-Repository, dann müssen andere nicht alles neu ausführen.
+
+::: {.callout-warning}
+`freeze: auto` achtet auf die `.qmd`-Datei, nicht auf deine Datendateien.
+Wenn du eine CSV-Datei änderst, aber nicht die `.qmd`, lösche den passenden Ordner in `_freeze/`, um einen neuen Lauf zu erzwingen.
+:::
+
+---
+
+## Profile
+
+Mit Profilen pflegst du mehrere Bauvarianten eines Projekts, für verschiedene Zielgruppen, Sprachen oder Formate.
+
+```{.yaml filename="_quarto.yml"}
+profile:
+  default: web
+  group:
+    - [web, print]
+```
+
+Aus einer Gruppe ist immer genau ein Profil aktiv. Jedes Profil hat eine eigene Datei `_quarto-<name>.yml`, die die Grundeinstellungen überschreibt oder ergänzt:
+
+```{.yaml filename="_quarto-print.yml"}
+project:
+  output-dir: docs/print
+format:
+  pdf:
+    toc: true
+```
+
+Ein bestimmtes Profil bauen:
+
+```{.bash}
+quarto render --profile print
+```
+
+::: {.callout-tip}
+Dieses Tutorial hat **zwei Gruppen** von Profilen: das Niveau (`beg`, `int`, `exp`) und die Sprache (`deutsch`, `english`, `svenska`, `norsk`, `dansk`). Bei jedem Lauf ist aus jeder Gruppe eines aktiv, z. B. `quarto render --profile int,english`. Mehr dazu unter [Mehrsprachige Projekte](exp_multilanguage.qmd).
+:::
+
+---
+
+## Seitenleiste {#sidebar}
+
+### Grundaufbau
+
+```{.yaml filename="_quarto.yml"}
+website:
+  sidebar:
+    - id: my-sidebar
+      style: docked       # docked | floating
+      collapse-level: 1   # wie viele Ebenen anfangs ausgeklappt sind
+      contents:
+        - href: page.qmd
+          text: "Titel der Seite"
+```
+
+### Abschnitte, die sich einklappen lassen
+
+Mit `section:` legst du Gruppen an, die sich in der Seitenleiste einklappen lassen.
+Ein Abschnitt kann eine eigene Übersichtsseite haben (`href`) oder nur eine Beschriftung sein:
+
+```{.yaml}
+contents:
+  - section: "Kapitel 1"          # nur Beschriftung, keine Seite
+    contents:
+      - href: ch1/part1.qmd
+        text: Teil 1
+
+  - section: "Kapitel 2"
+    href: ch2/index.qmd           # ein Klick auf den Titel öffnet diese Seite
+    contents:
+      - href: ch2/part1.qmd
+        text: Teil 1
+```
+
+### Ebenen ausklappen
+
+`collapse-level` legt fest, wie viele Ebenen beim Laden der Seite **ausgeklappt** sind:
+
+| Wert | Wirkung |
+|---|---|
+| `1` | nur die oberste Ebene ist zu sehen, alle Abschnitte sind eingeklappt |
+| `2` | die Abschnitte der ersten Ebene sind ausgeklappt (Standard) |
+| `3` | auch die Abschnitte der zweiten Ebene sind ausgeklappt |
+
+```{.yaml}
+sidebar:
+  collapse-level: 1   # eingeklappt beginnen, Leser klappen auf, was sie brauchen
+```
+
+### Feste oder schwebende Seitenleiste
+
+`style: docked` zeigt die Seitenleiste als feste Spalte mit eigenem Hintergrund. `style: floating` stellt sie ohne Hintergrund neben den Text:
+
+```{.yaml}
+website:
+  sidebar:
+    style: floating
+```
+
+Auf einer einzelnen Seite blendest du die Seitenleiste im Kopf der `.qmd`-Datei aus:
+
+```{.yaml filename="seite.qmd"}
+---
+sidebar: false
+---
+```
+
+---
+
+## Stile und CSS {#styles--css}
+
+### Ein Theme wählen
+
+Quarto benutzt für HTML die Themes von [Bootswatch](https://bootswatch.com/):
+
+```{.yaml filename="_quarto.yml"}
+format:
+  html:
+    theme: cosmo
+```
+
+Beliebte Themes: `default`, `cosmo`, `flatly`, `lumen`, `minty`, `sandstone`, `simplex`, `slate` (dunkel), `solar` (dunkel), `superhero` (dunkel).
+
+### Umschalter hell/dunkel
+
+```{.yaml filename="_quarto.yml"}
+format:
+  html:
+    theme:
+      light: flatly
+      dark: darkly
+```
+
+Quarto setzt von selbst einen Umschalter in die Navigationsleiste.
+
+### Eigenes CSS auf ein Theme setzen
+
+```{.yaml filename="_quarto.yml"}
+format:
+  html:
+    theme:
+      - cosmo
+      - custom.scss
+```
+
+Lege `custom.scss` neben die `_quarto.yml`:
+
+```{.scss filename="custom.scss"}
+/*-- scss:defaults --*/
+/* Bootstrap-Variablen überschreiben */
+$primary: #0d6efd;
+$font-size-base: 1rem;
+$headings-font-weight: 600;
+
+/*-- scss:rules --*/
+/* gewöhnliche CSS-Regeln */
+h2 {
+  border-bottom: 2px solid $primary;
+  padding-bottom: 0.25rem;
+}
+```
+
+Die beiden Abschnittsmarken verlangt Quarto:
+
+| Abschnitt | Zweck |
+|---|---|
+| `/*-- scss:defaults --*/` | SCSS-Variablen von Bootstrap überschreiben |
+| `/*-- scss:rules --*/` | gewöhnliche CSS-Regeln schreiben |
+
+### Wichtige SCSS-Variablen
+
+```{.scss}
+/*-- scss:defaults --*/
+$primary:             #0d6efd;
+$body-bg:             #ffffff;
+$body-color:          #212529;
+$font-family-base:    "Inter", sans-serif;
+$font-size-base:      1rem;
+$headings-font-weight: 600;
+$border-radius:       0.375rem;
+```
+
+### Regeln nur für den dunklen Modus
+
+```{.scss filename="custom.scss"}
+/*-- scss:rules --*/
+[data-bs-theme="dark"] .my-box {
+  background-color: #1e1e2e;
+}
+```
+
+### Eigenes Symbol in einem Callout, ein Beispiel für CSS
+
+Ein Callout bekommt ein ganz eigenes Symbol, wenn du eine eigene CSS-Klasse mit ein paar Regeln verbindest.
+
+Der Kasten hier **ist** das Ergebnis. Das Symbol 🎨 kommt vollständig aus dem CSS:
+
+::: {.callout-tip .palette-callout}
+## Eigenes Symbol über CSS
+Dieser Callout hat die Klasse `.palette-callout`. Das Symbol 🎨 wird mit `::before` eingefügt, das übliche SVG wird mit `display: none` ausgeblendet.
+:::
+
+Der Code dazu:
+
+````{.markdown}
+::: {.callout-tip .palette-callout}
+## Eigenes Symbol über CSS
+Inhalt.
+:::
+````
+
+```{.scss filename="custom.scss"}
+/*-- scss:rules --*/
+.palette-callout > .callout-header .callout-icon-container::before {
+  content: "🎨";
+  font-size: 1.1rem;
+  margin-right: 0.4rem;
+}
+.palette-callout > .callout-header .callout-icon-container svg {
+  display: none;
+}
+```
+
+::: {.callout-tip collapse="true"}
+## Sehr nützlich: mit F12 nachsehen
+
+Bevor du einen Stil ändern kannst, musst du wissen, welche CSS-Klasse gemeint ist.
+
+**① Öffne die gebaute HTML-Seite im Browser.**
+
+**② Drücke `F12`**, klicke auf das Zeiger-Symbol und fahre über das Element, das du gestalten willst.
+
+**③ Im HTML-Bereich** siehst du das Element und seine Klassen:
+```{.html}
+<h2 class="anchored" id="my-section">My Section</h2>
+```
+
+**④ Im Bereich „Styles“** siehst du, welche CSS-Regeln gelten und aus welcher Datei sie kommen.
+
+**⑤ Klicke auf einen Wert, um ihn direkt zu ändern.** Die Seite zeigt es sofort, du kannst also ausprobieren, bevor du Code schreibst.
+:::
+
+::: {.callout-note}
+## <i class="python"></i> Symbole gehen auch in Callout-Titeln
+
+Eigene Symbole aus `Theme/Icons/` erscheinen überall, wo Quarto HTML im Text annimmt, auch in Callout-Titeln. Das `<i class="python"></i>` oben entsteht allein durch diese CSS-Regel in der SCSS-Datei:
+
+```{.scss}
+i.python {
+  content: url("Theme/Icons/python.svg");
+  display: inline-block;
+  height: 1em;
+  width: 1em;
+  margin-right: 0.25em;
+}
+```
+:::
+::::
+
+:::: {.content-visible when-profile="english"}
 The `_quarto.yml` file is the control centre of your Quarto project.
-Everything you set here applies globally — unless overridden in a specific `.qmd` file or profile.
+Everything you set here applies globally, unless overridden in a specific `.qmd` file or profile.
 
 ::: {.callout-note}
 ## Official Reference
@@ -33,7 +369,7 @@ Run all formats: `quarto render`
 Run one format: `quarto render --to pdf`
 
 ::: {.callout-tip}
-Any format option can be overridden per page in the `.qmd` file's own YAML frontmatter.
+Any format option can be overridden per page in the header of the `.qmd` file.
 :::
 
 ---
@@ -51,10 +387,10 @@ execute:
 | `freeze` value | Behaviour |
 |---|---|
 | `false` | Always re-execute |
-| `true` | Never re-execute — use cached output |
+| `true` | Never re-execute, use cached output |
 | `auto` | Re-execute only when the `.qmd` file changes |
 
-Frozen results are stored in `_freeze/` — commit this folder so collaborators don't need to re-run everything.
+Frozen results are stored in `_freeze/`. Commit this folder so collaborators don't need to re-run everything.
 
 ::: {.callout-warning}
 `freeze: auto` watches the `.qmd` file, not your data files.
@@ -65,15 +401,16 @@ If you update a CSV but not the `.qmd`, delete the matching folder in `_freeze/`
 
 ## Profiles
 
-Profiles let you maintain multiple build variants — different audiences, languages, or formats — from one project.
+Profiles let you maintain multiple build variants of one project, for different audiences, languages, or formats.
 
 ```{.yaml filename="_quarto.yml"}
 profile:
   default: web
-  group: [web, print]
+  group:
+    - [web, print]
 ```
 
-Each profile has its own config file `_quarto-<name>.yml` that overrides or extends the root config:
+Exactly one profile of a group is active at a time. Each profile has its own config file `_quarto-<name>.yml` that overrides or extends the root config:
 
 ```{.yaml filename="_quarto-print.yml"}
 project:
@@ -90,7 +427,7 @@ quarto render --profile print
 ```
 
 ::: {.callout-tip}
-This entire tutorial is built with three profiles — `beg`, `int`, and `exp` — each with its own sidebar, navbar, and output folder.
+This tutorial has **two groups** of profiles: the level (`beg`, `int`, `exp`) and the language (`deutsch`, `english`, `svenska`, `norsk`, `dansk`). Every run has one of each group active, e.g. `quarto render --profile int,english`. More on this in [Multilanguage Projects](exp_multilanguage.qmd).
 :::
 
 ---
@@ -110,7 +447,7 @@ website:
           text: "Page Title"
 ```
 
-### Sections — collapsible groups
+### Sections: collapsible groups
 
 Use `section:` to create collapsible groups in the sidebar.
 A section can have its own overview page (`href`) or just be a label:
@@ -136,30 +473,30 @@ contents:
 | Value | Effect |
 |---|---|
 | `1` | Only top-level items visible, all sections collapsed |
-| `2` | Top level and first-level sections expanded |
-| `3` | Everything expanded |
+| `2` | First-level sections expanded (default) |
+| `3` | Second-level sections expanded as well |
 
 ```{.yaml}
 sidebar:
-  collapse-level: 1   # start collapsed — reader expands what they need
+  collapse-level: 1   # start collapsed, readers expand what they need
 ```
 
-### Collapsible sidebar (hide/show)
+### Docked or floating sidebar
 
-To allow readers to collapse the sidebar entirely, use:
-
-```{.yaml filename="_quarto.yml"}
-format:
-  html:
-    sidebar: true    # this is the default
-```
-
-For a floating sidebar that can be dismissed:
+`style: docked` shows the sidebar as a fixed column with its own background. `style: floating` places it next to the text without a background:
 
 ```{.yaml}
 website:
   sidebar:
     style: floating
+```
+
+To hide the sidebar on a single page, use the header of that `.qmd` file:
+
+```{.yaml filename="page.qmd"}
+---
+sidebar: false
+---
 ```
 
 ---
@@ -246,43 +583,16 @@ $border-radius:       0.375rem;
 }
 ```
 
-### Custom callout icon — a practical CSS example
+### Custom callout icon, a practical CSS example
 
-A callout can get a completely custom icon by combining a custom CSS class with a small style block.
+A callout can get a completely custom icon by combining a custom CSS class with a few rules.
 
-:::: {.content-visible when-format="html"}
-The callout below **is** the live result — the 🎨 icon is added entirely via CSS:
-
-```{=html}
-<style>
-.palette-callout > .callout-header .callout-icon-container {
-  display: flex;
-  align-items: center;
-}
-.palette-callout > .callout-header .callout-icon-container::before {
-  content: "🎨";
-  font-size: 1.1rem;
-  margin-right: 0.4rem;
-  font-style: normal;
-}
-.palette-callout > .callout-header .callout-icon-container svg {
-  display: none;
-}
-</style>
-```
+The callout below **is** the live result. The 🎨 icon is added entirely via CSS:
 
 ::: {.callout-tip .palette-callout}
 ## Custom icon via CSS
-This callout uses the `.palette-callout` class. The 🎨 icon is injected with `::before` — the default SVG is hidden with `display: none`.
+This callout uses the `.palette-callout` class. The 🎨 icon is injected with `::before`; the default SVG is hidden with `display: none`.
 :::
-::::
-
-:::: {.content-hidden when-format="html"}
-::: {.callout-note}
-## Live demo — HTML only
-The custom icon demo uses a `{=html}` style block which is ignored in this format. Render as HTML to see the 🎨 icon injected via CSS.
-:::
-::::
 
 The code that produces it:
 
@@ -306,13 +616,13 @@ Content here.
 ```
 
 ::: {.callout-tip collapse="true"}
-## Very nice to know — Inspect with F12
+## Very nice to know: inspect with F12
 
 Before you can change a style, you need to know which CSS class to target.
 
 **① Open your rendered HTML in a browser.**
 
-**② Press `F12`** → click the cursor icon → hover over the element you want to style.
+**② Press `F12`**, click the cursor icon and hover over the element you want to style.
 
 **③ In the HTML panel**, you will see the element and its classes:
 ```{.html}
@@ -321,13 +631,13 @@ Before you can change a style, you need to know which CSS class to target.
 
 **④ In the Styles panel**, you see which CSS rules apply and from which stylesheet.
 
-**⑤ Click any value to edit it live** — the page updates instantly so you can experiment before writing any code.
+**⑤ Click any value to edit it live.** The page updates instantly, so you can experiment before writing any code.
 :::
 
 ::: {.callout-note}
 ## <i class="python"></i> Icons work in callout headings too
 
-Custom icons from `Theme/Icons/` render anywhere Quarto accepts inline HTML — including callout titles. The `<i class="python"></i>` above is produced entirely by the CSS rule in your SCSS:
+Custom icons from `Theme/Icons/` render anywhere Quarto accepts inline HTML, including callout titles. The `<i class="python"></i>` above is produced entirely by this CSS rule in the SCSS file:
 
 ```{.scss}
 i.python {
@@ -339,3 +649,949 @@ i.python {
 }
 ```
 :::
+::::
+
+:::: {.content-visible when-profile="dansk"}
+Filen `_quarto.yml` er kontrolcentret i dit Quarto-projekt.
+Alt, hvad du indstiller her, gælder globalt, medmindre det tilsidesættes i en bestemt `.qmd`-fil eller profil.
+
+::: {.callout-note}
+## Officiel reference
+**[quarto.org/docs/reference/projects/websites](https://quarto.org/docs/reference/projects/websites.html)**
+:::
+
+---
+
+## Outputformater
+
+Quarto kan rendere den samme kilde til flere formater på én gang:
+
+```{.yaml filename="_quarto.yml"}
+format:
+  html:
+    toc: true
+    theme: cosmo
+  pdf:
+    toc: true
+    documentclass: article
+  docx:
+    toc: true
+```
+
+Alle formater: `quarto render`
+Ét format: `quarto render --to pdf`
+
+::: {.callout-tip}
+Enhver formatindstilling kan tilsidesættes pr. side i hovedet på `.qmd`-filen.
+:::
+
+---
+
+## Execute & freeze
+
+```{.yaml filename="_quarto.yml"}
+execute:
+  echo: true        # show source code
+  eval: true        # run the code
+  warning: false    # suppress warnings
+  freeze: auto      # re-run only when source changes
+```
+
+| Værdi for `freeze` | Adfærd |
+|---|---|
+| `false` | Kør altid igen |
+| `true` | Kør aldrig igen, brug gemt output |
+| `auto` | Kør kun igen, når `.qmd`-filen ændres |
+
+Frosne resultater gemmes i `_freeze/`. Tag mappen med i dine commits, så samarbejdspartnere ikke behøver at køre det hele igen.
+
+::: {.callout-warning}
+`freeze: auto` holder øje med `.qmd`-filen, ikke med dine datafiler.
+Hvis du opdaterer en CSV-fil, men ikke `.qmd`-filen, så slet den tilhørende mappe i `_freeze/` for at fremtvinge en ny kørsel.
+:::
+
+---
+
+## Profiler
+
+Med profiler kan du have flere byggevarianter af ét projekt, til forskellige målgrupper, sprog eller formater.
+
+```{.yaml filename="_quarto.yml"}
+profile:
+  default: web
+  group:
+    - [web, print]
+```
+
+Præcis én profil i en gruppe er aktiv ad gangen. Hver profil har sin egen konfigurationsfil `_quarto-<navn>.yml`, som tilsidesætter eller udvider grundkonfigurationen:
+
+```{.yaml filename="_quarto-print.yml"}
+project:
+  output-dir: docs/print
+format:
+  pdf:
+    toc: true
+```
+
+Render en bestemt profil:
+
+```{.bash}
+quarto render --profile print
+```
+
+::: {.callout-tip}
+Denne vejledning har **to grupper** af profiler: niveauet (`beg`, `int`, `exp`) og sproget (`deutsch`, `english`, `svenska`, `norsk`, `dansk`). I hver kørsel er én fra hver gruppe aktiv, f.eks. `quarto render --profile int,english`. Mere om det i [Flersprogede projekter](exp_multilanguage.qmd).
+:::
+
+---
+
+## Sidepanel {#sidebar}
+
+### Grundopsætning
+
+```{.yaml filename="_quarto.yml"}
+website:
+  sidebar:
+    - id: my-sidebar
+      style: docked       # docked | floating
+      collapse-level: 1   # how many levels are expanded by default
+      contents:
+        - href: page.qmd
+          text: "Page Title"
+```
+
+### Afsnit: grupper, der kan foldes sammen
+
+Brug `section:` til at lave grupper i sidepanelet, der kan foldes sammen.
+Et afsnit kan have sin egen oversigtsside (`href`) eller bare være en etiket:
+
+```{.yaml}
+contents:
+  - section: "Chapter 1"          # label only, no page
+    contents:
+      - href: ch1/part1.qmd
+        text: Part 1
+
+  - section: "Chapter 2"
+    href: ch2/index.qmd           # clicking the section title opens this page
+    contents:
+      - href: ch2/part1.qmd
+        text: Part 1
+```
+
+### Sammenfoldningsniveau
+
+`collapse-level` styrer, hvor mange niveauer der er **foldet ud**, når siden indlæses:
+
+| Værdi | Effekt |
+|---|---|
+| `1` | Kun det øverste niveau vises, alle afsnit er foldet sammen |
+| `2` | Afsnit på første niveau er foldet ud (standard) |
+| `3` | Også afsnit på andet niveau er foldet ud |
+
+```{.yaml}
+sidebar:
+  collapse-level: 1   # start collapsed, readers expand what they need
+```
+
+### Fastgjort eller flydende sidepanel
+
+`style: docked` viser sidepanelet som en fast kolonne med sin egen baggrund. `style: floating` lægger det ved siden af teksten uden baggrund:
+
+```{.yaml}
+website:
+  sidebar:
+    style: floating
+```
+
+For at skjule sidepanelet på en enkelt side bruger du hovedet i den `.qmd`-fil:
+
+```{.yaml filename="page.qmd"}
+---
+sidebar: false
+---
+```
+
+---
+
+## Typografier & CSS {#styles--css}
+
+### Vælg et tema
+
+Quarto bruger temaer fra [Bootswatch](https://bootswatch.com/) til HTML:
+
+```{.yaml filename="_quarto.yml"}
+format:
+  html:
+    theme: cosmo
+```
+
+Populære temaer: `default`, `cosmo`, `flatly`, `lumen`, `minty`, `sandstone`, `simplex`, `slate` (mørkt), `solar` (mørkt), `superhero` (mørkt).
+
+### Skift mellem lyst og mørkt
+
+```{.yaml filename="_quarto.yml"}
+format:
+  html:
+    theme:
+      light: flatly
+      dark: darkly
+```
+
+Quarto tilføjer automatisk en knap til at skifte i menulinjen.
+
+### Egen CSS oven på et tema
+
+```{.yaml filename="_quarto.yml"}
+format:
+  html:
+    theme:
+      - cosmo
+      - custom.scss
+```
+
+Opret `custom.scss` ved siden af `_quarto.yml`:
+
+```{.scss filename="custom.scss"}
+/*-- scss:defaults --*/
+/* Override Bootstrap design tokens */
+$primary: #0d6efd;
+$font-size-base: 1rem;
+$headings-font-weight: 600;
+
+/*-- scss:rules --*/
+/* Regular CSS rules */
+h2 {
+  border-bottom: 2px solid $primary;
+  padding-bottom: 0.25rem;
+}
+```
+
+Quarto kræver de to afsnitsmarkører:
+
+| Afsnit | Formål |
+|---|---|
+| `/*-- scss:defaults --*/` | Tilsidesætte Bootstraps SCSS-variabler |
+| `/*-- scss:rules --*/` | Skrive almindelige CSS-regler |
+
+### Vigtige SCSS-variabler
+
+```{.scss}
+/*-- scss:defaults --*/
+$primary:             #0d6efd;
+$body-bg:             #ffffff;
+$body-color:          #212529;
+$font-family-base:    "Inter", sans-serif;
+$font-size-base:      1rem;
+$headings-font-weight: 600;
+$border-radius:       0.375rem;
+```
+
+### Regler for mørk tilstand
+
+```{.scss filename="custom.scss"}
+/*-- scss:rules --*/
+[data-bs-theme="dark"] .my-box {
+  background-color: #1e1e2e;
+}
+```
+
+### Eget ikon i en infoboks, et praktisk CSS-eksempel
+
+En infoboks kan få sit helt eget ikon ved at kombinere en egen CSS-klasse med nogle få regler.
+
+Infoboksen nedenfor **er** det færdige resultat. Ikonet 🎨 tilføjes udelukkende med CSS:
+
+::: {.callout-tip .palette-callout}
+## Eget ikon med CSS
+Denne infoboks bruger klassen `.palette-callout`. Ikonet 🎨 indsættes med `::before`, og standardikonet (SVG) skjules med `display: none`.
+:::
+
+Koden, der giver det:
+
+````{.markdown}
+::: {.callout-tip .palette-callout}
+## Custom icon via CSS
+Content here.
+:::
+````
+
+```{.scss filename="custom.scss"}
+/*-- scss:rules --*/
+.palette-callout > .callout-header .callout-icon-container::before {
+  content: "🎨";
+  font-size: 1.1rem;
+  margin-right: 0.4rem;
+}
+.palette-callout > .callout-header .callout-icon-container svg {
+  display: none;
+}
+```
+
+::: {.callout-tip collapse="true"}
+## Rigtig godt at vide: inspicér med F12
+
+Før du kan ændre en typografi, skal du vide, hvilken CSS-klasse du skal ramme.
+
+**① Åbn den renderede HTML-side i en browser.**
+
+**② Tryk på `F12`**, klik på pilsymbolet, og hold musemarkøren over det element, du vil formgive.
+
+**③ I HTML-panelet** ser du elementet og dets klasser:
+
+```{.html}
+<h2 class="anchored" id="my-section">My Section</h2>
+```
+
+**④ I panelet Styles** ser du, hvilke CSS-regler der gælder, og hvilket typografiark de kommer fra.
+
+**⑤ Klik på en værdi for at ændre den direkte.** Siden opdateres med det samme, så du kan eksperimentere, før du skriver kode.
+:::
+
+::: {.callout-note}
+## <i class="python"></i> Ikoner virker også i infoboksenes overskrifter
+
+Egne ikoner fra `Theme/Icons/` vises overalt, hvor Quarto accepterer HTML i teksten, også i infoboksenes overskrifter. `<i class="python"></i>` ovenfor laves udelukkende af denne CSS-regel i SCSS-filen:
+
+```{.scss}
+i.python {
+  content: url("Theme/Icons/python.svg");
+  display: inline-block;
+  height: 1em;
+  width: 1em;
+  margin-right: 0.25em;
+}
+```
+
+:::
+::::
+
+:::: {.content-visible when-profile="norsk"}
+Filen `_quarto.yml` er kontrollsenteret i Quarto-prosjektet ditt.
+Alt du setter her, gjelder globalt, med mindre det overstyres i en bestemt `.qmd`-fil eller profil.
+
+::: {.callout-note}
+## Offisiell referanse
+**[quarto.org/docs/reference/projects/websites](https://quarto.org/docs/reference/projects/websites.html)**
+:::
+
+---
+
+## Utdataformater
+
+Quarto kan rendre den samme kilden til flere formater på én gang:
+
+```{.yaml filename="_quarto.yml"}
+format:
+  html:
+    toc: true
+    theme: cosmo
+  pdf:
+    toc: true
+    documentclass: article
+  docx:
+    toc: true
+```
+
+Alle formater: `quarto render`
+Ett format: `quarto render --to pdf`
+
+::: {.callout-tip}
+Hver formatinnstilling kan overstyres per side i hodet på `.qmd`-filen.
+:::
+
+---
+
+## Execute & freeze
+
+```{.yaml filename="_quarto.yml"}
+execute:
+  echo: true        # show source code
+  eval: true        # run the code
+  warning: false    # suppress warnings
+  freeze: auto      # re-run only when source changes
+```
+
+| Verdi for `freeze` | Oppførsel |
+|---|---|
+| `false` | Kjør alltid på nytt |
+| `true` | Kjør aldri på nytt, bruk lagret utdata |
+| `auto` | Kjør på nytt bare når `.qmd`-filen endres |
+
+Frosne resultater lagres i `_freeze/`. Ta med denne mappen i commitene dine, så slipper samarbeidspartnere å kjøre alt på nytt.
+
+::: {.callout-warning}
+`freeze: auto` følger med på `.qmd`-filen, ikke på datafilene dine.
+Hvis du oppdaterer en CSV-fil, men ikke `.qmd`-filen, sletter du den tilhørende mappen i `_freeze/` for å tvinge fram en ny kjøring.
+:::
+
+---
+
+## Profiler
+
+Med profiler kan du ha flere byggevarianter av ett prosjekt, for ulike målgrupper, språk eller formater.
+
+```{.yaml filename="_quarto.yml"}
+profile:
+  default: web
+  group:
+    - [web, print]
+```
+
+Nøyaktig én profil i en gruppe er aktiv om gangen. Hver profil har sin egen konfigurasjonsfil `_quarto-<navn>.yml`, som overstyrer eller utvider grunnkonfigurasjonen:
+
+```{.yaml filename="_quarto-print.yml"}
+project:
+  output-dir: docs/print
+format:
+  pdf:
+    toc: true
+```
+
+Rendre en bestemt profil:
+
+```{.bash}
+quarto render --profile print
+```
+
+::: {.callout-tip}
+Denne veiledningen har **to grupper** av profiler: nivået (`beg`, `int`, `exp`) og språket (`deutsch`, `english`, `svenska`, `norsk`, `dansk`). I hver kjøring er én fra hver gruppe aktiv, f.eks. `quarto render --profile int,english`. Mer om dette i [Flerspråklige prosjekter](exp_multilanguage.qmd).
+:::
+
+---
+
+## Sidefelt {#sidebar}
+
+### Grunnoppsett
+
+```{.yaml filename="_quarto.yml"}
+website:
+  sidebar:
+    - id: my-sidebar
+      style: docked       # docked | floating
+      collapse-level: 1   # how many levels are expanded by default
+      contents:
+        - href: page.qmd
+          text: "Page Title"
+```
+
+### Deler: grupper som kan foldes sammen
+
+Bruk `section:` til å lage grupper i sidefeltet som kan foldes sammen.
+En del kan ha sin egen oversiktsside (`href`) eller bare være en etikett:
+
+```{.yaml}
+contents:
+  - section: "Chapter 1"          # label only, no page
+    contents:
+      - href: ch1/part1.qmd
+        text: Part 1
+
+  - section: "Chapter 2"
+    href: ch2/index.qmd           # clicking the section title opens this page
+    contents:
+      - href: ch2/part1.qmd
+        text: Part 1
+```
+
+### Sammenfoldingsnivå
+
+`collapse-level` styrer hvor mange nivåer som er **foldet ut** når siden lastes:
+
+| Verdi | Effekt |
+|---|---|
+| `1` | Bare det øverste nivået vises, alle delene er foldet sammen |
+| `2` | Delene på første nivå er foldet ut (standard) |
+| `3` | Også delene på andre nivå er foldet ut |
+
+```{.yaml}
+sidebar:
+  collapse-level: 1   # start collapsed, readers expand what they need
+```
+
+### Dokket eller flytende sidefelt
+
+`style: docked` viser sidefeltet som en fast kolonne med egen bakgrunn. `style: floating` legger det ved siden av teksten uten bakgrunn:
+
+```{.yaml}
+website:
+  sidebar:
+    style: floating
+```
+
+For å skjule sidefeltet på én enkelt side bruker du hodet i den `.qmd`-filen:
+
+```{.yaml filename="page.qmd"}
+---
+sidebar: false
+---
+```
+
+---
+
+## Stiler & CSS {#styles--css}
+
+### Velge tema
+
+Quarto bruker temaer fra [Bootswatch](https://bootswatch.com/) for HTML:
+
+```{.yaml filename="_quarto.yml"}
+format:
+  html:
+    theme: cosmo
+```
+
+Populære temaer: `default`, `cosmo`, `flatly`, `lumen`, `minty`, `sandstone`, `simplex`, `slate` (mørkt), `solar` (mørkt), `superhero` (mørkt).
+
+### Bytte mellom lyst og mørkt
+
+```{.yaml filename="_quarto.yml"}
+format:
+  html:
+    theme:
+      light: flatly
+      dark: darkly
+```
+
+Quarto legger automatisk til en bryter i menylinjen.
+
+### Egen CSS oppå et tema
+
+```{.yaml filename="_quarto.yml"}
+format:
+  html:
+    theme:
+      - cosmo
+      - custom.scss
+```
+
+Lag `custom.scss` ved siden av `_quarto.yml`:
+
+```{.scss filename="custom.scss"}
+/*-- scss:defaults --*/
+/* Override Bootstrap design tokens */
+$primary: #0d6efd;
+$font-size-base: 1rem;
+$headings-font-weight: 600;
+
+/*-- scss:rules --*/
+/* Regular CSS rules */
+h2 {
+  border-bottom: 2px solid $primary;
+  padding-bottom: 0.25rem;
+}
+```
+
+Quarto krever de to delmarkørene:
+
+| Del | Formål |
+|---|---|
+| `/*-- scss:defaults --*/` | Overstyre SCSS-variablene i Bootstrap |
+| `/*-- scss:rules --*/` | Skrive vanlige CSS-regler |
+
+### Viktige SCSS-variabler
+
+```{.scss}
+/*-- scss:defaults --*/
+$primary:             #0d6efd;
+$body-bg:             #ffffff;
+$body-color:          #212529;
+$font-family-base:    "Inter", sans-serif;
+$font-size-base:      1rem;
+$headings-font-weight: 600;
+$border-radius:       0.375rem;
+```
+
+### Regler for mørk modus
+
+```{.scss filename="custom.scss"}
+/*-- scss:rules --*/
+[data-bs-theme="dark"] .my-box {
+  background-color: #1e1e2e;
+}
+```
+
+### Eget ikon i en infoboks, et praktisk CSS-eksempel
+
+En infoboks kan få et helt eget ikon ved å kombinere en egen CSS-klasse med noen få regler.
+
+Infoboksen under **er** det ferdige resultatet. Ikonet 🎨 legges til utelukkende med CSS:
+
+::: {.callout-tip .palette-callout}
+## Eget ikon med CSS
+Denne infoboksen bruker klassen `.palette-callout`. Ikonet 🎨 settes inn med `::before`, og standardikonet (SVG) skjules med `display: none`.
+:::
+
+Koden som gir dette:
+
+````{.markdown}
+::: {.callout-tip .palette-callout}
+## Custom icon via CSS
+Content here.
+:::
+````
+
+```{.scss filename="custom.scss"}
+/*-- scss:rules --*/
+.palette-callout > .callout-header .callout-icon-container::before {
+  content: "🎨";
+  font-size: 1.1rem;
+  margin-right: 0.4rem;
+}
+.palette-callout > .callout-header .callout-icon-container svg {
+  display: none;
+}
+```
+
+::: {.callout-tip collapse="true"}
+## Veldig greit å vite: inspiser med F12
+
+Før du kan endre en stil, må du vite hvilken CSS-klasse du skal sikte på.
+
+**① Åpne den ferdig rendrede HTML-siden i en nettleser.**
+
+**② Trykk på `F12`**, klikk på pilsymbolet og hold musepekeren over elementet du vil utforme.
+
+**③ I HTML-panelet** ser du elementet og klassene det har:
+
+```{.html}
+<h2 class="anchored" id="my-section">My Section</h2>
+```
+
+**④ I panelet Styles** ser du hvilke CSS-regler som gjelder, og hvilket stilark de kommer fra.
+
+**⑤ Klikk på en verdi for å endre den direkte.** Siden oppdateres med en gang, så du kan eksperimentere før du skriver noe kode.
+:::
+
+::: {.callout-note}
+## <i class="python"></i> Ikoner virker også i overskriftene til infobokser
+
+Egne ikoner fra `Theme/Icons/` vises overalt der Quarto godtar HTML i teksten, også i overskriftene til infobokser. `<i class="python"></i>` over lages utelukkende av denne CSS-regelen i SCSS-filen:
+
+```{.scss}
+i.python {
+  content: url("Theme/Icons/python.svg");
+  display: inline-block;
+  height: 1em;
+  width: 1em;
+  margin-right: 0.25em;
+}
+```
+
+:::
+::::
+
+:::: {.content-visible when-profile="svenska"}
+Filen `_quarto.yml` är kontrollcentralen i ditt Quarto-projekt.
+Allt du ställer in här gäller globalt, om det inte ändras i en enskild `.qmd`-fil eller profil.
+
+::: {.callout-note}
+## Officiell referens
+**[quarto.org/docs/reference/projects/websites](https://quarto.org/docs/reference/projects/websites.html)**
+:::
+
+---
+
+## Utdataformat
+
+Quarto kan rendera samma källa till flera format på en gång:
+
+```{.yaml filename="_quarto.yml"}
+format:
+  html:
+    toc: true
+    theme: cosmo
+  pdf:
+    toc: true
+    documentclass: article
+  docx:
+    toc: true
+```
+
+Alla format: `quarto render`
+Ett format: `quarto render --to pdf`
+
+::: {.callout-tip}
+Varje formatinställning kan ändras per sida i huvudet på `.qmd`-filen.
+:::
+
+---
+
+## Execute & freeze
+
+```{.yaml filename="_quarto.yml"}
+execute:
+  echo: true        # show source code
+  eval: true        # run the code
+  warning: false    # suppress warnings
+  freeze: auto      # re-run only when source changes
+```
+
+| Värde för `freeze` | Beteende |
+|---|---|
+| `false` | Kör alltid om |
+| `true` | Kör aldrig om, använd sparad utdata |
+| `auto` | Kör om bara när `.qmd`-filen ändras |
+
+Frysta resultat sparas i `_freeze/`. Ta med mappen i dina commits, så behöver medarbetare inte köra om allt.
+
+::: {.callout-warning}
+`freeze: auto` bevakar `.qmd`-filen, inte dina datafiler.
+Om du uppdaterar en CSV-fil men inte `.qmd`-filen, radera motsvarande mapp i `_freeze/` för att tvinga fram en ny körning.
+:::
+
+---
+
+## Profiler
+
+Med profiler kan du ha flera byggvarianter av ett projekt, för olika målgrupper, språk eller format.
+
+```{.yaml filename="_quarto.yml"}
+profile:
+  default: web
+  group:
+    - [web, print]
+```
+
+Exakt en profil i en grupp är aktiv åt gången. Varje profil har sin egen konfigurationsfil `_quarto-<namn>.yml`, som ändrar eller kompletterar grundkonfigurationen:
+
+```{.yaml filename="_quarto-print.yml"}
+project:
+  output-dir: docs/print
+format:
+  pdf:
+    toc: true
+```
+
+Rendera en viss profil:
+
+```{.bash}
+quarto render --profile print
+```
+
+::: {.callout-tip}
+Den här handledningen har **två grupper** av profiler: nivån (`beg`, `int`, `exp`) och språket (`deutsch`, `english`, `svenska`, `norsk`, `dansk`). I varje körning är en ur varje grupp aktiv, t.ex. `quarto render --profile int,english`. Mer om det i [Flerspråkiga projekt](exp_multilanguage.qmd).
+:::
+
+---
+
+## Sidofält {#sidebar}
+
+### Grundinställning
+
+```{.yaml filename="_quarto.yml"}
+website:
+  sidebar:
+    - id: my-sidebar
+      style: docked       # docked | floating
+      collapse-level: 1   # how many levels are expanded by default
+      contents:
+        - href: page.qmd
+          text: "Page Title"
+```
+
+### Avsnitt: grupper som kan fällas ihop
+
+Använd `section:` för att skapa grupper i sidofältet som kan fällas ihop.
+Ett avsnitt kan ha en egen översiktssida (`href`) eller bara vara en etikett:
+
+```{.yaml}
+contents:
+  - section: "Chapter 1"          # label only, no page
+    contents:
+      - href: ch1/part1.qmd
+        text: Part 1
+
+  - section: "Chapter 2"
+    href: ch2/index.qmd           # clicking the section title opens this page
+    contents:
+      - href: ch2/part1.qmd
+        text: Part 1
+```
+
+### Hopfällningsnivå
+
+`collapse-level` styr hur många nivåer som är **utfällda** när sidan laddas:
+
+| Värde | Effekt |
+|---|---|
+| `1` | Bara översta nivån syns, alla avsnitt är hopfällda |
+| `2` | Avsnitt på första nivån är utfällda (standard) |
+| `3` | Även avsnitt på andra nivån är utfällda |
+
+```{.yaml}
+sidebar:
+  collapse-level: 1   # start collapsed, readers expand what they need
+```
+
+### Dockat eller flytande sidofält
+
+`style: docked` visar sidofältet som en fast kolumn med egen bakgrund. `style: floating` lägger det bredvid texten utan bakgrund:
+
+```{.yaml}
+website:
+  sidebar:
+    style: floating
+```
+
+För att dölja sidofältet på en enskild sida använder du huvudet i den `.qmd`-filen:
+
+```{.yaml filename="page.qmd"}
+---
+sidebar: false
+---
+```
+
+---
+
+## Stilar & CSS {#styles--css}
+
+### Välja tema
+
+Quarto använder teman från [Bootswatch](https://bootswatch.com/) för HTML:
+
+```{.yaml filename="_quarto.yml"}
+format:
+  html:
+    theme: cosmo
+```
+
+Populära teman: `default`, `cosmo`, `flatly`, `lumen`, `minty`, `sandstone`, `simplex`, `slate` (mörkt), `solar` (mörkt), `superhero` (mörkt).
+
+### Växla mellan ljust och mörkt
+
+```{.yaml filename="_quarto.yml"}
+format:
+  html:
+    theme:
+      light: flatly
+      dark: darkly
+```
+
+Quarto lägger automatiskt till en växlingsknapp i menyraden.
+
+### Egen CSS ovanpå ett tema
+
+```{.yaml filename="_quarto.yml"}
+format:
+  html:
+    theme:
+      - cosmo
+      - custom.scss
+```
+
+Skapa `custom.scss` bredvid `_quarto.yml`:
+
+```{.scss filename="custom.scss"}
+/*-- scss:defaults --*/
+/* Override Bootstrap design tokens */
+$primary: #0d6efd;
+$font-size-base: 1rem;
+$headings-font-weight: 600;
+
+/*-- scss:rules --*/
+/* Regular CSS rules */
+h2 {
+  border-bottom: 2px solid $primary;
+  padding-bottom: 0.25rem;
+}
+```
+
+Quarto kräver de två avsnittsmarkeringarna:
+
+| Avsnitt | Syfte |
+|---|---|
+| `/*-- scss:defaults --*/` | Ändra Bootstraps SCSS-variabler |
+| `/*-- scss:rules --*/` | Skriva vanliga CSS-regler |
+
+### Viktiga SCSS-variabler
+
+```{.scss}
+/*-- scss:defaults --*/
+$primary:             #0d6efd;
+$body-bg:             #ffffff;
+$body-color:          #212529;
+$font-family-base:    "Inter", sans-serif;
+$font-size-base:      1rem;
+$headings-font-weight: 600;
+$border-radius:       0.375rem;
+```
+
+### Regler för mörkt läge
+
+```{.scss filename="custom.scss"}
+/*-- scss:rules --*/
+[data-bs-theme="dark"] .my-box {
+  background-color: #1e1e2e;
+}
+```
+
+### Egen ikon i en inforuta, ett praktiskt CSS-exempel
+
+En inforuta kan få en helt egen ikon genom att kombinera en egen CSS-klass med några regler.
+
+Inforutan nedanför **är** det färdiga resultatet. Ikonen 🎨 läggs till helt med CSS:
+
+::: {.callout-tip .palette-callout}
+## Egen ikon med CSS
+Den här inforutan använder klassen `.palette-callout`. Ikonen 🎨 läggs in med `::before`, och standardikonen (SVG) döljs med `display: none`.
+:::
+
+Koden som ger detta:
+
+````{.markdown}
+::: {.callout-tip .palette-callout}
+## Custom icon via CSS
+Content here.
+:::
+````
+
+```{.scss filename="custom.scss"}
+/*-- scss:rules --*/
+.palette-callout > .callout-header .callout-icon-container::before {
+  content: "🎨";
+  font-size: 1.1rem;
+  margin-right: 0.4rem;
+}
+.palette-callout > .callout-header .callout-icon-container svg {
+  display: none;
+}
+```
+
+::: {.callout-tip collapse="true"}
+## Mycket bra att känna till: inspektera med F12
+
+Innan du kan ändra en stil måste du veta vilken CSS-klass du ska rikta in dig på.
+
+**① Öppna den renderade HTML-sidan i en webbläsare.**
+
+**② Tryck på `F12`**, klicka på pilsymbolen och håll muspekaren över det element du vill formge.
+
+**③ I HTML-panelen** ser du elementet och dess klasser:
+
+```{.html}
+<h2 class="anchored" id="my-section">My Section</h2>
+```
+
+**④ I panelen Styles** ser du vilka CSS-regler som gäller och från vilken stilmall de kommer.
+
+**⑤ Klicka på ett värde för att ändra det direkt.** Sidan uppdateras genast, så du kan experimentera innan du skriver någon kod.
+:::
+
+::: {.callout-note}
+## <i class="python"></i> Ikoner fungerar också i inforutors rubriker
+
+Egna ikoner från `Theme/Icons/` visas överallt där Quarto accepterar HTML i texten, även i inforutors rubriker. `<i class="python"></i>` ovanför skapas helt av den här CSS-regeln i SCSS-filen:
+
+```{.scss}
+i.python {
+  content: url("Theme/Icons/python.svg");
+  display: inline-block;
+  height: 1em;
+  width: 1em;
+  margin-right: 0.25em;
+}
+```
+
+:::
+::::

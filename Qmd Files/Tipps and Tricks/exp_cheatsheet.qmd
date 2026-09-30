@@ -1,13 +1,328 @@
 ---
 title: "Cheatsheet"
+title-en: "Cheatsheet"
+title-sv: "Cheatsheet"
+title-no: "Cheatsheet"
+title-da: "Cheatsheet"
 sidebar: tips-sidebar
 ---
 
+:::: {.content-visible when-profile="deutsch"}
+Alles aus diesem Teil zum schnellen Nachschlagen.
+
+---
+
+## YAML: Optionen in der `_quarto.yml`
+
+### Projekt
+
+```{.yaml}
+project:
+  type: website       # website | book | manuscript | default
+  output-dir: docs    # wohin die gebauten Dateien kommen
+```
+
+### Ausführen (Vorgaben für allen Code)
+
+```{.yaml}
+execute:
+  echo: true          # Quellcode zeigen
+  eval: true          # Code ausführen
+  warning: false      # Warnungen ausblenden
+  error: false        # bei Fehlern abbrechen
+  freeze: auto        # auto | true | false
+```
+
+### Format
+
+```{.yaml}
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    theme:              # ein Name (theme: cosmo) oder eine Liste
+      - cosmo
+      - custom.scss
+    code-fold: true
+    code-tools: true
+    number-sections: false
+  pdf:
+    toc: true
+    documentclass: article
+    geometry: margin=2.5cm
+  docx:
+    toc: true
+```
+
+### Website
+
+```{.yaml}
+website:
+  title: "Meine Seite"
+  navbar:
+    left:
+      - text: "Start"
+        href: index.qmd
+      - text: "Extern"
+        href: https://example.com
+    right:
+      - icon: github
+        href: https://github.com/your/repo
+  sidebar:
+    - id: my-sidebar
+      style: docked        # docked | floating
+      contents:
+        - href: page.qmd
+          text: Titel der Seite
+        - section: "Gruppe"
+          contents:
+            - href: sub.qmd
+              text: Unterseite
+```
+
+### Profile
+
+```{.yaml}
+profile:
+  default: [web, deutsch]
+  group:
+    - [web, print]          # aus jeder Gruppe ist genau eines aktiv
+    - [deutsch, english]
+```
+
+```{.bash}
+quarto render --profile print,english
+```
+
+---
+
+## QMD: Optionen für Codeblöcke
+
+```{.yaml}
+#| echo: false          # Quellcode ausblenden
+#| eval: false          # nicht ausführen (nur Code zeigen)
+#| output: false        # Ausgabe ausblenden
+#| warning: false       # Warnungen ausblenden
+#| include: false       # alles ausblenden (Code läuft trotzdem)
+#| code-fold: true      # true | false: Code einklappbar
+#| code-summary: "Code zeigen"
+#| fig-cap: "Meine Abbildung"
+#| fig-align: center    # left | center | right
+#| label: fig-myplot    # für Querverweise
+```
+
+### Kennungen für Querverweise
+
+| Art | Beginn der Kennung | Verweis |
+|---|---|---|
+| Abbildung | `fig-` | `@fig-myplot` |
+| Tabelle | `tbl-` | `@tbl-mydata` |
+| Abschnitt | `sec-` (an der Überschrift) | `@sec-intro` |
+
+---
+
+## QMD: bedingte Inhalte
+
+```{.markdown}
+::: {.content-visible when-profile="deutsch"}
+Nur auf Deutsch sichtbar.
+:::
+
+::: {.content-hidden when-format="pdf"}
+Nicht im PDF.
+:::
+```
+
+---
+
+## QMD: Markdown-Elemente
+
+### Callouts
+
+```{.markdown}
+::: {.callout-note}
+::: {.callout-tip}
+::: {.callout-warning}
+::: {.callout-important}
+::: {.callout-caution}
+
+::: {.callout-tip collapse="true"}
+## Titel
+Anfangs verborgen.
+:::
+```
+
+### Shortcodes
+
+```{.markdown}
+{{</* include other-file.qmd */>}}   ← andere Datei einbetten
+{{</* pagebreak */>}}                ← Seitenumbruch erzwingen (PDF)
+{{</* kbd Ctrl+C */>}}               ← Tastenkürzel darstellen
+```
+
+### Raster
+
+```{.markdown}
+::: {.grid}
+::: {.g-col-6}
+Linke Spalte (halbe Breite)
+:::
+::: {.g-col-6}
+Rechte Spalte (halbe Breite)
+:::
+:::
+```
+
+Spaltenbreiten werden in Zwölfteln angegeben: `g-col-4` ist ein Drittel, `g-col-6` die Hälfte, `g-col-12` die ganze Breite.
+
+---
+
+## Extensions: Schreibweisen im Überblick
+
+```{.bash}
+quarto add parmsam/quizdown
+quarto add Erasmus-CTM/pyodide-interaktiv
+quarto add Erasmus-CTM/py-exercise
+quarto add Erasmus-CTM/math-exercise      # bringt jsxgraph mit
+```
+
+```{.yaml}
+filters:                 # Reihenfolge beachten
+  - parmsam/quizdown
+  - Erasmus-CTM/pyodide-interaktiv
+  - Erasmus-CTM/py-exercise
+  - jsxgraph
+  - Erasmus-CTM/math-exercise
+```
+
+### quizdown
+
+````{.markdown}
+```{quizdown}
+---
+locale: de
+---
+# Fragetext?
+1. [x] Richtige Antwort
+1. [ ] Falsche Antwort
+```
+````
+
+### pyodide-interaktiv
+
+````{.markdown}
+```{pyodide-python}
+#| autorun: false
+#| read-only: false
+#| code-fold: false
+#| context: interactive   # interactive | output | setup
+print("läuft im Browser")
+```
+````
+
+Alle Zellen einer Seite teilen sich ihre Variablen. `plt.show()` löst die Ausgabe von Plots und Animationen aus.
+
+### py-exercise
+
+````{.markdown}
+```{py-exercise}
+#| caption: Titel
+#| forbidden-keywords: for, while
+def my_func(x):
+    pass        # hier tragen Studierende die Lösung ein
+
+## TESTS ##
+assert my_func(2) == 4, "Rückmeldung bei Fehler"
+```
+````
+
+### math-exercise
+
+````{.markdown}
+```{math-exercise}
+#| label: kreis
+#| vars: r
+#| mode: equivalent
+Flächeninhalt eines Kreises mit r = 3: _[pi*9]
+```
+````
+
+| Feld | Bedeutung |
+|---|---|
+| `_[a]` / `__[a]` / `___[a]` | schmal / mittel / breit |
+| `vec[a,b,c]` | Vektor |
+| `mat[a,b;c,d]` | Matrix (Komma: Spalte, Strichpunkt: Zeile) |
+
+| `mode` | Prüft |
+|---|---|
+| `equivalent` | mathematisch gleichwertig (Standard), mit `reject` und `form` |
+| `exact` | genau diese Darstellung |
+| `numeric` | Zahlenwert, mit `tolerance`, `decplaces` oder `sigfigs` |
+| `string` / `string_ci` | Text wörtlich / ohne Groß- und Kleinschreibung |
+| `set` | Liste ohne Reihenfolge |
+| `custom` | eigener Prüfcode in `checker` |
+
+Weitere Optionen: `pool: true`, `partial-credit: true`, `field-labels`, `context`.
+
+### JSXGraph
+
+````{.markdown}
+```jsxgraph
+var board = JXG.JSXGraph.initBoard(BOARDID, {
+    boundingbox: [-5, 5, 5, -5], axis: true
+});
+board.create('functiongraph', [Math.sin]);
+```
+````
+
+Als Antwort auf eine Aufgabe: Block mit `{.jsxgraph assessment_id="brett"}` und `JXG.QuartoAssessment.register(...)`, in der Aufgabe `#| mode: custom` und `#| response: jsxgraph:brett`.
+
+---
+
+## CSS: Hilfsklassen von Bootstrap
+
+| Klasse | Wirkung |
+|---|---|
+| `.text-center` | Text zentrieren |
+| `.text-muted` | grauer Text |
+| `.text-white` | weißer Text |
+| `.fw-bold` | fett |
+| `.border` | Rahmen |
+| `.rounded` | runde Ecken |
+| `.shadow` | Schatten |
+| `.bg-light` | heller Hintergrund |
+| `.bg-primary` | Hintergrund in der Hauptfarbe |
+| `.p-{0-5}` | Innenabstand auf allen Seiten |
+| `.m-{0-5}` | Außenabstand auf allen Seiten |
+| `.mt-{0-5}` / `.mb-{0-5}` | Abstand nach oben / unten |
+| `.d-flex` | Flexbox-Behälter |
+| `.gap-{0-5}` | Abstand zwischen Flex-Elementen |
+| `.justify-content-center` | Flex-Elemente zentrieren |
+
+## CSS: SCSS-Variablen
+
+```{.scss}
+/*-- scss:defaults --*/
+$primary:            #0d6efd;
+$body-bg:            #ffffff;
+$body-color:         #212529;
+$font-family-base:   "Inter", sans-serif;
+$font-size-base:     1rem;
+$headings-font-weight: 600;
+$border-radius:      0.375rem;
+$border-color:       #dee2e6;
+
+/*-- scss:rules --*/
+/* hier steht dein eigenes CSS */
+```
+::::
+
+:::: {.content-visible when-profile="english"}
 A quick reference for everything covered in this section.
 
 ---
 
-## YAML — `_quarto.yml` options
+## YAML: `_quarto.yml` options
 
 ### Project
 
@@ -24,7 +339,7 @@ execute:
   echo: true          # show source code
   eval: true          # run the code
   warning: false      # hide warnings
-  error: false        # hide errors
+  error: false        # stop on errors
   freeze: auto        # auto | true | false
 ```
 
@@ -35,8 +350,7 @@ format:
   html:
     toc: true
     toc-depth: 3
-    theme: cosmo
-    theme:
+    theme:              # one name (theme: cosmo) or a list
       - cosmo
       - custom.scss
     code-fold: true
@@ -80,21 +394,27 @@ website:
 
 ```{.yaml}
 profile:
-  default: web
-  group: [web, print, de, en]
+  default: [web, deutsch]
+  group:
+    - [web, print]          # exactly one of each group is active
+    - [deutsch, english]
+```
+
+```{.bash}
+quarto render --profile print,english
 ```
 
 ---
 
-## QMD — code chunk options
+## QMD: code chunk options
 
 ```{.yaml}
 #| echo: false          # hide source code
 #| eval: false          # don't run (show code only)
 #| output: false        # hide output
 #| warning: false       # hide warnings
-#| include: false       # hide everything (no trace in output)
-#| code-fold: true      # true | false — collapsible code block
+#| include: false       # hide everything (the code still runs)
+#| code-fold: true      # true | false: collapsible code block
 #| code-summary: "Show the code"
 #| fig-cap: "My figure"
 #| fig-align: center    # left | center | right
@@ -111,11 +431,11 @@ profile:
 
 ---
 
-## QMD — conditional content
+## QMD: conditional content
 
 ```{.markdown}
-::: {.content-visible when-profile="de"}
-Nur auf Deutsch sichtbar.
+::: {.content-visible when-profile="english"}
+Only visible in English.
 :::
 
 ::: {.content-hidden when-format="pdf"}
@@ -125,7 +445,7 @@ Not in PDF.
 
 ---
 
-## QMD — Markdown elements
+## QMD: Markdown elements
 
 ### Callouts
 
@@ -167,38 +487,62 @@ Column widths are in 12ths: `g-col-4` = one third, `g-col-6` = half, `g-col-12` 
 
 ---
 
-## Extensions — syntax summary
+## Extensions: syntax summary
+
+```{.bash}
+quarto add parmsam/quizdown
+quarto add Erasmus-CTM/pyodide-interaktiv
+quarto add Erasmus-CTM/py-exercise
+quarto add Erasmus-CTM/math-exercise      # brings jsxgraph along
+```
+
+```{.yaml}
+filters:                 # mind the order
+  - parmsam/quizdown
+  - Erasmus-CTM/pyodide-interaktiv
+  - Erasmus-CTM/py-exercise
+  - jsxgraph
+  - Erasmus-CTM/math-exercise
+```
 
 ### quizdown
 
 ````{.markdown}
 ```{quizdown}
+---
+locale: en
+---
 # Question text?
 1. [x] Correct answer
 1. [ ] Wrong answer
 ```
 ````
 
-### Pyodide
+### pyodide-interaktiv
 
 ````{.markdown}
 ```{pyodide-python}
 #| autorun: false
 #| read-only: false
+#| code-fold: false
+#| context: interactive   # interactive | output | setup
 print("runs in browser")
 ```
 ````
+
+All cells on a page share their variables. `plt.show()` triggers the output of plots and animations.
 
 ### py-exercise
 
 ````{.markdown}
 ```{py-exercise}
+#| caption: Title
 #| forbidden-keywords: for, while
 def my_func(x):
     pass        # student fills this in
 
 ## TESTS ##
-assert my_func(2) == 4
+assert my_func(2) == 4, "Feedback on failure"
 ```
 ````
 
@@ -206,11 +550,29 @@ assert my_func(2) == 4
 
 ````{.markdown}
 ```{math-exercise}
+#| label: circle
 #| vars: r
 #| mode: equivalent
 Area of a circle with r = 3: _[pi*9]
 ```
 ````
+
+| Field | Meaning |
+|---|---|
+| `_[a]` / `__[a]` / `___[a]` | narrow / medium / wide |
+| `vec[a,b,c]` | vector |
+| `mat[a,b;c,d]` | matrix (comma: column, semicolon: row) |
+
+| `mode` | Checks |
+|---|---|
+| `equivalent` | mathematically equivalent (default), with `reject` and `form` |
+| `exact` | exactly this representation |
+| `numeric` | numeric value, with `tolerance`, `decplaces` or `sigfigs` |
+| `string` / `string_ci` | text literally / ignoring case |
+| `set` | list without order |
+| `custom` | your own checking code in `checker` |
+
+More options: `pool: true`, `partial-credit: true`, `field-labels`, `context`.
 
 ### JSXGraph
 
@@ -223,9 +585,11 @@ board.create('functiongraph', [Math.sin]);
 ```
 ````
 
+As the answer to an exercise: a block with `{.jsxgraph assessment_id="board"}` and `JXG.QuartoAssessment.register(...)`, and in the exercise `#| mode: custom` and `#| response: jsxgraph:board`.
+
 ---
 
-## CSS — Bootstrap utility classes
+## CSS: Bootstrap utility classes
 
 | Class | Effect |
 |---|---|
@@ -245,7 +609,7 @@ board.create('functiongraph', [Math.sin]);
 | `.gap-{0-5}` | Gap between flex items |
 | `.justify-content-center` | Centre flex items |
 
-## CSS — SCSS variable reference
+## CSS: SCSS variable reference
 
 ```{.scss}
 /*-- scss:defaults --*/
@@ -261,3 +625,934 @@ $border-color:       #dee2e6;
 /*-- scss:rules --*/
 /* your custom CSS here */
 ```
+::::
+
+:::: {.content-visible when-profile="dansk"}
+Et hurtigt opslagsværk for alt, hvad der gennemgås i denne del.
+
+---
+
+## YAML: indstillinger i `_quarto.yml`
+
+### Projekt
+
+```{.yaml}
+project:
+  type: website       # website | book | manuscript | default
+  output-dir: docs    # where rendered files go
+```
+
+### Execute (globale standardværdier for kode)
+
+```{.yaml}
+execute:
+  echo: true          # show source code
+  eval: true          # run the code
+  warning: false      # hide warnings
+  error: false        # stop on errors
+  freeze: auto        # auto | true | false
+```
+
+### Format
+
+```{.yaml}
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    theme:              # one name (theme: cosmo) or a list
+      - cosmo
+      - custom.scss
+    code-fold: true
+    code-tools: true
+    number-sections: false
+  pdf:
+    toc: true
+    documentclass: article
+    geometry: margin=2.5cm
+  docx:
+    toc: true
+```
+
+### Websted
+
+```{.yaml}
+website:
+  title: "My Site"
+  navbar:
+    left:
+      - text: "Home"
+        href: index.qmd
+      - text: "External"
+        href: https://example.com
+    right:
+      - icon: github
+        href: https://github.com/your/repo
+  sidebar:
+    - id: my-sidebar
+      style: docked        # docked | floating
+      contents:
+        - href: page.qmd
+          text: Page Title
+        - section: "Group"
+          contents:
+            - href: sub.qmd
+              text: Sub-page
+```
+
+### Profiler
+
+```{.yaml}
+profile:
+  default: [web, deutsch]
+  group:
+    - [web, print]          # exactly one of each group is active
+    - [deutsch, english]
+```
+
+```{.bash}
+quarto render --profile print,english
+```
+
+---
+
+## QMD: indstillinger for kodeblokke
+
+```{.yaml}
+#| echo: false          # hide source code
+#| eval: false          # don't run (show code only)
+#| output: false        # hide output
+#| warning: false       # hide warnings
+#| include: false       # hide everything (the code still runs)
+#| code-fold: true      # true | false: collapsible code block
+#| code-summary: "Show the code"
+#| fig-cap: "My figure"
+#| fig-align: center    # left | center | right
+#| label: fig-myplot    # for cross-referencing
+```
+
+### Id'er til krydshenvisninger
+
+| Type | Præfiks | Henvisning |
+|---|---|---|
+| Figur | `fig-` | `@fig-myplot` |
+| Tabel | `tbl-` | `@tbl-mydata` |
+| Afsnit | `sec-` (på overskriften) | `@sec-intro` |
+
+---
+
+## QMD: betinget indhold
+
+```{.markdown}
+::: {.content-visible when-profile="english"}
+Only visible in English.
+:::
+
+::: {.content-hidden when-format="pdf"}
+Not in PDF.
+:::
+```
+
+---
+
+## QMD: Markdown-elementer
+
+### Infobokse
+
+```{.markdown}
+::: {.callout-note}
+::: {.callout-tip}
+::: {.callout-warning}
+::: {.callout-important}
+::: {.callout-caution}
+
+::: {.callout-tip collapse="true"}
+## Title
+Hidden by default.
+:::
+```
+
+### Shortcodes
+
+```{.markdown}
+{{</* include other-file.qmd */>}}   ← embed another file
+{{</* pagebreak */>}}                ← force page break (PDF)
+{{</* kbd Ctrl+C */>}}               ← keyboard shortcut styling
+```
+
+### Gitterlayout
+
+```{.markdown}
+::: {.grid}
+::: {.g-col-6}
+Left column (half width)
+:::
+::: {.g-col-6}
+Right column (half width)
+:::
+:::
+```
+
+Kolonnebredder angives i tolvtedele: `g-col-4` = en tredjedel, `g-col-6` = halvdelen, `g-col-12` = hele bredden.
+
+---
+
+## Udvidelser: syntaks kort fortalt
+
+```{.bash}
+quarto add parmsam/quizdown
+quarto add Erasmus-CTM/pyodide-interaktiv
+quarto add Erasmus-CTM/py-exercise
+quarto add Erasmus-CTM/math-exercise      # brings jsxgraph along
+```
+
+```{.yaml}
+filters:                 # mind the order
+  - parmsam/quizdown
+  - Erasmus-CTM/pyodide-interaktiv
+  - Erasmus-CTM/py-exercise
+  - jsxgraph
+  - Erasmus-CTM/math-exercise
+```
+
+### quizdown
+
+````{.markdown}
+```{quizdown}
+---
+locale: en
+---
+# Question text?
+1. [x] Correct answer
+1. [ ] Wrong answer
+```
+````
+
+### pyodide-interaktiv
+
+````{.markdown}
+```{pyodide-python}
+#| autorun: false
+#| read-only: false
+#| code-fold: false
+#| context: interactive   # interactive | output | setup
+print("runs in browser")
+```
+````
+
+Alle celler på en side deler variabler. `plt.show()` starter visningen af grafer og animationer.
+
+### py-exercise
+
+````{.markdown}
+```{py-exercise}
+#| caption: Title
+#| forbidden-keywords: for, while
+def my_func(x):
+    pass        # student fills this in
+
+## TESTS ##
+assert my_func(2) == 4, "Feedback on failure"
+```
+````
+
+### math-exercise
+
+````{.markdown}
+```{math-exercise}
+#| label: circle
+#| vars: r
+#| mode: equivalent
+Area of a circle with r = 3: _[pi*9]
+```
+````
+
+| Felt | Betydning |
+|---|---|
+| `_[a]` / `__[a]` / `___[a]` | smalt / mellem / bredt |
+| `vec[a,b,c]` | vektor |
+| `mat[a,b;c,d]` | matrix (komma: kolonne, semikolon: række) |
+
+| `mode` | Kontrollerer |
+|---|---|
+| `equivalent` | matematisk ækvivalent (standard), med `reject` og `form` |
+| `exact` | præcis denne skrivemåde |
+| `numeric` | talværdi, med `tolerance`, `decplaces` eller `sigfigs` |
+| `string` / `string_ci` | tekst bogstaveligt / uden hensyn til store og små bogstaver |
+| `set` | liste uden rækkefølge |
+| `custom` | din egen kontrolkode i `checker` |
+
+Flere indstillinger: `pool: true`, `partial-credit: true`, `field-labels`, `context`.
+
+### JSXGraph
+
+````{.markdown}
+```jsxgraph
+var board = JXG.JSXGraph.initBoard(BOARDID, {
+    boundingbox: [-5, 5, 5, -5], axis: true
+});
+board.create('functiongraph', [Math.sin]);
+```
+````
+
+Som svar på en opgave: en blok med `{.jsxgraph assessment_id="board"}` og `JXG.QuartoAssessment.register(...)`, og i opgaven `#| mode: custom` og `#| response: jsxgraph:board`.
+
+---
+
+## CSS: hjælpeklasser fra Bootstrap
+
+| Klasse | Effekt |
+|---|---|
+| `.text-center` | Centrér tekst |
+| `.text-muted` | Grå tekst |
+| `.text-white` | Hvid tekst |
+| `.fw-bold` | Fed |
+| `.border` | Ramme |
+| `.rounded` | Afrundede hjørner |
+| `.shadow` | Skygge |
+| `.bg-light` | Lys baggrund |
+| `.bg-primary` | Baggrund i primærfarven |
+| `.p-{0-5}` | Luft indenfor på alle sider |
+| `.m-{0-5}` | Margen på alle sider |
+| `.mt-{0-5}` / `.mb-{0-5}` | Margen foroven / forneden |
+| `.d-flex` | Flexbox-beholder |
+| `.gap-{0-5}` | Afstand mellem flex-elementer |
+| `.justify-content-center` | Centrér flex-elementer |
+
+## CSS: SCSS-variabler
+
+```{.scss}
+/*-- scss:defaults --*/
+$primary:            #0d6efd;
+$body-bg:            #ffffff;
+$body-color:         #212529;
+$font-family-base:   "Inter", sans-serif;
+$font-size-base:     1rem;
+$headings-font-weight: 600;
+$border-radius:      0.375rem;
+$border-color:       #dee2e6;
+
+/*-- scss:rules --*/
+/* your custom CSS here */
+```
+::::
+
+:::: {.content-visible when-profile="norsk"}
+En hurtigreferanse for alt som tas opp i denne delen.
+
+---
+
+## YAML: innstillinger i `_quarto.yml`
+
+### Prosjekt
+
+```{.yaml}
+project:
+  type: website       # website | book | manuscript | default
+  output-dir: docs    # where rendered files go
+```
+
+### Execute (globale standardverdier for kode)
+
+```{.yaml}
+execute:
+  echo: true          # show source code
+  eval: true          # run the code
+  warning: false      # hide warnings
+  error: false        # stop on errors
+  freeze: auto        # auto | true | false
+```
+
+### Format
+
+```{.yaml}
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    theme:              # one name (theme: cosmo) or a list
+      - cosmo
+      - custom.scss
+    code-fold: true
+    code-tools: true
+    number-sections: false
+  pdf:
+    toc: true
+    documentclass: article
+    geometry: margin=2.5cm
+  docx:
+    toc: true
+```
+
+### Nettsted
+
+```{.yaml}
+website:
+  title: "My Site"
+  navbar:
+    left:
+      - text: "Home"
+        href: index.qmd
+      - text: "External"
+        href: https://example.com
+    right:
+      - icon: github
+        href: https://github.com/your/repo
+  sidebar:
+    - id: my-sidebar
+      style: docked        # docked | floating
+      contents:
+        - href: page.qmd
+          text: Page Title
+        - section: "Group"
+          contents:
+            - href: sub.qmd
+              text: Sub-page
+```
+
+### Profiler
+
+```{.yaml}
+profile:
+  default: [web, deutsch]
+  group:
+    - [web, print]          # exactly one of each group is active
+    - [deutsch, english]
+```
+
+```{.bash}
+quarto render --profile print,english
+```
+
+---
+
+## QMD: innstillinger for kodeblokker
+
+```{.yaml}
+#| echo: false          # hide source code
+#| eval: false          # don't run (show code only)
+#| output: false        # hide output
+#| warning: false       # hide warnings
+#| include: false       # hide everything (the code still runs)
+#| code-fold: true      # true | false: collapsible code block
+#| code-summary: "Show the code"
+#| fig-cap: "My figure"
+#| fig-align: center    # left | center | right
+#| label: fig-myplot    # for cross-referencing
+```
+
+### ID-er for kryssreferanser
+
+| Type | Prefiks | Referanse |
+|---|---|---|
+| Figur | `fig-` | `@fig-myplot` |
+| Tabell | `tbl-` | `@tbl-mydata` |
+| Del | `sec-` (på overskriften) | `@sec-intro` |
+
+---
+
+## QMD: betinget innhold
+
+```{.markdown}
+::: {.content-visible when-profile="english"}
+Only visible in English.
+:::
+
+::: {.content-hidden when-format="pdf"}
+Not in PDF.
+:::
+```
+
+---
+
+## QMD: Markdown-elementer
+
+### Infobokser
+
+```{.markdown}
+::: {.callout-note}
+::: {.callout-tip}
+::: {.callout-warning}
+::: {.callout-important}
+::: {.callout-caution}
+
+::: {.callout-tip collapse="true"}
+## Title
+Hidden by default.
+:::
+```
+
+### Shortcodes
+
+```{.markdown}
+{{</* include other-file.qmd */>}}   ← embed another file
+{{</* pagebreak */>}}                ← force page break (PDF)
+{{</* kbd Ctrl+C */>}}               ← keyboard shortcut styling
+```
+
+### Rutenett
+
+```{.markdown}
+::: {.grid}
+::: {.g-col-6}
+Left column (half width)
+:::
+::: {.g-col-6}
+Right column (half width)
+:::
+:::
+```
+
+Kolonnebredder angis i tolvdeler: `g-col-4` = en tredjedel, `g-col-6` = halvparten, `g-col-12` = hele bredden.
+
+---
+
+## Utvidelser: syntaks i korte trekk
+
+```{.bash}
+quarto add parmsam/quizdown
+quarto add Erasmus-CTM/pyodide-interaktiv
+quarto add Erasmus-CTM/py-exercise
+quarto add Erasmus-CTM/math-exercise      # brings jsxgraph along
+```
+
+```{.yaml}
+filters:                 # mind the order
+  - parmsam/quizdown
+  - Erasmus-CTM/pyodide-interaktiv
+  - Erasmus-CTM/py-exercise
+  - jsxgraph
+  - Erasmus-CTM/math-exercise
+```
+
+### quizdown
+
+````{.markdown}
+```{quizdown}
+---
+locale: en
+---
+# Question text?
+1. [x] Correct answer
+1. [ ] Wrong answer
+```
+````
+
+### pyodide-interaktiv
+
+````{.markdown}
+```{pyodide-python}
+#| autorun: false
+#| read-only: false
+#| code-fold: false
+#| context: interactive   # interactive | output | setup
+print("runs in browser")
+```
+````
+
+Alle cellene på en side deler variabler. `plt.show()` starter visningen av grafer og animasjoner.
+
+### py-exercise
+
+````{.markdown}
+```{py-exercise}
+#| caption: Title
+#| forbidden-keywords: for, while
+def my_func(x):
+    pass        # student fills this in
+
+## TESTS ##
+assert my_func(2) == 4, "Feedback on failure"
+```
+````
+
+### math-exercise
+
+````{.markdown}
+```{math-exercise}
+#| label: circle
+#| vars: r
+#| mode: equivalent
+Area of a circle with r = 3: _[pi*9]
+```
+````
+
+| Felt | Betydning |
+|---|---|
+| `_[a]` / `__[a]` / `___[a]` | smalt / middels / bredt |
+| `vec[a,b,c]` | vektor |
+| `mat[a,b;c,d]` | matrise (komma: kolonne, semikolon: rad) |
+
+| `mode` | Kontrollerer |
+|---|---|
+| `equivalent` | matematisk ekvivalent (standard), med `reject` og `form` |
+| `exact` | nøyaktig denne skrivemåten |
+| `numeric` | tallverdi, med `tolerance`, `decplaces` eller `sigfigs` |
+| `string` / `string_ci` | tekst bokstavelig / uten hensyn til store og små bokstaver |
+| `set` | liste uten rekkefølge |
+| `custom` | din egen kontrollkode i `checker` |
+
+Flere innstillinger: `pool: true`, `partial-credit: true`, `field-labels`, `context`.
+
+### JSXGraph
+
+````{.markdown}
+```jsxgraph
+var board = JXG.JSXGraph.initBoard(BOARDID, {
+    boundingbox: [-5, 5, 5, -5], axis: true
+});
+board.create('functiongraph', [Math.sin]);
+```
+````
+
+Som svar på en oppgave: en blokk med `{.jsxgraph assessment_id="board"}` og `JXG.QuartoAssessment.register(...)`, og i oppgaven `#| mode: custom` og `#| response: jsxgraph:board`.
+
+---
+
+## CSS: hjelpeklasser fra Bootstrap
+
+| Klasse | Effekt |
+|---|---|
+| `.text-center` | Midtstille tekst |
+| `.text-muted` | Grå tekst |
+| `.text-white` | Hvit tekst |
+| `.fw-bold` | Fet |
+| `.border` | Ramme |
+| `.rounded` | Avrundede hjørner |
+| `.shadow` | Skygge |
+| `.bg-light` | Lys bakgrunn |
+| `.bg-primary` | Bakgrunn i primærfargen |
+| `.p-{0-5}` | Luft innenfor på alle sider |
+| `.m-{0-5}` | Marg på alle sider |
+| `.mt-{0-5}` / `.mb-{0-5}` | Marg over / under |
+| `.d-flex` | Flexbox-beholder |
+| `.gap-{0-5}` | Avstand mellom flex-elementer |
+| `.justify-content-center` | Midtstille flex-elementer |
+
+## CSS: SCSS-variabler
+
+```{.scss}
+/*-- scss:defaults --*/
+$primary:            #0d6efd;
+$body-bg:            #ffffff;
+$body-color:         #212529;
+$font-family-base:   "Inter", sans-serif;
+$font-size-base:     1rem;
+$headings-font-weight: 600;
+$border-radius:      0.375rem;
+$border-color:       #dee2e6;
+
+/*-- scss:rules --*/
+/* your custom CSS here */
+```
+::::
+
+:::: {.content-visible when-profile="svenska"}
+En snabbreferens för allt som tas upp i den här delen.
+
+---
+
+## YAML: inställningar i `_quarto.yml`
+
+### Projekt
+
+```{.yaml}
+project:
+  type: website       # website | book | manuscript | default
+  output-dir: docs    # where rendered files go
+```
+
+### Execute (globala standardvärden för kod)
+
+```{.yaml}
+execute:
+  echo: true          # show source code
+  eval: true          # run the code
+  warning: false      # hide warnings
+  error: false        # stop on errors
+  freeze: auto        # auto | true | false
+```
+
+### Format
+
+```{.yaml}
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    theme:              # one name (theme: cosmo) or a list
+      - cosmo
+      - custom.scss
+    code-fold: true
+    code-tools: true
+    number-sections: false
+  pdf:
+    toc: true
+    documentclass: article
+    geometry: margin=2.5cm
+  docx:
+    toc: true
+```
+
+### Webbplats
+
+```{.yaml}
+website:
+  title: "My Site"
+  navbar:
+    left:
+      - text: "Home"
+        href: index.qmd
+      - text: "External"
+        href: https://example.com
+    right:
+      - icon: github
+        href: https://github.com/your/repo
+  sidebar:
+    - id: my-sidebar
+      style: docked        # docked | floating
+      contents:
+        - href: page.qmd
+          text: Page Title
+        - section: "Group"
+          contents:
+            - href: sub.qmd
+              text: Sub-page
+```
+
+### Profiler
+
+```{.yaml}
+profile:
+  default: [web, deutsch]
+  group:
+    - [web, print]          # exactly one of each group is active
+    - [deutsch, english]
+```
+
+```{.bash}
+quarto render --profile print,english
+```
+
+---
+
+## QMD: inställningar för kodblock
+
+```{.yaml}
+#| echo: false          # hide source code
+#| eval: false          # don't run (show code only)
+#| output: false        # hide output
+#| warning: false       # hide warnings
+#| include: false       # hide everything (the code still runs)
+#| code-fold: true      # true | false: collapsible code block
+#| code-summary: "Show the code"
+#| fig-cap: "My figure"
+#| fig-align: center    # left | center | right
+#| label: fig-myplot    # for cross-referencing
+```
+
+### Id för korsreferenser
+
+| Typ | Prefix | Referens |
+|---|---|---|
+| Figur | `fig-` | `@fig-myplot` |
+| Tabell | `tbl-` | `@tbl-mydata` |
+| Avsnitt | `sec-` (på rubriken) | `@sec-intro` |
+
+---
+
+## QMD: villkorat innehåll
+
+```{.markdown}
+::: {.content-visible when-profile="english"}
+Only visible in English.
+:::
+
+::: {.content-hidden when-format="pdf"}
+Not in PDF.
+:::
+```
+
+---
+
+## QMD: Markdown-element
+
+### Inforutor
+
+```{.markdown}
+::: {.callout-note}
+::: {.callout-tip}
+::: {.callout-warning}
+::: {.callout-important}
+::: {.callout-caution}
+
+::: {.callout-tip collapse="true"}
+## Title
+Hidden by default.
+:::
+```
+
+### Shortcodes
+
+```{.markdown}
+{{</* include other-file.qmd */>}}   ← embed another file
+{{</* pagebreak */>}}                ← force page break (PDF)
+{{</* kbd Ctrl+C */>}}               ← keyboard shortcut styling
+```
+
+### Rutnät
+
+```{.markdown}
+::: {.grid}
+::: {.g-col-6}
+Left column (half width)
+:::
+::: {.g-col-6}
+Right column (half width)
+:::
+:::
+```
+
+Kolumnbredder anges i tolftedelar: `g-col-4` = en tredjedel, `g-col-6` = hälften, `g-col-12` = hela bredden.
+
+---
+
+## Tillägg: syntax i korthet
+
+```{.bash}
+quarto add parmsam/quizdown
+quarto add Erasmus-CTM/pyodide-interaktiv
+quarto add Erasmus-CTM/py-exercise
+quarto add Erasmus-CTM/math-exercise      # brings jsxgraph along
+```
+
+```{.yaml}
+filters:                 # mind the order
+  - parmsam/quizdown
+  - Erasmus-CTM/pyodide-interaktiv
+  - Erasmus-CTM/py-exercise
+  - jsxgraph
+  - Erasmus-CTM/math-exercise
+```
+
+### quizdown
+
+````{.markdown}
+```{quizdown}
+---
+locale: en
+---
+# Question text?
+1. [x] Correct answer
+1. [ ] Wrong answer
+```
+````
+
+### pyodide-interaktiv
+
+````{.markdown}
+```{pyodide-python}
+#| autorun: false
+#| read-only: false
+#| code-fold: false
+#| context: interactive   # interactive | output | setup
+print("runs in browser")
+```
+````
+
+Alla celler på en sida delar variabler. `plt.show()` startar visningen av grafer och animationer.
+
+### py-exercise
+
+````{.markdown}
+```{py-exercise}
+#| caption: Title
+#| forbidden-keywords: for, while
+def my_func(x):
+    pass        # student fills this in
+
+## TESTS ##
+assert my_func(2) == 4, "Feedback on failure"
+```
+````
+
+### math-exercise
+
+````{.markdown}
+```{math-exercise}
+#| label: circle
+#| vars: r
+#| mode: equivalent
+Area of a circle with r = 3: _[pi*9]
+```
+````
+
+| Fält | Betydelse |
+|---|---|
+| `_[a]` / `__[a]` / `___[a]` | smalt / medelbrett / brett |
+| `vec[a,b,c]` | vektor |
+| `mat[a,b;c,d]` | matris (komma: kolumn, semikolon: rad) |
+
+| `mode` | Kontrollerar |
+|---|---|
+| `equivalent` | matematiskt ekvivalent (standard), med `reject` och `form` |
+| `exact` | exakt den här skrivformen |
+| `numeric` | numeriskt värde, med `tolerance`, `decplaces` eller `sigfigs` |
+| `string` / `string_ci` | text bokstavligt / utan hänsyn till stora och små bokstäver |
+| `set` | lista utan ordning |
+| `custom` | din egen kontrollkod i `checker` |
+
+Fler inställningar: `pool: true`, `partial-credit: true`, `field-labels`, `context`.
+
+### JSXGraph
+
+````{.markdown}
+```jsxgraph
+var board = JXG.JSXGraph.initBoard(BOARDID, {
+    boundingbox: [-5, 5, 5, -5], axis: true
+});
+board.create('functiongraph', [Math.sin]);
+```
+````
+
+Som svar på en uppgift: ett block med `{.jsxgraph assessment_id="board"}` och `JXG.QuartoAssessment.register(...)`, och i uppgiften `#| mode: custom` och `#| response: jsxgraph:board`.
+
+---
+
+## CSS: hjälpklasser från Bootstrap
+
+| Klass | Effekt |
+|---|---|
+| `.text-center` | Centrera text |
+| `.text-muted` | Grå text |
+| `.text-white` | Vit text |
+| `.fw-bold` | Fet |
+| `.border` | Ram |
+| `.rounded` | Rundade hörn |
+| `.shadow` | Skugga |
+| `.bg-light` | Ljus bakgrund |
+| `.bg-primary` | Bakgrund i primärfärgen |
+| `.p-{0-5}` | Luft innanför på alla sidor |
+| `.m-{0-5}` | Marginal på alla sidor |
+| `.mt-{0-5}` / `.mb-{0-5}` | Marginal ovanför / nedanför |
+| `.d-flex` | Flexbox-behållare |
+| `.gap-{0-5}` | Avstånd mellan flex-element |
+| `.justify-content-center` | Centrera flex-element |
+
+## CSS: SCSS-variabler
+
+```{.scss}
+/*-- scss:defaults --*/
+$primary:            #0d6efd;
+$body-bg:            #ffffff;
+$body-color:         #212529;
+$font-family-base:   "Inter", sans-serif;
+$font-size-base:     1rem;
+$headings-font-weight: 600;
+$border-radius:      0.375rem;
+$border-color:       #dee2e6;
+
+/*-- scss:rules --*/
+/* your custom CSS here */
+```
+::::

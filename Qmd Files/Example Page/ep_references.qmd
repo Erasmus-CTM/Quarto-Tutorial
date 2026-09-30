@@ -1,9 +1,44 @@
 ---
-title: "References"
+title: "Quellen"
+title-en: "References"
+title-sv: "Källor"
+title-no: "Kilder"
+title-da: "Kilder"
 bibliography: references.bib
 sidebar: example-sidebar
 ---
 
+:::: {.content-visible when-profile="deutsch"}
+Quarto kann Zitate und Literaturverzeichnisse aus gewöhnlichen `.bib`-Dateien erzeugen, ganz ohne Zusatzprogramme.
+
+## So funktioniert es
+
+1. Lege eine Datei `references.bib` mit BibTeX-Einträgen an.
+2. Ergänze `bibliography: references.bib` im YAML-Kopf der Seite.
+3. Zitiere an beliebiger Stelle im Text mit `[@schlüssel]`.
+
+Das Literaturverzeichnis erscheint automatisch am Ende der Seite.
+
+::: {.callout-tip}
+## Beispiel
+Schreibst du `[@quarto]` in deinen Text, entsteht daraus das Zitat: [@quarto]
+
+Der vollständige Eintrag steht unten unter *Literatur*.
+:::
+
+## Werkzeuge in diesem Beispiel
+
+Alle interaktiven Elemente dieser Seiten beruhen auf frei verfügbaren Werkzeugen:
+
+- **Quarto** [@quarto]: das Publikationssystem hinter allen diesen Seiten
+- **pyodide-interaktiv** [@pyodide-interaktiv]: führt Python direkt im Browser in einem Web Worker aus und baut auf **Pyodide** [@pyodide] von Droettboom et al. auf (siehe [Code](ep_code.qmd))
+- **JSXGraph** [@jsxgraph]: interaktive Mathematik im Browser (siehe [Visualisierungen](ep_visuals.qmd))
+- **quizdown** [@quizdown]: interaktive Multiple-Choice-Quizze im Browser (siehe [Quiz](ep_quiz.qmd))
+- **py-exercise** [@py-exercise]: Programmieraufgaben mit versteckten Tests (siehe [Visualisierungen](ep_visuals.qmd))
+- **math-exercise** [@math-exercise]: mathematische Antworten, symbolisch geprüft mit SymPy (siehe [Visualisierungen](ep_visuals.qmd))
+::::
+
+:::: {.content-visible when-profile="english"}
 Quarto supports citations and bibliographies via standard `.bib` files — no plugins needed.
 
 ## How It Works
@@ -31,3 +66,94 @@ All interactive features on this site are powered by open-source tools:
 - **quizdown** [@quizdown] — interactive multiple-choice quizzes in the browser (see [Quiz](ep_quiz.qmd))
 - **py-exercise** [@py-exercise] — editable coding exercises with hidden tests (see [Visualizations](ep_visuals.qmd))
 - **math-exercise** [@math-exercise] — symbolic maths answers checked with SymPy (see [Visualizations](ep_visuals.qmd))
+::::
+
+:::: {.content-visible when-profile="dansk"}
+Quarto kan lave citater og litteraturlister ud fra almindelige `.bib`-filer, helt uden ekstra programmer.
+
+## Sådan fungerer det
+
+1. Opret en fil `references.bib` med BibTeX-poster.
+2. Tilføj `bibliography: references.bib` i sidens YAML-hoved.
+3. Citer hvor som helst i teksten med `[@nøgle]`.
+
+Litteraturlisten vises automatisk nederst på siden.
+
+::: {.callout-tip}
+## Eksempel
+Skriver du `[@quarto]` i teksten, bliver det til citatet: [@quarto]
+
+Hele posten står nederst i litteraturlisten.
+:::
+
+## Værktøjer i dette eksempel
+
+Alle interaktive elementer på disse sider bygger på frit tilgængelige værktøjer:
+
+- **Quarto** [@quarto]: publiceringssystemet bag alle disse sider
+- **pyodide-interaktiv** [@pyodide-interaktiv]: kører Python direkte i browseren i en Web Worker og bygger på **Pyodide** [@pyodide] af Droettboom m.fl. (se [Kode](ep_code.qmd))
+- **JSXGraph** [@jsxgraph]: interaktiv matematik i browseren (se [Visualiseringer](ep_visuals.qmd))
+- **quizdown** [@quizdown]: interaktive multiple choice-quizzer i browseren (se [Quiz](ep_quiz.qmd))
+- **py-exercise** [@py-exercise]: programmeringsopgaver med skjulte test (se [Visualiseringer](ep_visuals.qmd))
+- **math-exercise** [@math-exercise]: matematiske svar, der kontrolleres symbolsk med SymPy (se [Visualiseringer](ep_visuals.qmd))
+::::
+
+:::: {.content-visible when-profile="norsk"}
+Quarto kan lage sitater og litteraturlister fra vanlige `.bib`-filer, helt uten ekstra programmer.
+
+## Slik fungerer det
+
+1. Lag en fil `references.bib` med BibTeX-oppføringer.
+2. Legg til `bibliography: references.bib` i YAML-hodet på siden.
+3. Siter hvor som helst i teksten med `[@nøkkel]`.
+
+Litteraturlisten vises automatisk nederst på siden.
+
+::: {.callout-tip}
+## Eksempel
+Skriver du `[@quarto]` i teksten, blir det til sitatet: [@quarto]
+
+Hele oppføringen står nederst i litteraturlisten.
+:::
+
+## Verktøy i dette eksempelet
+
+Alle interaktive elementer på disse sidene bygger på fritt tilgjengelige verktøy:
+
+- **Quarto** [@quarto]: publiseringssystemet bak alle disse sidene
+- **pyodide-interaktiv** [@pyodide-interaktiv]: kjører Python direkte i nettleseren i en Web Worker og bygger på **Pyodide** [@pyodide] av Droettboom mfl. (se [Kode](ep_code.qmd))
+- **JSXGraph** [@jsxgraph]: interaktiv matematikk i nettleseren (se [Visualiseringer](ep_visuals.qmd))
+- **quizdown** [@quizdown]: interaktive flervalgsquizer i nettleseren (se [Quiz](ep_quiz.qmd))
+- **py-exercise** [@py-exercise]: programmeringsoppgaver med skjulte tester (se [Visualiseringer](ep_visuals.qmd))
+- **math-exercise** [@math-exercise]: matematiske svar som kontrolleres symbolsk med SymPy (se [Visualiseringer](ep_visuals.qmd))
+::::
+
+:::: {.content-visible when-profile="svenska"}
+Quarto kan skapa citat och litteraturförteckningar från vanliga `.bib`-filer, helt utan extra program.
+
+## Så fungerar det
+
+1. Skapa en fil `references.bib` med BibTeX-poster.
+2. Lägg till `bibliography: references.bib` i sidans YAML-huvud.
+3. Citera var som helst i texten med `[@nyckel]`.
+
+Litteraturförteckningen visas automatiskt i slutet av sidan.
+
+::: {.callout-tip}
+## Exempel
+Skriver du `[@quarto]` i texten blir det citatet: [@quarto]
+
+Hela posten står längst ner i litteraturförteckningen.
+:::
+
+## Verktyg i det här exemplet
+
+Alla interaktiva delar av de här sidorna bygger på fritt tillgängliga verktyg:
+
+- **Quarto** [@quarto]: publiceringssystemet bakom alla de här sidorna
+- **pyodide-interaktiv** [@pyodide-interaktiv]: kör Python direkt i webbläsaren i en Web Worker och bygger på **Pyodide** [@pyodide] av Droettboom m.fl. (se [Kod](ep_code.qmd))
+- **JSXGraph** [@jsxgraph]: interaktiv matematik i webbläsaren (se [Visualiseringar](ep_visuals.qmd))
+- **quizdown** [@quizdown]: interaktiva flervalsquiz i webbläsaren (se [Quiz](ep_quiz.qmd))
+- **py-exercise** [@py-exercise]: programmeringsuppgifter med dolda tester (se [Visualiseringar](ep_visuals.qmd))
+- **math-exercise** [@math-exercise]: matematiska svar som kontrolleras symboliskt med SymPy (se [Visualiseringar](ep_visuals.qmd))
+::::

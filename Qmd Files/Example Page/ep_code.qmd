@@ -1,16 +1,58 @@
 ---
 title: "Code"
+title-sv: "Kod"
+title-no: "Kode"
+title-da: "Kode"
 bibliography: references.bib
 sidebar: example-sidebar
 filters:
   - pyodide-interaktiv
 ---
+
+:::: {.content-visible when-profile="deutsch"}
+Quarto kennt drei Wege, Python-Code einzubinden.
+Im Browser läuft er mit [Pyodide](https://pyodide.org) [@pyodide], also ohne Installation.
+
+## Nur die Ausgabe
+
+Der Code läuft automatisch im Hintergrund, zu sehen ist nur das Ergebnis:
+::::
+
+:::: {.content-visible when-profile="english"}
 Quarto supports three ways to include Python code —
 all powered by [Pyodide](https://pyodide.org) [@pyodide], which runs Python directly in the browser.
 
 ## Output Only
 
 The code runs automatically in the background; only the result is shown:
+::::
+
+:::: {.content-visible when-profile="dansk"}
+Quarto har tre måder at tage Python-kode med på.
+I browseren køres den med [Pyodide](https://pyodide.org) [@pyodide], altså uden installation.
+
+## Kun output
+
+Koden køres automatisk i baggrunden, kun resultatet vises:
+::::
+
+:::: {.content-visible when-profile="norsk"}
+Quarto har tre måter å ta med Python-kode på.
+I nettleseren kjøres den med [Pyodide](https://pyodide.org) [@pyodide], altså uten installasjon.
+
+## Bare utdata
+
+Koden kjøres automatisk i bakgrunnen, bare resultatet vises:
+::::
+
+:::: {.content-visible when-profile="svenska"}
+Quarto har tre sätt att ta med Python-kod.
+I webbläsaren körs den med [Pyodide](https://pyodide.org) [@pyodide], alltså utan installation.
+
+## Bara utdata
+
+Koden körs automatiskt i bakgrunden, bara resultatet visas:
+::::
 
 ```{python}
 #| execute: true # This makes the Code execute during render
@@ -19,22 +61,78 @@ import math
 
 angles = [0, 30, 45, 60, 90, 180]
 for deg in angles:
-    val = math.sin(math.radians(deg))   
+    val = math.sin(math.radians(deg))
     print(f"sin({deg:3d}°) = {val:.4f}")
 ```
 
+:::: {.content-visible when-profile="deutsch"}
+<details>
+<summary>So sah der Code für diese Ausgabe aus:</summary>
+
+````markdown
+```python
+#| execute: true # führt den Code beim Rendern aus
+#| echo: false # blendet den Code in der fertigen Seite aus
+import math
+
+angles = [0, 30, 45, 60, 90, 180]
+for deg in angles:
+    val = math.sin(math.radians(deg))
+    print(f"sin({deg:3d}°) = {val:.4f}")
+```
+````
+</details>
+
+## Ausführbarer Code
+
+Klicke auf **Code ausführen**, dann läuft der Code direkt im Browser:
+
+```{pyodide-python}
+import math
+
+angles = [0, 30, 45, 60, 90, 180]
+for deg in angles:
+    val = math.sin(math.radians(deg))
+    bar = "█" * round(abs(val) * 12)
+    print(f"sin({deg:3d}°) = {val:+.4f}  {bar}")
+```
+
+## Zellen teilen sich ihren Zustand
+
+Alle Zellen einer Seite laufen im **selben** Python-Interpreter. Eine spätere Zelle kann
+eine Variable aus einer früheren weiterverwenden, ohne sie neu zu importieren oder zu definieren:
+
+```{pyodide-python}
+# 'angles' und 'math' gibt es schon aus der Zelle darüber
+print(f"Größter geprüfter Winkel: {max(angles)}°")
+```
+
+## Interaktives `input()`
+
+Zellen können ein echtes, wartendes `input()` benutzen. Die Seite bleibt bedienbar,
+während sie auf deine Eingabe wartet:
+
+```{pyodide-python}
+name = input("Wie heißt du? ")
+print(f"Hallo, {name}!")
+```
+
+→ Eine Animation und Aufgaben zum Bearbeiten findest du auf der Seite [Visualisierungen](ep_visuals.qmd).
+::::
+
+:::: {.content-visible when-profile="english"}
 <details>
 <summary>The Code for this Output looked like this:</summary>
 
 ````markdown
 ```python
 #| execute: true # This makes the Code execute during render
-#| echo: false # This makes the Code invisible in the final output 
+#| echo: false # This makes the Code invisible in the final output
 import math
 
 angles = [0, 30, 45, 60, 90, 180]
 for deg in angles:
-    val = math.sin(math.radians(deg))   
+    val = math.sin(math.radians(deg))
     print(f"sin({deg:3d}°) = {val:.4f}")
 ```
 ````
@@ -73,3 +171,174 @@ waits for you to type:
 name = input("What's your name? ")
 print(f"Hello, {name}!")
 ```
+
+→ An animation and exercises to fill in are on the [Visualizations page](ep_visuals.qmd).
+::::
+
+:::: {.content-visible when-profile="dansk"}
+<details>
+<summary>Sådan så koden til dette output ud:</summary>
+
+````markdown
+```python
+#| execute: true # This makes the Code execute during render
+#| echo: false # This makes the Code invisible in the final output
+import math
+
+angles = [0, 30, 45, 60, 90, 180]
+for deg in angles:
+    val = math.sin(math.radians(deg))
+    print(f"sin({deg:3d}°) = {val:.4f}")
+```
+````
+
+</details>
+
+## Kørbar kode
+
+Klik på **Kør koden**, så køres koden direkte i browseren:
+
+```{pyodide-python}
+import math
+
+angles = [0, 30, 45, 60, 90, 180]
+for deg in angles:
+    val = math.sin(math.radians(deg))
+    bar = "█" * round(abs(val) * 12)
+    print(f"sin({deg:3d}°) = {val:+.4f}  {bar}")
+```
+
+## Celler deler tilstand
+
+Alle celler på en side køres i **den samme** Python-fortolker. En senere celle kan
+bruge en variabel fra en tidligere uden at importere eller definere den igen:
+
+```{pyodide-python}
+# 'angles' og 'math' findes allerede fra cellen ovenfor
+print(f"Største kontrollerede vinkel: {max(angles)}°")
+```
+
+## Interaktiv `input()`
+
+Celler kan bruge en rigtig, ventende `input()`. Siden kan bruges,
+mens den venter på, at du skriver noget:
+
+```{pyodide-python}
+name = input("Hvad hedder du? ")
+print(f"Hej, {name}!")
+```
+
+→ En animation og opgaver, du kan løse, finder du på siden [Visualiseringer](ep_visuals.qmd).
+::::
+
+:::: {.content-visible when-profile="norsk"}
+<details>
+<summary>Slik så koden for denne utdataen ut:</summary>
+
+````markdown
+```python
+#| execute: true # This makes the Code execute during render
+#| echo: false # This makes the Code invisible in the final output
+import math
+
+angles = [0, 30, 45, 60, 90, 180]
+for deg in angles:
+    val = math.sin(math.radians(deg))
+    print(f"sin({deg:3d}°) = {val:.4f}")
+```
+````
+
+</details>
+
+## Kjørbar kode
+
+Klikk på **Kjør koden**, så kjøres koden direkte i nettleseren:
+
+```{pyodide-python}
+import math
+
+angles = [0, 30, 45, 60, 90, 180]
+for deg in angles:
+    val = math.sin(math.radians(deg))
+    bar = "█" * round(abs(val) * 12)
+    print(f"sin({deg:3d}°) = {val:+.4f}  {bar}")
+```
+
+## Celler deler tilstand
+
+Alle celler på en side kjøres i **samme** Python-tolk. En senere celle kan
+bruke en variabel fra en tidligere uten å importere eller definere den på nytt:
+
+```{pyodide-python}
+# 'angles' og 'math' finnes allerede fra cellen over
+print(f"Største kontrollerte vinkel: {max(angles)}°")
+```
+
+## Interaktiv `input()`
+
+Celler kan bruke en ekte, ventende `input()`. Siden kan brukes
+mens den venter på at du skriver noe:
+
+```{pyodide-python}
+name = input("Hva heter du? ")
+print(f"Hei, {name}!")
+```
+
+→ En animasjon og oppgaver du kan løse, finner du på siden [Visualiseringer](ep_visuals.qmd).
+::::
+
+:::: {.content-visible when-profile="svenska"}
+<details>
+<summary>Så här såg koden för den här utdatan ut:</summary>
+
+````markdown
+```python
+#| execute: true # This makes the Code execute during render
+#| echo: false # This makes the Code invisible in the final output
+import math
+
+angles = [0, 30, 45, 60, 90, 180]
+for deg in angles:
+    val = math.sin(math.radians(deg))
+    print(f"sin({deg:3d}°) = {val:.4f}")
+```
+````
+
+</details>
+
+## Körbar kod
+
+Klicka på **Kör koden**, så körs koden direkt i webbläsaren:
+
+```{pyodide-python}
+import math
+
+angles = [0, 30, 45, 60, 90, 180]
+for deg in angles:
+    val = math.sin(math.radians(deg))
+    bar = "█" * round(abs(val) * 12)
+    print(f"sin({deg:3d}°) = {val:+.4f}  {bar}")
+```
+
+## Celler delar tillstånd
+
+Alla celler på en sida körs i **samma** Python-tolk. En senare cell kan
+återanvända en variabel från en tidigare utan att importera eller definiera den på nytt:
+
+```{pyodide-python}
+# 'angles' och 'math' finns redan från cellen ovanför
+print(f"Största kontrollerade vinkeln: {max(angles)}°")
+```
+
+## Interaktivt `input()`
+
+Celler kan använda ett riktigt, väntande `input()`. Sidan går att använda
+medan den väntar på din inmatning:
+
+```{pyodide-python}
+name = input("Vad heter du? ")
+print(f"Hej, {name}!")
+```
+
+→ En animation och uppgifter att lösa finns på sidan [Visualiseringar](ep_visuals.qmd).
+::::

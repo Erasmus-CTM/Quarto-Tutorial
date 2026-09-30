@@ -1,26 +1,71 @@
 ---
-title: "Quarto Tips & Tricks"
-subtitle: "Going further with Quarto"
+title: "Quarto Tipps & Tricks"
+title-en: "Quarto Tips & Tricks"
+title-sv: "Quarto: tips & tricks"
+title-no: "Quarto: tips & triks"
+title-da: "Quarto: tips & tricks"
 sidebar: tips-sidebar
 ---
+
+:::: {.content-visible when-profile="deutsch"}
+*Mit Quarto weiterkommen*
+
+Dieser Teil ist für alle, die schon Quarto-Dokumente bauen können und weitergehen wollen.
+Alle drei Niveaus dieses Tutorials sind mit den Techniken gebaut, die hier beschrieben werden.
+
+::: {.callout-note}
+## Offizielle Dokumentation
+Die vollständige Referenz zu Quarto steht unter **[quarto.org/docs/reference](https://quarto.org/docs/reference/)**.
+Dieser Teil ist eine Auswahl dessen, was in der Praxis am meisten hilft.
+:::
+
+---
+
+## Was es hier gibt und wo du es findest
+
+| Ich möchte … | Gehe zu |
+|---|---|
+| Ausgabeformate, `freeze` und Profile steuern | [Die YML-Datei](exp_yml.qmd) |
+| Abschnitte der Seitenleiste einrichten und einklappen | [Die YML-Datei → Seitenleiste](exp_yml.qmd#sidebar) |
+| Das Aussehen mit Themes und CSS anpassen | [Die YML-Datei → Stile](exp_yml.qmd#styles--css) |
+| Steuern, wie Code läuft (`echo`, `eval`, `fold`, …) | [Die QMD-Datei](exp_qmd.qmd) |
+| Inhalte nur in bestimmten Profilen oder Formaten zeigen | [Die QMD-Datei → Bedingte Inhalte](exp_qmd.qmd#conditional-content) |
+| Auf Abbildungen, Tabellen und Abschnitte verweisen | [Die QMD-Datei → Querverweise](exp_qmd.qmd#cross-referencing) |
+| quizdown, Pyodide, JSXGraph, py-exercise oder math-exercise benutzen | [Extensions](exp_extensions.qmd) |
+| Dasselbe Projekt in mehreren Sprachen anbieten | [Mehrsprachige Projekte](exp_multilanguage.qmd) |
+| Schnell etwas nachschlagen | [Cheatsheet](exp_cheatsheet.qmd) |
+
+---
+
+## Was du schon können solltest
+
+Dieser Teil setzt voraus, dass dir Folgendes aus den anderen Niveaus vertraut ist:
+
+- Eine **Website**, ein **Übungsblatt** oder ein **Buch** mit Quarto erstellen: [Erste Schritte](../../../int/Qmd Files/Getting Started/getting_started.html)
+- **Python im Browser** mit Pyodide ausführen: [Interaktiver Code](../../../int/Qmd Files/Getting Started/beg_extensions.html)
+- Wie interaktive Quarto-Seiten aussehen: [Beispielseite](../../../beg/Qmd Files/Example Page/index_beg.html)
+::::
+
+:::: {.content-visible when-profile="english"}
+*Going further with Quarto*
 
 This section is for people who already know how to build Quarto documents and want to go further.
 All three levels of this tutorial are built with the techniques described here.
 
 ::: {.callout-note}
 ## Official Documentation
-The complete Quarto reference is at **[quarto.org/docs/reference](https://quarto.org/docs/reference/)** —
-this section is a curated guide to the parts that are most useful in practice.
+The complete Quarto reference is at **[quarto.org/docs/reference](https://quarto.org/docs/reference/)**.
+This section is a curated guide to the parts that are most useful in practice.
 :::
 
 ---
 
-## What's covered — and where to find it
+## What's covered and where to find it
 
 | I want to… | Go to |
 |---|---|
 | Control output formats, freeze, and profiles | [The YML File](exp_yml.qmd) |
-| Configure advanced sidebar sections and collapsing | [The YML File → Sidebar](exp_yml.qmd#sidebar) |
+| Configure sidebar sections and collapsing | [The YML File → Sidebar](exp_yml.qmd#sidebar) |
 | Customise the site's look with themes and CSS | [The YML File → Styles](exp_yml.qmd#styles--css) |
 | Control how code runs (`echo`, `eval`, `fold`, …) | [The QMD File](exp_qmd.qmd) |
 | Show content only in certain profiles or formats | [The QMD File → Conditional content](exp_qmd.qmd#conditional-content) |
@@ -33,8 +78,126 @@ this section is a curated guide to the parts that are most useful in practice.
 
 ## What you should already know
 
-This section assumes you are comfortable with the following from the previous levels:
+This section assumes you are comfortable with the following from the other levels:
 
-- Creating a Quarto **website**, **exercise sheet**, or **book** — [Getting Started](../../int/Qmd Files/Getting Started/getting_started.html)
-- Running **Python in the browser** with Pyodide — [Extensions](../../int/Qmd Files/Getting Started/beg_extensions.html)
-- What interactive Quarto output looks like — [Example Page](../../beg/Qmd Files/Example Page/index_beg.html)
+- Creating a Quarto **website**, **exercise sheet**, or **book**: [Getting Started](../../../int/Qmd Files/Getting Started/getting_started.html)
+- Running **Python in the browser** with Pyodide: [Interactive Code](../../../int/Qmd Files/Getting Started/beg_extensions.html)
+- What interactive Quarto output looks like: [Example Page](../../../beg/Qmd Files/Example Page/index_beg.html)
+::::
+
+:::: {.content-visible when-profile="dansk"}
+*Videre med Quarto*
+
+Denne del er til dig, der allerede kan lave Quarto-dokumenter og vil videre.
+Alle tre niveauer i denne vejledning er bygget med de teknikker, der beskrives her.
+
+::: {.callout-note}
+## Officiel dokumentation
+Den fulde Quarto-reference finder du på **[quarto.org/docs/reference](https://quarto.org/docs/reference/)**.
+Denne del er et udvalg af det, der er mest nyttigt i praksis.
+:::
+
+---
+
+## Hvad der dækkes, og hvor du finder det
+
+| Jeg vil … | Gå til |
+|---|---|
+| Styre outputformater, freeze og profiler | [YML-filen](exp_yml.qmd) |
+| Indstille sidepanelets afsnit og sammenfoldning | [YML-filen → Sidepanel](exp_yml.qmd#sidebar) |
+| Tilpasse webstedets udseende med temaer og CSS | [YML-filen → Typografier](exp_yml.qmd#styles--css) |
+| Styre, hvordan kode køres (`echo`, `eval`, `fold`, …) | [QMD-filen](exp_qmd.qmd) |
+| Vise indhold kun i bestemte profiler eller formater | [QMD-filen → Betinget indhold](exp_qmd.qmd#conditional-content) |
+| Krydshenvise til figurer, tabeller og afsnit | [QMD-filen → Krydshenvisninger](exp_qmd.qmd#cross-referencing) |
+| Bruge quizdown, Pyodide, JSXGraph, py-exercise eller math-exercise | [Udvidelser](exp_extensions.qmd) |
+| Tilbyde det samme projekt på flere sprog | [Flersprogede projekter](exp_multilanguage.qmd) |
+| Slå noget op hurtigt | [Cheatsheet](exp_cheatsheet.qmd) |
+
+---
+
+## Hvad du bør kunne i forvejen
+
+Denne del forudsætter, at du er fortrolig med følgende fra de andre niveauer:
+
+- Oprette et **websted**, et **opgaveark** eller en **bog** med Quarto: [Kom i gang](../../../int/Qmd Files/Getting Started/getting_started.html)
+- Køre **Python i browseren** med Pyodide: [Interaktiv kode](../../../int/Qmd Files/Getting Started/beg_extensions.html)
+- Hvordan interaktivt Quarto-indhold ser ud: [Eksempelsiden](../../../beg/Qmd Files/Example Page/index_beg.html)
+::::
+
+:::: {.content-visible when-profile="norsk"}
+*Videre med Quarto*
+
+Denne delen er for deg som allerede kan lage Quarto-dokumenter og vil gå videre.
+Alle de tre nivåene i denne veiledningen er bygget med teknikkene som beskrives her.
+
+::: {.callout-note}
+## Offisiell dokumentasjon
+Den fullstendige Quarto-referansen finner du på **[quarto.org/docs/reference](https://quarto.org/docs/reference/)**.
+Denne delen er et utvalg av det som er mest nyttig i praksis.
+:::
+
+---
+
+## Hva som dekkes, og hvor du finner det
+
+| Jeg vil … | Gå til |
+|---|---|
+| Styre utdataformater, freeze og profiler | [YML-filen](exp_yml.qmd) |
+| Sette opp delene i sidefeltet og sammenfolding | [YML-filen → Sidefelt](exp_yml.qmd#sidebar) |
+| Tilpasse utseendet på nettstedet med temaer og CSS | [YML-filen → Stiler](exp_yml.qmd#styles--css) |
+| Styre hvordan kode kjøres (`echo`, `eval`, `fold`, …) | [QMD-filen](exp_qmd.qmd) |
+| Vise innhold bare i bestemte profiler eller formater | [QMD-filen → Betinget innhold](exp_qmd.qmd#conditional-content) |
+| Kryssreferere figurer, tabeller og deler | [QMD-filen → Kryssreferanser](exp_qmd.qmd#cross-referencing) |
+| Bruke quizdown, Pyodide, JSXGraph, py-exercise eller math-exercise | [Utvidelser](exp_extensions.qmd) |
+| Tilby det samme prosjektet på flere språk | [Flerspråklige prosjekter](exp_multilanguage.qmd) |
+| Slå opp noe raskt | [Cheatsheet](exp_cheatsheet.qmd) |
+
+---
+
+## Hva du bør kunne fra før
+
+Denne delen forutsetter at du er fortrolig med følgende fra de andre nivåene:
+
+- Lage et **nettsted**, et **oppgaveark** eller en **bok** med Quarto: [Kom i gang](../../../int/Qmd Files/Getting Started/getting_started.html)
+- Kjøre **Python i nettleseren** med Pyodide: [Interaktiv kode](../../../int/Qmd Files/Getting Started/beg_extensions.html)
+- Hvordan interaktivt Quarto-innhold ser ut: [Eksempelsiden](../../../beg/Qmd Files/Example Page/index_beg.html)
+::::
+
+:::: {.content-visible when-profile="svenska"}
+*Gå vidare med Quarto*
+
+Den här delen är till för dig som redan kan bygga Quarto-dokument och vill gå vidare.
+Alla tre nivåerna i den här handledningen är byggda med de tekniker som beskrivs här.
+
+::: {.callout-note}
+## Officiell dokumentation
+Den fullständiga Quarto-referensen finns på **[quarto.org/docs/reference](https://quarto.org/docs/reference/)**.
+Den här delen är ett urval av det som är mest användbart i praktiken.
+:::
+
+---
+
+## Vad som tas upp och var du hittar det
+
+| Jag vill … | Gå till |
+|---|---|
+| Styra utdataformat, freeze och profiler | [YML-filen](exp_yml.qmd) |
+| Ställa in sidofältets avsnitt och hopfällning | [YML-filen → Sidofält](exp_yml.qmd#sidebar) |
+| Anpassa webbplatsens utseende med teman och CSS | [YML-filen → Stilar](exp_yml.qmd#styles--css) |
+| Styra hur kod körs (`echo`, `eval`, `fold`, …) | [QMD-filen](exp_qmd.qmd) |
+| Visa innehåll bara i vissa profiler eller format | [QMD-filen → Villkorat innehåll](exp_qmd.qmd#conditional-content) |
+| Korsreferera figurer, tabeller och avsnitt | [QMD-filen → Korsreferenser](exp_qmd.qmd#cross-referencing) |
+| Använda quizdown, Pyodide, JSXGraph, py-exercise eller math-exercise | [Tillägg](exp_extensions.qmd) |
+| Erbjuda samma projekt på flera språk | [Flerspråkiga projekt](exp_multilanguage.qmd) |
+| Slå upp något snabbt | [Cheatsheet](exp_cheatsheet.qmd) |
+
+---
+
+## Vad du redan bör kunna
+
+Den här delen förutsätter att du är bekväm med följande från de andra nivåerna:
+
+- Skapa en **webbplats**, ett **övningsblad** eller en **bok** med Quarto: [Kom igång](../../../int/Qmd Files/Getting Started/getting_started.html)
+- Köra **Python i webbläsaren** med Pyodide: [Interaktiv kod](../../../int/Qmd Files/Getting Started/beg_extensions.html)
+- Hur interaktivt Quarto-innehåll ser ut: [Exempelsidan](../../../beg/Qmd Files/Example Page/index_beg.html)
+::::

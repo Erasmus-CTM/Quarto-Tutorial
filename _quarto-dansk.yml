@@ -1,0 +1,107 @@
+# Everything that depends on the LANGUAGE (Dansk): UI language, title, navbar and sidebar
+# labels. Which pages are rendered is set in _quarto-<level>.yml.
+lang: da
+
+website:
+  title: "Quarto-vejledning"
+  reader-mode: true
+  navbar:
+    search: true
+    left:
+      # placeholders, navigation.html fills in the target in the current language
+      - text: "Eksempelside"
+        href: "#niveau-beg"
+      - text: "Kom i gang"
+        href: "#niveau-int"
+      - text: "Tips & tricks"
+        href: "#niveau-exp"
+    right:
+      - icon: github
+        href: "https://github.com/Erasmus-CTM/Quarto-Tutorial"
+      - icon: globe
+        aria-label: "Sprache wählen / Choose language"
+        menu:
+          - text: "Deutsch"
+            href: "#sprache-de"
+          - text: "English"
+            href: "#sprache-en"
+          - text: "Svenska"
+            href: "#sprache-sv"
+          - text: "Norsk"
+            href: "#sprache-no"
+          - text: "Dansk"
+            href: "#sprache-da"
+  # Sidebars of ALL levels. Quarto shows on each page only the one that lists it.
+  # Pages of another level are not rendered in this run; that does no harm.
+  sidebar:
+    - id: example-sidebar
+      title: "Eksempelsider"
+      style: docked
+      contents:
+        - text: "Oversigt"
+          href: "Qmd Files/Example Page/index_beg.qmd"
+        - text: "Layout & formatering"
+          href: "Qmd Files/Example Page/ep_layout.qmd"
+        - text: "Kode"
+          href: "Qmd Files/Example Page/ep_code.qmd"
+        - text: "Visualiseringer"
+          href: "Qmd Files/Example Page/ep_visuals.qmd"
+        - text: "Quiz"
+          href: "Qmd Files/Example Page/ep_quiz.qmd"
+        - text: "Kilder"
+          href: "Qmd Files/Example Page/ep_references.qmd"
+    - id: getting-started-sidebar
+      style: docked
+      collapse-level: 1
+      contents:
+        - text: "Oversigt"
+          href: "Qmd Files/Getting Started/getting_started.qmd"
+        - section: "Opret et Quarto-websted"
+          contents:
+            - text: "Det skal du bruge"
+              href: "Qmd Files/Getting Started/beg_website_1.qmd"
+            - text: "Opret et websted"
+              href: "Qmd Files/Getting Started/beg_website_2.qmd"
+            - text: "Udgiv webstedet"
+              href: "Qmd Files/Getting Started/beg_website_3.qmd"
+            - text: "📄 Cheatsheet (PDF)"
+              href: "Qmd Files/Getting Started/beg_website_cheatsheet.qmd"
+        - section: "Opret et opgaveark med Quarto"
+          contents:
+            - text: "Det skal du bruge"
+              href: "Qmd Files/Getting Started/beg_exercise_1.qmd"
+            - text: "Opret et opgaveark"
+              href: "Qmd Files/Getting Started/beg_exercise_2.qmd"
+            - text: "Andre outputformater"
+              href: "Qmd Files/Getting Started/beg_exercise_3.qmd"
+            - text: "📄 Cheatsheet (PDF)"
+              href: "Qmd Files/Getting Started/beg_exercise_cheatsheet.qmd"
+        - section: "Opret en Quarto-bog"
+          contents:
+            - text: "Det skal du bruge"
+              href: "Qmd Files/Getting Started/beg_book_1.qmd"
+            - text: "Opret en bog"
+              href: "Qmd Files/Getting Started/beg_book_2.qmd"
+            - text: "📄 Cheatsheet (PDF)"
+              href: "Qmd Files/Getting Started/beg_book_cheatsheet.qmd"
+        - section: "Interaktiv kode"
+          contents:
+            - text: "Interaktivt Python med Pyodide"
+              href: "Qmd Files/Getting Started/beg_extensions.qmd"
+            - text: "📄 Cheatsheet (PDF)"
+              href: "Qmd Files/Getting Started/beg_extensions_cheatsheet.qmd"
+    - id: tips-sidebar
+      style: docked
+      contents:
+        - text: "Hvad der dækkes & hvad du bør kunne i forvejen"
+          href: "Qmd Files/Tipps and Tricks/index_exp.qmd"
+        - text: "YML-filen"
+          href: "Qmd Files/Tipps and Tricks/exp_yml.qmd"
+        - text: "QMD-filen"
+          href: "Qmd Files/Tipps and Tricks/exp_qmd.qmd"
+        - text: "Udvidelser"
+          href: "Qmd Files/Tipps and Tricks/exp_extensions.qmd"
+        - text: "Flersprogede projekter"
+          href: "Qmd Files/Tipps and Tricks/exp_multilanguage.qmd"
+        - text: "Cheatsheet"
+          href: "Qmd Files/Tipps and Tricks/exp_cheatsheet.qmd"

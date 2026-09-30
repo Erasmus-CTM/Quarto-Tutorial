@@ -1,7 +1,64 @@
 ---
-title: "What you need — Book"
+title: "Was du brauchst – Buch"
+title-sv: "Vad du behöver – bok"
+title-no: "Dette trenger du – bok"
+title-da: "Det skal du bruge – bog"
+title-en: "What you need — Book"
 ---
 
+:::: {.content-visible when-profile="deutsch"}
+::: {.callout-note}
+## Offizielle Dokumentation
+Die vollständige Anleitung zu Quarto-Büchern steht unter **[quarto.org/docs/books](https://quarto.org/docs/books/)**.
+:::
+
+::: {.callout-tip}
+## Lieber eine Kurzfassung?
+Dieses Kapitel gibt es als dreiseitiges [PDF-Cheatsheet](beg_book_cheatsheet.qmd): Einrichten, Kapitel ordnen und Veröffentlichen, knapp gefasst zum Ausdrucken oder Nachschlagen.
+:::
+
+Ein Quarto-Buch besteht aus mehreren `.qmd`-Dateien, die zusammen zu einem Dokument mit Navigation gebaut werden. Das passt gut für ein Vorlesungsskript, ein Kurshandbuch oder eine Dokumentation.
+
+Du brauchst dieselbe Ausstattung wie für eine Website. Falls noch nicht geschehen, folge zuerst [Was du brauchst – Website](beg_website_1.qmd).
+
+---
+
+## Wie ein Buch aufgebaut ist
+
+Wenn du ein Buchprojekt anlegst, erzeugt Quarto von selbst diese Dateien:
+
+![](../../Img Files/Getting Started/quarto_book_project_files.png)
+
+- `_quarto.yml`: legt Titel, Autor und die Reihenfolge der Kapitel fest
+- `index.qmd`: Titelseite bzw. Vorwort
+- `intro.qmd`, `summary.qmd`: Beispielkapitel (die du umbenennst oder ersetzt)
+- `references.bib`: Literaturdatei für Zitate
+- `references.qmd`: automatisch erzeugte Seite mit dem Literaturverzeichnis
+
+Die `_quarto.yml` verbindet alles miteinander. Zum Beispiel:
+
+```yaml
+book:
+  title: "Mein Vorlesungsskript"
+  author: "Dein Name"
+  chapters:
+    - index.qmd
+    - intro.qmd
+    - summary.qmd
+    - references.qmd
+```
+
+Jede `.qmd`-Datei wird ein Kapitel. Die Reihenfolge in der Liste ist die Reihenfolge im Buch.
+
+---
+
+::: {.callout-tip}
+## ✅ Fertig!
+Weiter geht es mit [Buch erstellen →](beg_book_2.qmd)
+:::
+::::
+
+:::: {.content-visible when-profile="english"}
 ::: {.callout-note}
 ## Official Documentation
 See the full Quarto book guide at **[quarto.org/docs/books](https://quarto.org/docs/books/)**.
@@ -51,3 +108,160 @@ Each `.qmd` file becomes one chapter. The order in the list is the order in the 
 ## ✅ Ready!
 Continue with [Create a Book →](beg_book_2.qmd)
 :::
+::::
+
+:::: {.content-visible when-profile="dansk"}
+::: {.callout-note}
+## Officiel dokumentation
+Den fulde guide til Quarto-bøger finder du på **[quarto.org/docs/books](https://quarto.org/docs/books/)**.
+:::
+
+::: {.callout-tip}
+## Vil du hellere have en kort udgave?
+Dette kapitel findes som et [PDF-cheatsheet](beg_book_cheatsheet.qmd) på tre sider: opsætning, at ordne kapitler og udgivelse, kort fortalt til udskrift eller hurtigt opslag.
+:::
+
+En Quarto-bog er en samling `.qmd`-filer, der renderes sammen til et dokument med navigation. Det passer godt til forelæsningsnoter, en kursushåndbog eller dokumentation.
+
+Du skal bruge det samme som til et websted. Hvis du ikke har gjort det endnu, så følg først [Det skal du bruge – websted](beg_website_1.qmd).
+
+---
+
+## Sådan er en bog bygget op
+
+Når du opretter et bogprojekt, laver Quarto automatisk denne filstruktur:
+
+![](../../Img Files/Getting Started/quarto_book_project_files.png)
+
+- `_quarto.yml`: angiver titel, forfatter og kapitlernes rækkefølge
+- `index.qmd`: forside eller forord
+- `intro.qmd`, `summary.qmd`: eksempelkapitler (omdøb dem, eller erstat dem)
+- `references.bib`: litteraturfil til citater
+- `references.qmd`: side, hvor litteraturlisten laves automatisk
+
+`_quarto.yml` binder det hele sammen. For eksempel:
+
+```yaml
+book:
+  title: "My Lecture Notes"
+  author: "Your Name"
+  chapters:
+    - index.qmd
+    - intro.qmd
+    - summary.qmd
+    - references.qmd
+```
+
+Hver `.qmd`-fil bliver til ét kapitel. Rækkefølgen i listen er rækkefølgen i bogen.
+
+---
+
+::: {.callout-tip}
+## ✅ Klar!
+Fortsæt med [Opret en bog →](beg_book_2.qmd)
+:::
+::::
+
+:::: {.content-visible when-profile="norsk"}
+::: {.callout-note}
+## Offisiell dokumentasjon
+Den fullstendige guiden til Quarto-bøker finner du på **[quarto.org/docs/books](https://quarto.org/docs/books/)**.
+:::
+
+::: {.callout-tip}
+## Vil du heller ha en kortversjon?
+Dette kapittelet finnes som et [PDF-cheatsheet](beg_book_cheatsheet.qmd) på tre sider: oppsett, å ordne kapitler og publisering, kort oppsummert til utskrift eller raskt oppslag.
+:::
+
+En Quarto-bok er en samling `.qmd`-filer som rendres sammen til et dokument med navigasjon. Det passer godt til forelesningsnotater, en kurshåndbok eller dokumentasjon.
+
+Du trenger det samme som til et nettsted. Hvis du ikke har gjort det ennå, følger du først [Dette trenger du – nettsted](beg_website_1.qmd).
+
+---
+
+## Slik er en bok bygget opp
+
+Når du lager et bokprosjekt, lager Quarto denne filstrukturen automatisk:
+
+![](../../Img Files/Getting Started/quarto_book_project_files.png)
+
+- `_quarto.yml`: angir tittel, forfatter og rekkefølgen på kapitlene
+- `index.qmd`: forside eller forord
+- `intro.qmd`, `summary.qmd`: eksempelkapitler (gi dem nytt navn eller bytt dem ut)
+- `references.bib`: litteraturfil for sitater
+- `references.qmd`: side der litteraturlisten lages automatisk
+
+`_quarto.yml` knytter alt sammen. For eksempel:
+
+```yaml
+book:
+  title: "My Lecture Notes"
+  author: "Your Name"
+  chapters:
+    - index.qmd
+    - intro.qmd
+    - summary.qmd
+    - references.qmd
+```
+
+Hver `.qmd`-fil blir ett kapittel. Rekkefølgen i listen er rekkefølgen i boken.
+
+---
+
+::: {.callout-tip}
+## ✅ Klar!
+Fortsett med [Lag en bok →](beg_book_2.qmd)
+:::
+::::
+
+:::: {.content-visible when-profile="svenska"}
+::: {.callout-note}
+## Officiell dokumentation
+Den fullständiga guiden till Quarto-böcker finns på **[quarto.org/docs/books](https://quarto.org/docs/books/)**.
+:::
+
+::: {.callout-tip}
+## Vill du hellre ha en kortversion?
+Det här kapitlet finns som en [PDF-lathund](beg_book_cheatsheet.qmd) på tre sidor: installation, att ordna kapitel och publicering, kortfattat för utskrift eller snabb uppslagning.
+:::
+
+En Quarto-bok är en samling `.qmd`-filer som renderas tillsammans till ett dokument med navigering. Det passar bra för föreläsningsanteckningar, en kurshandbok eller dokumentation.
+
+Du behöver samma saker som för en webbplats. Om du inte har gjort det än, följ först [Vad du behöver – webbplats](beg_website_1.qmd).
+
+---
+
+## Så är en bok uppbyggd
+
+När du skapar ett bokprojekt skapar Quarto den här filstrukturen automatiskt:
+
+![](../../Img Files/Getting Started/quarto_book_project_files.png)
+
+- `_quarto.yml`: anger titel, författare och kapitlens ordning
+- `index.qmd`: omslag eller förord
+- `intro.qmd`, `summary.qmd`: exempelkapitel (byt namn på dem eller ersätt dem)
+- `references.bib`: litteraturfil för citat
+- `references.qmd`: sida där litteraturförteckningen skapas automatiskt
+
+`_quarto.yml` binder ihop allt. Till exempel:
+
+```yaml
+book:
+  title: "My Lecture Notes"
+  author: "Your Name"
+  chapters:
+    - index.qmd
+    - intro.qmd
+    - summary.qmd
+    - references.qmd
+```
+
+Varje `.qmd`-fil blir ett kapitel. Ordningen i listan är ordningen i boken.
+
+---
+
+::: {.callout-tip}
+## ✅ Klart!
+Fortsätt med [Skapa en bok →](beg_book_2.qmd)
+:::
+::::
