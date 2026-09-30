@@ -1,131 +1,134 @@
-// qpyodide-canvas-plots.js – interaktive matplotlib-Plots per zweiter Pyodide-Instanz
+// qpyodide-canvas-plots.js – interactive matplotlib plots via a second Pyodide instance
 //
-// Ausgangslage: Python laeuft in dieser Extension in einem Web Worker. Dort gibt
-// es kein DOM, deshalb kann matplotlib nur mit dem AGG-Backend rendern, also
-// PNG-Bilder liefern. Das interaktive `html5_canvas_backend` (Werkzeugleiste mit
-// Zoom, Pan, Zuruecksetzen, Speichern) malt dagegen direkt auf ein <canvas> und
-// braucht damit zwingend den Haupt-Thread.
+// Starting point: in this extension, Python runs in a Web Worker. There is no
+// DOM there, so matplotlib can only render with the AGG backend, i.e. it can
+// only deliver PNG images. The interactive `html5_canvas_backend` (toolbar
+// with zoom, pan, reset, save), by contrast, draws directly onto a <canvas>
+// and therefore necessarily needs the main thread.
 //
-// Zusaetzlich muss das Canvas-Backend selbst reaktiviert werden. In
-// matplotlib-pyodide 0.2.3 (was Pyodide 0.27.2 mitliefert) ist die interaktive
-// Schicht upstream abgeschaltet - in v0.2.0 war sie noch aktiv, im Changelog
-// steht zur Abschaltung nichts. Drei Stellen sind betroffen, alle drei setzt
-// QPC_PY_SETUP unten zurueck:
-//   1. Im Export-Block von html5_canvas_backend.py sind FigureCanvasHTMLCanvas
-//      und FigureManagerHTMLCanvas auskommentiert; aktiv sind die Agg-Klassen,
-//      die nur fertige Agg-Pixel ins Canvas blitten. Der Vektor-Renderer
-//      RendererHTMLCanvas wird dadurch nie benutzt.
-//   2. canvas.manager_class wird nirgends gesetzt. Seit matplotlib 3.6
-//      entscheidet aber genau das ueber den Manager, also entsteht sonst ein
-//      FigureManagerBase ohne Werkzeugleiste und canvas.toolbar bleibt None.
-//   3. In browser_backend.py sind die add_event_listener-Zeilen fuer Maus und
-//      Tastatur auskommentiert, und die zugehoerigen Handler rufen mit
-//      canvas.motion_notify_event() eine API auf, die matplotlib in 3.8
-//      entfernt hat. Ersetzt durch eigene Handler auf Event(...)._process().
+// Additionally, the canvas backend itself needs to be re-enabled. In
+// matplotlib-pyodide 0.2.3 (what Pyodide 0.27.2 ships), the interactive
+// layer is disabled upstream - it was still active in v0.2.0, and the
+// changelog says nothing about the removal. Three places are affected, all
+// three reset by QPC_PY_SETUP below:
+//   1. In the export block of html5_canvas_backend.py, FigureCanvasHTMLCanvas
+//      and FigureManagerHTMLCanvas are commented out; the Agg classes are
+//      active instead, which only blit finished Agg pixels onto the canvas.
+//      As a result, the vector renderer RendererHTMLCanvas is never used.
+//   2. canvas.manager_class is set nowhere. Since matplotlib 3.6, that is
+//      exactly what decides the manager, so otherwise a bare
+//      FigureManagerBase without a toolbar is created and canvas.toolbar
+//      stays None.
+//   3. In browser_backend.py, the add_event_listener lines for mouse and
+//      keyboard are commented out, and the corresponding handlers call
+//      canvas.motion_notify_event(), an API that matplotlib removed in
+//      3.8. That's presumably why they got commented out. Replaced with our
+//      own handlers on Event(...)._process().
 //
-// Kompromiss dieses Moduls (EXPERIMENT):
-//   1. Der Worker rechnet wie bisher und schickt jede offene Figur zusaetzlich
-//      zum PNG als `pickle`-Bytes mit (Base64).
-//   2. Das PNG wird sofort angezeigt – die Seite wirkt also nicht langsamer.
-//   3. Beim ersten Plot der Seite wird im Hintergrund eine zweite, schlanke
-//      Pyodide-Instanz auf dem Haupt-Thread geladen (nur matplotlib).
-//   4. Sobald sie steht, wird die Figur dort aus dem pickle wiederhergestellt,
-//      als Canvas gezeichnet und das PNG ersetzt. Ab dem zweiten Plot passiert
-//      das ohne Wartezeit.
+// This module's compromise (EXPERIMENT):
+//   1. The worker computes as before and additionally sends each open
+//      figure along as `pickle` bytes (Base64) with the PNG.
+//   2. The PNG is displayed immediately – the page therefore doesn't feel
+//      slower.
+//   3. On the page's first plot, a second, lightweight Pyodide instance
+//      (matplotlib only) is loaded in the background on the main thread.
+//   4. Once it's ready, the figure is restored there from the pickle,
+//      drawn as canvas, and replaces the PNG. From the second plot onward
+//      this happens without any wait.
 //
-// Faellt irgendein Schritt aus (kein pickle moeglich, zweite Instanz laedt
-// nicht, Wiederherstellung schlaegt fehl), bleibt das PNG stehen – die Seite
-// funktioniert dann genau wie vorher.
+// If any step fails (pickling not possible, second instance doesn't load,
+// restoration fails), the PNG stays as is – the page then works exactly as
+// before.
 //
-// Bewusst NICHT betroffen:
-//   * Animationen: plt.show() gibt eine animierte Figur als JS-Player aus und
-//     schliesst sie dabei - fuer sie entsteht also gar kein pickle. Ein
-//     zusaetzlicher statischer Plot in derselben Zelle wird weiterhin ganz
-//     normal auf Canvas umgestellt.
-//   * Der Rich-HTML-Pfad (Plotly, `zeige_svg()`, `zeige_animation()`): diese
-//     Zellen geben HTML zurueck und schliessen ihre Figur selbst; bei einer
-//     HTML-Rueckgabe wird grundsaetzlich nicht auf Canvas umgeschaltet.
-//   * Zellen mit der Option `#| canvas: false`.
+// Deliberately NOT affected:
+//   * Animations: plt.show() outputs an animated figure as a JS player and
+//     closes it in the process - so no pickle is created for it at all. An
+//     additional static plot in the same cell is still switched to canvas
+//     completely normally.
+//   * The rich HTML path (Plotly, `zeige_svg()`, `zeige_animation()`): these
+//     cells return HTML and close their figure themselves; with an HTML
+//     return value, there is never a switch to canvas.
+//   * Cells with the option `#| canvas: false`.
 //
-// Globale Schnittstellen:
-//   qpyodideCanvasPlots        – Zustand + Schalter (enabled, status, bootSeconds)
-//   qpyodideCanvasWanted(opts) – soll fuer diese Zelle Canvas versucht werden?
-//   qpyodideCanvasUpgrade(...) – PNG-Ausgabe nachtraeglich auf Canvas umstellen
+// Global interfaces:
+//   qpyodideCanvasPlots        – state + switches (enabled, status, bootSeconds)
+//   qpyodideCanvasWanted(opts) – should canvas be attempted for this cell?
+//   qpyodideCanvasUpgrade(...) – retroactively switch a PNG output to canvas
 
 // ---------------------------------------------------------------------------
-// Zustand
+// State
 // ---------------------------------------------------------------------------
 
 globalThis.qpyodideCanvasPlots = {
-  // Hauptschalter. Spaeter ggf. Dokument-Option bzw. Haken im Einstellungs-Panel;
-  // fuer den Test in der Browser-Konsole umschaltbar:
+  // Main switch. Might later become a document option or a checkbox in the
+  // settings panel; toggleable for testing in the browser console:
   //   qpyodideCanvasPlots.enabled = false
   enabled: true,
 
-  // Einrastender Cursor an Kurven und Punkten (Punkt-Anzeige mit Werten).
-  // Je Zelle abschaltbar ueber "#| snap: false".
+  // Snapping cursor on curves and points (point display with values).
+  // Can be disabled per cell via "#| snap: false".
   snapCursor: true,
 
   // "idle" | "booting" | "ready" | "failed"
   status: "idle",
 
-  // Messwerte des Experiments (fuer die Bewertung in der Konsole)
+  // Measurements for the experiment (for evaluation in the console)
   bootSeconds: null,
   renderSeconds: [],
 
-  // Die zweite Pyodide-Instanz bzw. das Promise darauf
+  // The second Pyodide instance, or the promise for it
   pyodide: null,
   bootPromise: null
 };
 
-// Python-Seite der zweiten Instanz: interaktives Backend aktivieren und einen
-// Wiederhersteller fuer die pickle-Bytes aus dem Worker definieren.
+// Python side of the second instance: enable the interactive backend and
+// define a restorer for the pickle bytes coming from the worker.
 const QPC_PY_SETUP = [
   "import base64, pickle",
   "import numpy as np",
   "import matplotlib",
   "",
-  "# --- 1. Das HTML5-Canvas-Backend wieder einschalten ----------------------",
-  "# In matplotlib-pyodide 0.2.3 (Pyodide 0.27.2) sind im Export-Block von",
-  "# html5_canvas_backend.py die HTML5-Klassen auskommentiert:",
+  "# --- 1. Re-enable the HTML5 canvas backend --------------------------------",
+  "# In matplotlib-pyodide 0.2.3 (Pyodide 0.27.2), the HTML5 classes are",
+  "# commented out in the export block of html5_canvas_backend.py:",
   "#     # FigureCanvas = FigureCanvasHTMLCanvas",
   "#     FigureCanvas = FigureCanvasAggWasm",
-  "# Aktiv ist damit die Agg-Variante, die nur fertige Agg-Pixel ins Canvas",
-  "# blittet - also genau dieselben Pixel wie unser Worker-PNG. Der eigentliche",
-  "# Vektor-Renderer (RendererHTMLCanvas) wird nie benutzt. In v0.2.0 war er",
-  "# aktiv; im Changelog steht zur Abschaltung nichts. Wir setzen ihn zurueck.",
+  "# Active is therefore the Agg variant, which only blits finished Agg pixels",
+  "# onto the canvas - i.e. exactly the same pixels as our worker PNG. The",
+  "# actual vector renderer (RendererHTMLCanvas) is never used. It was active",
+  "# in v0.2.0; the changelog says nothing about the removal. We reset it.",
   "import matplotlib_pyodide.html5_canvas_backend as _qpc_h5",
   "_qpc_h5._BackendHTMLCanvas.FigureCanvas  = _qpc_h5.FigureCanvasHTMLCanvas",
   "_qpc_h5._BackendHTMLCanvas.FigureManager = _qpc_h5.FigureManagerHTMLCanvas",
   "_qpc_h5.FigureCanvas  = _qpc_h5.FigureCanvasHTMLCanvas",
   "_qpc_h5.FigureManager = _qpc_h5.FigureManagerHTMLCanvas",
-  "# Seit matplotlib 3.6 entscheidet canvas.manager_class, welcher Manager",
-  "# entsteht; _Backend.FigureManager wird nicht mehr benutzt. matplotlib-pyodide",
-  "# setzt manager_class nirgends - deshalb entsteht sonst nur ein nackter",
-  "# FigureManagerBase, der keine Werkzeugleiste anlegt, canvas.toolbar bleibt",
-  "# None und show() ueberspringt die Leiste stillschweigend. Daran haengt auch",
-  "# die Koordinaten-Anzeige: NavigationToolbar2.__init__ setzt canvas.toolbar",
-  "# und verbindet mouse_move, das die x/y-Werte in die Leiste schreibt.",
+  "# Since matplotlib 3.6, canvas.manager_class decides which manager gets",
+  "# created; _Backend.FigureManager is no longer used. matplotlib-pyodide",
+  "# never sets manager_class - so otherwise only a bare FigureManagerBase is",
+  "# created, which doesn't build a toolbar, canvas.toolbar stays None, and",
+  "# show() silently skips the toolbar. The coordinate display also depends",
+  "# on this: NavigationToolbar2.__init__ sets canvas.toolbar and connects",
+  "# mouse_move, which writes the x/y values into the toolbar.",
   "_qpc_h5.FigureCanvasHTMLCanvas.manager_class = _qpc_h5.FigureManagerHTMLCanvas",
   "matplotlib.use('module://matplotlib_pyodide.html5_canvas_backend', force=True)",
   "from matplotlib import pyplot as plt",
   "import matplotlib._pylab_helpers as _qpc_helpers",
   "",
-  "# --- 2. Maus- und Tastatur-Ereignisse wieder anschliessen ----------------",
-  "# In browser_backend.py sind die add_event_listener-Zeilen fuer das",
-  "# rubberband-Canvas auskommentiert. Die vorhandenen Handler dort rufen",
-  "# canvas.motion_notify_event() / button_press_event() auf - Methoden, die",
-  "# matplotlib in 3.8 entfernt hat (Pyodide 0.27.2 liefert 3.8.4). Das ist",
-  "# vermutlich der Grund fuers Auskommentieren. Deshalb hier eigene Handler",
-  "# auf der aktuellen Event-API: Event(...)._process().",
+  "# --- 2. Reconnect mouse and keyboard events --------------------------------",
+  "# In browser_backend.py, the add_event_listener lines for the rubberband",
+  "# canvas are commented out. The handlers that are there call",
+  "# canvas.motion_notify_event() / button_press_event() - methods that",
+  "# matplotlib removed in 3.8 (Pyodide 0.27.2 ships 3.8.4). That's presumably",
+  "# why they got commented out. So here are our own handlers using the",
+  "# current event API: Event(...)._process().",
   "from matplotlib.backend_bases import KeyEvent, MouseEvent",
   "from pyodide.ffi import create_proxy",
   "",
-  "# Mauskoordinaten selbst umrechnen. Das Original nimmt event.offsetX gegen",
-  "# die logische Figurengroesse und ignoriert devicePixelRatio sowie jede",
-  "# CSS-Skalierung des Canvas - die angezeigten x/y-Werte waeren dann bei",
-  "# Windows-Skalierung ungleich 100 % oder bei max-width-Verkleinerung falsch.",
-  "# Ueber getBoundingClientRect stimmt es in jedem Fall.",
+  "# Convert mouse coordinates ourselves. The original takes event.offsetX",
+  "# against the logical figure size and ignores devicePixelRatio as well as",
+  "# any CSS scaling of the canvas - the displayed x/y values would then be",
+  "# wrong under Windows scaling != 100% or when shrunk via max-width.",
+  "# Using getBoundingClientRect, it's correct in every case.",
   "def _qpc_convert_mouse_event(self, event):",
   "    width, height = self.get_width_height()",
   "    rect = self.get_element('rubberband').getBoundingClientRect()",
@@ -143,16 +146,16 @@ const QPC_PY_SETUP = [
   "",
   "_qpc_h5.FigureCanvasHTMLCanvas._convert_mouse_event = _qpc_convert_mouse_event",
   "",
-  "# Proxies und Figuren festhalten. Bei den Proxies zwingend: Pyodide gibt sie",
-  "# sonst frei und der Listener ruft ins Leere. Bei den Figuren, weil die",
-  "# DOM-Ids des Backends hex(id(canvas)) sind und CPython die id() eines",
-  "# freigegebenen Objekts wiederverwendet - eine neue Figur koennte sonst die",
-  "# Id einer aelteren, noch sichtbaren erwischen und in deren Canvas zeichnen.",
+  "# Keep proxies and figures alive. Mandatory for the proxies: otherwise",
+  "# Pyodide frees them and the listener calls into nothing. For the figures,",
+  "# because the backend's DOM ids are hex(id(canvas)) and CPython reuses the",
+  "# id() of a freed object - a new figure could otherwise get the id of an",
+  "# older, still-visible one and draw into its canvas.",
   "_qpc_keep = []",
   "_qpc_proxies = []",
   "",
   "def _qpc_wire_events(canvas):",
-  "    # Das rubberband-Canvas liegt oben auf und bekommt die Ereignisse.",
+  "    # The rubberband canvas sits on top and receives the events.",
   "    rb = canvas.get_element('rubberband')",
   "    if rb is None:",
   "        return",
@@ -170,7 +173,7 @@ const QPC_PY_SETUP = [
   "        MouseEvent('button_release_event', canvas, x, y, button, guiEvent=event)._process()",
   "",
   "    def on_enter(event):",
-  "        rb.focus()   # Tastatur-Fokus, damit Kuerzel wie 'p' und 'o' wirken",
+  "        rb.focus()   # keyboard focus, so shortcuts like 'p' and 'o' work",
   "",
   "    def on_leave(event):",
   "        rb.blur()",
@@ -191,22 +194,108 @@ const QPC_PY_SETUP = [
   "        _qpc_proxies.append(proxy)",
   "        rb.addEventListener(name, proxy)",
   "",
-  "# --- 3. Einrastender Cursor ----------------------------------------------",
-  "# matplotlib bringt das nicht mit: matplotlib.widgets.Cursor zeichnet nur ein",
-  "# freilaufendes Fadenkreuz und rastet nicht ein. Deshalb eine eigene kleine",
-  "# Klasse. Der naechste Punkt wird in Pixel-Abstand gesucht, nicht in",
-  "# Datenwerten - sonst verzerren unterschiedlich skalierte Achsen das Ergebnis.",
+  "# --- 3. Font Awesome-safe toolbar buttons ----------------------------------",
+  "# matplotlib-pyodide puts the `fa`/`fa-<name>` icon classes directly onto the",
+  "# toolbar's <button> elements. This extension loads Font Awesome's JS build",
+  "# (the CSS build pulls webfonts that no `embed-resources` pass can inline),",
+  "# and that build REPLACES every element carrying an `fa` class with an inline",
+  "# <svg>, keeping the original only as an HTML comment. The icon still shows,",
+  "# but the button - and with it the click listener and the `:hover` rule - is",
+  "# gone: a toolbar that looks right and does nothing at all.",
+  "# So build the same toolbar here with the icon classes on a nested <i>:",
+  "# Font Awesome swaps that <i> for its <svg> and leaves the <button> alone.",
+  "from js import document as _qpc_document",
+  "from matplotlib_pyodide.browser_backend import _FONTAWESOME_ICONS, FILE_TYPES",
+  "from pyodide.ffi.wrappers import add_event_listener",
   "",
-  "_QPC_SNAP_RADIUS = 45      # Pixel; weiter weg wird nichts angezeigt",
+  "def _qpc_toolbar_get_element(self):",
+  "    div = _qpc_document.createElement('span')",
+  "    self._qpc_mode_buttons = {}",
+  "",
+  "    def add_spacer():",
+  "        span = _qpc_document.createElement('span')",
+  "        span.style.minWidth = '16px'",
+  "        span.textContent = chr(160)",
+  "        div.appendChild(span)",
+  "",
+  "    for _text, _tooltip, image_file, name_of_method in self.toolitems:",
+  "        if image_file not in _FONTAWESOME_ICONS:",
+  "            continue",
+  "        if image_file is None:",
+  "            add_spacer()",
+  "            continue",
+  "        button = _qpc_document.createElement('button')",
+  "        button.classList.add('matplotlib-toolbar-button')",
+  "        icon = _qpc_document.createElement('i')",
+  "        icon.classList.add('fa')",
+  "        icon.classList.add(_FONTAWESOME_ICONS[image_file])",
+  "        button.appendChild(icon)",
+  "        add_event_listener(button, 'click', getattr(self, name_of_method))",
+  "        if name_of_method in ('pan', 'zoom'):",
+  "            self._qpc_mode_buttons[name_of_method] = button",
+  "        div.appendChild(button)",
+  "",
+  "    # The download buttons show their format as text, no icon - the bare",
+  "    # `fa` class upstream also puts on them would only make Font Awesome",
+  "    # try to convert them too.",
+  "    for _fmt, _mimetype in sorted(FILE_TYPES.items()):",
+  "        button = _qpc_document.createElement('button')",
+  "        button.classList.add('matplotlib-toolbar-button')",
+  "        button.textContent = _fmt",
+  "        button.id = 'text'",
+  "        add_event_listener(button, 'click', self.ondownload)",
+  "        div.appendChild(button)",
+  "",
+  "    return div",
+  "",
+  "_qpc_h5.NavigationToolbar2HTMLCanvas.get_element = _qpc_toolbar_get_element",
+  "",
+  "# Pan and zoom are toggles, but no browser backend renders that state, so",
+  "# both buttons look the same whether the mode is on or off - there is no",
+  "# way to see whether dragging will move the plot or do nothing. Mark the",
+  "# active one with a class and let the stylesheet colour it. Wrapping the",
+  "# two methods (rather than the click handlers) also covers matplotlib's",
+  "# own 'p'/'o' keyboard shortcuts, which toggle the very same modes.",
+  "_QPC_ACTIVE_CLASS = 'qpyodide-toolbar-button-active'",
+  "_QPC_MODE_OWNER = {'pan/zoom': 'pan', 'zoom rect': 'zoom'}",
+  "",
+  "def _qpc_sync_mode_buttons(self):",
+  "    buttons = getattr(self, '_qpc_mode_buttons', None)",
+  "    if not buttons:",
+  "        return",
+  "    active = _QPC_MODE_OWNER.get(self.mode.value)",
+  "    for name, button in buttons.items():",
+  "        if name == active:",
+  "            button.classList.add(_QPC_ACTIVE_CLASS)",
+  "        else:",
+  "            button.classList.remove(_QPC_ACTIVE_CLASS)",
+  "",
+  "def _qpc_mode_toggle(method_name):",
+  "    original = getattr(_qpc_h5.NavigationToolbar2HTMLCanvas, method_name)",
+  "    def toggle(self, *args):",
+  "        original(self, *args)",
+  "        _qpc_sync_mode_buttons(self)",
+  "    setattr(_qpc_h5.NavigationToolbar2HTMLCanvas, method_name, toggle)",
+  "",
+  "for _qpc_name in ('pan', 'zoom'):",
+  "    _qpc_mode_toggle(_qpc_name)",
+  "",
+  "# --- 4. Snapping cursor ----------------------------------------------------",
+  "# matplotlib doesn't come with this: matplotlib.widgets.Cursor only draws a",
+  "# free-floating crosshair and doesn't snap. Hence our own small class. The",
+  "# nearest point is searched for in pixel distance, not in data values -",
+  "# otherwise differently scaled axes would distort the result.",
+  "",
+  "_QPC_SNAP_RADIUS = 45      # pixels; nothing is shown further away than this",
   "",
   "class _QpcSnapCursor:",
   "    def __init__(self, ax, sources, bars):",
   "        self.ax = ax",
   "        self.sources = sources",
-  "        self.bars = bars       # Liste von (patch, orientation, value, label)",
+  "        self.bars = bars       # list of (patch, orientation, value, label)",
   "        self._last = None",
-  "        # Grenzen sichern: axvline/axhline nehmen an der Autoskalierung teil",
-  "        # und wuerden die Achsen sonst verschieben.",
+  "        # Preserve limits: axvline/axhline participate in autoscaling and",
+  "        # would otherwise shift the axes.",
   "        xlim, ylim = ax.get_xlim(), ax.get_ylim()",
   "        self.vline = ax.axvline(0, color='0.45', lw=0.8, ls=':', visible=False)",
   "        self.hline = ax.axhline(0, color='0.45', lw=0.8, ls=':', visible=False)",
@@ -238,7 +327,7 @@ const QPC_PY_SETUP = [
   "        x, y = float(best[2][0]), float(best[2][1])",
   "        key = (id(best[1]), x, y)",
   "        if key == self._last:",
-  "            return          # gleicher Punkt -> kein Neuzeichnen (das ist teuer)",
+  "            return          # same point -> no redraw (that's expensive)",
   "        self._last = key",
   "        self.vline.set_xdata([x, x])",
   "        self.hline.set_ydata([y, y])",
@@ -252,13 +341,13 @@ const QPC_PY_SETUP = [
   "        self.ax.figure.canvas.draw_idle()",
   "",
   "    def _hit_bar(self, event):",
-  "        # Flaechentreffer statt Punkt-Distanz: die Bbox kommt live aus",
-  "        # get_window_extent(), das bereits die aktuelle (ggf. gezoomte)",
-  "        # Transformation nutzt - anders als bei Linien/Punkten cachen wir",
-  "        # hier also nicht die Pixel-Position, sondern nur das Patch-Objekt.",
+  "        # Area hit instead of point distance: the bbox comes live from",
+  "        # get_window_extent(), which already uses the current (possibly",
+  "        # zoomed) transform - unlike lines/points, we therefore don't cache",
+  "        # the pixel position here, only the patch object.",
   "        for patch, orientation, value, label in self.bars:",
   "            bbox = patch.get_window_extent()",
-  "            pad = 2  # etwas Toleranz am Rand",
+  "            pad = 2  # a bit of tolerance at the edge",
   "            if not (bbox.x0 - pad <= event.x <= bbox.x1 + pad",
   "                    and bbox.y0 - pad <= event.y <= bbox.y1 + pad):",
   "                continue",
@@ -295,8 +384,8 @@ const QPC_PY_SETUP = [
   "",
   "",
   "def _qpc_snap_sources(ax):",
-  "    # Datenquellen einsammeln, BEVOR der Cursor seine eigenen Hilfslinien",
-  "    # anlegt - sonst rastet er auf sich selbst ein.",
+  "    # Collect data sources BEFORE the cursor creates its own helper lines -",
+  "    # otherwise it would snap to itself.",
   "    sources = []",
   "    for line in ax.get_lines():",
   "        xdata = np.asarray(line.get_xdata(), dtype=float)",
@@ -314,10 +403,10 @@ const QPC_PY_SETUP = [
   "",
   "",
   "def _qpc_bar_sources(ax):",
-  "    # Balkendiagramme UND Histogramme: Axes.bar()/Axes.hist() haengen ihre",
-  "    # Rechtecke als BarContainer an ax.containers. datavalues traegt den",
-  "    # eigentlichen Wert (bei gestapelten Balken != get_height()); get_window_extent()",
-  "    # kommt in fig.get_axes()-Reihenfolge bereits in Pixelkoordinaten.",
+  "    # Bar charts AND histograms: Axes.bar()/Axes.hist() attach their",
+  "    # rectangles as a BarContainer to ax.containers. datavalues carries the",
+  "    # actual value (!= get_height() for stacked bars); get_window_extent()",
+  "    # comes in fig.get_axes() order already in pixel coordinates.",
   "    import matplotlib.container as mcontainer",
   "    bars = []",
   "    for container in getattr(ax, 'containers', []):",
@@ -338,38 +427,37 @@ const QPC_PY_SETUP = [
   "        sources = _qpc_snap_sources(ax)",
   "        bars = _qpc_bar_sources(ax)",
   "        if not sources and not bars:",
-  "            continue      # z. B. reine Bild-Achsen (imshow) oder Colorbars",
+  "            continue      # e.g. pure image axes (imshow) or colorbars",
   "        cursor = _QpcSnapCursor(ax, sources, bars)",
   "        fig.canvas.mpl_connect('motion_notify_event', cursor.on_move)",
   "        _qpc_keep.append(cursor)",
   "",
-  "# --- 4. Figur aus dem Worker wiederherstellen und zeigen -----------------",
+  "# --- 5. Restore and show the figure from the worker ------------------------",
   "",
   "def _qpc_show(payload, snap=True):",
-  "    # Die Figur-Registry leeren, damit plt.show() nur die neue Figur zeigt.",
-  "    # Absichtlich .clear() statt plt.close('all'): close() wuerde den Manager",
-  "    # zerstoeren und damit die bereits gezeichneten Canvas aus dem DOM",
-  "    # entfernen. Hier soll nur die Registry vergessen werden.",
+  "    # Clear the figure registry so plt.show() only shows the new figure.",
+  "    # Deliberately .clear() instead of plt.close('all'): close() would",
+  "    # destroy the manager and thereby remove the already-drawn canvases",
+  "    # from the DOM. Here, only the registry should be forgotten.",
   "    _qpc_helpers.Gcf.figs.clear()",
   "    fig = pickle.loads(base64.b64decode(payload))",
   "    if not _qpc_helpers.Gcf.figs:",
-  "        # Figur war im Worker nicht bei pyplot registriert (z. B. direkt",
-  "        # ueber Figure() erzeugt) -> Manager selbst anlegen.",
+  "        # The figure wasn't registered with pyplot in the worker (e.g.",
+  "        # created directly via Figure()) -> create the manager ourselves.",
   "        mgr = plt._backend_mod.new_figure_manager_given_figure(len(_qpc_keep) + 1, fig)",
   "        _qpc_helpers.Gcf._set_new_active_manager(mgr)",
-  "    # Das Worker-PNG entsteht mit bbox_inches='tight' - dort waechst die",
-  "    # Bildflaeche um die Beschriftung herum. Das Canvas rendert dagegen exakt",
-  "    # die Figurenflaeche und schneidet alles darueber hinaus ab (sichtbar z. B.",
-  "    # an einer halb abgeschnittenen Achsenbeschriftung bei df.plot()). Das",
-  "    # tight-Layout ordnet stattdessen innerhalb der Flaeche um.",
-  "    # tight_layout() rechnet einmal und setzt die Layout-Engine danach",
-  "    # selbst auf 'none' zurueck. Wichtig: set_layout_engine('tight') wuerde",
-  "    # bei JEDEM Neuzeichnen neu umlayouten - und der einrastende Cursor",
-  "    # zeichnet viel neu.",
+  "    # The worker PNG is created with bbox_inches='tight' - there, the image",
+  "    # area grows around the labels. The canvas, by contrast, renders exactly",
+  "    # the figure area and clips everything beyond it (visible e.g. as a",
+  "    # half-cut-off axis label with df.plot()). The tight layout instead",
+  "    # rearranges within the area.",
+  "    # tight_layout() computes once and then resets the layout engine to",
+  "    # 'none' itself. Important: set_layout_engine('tight') would re-layout",
+  "    # on EVERY redraw - and the snapping cursor redraws a lot.",
   "    try:",
   "        fig.tight_layout()",
   "    except Exception as exc:",
-  "        print('qpyodide: tight_layout uebersprungen:', exc)",
+  "        print('qpyodide: tight_layout skipped:', exc)",
   "    if snap:",
   "        _qpc_attach_snap(fig)",
   "    plt.show()",
@@ -378,9 +466,9 @@ const QPC_PY_SETUP = [
   "    return True",
   "",
   "def _qpc_redraw(count):",
-  "    # Nach dem Einblenden nochmal zeichnen. Beim allerersten Plot sind die",
-  "    # Web-Fonts noch nicht geladen; deren Callback zeichnet zwar selbst nach,",
-  "    # dieser Aufruf macht das Ergebnis aber unabhaengig von diesem Rennen.",
+  "    # Redraw once more after showing. On the very first plot, the web fonts",
+  "    # aren't loaded yet; their callback does redraw on its own, but this",
+  "    # call makes the result independent of that race.",
   "    for item in _qpc_keep[-count:]:",
   "        if hasattr(item, 'canvas'):",
   "            item.canvas.draw()",
@@ -388,14 +476,14 @@ const QPC_PY_SETUP = [
 ].join("\n");
 
 // ---------------------------------------------------------------------------
-// Zweite Pyodide-Instanz (Haupt-Thread) laden
+// Load the second Pyodide instance (main thread)
 // ---------------------------------------------------------------------------
 
 /**
- * Laedt die Canvas-Instanz beim ersten Aufruf und liefert danach immer
- * dieselbe. Der Download kommt fast vollstaendig aus dem HTTP-Cache, weil der
- * Worker dieselben Dateien schon geholt hat; die Zeit geht fuer WebAssembly-
- * Instanziierung und das Auspacken von matplotlib drauf.
+ * Loads the canvas instance on first call and always returns the same one
+ * afterward. The download comes almost entirely from the HTTP cache,
+ * because the worker has already fetched the same files; the time is spent
+ * on WebAssembly instantiation and unpacking matplotlib.
  */
 function qpyodideCanvasEngine() {
   const state = globalThis.qpyodideCanvasPlots;
@@ -410,7 +498,7 @@ function qpyodideCanvasEngine() {
     const py = await mod.loadPyodide({
       indexURL: indexURL,
       env: qpyodideCustomizedPyodideOptions.env,
-      // Diese Instanz zeichnet nur; Ausgaben gehoeren nicht ins Zell-Terminal.
+      // This instance only draws; its output doesn't belong in the cell terminal.
       stdout: (text) => console.debug("qpyodide/canvas:", text),
       stderr: (text) => console.warn("qpyodide/canvas:", text)
     });
@@ -422,7 +510,7 @@ function qpyodideCanvasEngine() {
     state.status = "ready";
     state.bootSeconds = (performance.now() - started) / 1000;
     console.log(
-      "qpyodide: zweite Pyodide-Instanz (Canvas-Plots) bereit nach " +
+      "qpyodide: second Pyodide instance (canvas plots) ready after " +
       state.bootSeconds.toFixed(1) + "s" + qpyodideCanvasMemoryNote()
     );
     return py;
@@ -435,20 +523,20 @@ function qpyodideCanvasEngine() {
   return state.bootPromise;
 }
 
-/** Speicherverbrauch, falls der Browser ihn verraet (nur Chromium). */
+/** Memory usage, if the browser reveals it (Chromium only). */
 function qpyodideCanvasMemoryNote() {
   const mem = performance.memory;
   if (!mem) return "";
   const mb = (bytes) => (bytes / 1048576).toFixed(0) + " MB";
-  return " (JS-Heap " + mb(mem.usedJSHeapSize) + " von " + mb(mem.jsHeapSizeLimit) + ")";
+  return " (JS heap " + mb(mem.usedJSHeapSize) + " of " + mb(mem.jsHeapSizeLimit) + ")";
 }
 
 // ---------------------------------------------------------------------------
-// Zeichnen: pickle -> Canvas
+// Drawing: pickle -> canvas
 // ---------------------------------------------------------------------------
 
-// Die Canvas-Instanz kennt nur ein globales Ziel (document.pyodideMplTarget).
-// Deshalb duerfen nie zwei Zellen gleichzeitig zeichnen.
+// The canvas instance only knows one global target (document.pyodideMplTarget).
+// Therefore two cells must never draw at the same time.
 let qpyodideCanvasQueue = Promise.resolve();
 
 function qpyodideCanvasSerialize(task) {
@@ -458,8 +546,8 @@ function qpyodideCanvasSerialize(task) {
 }
 
 /**
- * Text der Hinweiszeile setzen. Waehrend gewartet wird mit Spinner davor, damit
- * unuebersehbar ist, dass gerade etwas laedt; Fehlermeldungen ohne.
+ * Sets the hint line's text. While waiting, with a spinner in front so it's
+ * unmistakable that something is loading; error messages without one.
  */
 function qpyodideCanvasHintText(hint, text, spinning) {
   hint.textContent = "";
@@ -473,15 +561,16 @@ function qpyodideCanvasHintText(hint, text, spinning) {
 }
 
 /**
- * Soll der einrastende Cursor an die Figur? Abschaltbar global ueber
- * qpyodideCanvasPlots.snapCursor oder je Zelle ueber die Option "#| snap: false".
+ * Should the snapping cursor be attached to the figure? Can be disabled
+ * globally via qpyodideCanvasPlots.snapCursor or per cell via the option
+ * "#| snap: false".
  */
 function qpyodideCanvasSnapWanted(options) {
   if (globalThis.qpyodideCanvasPlots.snapCursor === false) return false;
   return (options || {})["snap"] !== "false";
 }
 
-/** Soll fuer diese Zelle ueberhaupt auf Canvas umgestellt werden? */
+/** Should canvas be attempted for this cell at all? */
 globalThis.qpyodideCanvasWanted = function (options) {
   const state = globalThis.qpyodideCanvasPlots;
   if (!state || !state.enabled || state.status === "failed") return false;
@@ -489,18 +578,18 @@ globalThis.qpyodideCanvasWanted = function (options) {
 };
 
 /**
- * Ersetzt die schon sichtbare PNG-Ausgabe eines Laufs durch interaktive
- * Canvas-Figuren. Laeuft absichtlich ohne await im Aufrufer: die Zelle ist
- * fertig, das Nachladen darf im Hintergrund passieren.
+ * Replaces a run's already-visible PNG output with interactive canvas
+ * figures. Deliberately runs without await in the caller: the cell is done,
+ * loading the rest may happen in the background.
  *
- * @param {Element}  targetDiv Ausgabe-Container der Zelle (outputGraphDiv)
- * @param {string[]} pickles   Base64-pickles der Figuren, in Reihenfolge
- * @param {Object}   options   Zell-Optionen (fuer fig-cap)
+ * @param {Element}  targetDiv output container of the cell (outputGraphDiv)
+ * @param {string[]} pickles   base64 pickles of the figures, in order
+ * @param {Object}   options   cell options (for fig-cap)
  */
 globalThis.qpyodideCanvasUpgrade = async function (targetDiv, pickles, options) {
-  // Nur die eigene PNG-Ausgabe treffen: in derselben Zelle kann darueber ein
-  // Animations-Player stehen (.qpyodide-html-output), dessen Markup nicht
-  // angefasst werden darf. Der PNG-<figure> ist immer direktes Kind.
+  // Only target our own PNG output: in the same cell, an animation player
+  // (.qpyodide-html-output) may sit above it, whose markup must not be
+  // touched. The PNG <figure> is always a direct child.
   const pngFigure = targetDiv.querySelector(":scope > figure");
 
   const hint = document.createElement("div");
@@ -519,19 +608,20 @@ globalThis.qpyodideCanvasUpgrade = async function (targetDiv, pickles, options) 
     py = await qpyodideCanvasEngine();
   } catch (err) {
     qpyodideCanvasHintText(hint, QP_L.canvasEngineFailed, false);
-    console.error("qpyodide: zweite Pyodide-Instanz nicht ladbar", err);
+    console.error("qpyodide: second Pyodide instance could not be loaded", err);
     return;
   }
 
-  // Zelle wurde waehrend des Ladens erneut ausgefuehrt -> Ergebnis verwerfen
+  // The cell was run again while loading -> discard the result
   if (!hint.isConnected) return;
 
-  // WICHTIG: Das Zielelement muss beim Zeichnen im Dokument haengen. Das
-  // Canvas-Backend sucht sein eigenes Canvas ueber document.getElementById
-  // (FigureCanvasWasm.get_element); in einem losgeloesten Element findet es
-  // nichts und FigureCanvasHTMLCanvas.draw() bricht ohne Fehler ab -> leeres,
-  // weisses Canvas. Verborgen (display:none) ist dagegen unproblematisch:
-  // getElementById braucht Dokument-Zugehoerigkeit, kein Layout.
+  // IMPORTANT: the target element must be attached to the document while
+  // drawing. The canvas backend looks up its own canvas via
+  // document.getElementById (FigureCanvasWasm.get_element); in a detached
+  // element it finds nothing and FigureCanvasHTMLCanvas.draw() aborts
+  // without an error -> an empty, white canvas. Hidden (display:none) is,
+  // by contrast, unproblematic: getElementById needs document membership,
+  // not layout.
   const figure = document.createElement("figure");
   figure.className = "qpyodide-canvas-figure";
   figure.hidden = true;
@@ -548,15 +638,15 @@ globalThis.qpyodideCanvasUpgrade = async function (targetDiv, pickles, options) 
       }
     });
   } catch (err) {
-    // Wiederherstellung gescheitert (z. B. fehlendes Modul im pickle) ->
-    // das PNG bleibt die Ausgabe.
+    // Restoration failed (e.g. a module missing from the pickle) -> the
+    // PNG stays as the output.
     figure.remove();
     if (hint.isConnected) qpyodideCanvasHintText(hint, QP_L.canvasRenderFailed, false);
-    console.warn("qpyodide: Figur nicht als Canvas darstellbar", err);
+    console.warn("qpyodide: figure could not be rendered as canvas", err);
     return;
   }
 
-  // Zelle lief waehrend des Zeichnens erneut -> Ergebnis verwerfen
+  // The cell ran again while drawing -> discard the result
   if (!hint.isConnected) return;
 
   if (options && options["fig-cap"]) {
@@ -565,20 +655,20 @@ globalThis.qpyodideCanvasUpgrade = async function (targetDiv, pickles, options) 
     figure.appendChild(figcaption);
   }
 
-  // Einblenden und PNG entfernen ohne Bildaufbau dazwischen (gleicher Task).
+  // Show and remove the PNG without a rebuild in between (same task).
   figure.hidden = false;
   if (pngFigure) pngFigure.remove();
   hint.remove();
   targetDiv.classList.add("has-content");
 
-  // Jetzt sichtbar -> Nachzeichnen, damit Schrift und Layout sicher stehen.
+  // Now visible -> redraw, to make sure fonts and layout are settled.
   try {
     await qpyodideCanvasSerialize(() => py.runPythonAsync("_qpc_redraw(" + pickles.length + ")"));
   } catch (err) {
-    console.warn("qpyodide: Nachzeichnen fehlgeschlagen", err);
+    console.warn("qpyodide: redraw failed", err);
   }
 
   const seconds = (performance.now() - started) / 1000;
   globalThis.qpyodideCanvasPlots.renderSeconds.push(seconds);
-  console.log("qpyodide: Canvas-Figur(en) gezeichnet in " + seconds.toFixed(2) + "s");
+  console.log("qpyodide: canvas figure(s) drawn in " + seconds.toFixed(2) + "s");
 };

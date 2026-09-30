@@ -1,48 +1,48 @@
-// coi-serviceworker.js – Cross-Origin-Isolation via Service Worker
+// coi-serviceworker.js – cross-origin isolation via a service worker
 //
-// Aktiviert SharedArrayBuffer auf HTTPS-Hosts ohne COOP/COEP-Server-Header
-// (z.B. GitHub Pages). Der Service Worker fängt alle Requests ab und hängt
-// die nötigen Header an die Responses.
+// Enables SharedArrayBuffer on HTTPS hosts without server-side COOP/COEP
+// headers (e.g. GitHub Pages). The service worker intercepts all requests
+// and attaches the required headers to the responses.
 //
-// Basiert auf: https://github.com/gzuidhof/coi-serviceworker (MIT-Lizenz)
+// Based on: https://github.com/gzuidhof/coi-serviceworker (MIT license)
 //
-// Ablauf:
-//   1. Lua-Filter kopiert diese Datei beim Rendern ins Projekt-Root.
-//   2. Der Filter injiziert <script src="/coi-serviceworker.js"> ins HTML.
-//   3. Auf der ersten Seite registriert das Skript den Service Worker und
-//      wartet auf navigator.serviceWorker.ready (SW wirklich aktiv, nicht
-//      nur registriert).
-//   4. qpyodide-document-status.js lädt die Seite automatisch einmal neu,
-//      sobald der SW bereit ist (Event "coi-sw-ready") – außer der User
-//      tippt/klickt bereits irgendwo, dann wird der Reload für diese
-//      Sitzung übersprungen → SW fängt die Navigation ab →
-//      crossOriginIsolated === true → input() verfügbar.
+// Flow:
+//   1. The Lua filter copies this file into the project root during render.
+//   2. The filter injects <script src="/coi-serviceworker.js"> into the HTML.
+//   3. On the first page, the script registers the service worker and
+//      waits for navigator.serviceWorker.ready (SW actually active, not
+//      just registered).
+//   4. qpyodide-document-status.js automatically reloads the page once the
+//      SW is ready (event "coi-sw-ready") – unless the user is already
+//      typing/clicking somewhere, in which case the reload is skipped for
+//      this session → the SW intercepts the navigation →
+//      crossOriginIsolated === true → input() available.
 //
-// Events an qpyodide-document-status.js:
-//   "coi-sw-ready"   – SW registriert UND aktiv, löst den automatischen
-//                      Reload aus
-//   "coi-unavailable"– COI auf dieser Origin nicht erreichbar (kein SW-Support,
-//                      Registration fehlgeschlagen, oder Reload hat nichts gebracht)
+// Events sent to qpyodide-document-status.js:
+//   "coi-sw-ready"    – SW registered AND active, triggers the automatic
+//                       reload
+//   "coi-unavailable" – COI unreachable on this origin (no SW support,
+//                       registration failed, or a reload didn't help)
 //
-// Persistenz:
-//   sessionStorage "qpyodide-coi-reload-pending" – gesetzt vor dem Check-Reload;
-//     zusammen mit navigation.type "reload" erkennen wir, ob der Reload COI
-//     gebracht hat oder nicht.
-//   localStorage "qpyodide-coi-unavailable-<origin>" – dauerhaftes Urteil, sobald
-//     ein Reload nachweislich kein COI gebracht hat. Verhindert erneute
-//     "prüfen"-Schleife bei späteren Besuchen. Wird gelöscht, sobald
-//     crossOriginIsolated === true (z. B. nach Serverkonfigurationsänderung).
+// Persistence:
+//   sessionStorage "qpyodide-coi-reload-pending" – set before the check
+//     reload; together with navigation.type "reload" we detect whether
+//     the reload achieved COI or not.
+//   localStorage "qpyodide-coi-unavailable-<origin>" – permanent verdict
+//     once a reload has demonstrably not achieved COI. Prevents a repeated
+//     "check" loop on later visits. Cleared once crossOriginIsolated ===
+//     true (e.g. after a server configuration change).
 
 if (typeof window === "undefined") {
-  // ── Service-Worker-Kontext ─────────────────────────────────────────────────
-  // COOP/COEP-Header an jede Response anhängen
+  // ── Service worker context ──────────────────────────────────────────────
+  // Attach COOP/COEP headers to every response
 
   self.addEventListener("install", () => self.skipWaiting());
   self.addEventListener("activate", e => e.waitUntil(self.clients.claim()));
 
   self.addEventListener("fetch", event => {
     const req = event.request;
-    // Opaque Requests (z. B. no-cors cross-origin) überspringen
+    // Skip opaque requests (e.g. no-cors cross-origin)
     if (req.cache === "only-if-cached" && req.mode !== "same-origin") return;
 
     event.respondWith(
@@ -61,89 +61,89 @@ if (typeof window === "undefined") {
   });
 
 } else {
-  // ── Seiten-Kontext ─────────────────────────────────────────────────────────
+  // ── Page context ─────────────────────────────────────────────────────────
 
   (function () {
     var RELOAD_FLAG = "qpyodide-coi-reload-pending";
     var LS_UNAVAIL  = "qpyodide-coi-unavailable-" + location.origin;
 
     function lsGet(k)    { try { return localStorage.getItem(k);      } catch (e) { return null; } }
-    function lsSet(k, v) { try {   localStorage.setItem(k, v);        } catch (e) { /* blockiert */ } }
-    function lsDel(k)    { try {   localStorage.removeItem(k);         } catch (e) { /* blockiert */ } }
+    function lsSet(k, v) { try {   localStorage.setItem(k, v);        } catch (e) { /* blocked */ } }
+    function lsDel(k)    { try {   localStorage.removeItem(k);         } catch (e) { /* blocked */ } }
     function ssGet(k)    { try { return sessionStorage.getItem(k);    } catch (e) { return null; } }
-    function ssDel(k)    { try {   sessionStorage.removeItem(k);       } catch (e) { /* blockiert */ } }
+    function ssDel(k)    { try {   sessionStorage.removeItem(k);       } catch (e) { /* blocked */ } }
     function log(msg)    { console.log("[qpyodide-coi] " + msg); }
 
-    // Ergebnis zusätzlich zum Event synchron ablegen (globalThis.qpyodideCoiOutcome
-    // = "ready" | "unavailable"). Grund: dieses Skript kann – z. B. wenn der SW aus
-    // einem früheren Reload schon aktiv ist – schneller fertig sein, als
-    // qpyodide-document-status.js seinen Event-Listener registriert hat. Ein
-    // einmalig gefeuertes CustomEvent würde dann ungehört verpuffen. Wer den
-    // Zustand später abfragt (statt nur auf das Event zu warten), bekommt ihn
-    // trotzdem mit.
+    // Also store the result synchronously in addition to the event
+    // (globalThis.qpyodideCoiOutcome = "ready" | "unavailable"). Reason:
+    // this script can finish faster than qpyodide-document-status.js has
+    // registered its event listener – e.g. if the SW is already active
+    // from an earlier reload. A CustomEvent fired only once would then go
+    // unheard. Anyone who queries the state later (instead of only waiting
+    // for the event) still gets it.
     function emit(kind) {
       globalThis.qpyodideCoiOutcome = kind;
       window.dispatchEvent(new CustomEvent(
         kind === "ready" ? "coi-sw-ready" : "coi-unavailable"));
     }
 
-    // Bereits isoliert: input() funktioniert. Altes "geht nicht"-Urteil zurücknehmen.
+    // Already isolated: input() works. Revoke any earlier "unavailable" verdict.
     if (globalThis.crossOriginIsolated) {
-      log("bereits crossOriginIsolated – nichts zu tun.");
+      log("already crossOriginIsolated – nothing to do.");
       lsDel(LS_UNAVAIL);
       ssDel(RELOAD_FLAG);
       return;
     }
 
-    // Service Worker nicht unterstützt (file://, sehr alter Browser).
+    // Service worker not supported (file://, very old browser).
     if (!("serviceWorker" in navigator)) {
-      log("navigator.serviceWorker nicht verfügbar (file:// oder alter Browser).");
+      log("navigator.serviceWorker not available (file:// or old browser).");
       emit("unavailable");
       return;
     }
 
-    // Für diese Origin wurde COI bereits als dauerhaft nicht verfügbar eingestuft.
+    // COI has already been permanently marked unavailable for this origin.
     if (lsGet(LS_UNAVAIL)) {
-      log("laut localStorage (" + LS_UNAVAIL + ") bereits dauerhaft als nicht verfügbar markiert.");
+      log("already permanently marked unavailable per localStorage (" + LS_UNAVAIL + ").");
       emit("unavailable");
       return;
     }
 
-    // War dieser Seitenaufruf der vom User ausgelöste Check-Reload?
-    // Wenn ja und COI fehlt trotzdem → dauerhaft nicht verfügbar.
+    // Was this page load the user-triggered check reload?
+    // If so and COI is still missing → permanently unavailable.
     var hadFlag = !!ssGet(RELOAD_FLAG);
     ssDel(RELOAD_FLAG);
     if (hadFlag) {
       var isReload = false;
-      try { isReload = performance.getEntriesByType("navigation")[0].type === "reload"; } catch (e) { /* nicht verfügbar */ }
-      log("Reload-Flag war gesetzt, navigation.type=" +
+      try { isReload = performance.getEntriesByType("navigation")[0].type === "reload"; } catch (e) { /* not available */ }
+      log("reload flag was set, navigation.type=" +
         (performance.getEntriesByType("navigation")[0] || {}).type + ", isReload=" + isReload);
       if (isReload) {
-        log("Reload hat COI nicht gebracht – markiere dauerhaft nicht verfügbar.");
+        log("reload did not achieve COI – marking permanently unavailable.");
         lsSet(LS_UNAVAIL, "1");
         emit("unavailable");
         return;
       }
     }
 
-    // SW registrieren und auf "ready" warten (= SW hat activate() inkl.
-    // clients.claim() abgeschlossen). register() allein reicht NICHT: das
-    // Promise löst schon auf, sobald die Registrierung angelegt ist – oft
-    // Millisekunden bevor der SW wirklich aktiv ist. Ein sofortiger Reload
-    // an dieser Stelle (siehe qpyodide-document-status.js) würde die
-    // Navigation dann verpassen, crossOriginIsolated bliebe false, und der
-    // Reload-Check oben (hadFlag + isReload) würde die Seite fälschlich
-    // dauerhaft als "nicht verfügbar" markieren.
+    // Register the SW and wait for "ready" (= SW has completed activate()
+    // including clients.claim()). register() alone is NOT enough: the
+    // promise already resolves once the registration is created – often
+    // milliseconds before the SW is actually active. An immediate reload
+    // at that point (see qpyodide-document-status.js) would then miss the
+    // navigation, crossOriginIsolated would stay false, and the reload
+    // check above (hadFlag + isReload) would falsely mark the page as
+    // permanently "unavailable".
     var swUrl = document.currentScript ? document.currentScript.src : "/coi-serviceworker.js";
-    log("registriere Service Worker: " + swUrl);
+    log("registering service worker: " + swUrl);
     navigator.serviceWorker.register(swUrl).then(function (reg) {
-      log("register() aufgelöst (scope=" + reg.scope + "), warte auf serviceWorker.ready …");
+      log("register() resolved (scope=" + reg.scope + "), waiting for serviceWorker.ready …");
       return navigator.serviceWorker.ready;
     }).then(function () {
-      log("serviceWorker.ready – feuere coi-sw-ready.");
+      log("serviceWorker.ready – firing coi-sw-ready.");
       emit("ready");
     }).catch(function (err) {
-      log("register()/ready fehlgeschlagen: " + err);
+      log("register()/ready failed: " + err);
       lsSet(LS_UNAVAIL, "1");
       emit("unavailable");
     });

@@ -1,30 +1,30 @@
-// qpyodide-feedback.js – KI-Feedback-Modul (EINE Implementierung für alle Zellen)
+// qpyodide-feedback.js – AI feedback module (ONE implementation for all cells)
 //
-// Stellt `globalThis.qpyodideFeedback` bereit:
-//   attach(unit)     – verdrahtet den Feedback-Button einer Editor-Einheit;
-//                      `unit` liefert { uid, feedbackButton, feedbackDiv,
+// Provides `globalThis.qpyodideFeedback`:
+//   attach(unit)     – wires up the feedback button of an editor unit;
+//                      `unit` provides { uid, feedbackButton, feedbackDiv,
 //                      getCode(), runForOutput() }
-//   buildSettingsUI()– baut das (einklappbare) Einstellungs-Panel auf
+//   buildSettingsUI()– builds the (collapsible) settings panel
 //
-// Anbieter-neutral: jeder OpenAI-kompatible Endpunkt funktioniert über
-// POST {baseUrl}/chat/completions mit Bearer-Key und frei wählbarem Modell
-// (OpenRouter, Cerebras, Groq, OpenAI, Ollama, …). Es wird NICHTS geraten –
-// insbesondere kein Modell-Lookup über GET /models.
+// Provider-neutral: any OpenAI-compatible endpoint works via
+// POST {baseUrl}/chat/completions with a bearer key and a freely chosen
+// model (OpenRouter, Cerebras, Groq, OpenAI, Ollama, …). NOTHING is
+// guessed – in particular no model lookup via GET /models.
 //
-// Zwei Modi:
-//   "api"  – Direktaufruf der API (Standard)
-//   "copy" – erzeugt einen kopierbaren Prompt inkl. System-Prompt für
-//            ChatGPT/Claude & Co. (kein API-Key nötig)
+// Two modes:
+//   "api"  – direct API call (default)
+//   "copy" – generates a copyable prompt including the system prompt for
+//            ChatGPT/Claude & co. (no API key needed)
 //
-// Konfiguration wird je nach Wahl in localStorage (dauerhaft) oder
-// sessionStorage (pro Tab) abgelegt – ausschließlich im Browser des Nutzers.
+// Configuration is stored, depending on the choice, in localStorage
+// (persistent) or sessionStorage (per tab) – exclusively in the user's browser.
 
 const qfOptions = globalThis.qpyodideFeedbackOptions ?? { enabled: false, storage: "local", hints: true };
 
 const QF_STORAGE_KEY = "qpyodide-feedback-config";
 
 // ---------------------------------------------------------------------------
-// Konfiguration laden/speichern
+// Load/save configuration
 // ---------------------------------------------------------------------------
 
 function qfLoadConfig() {
@@ -36,7 +36,7 @@ function qfLoadConfig() {
         cfg.storage = (store === localStorage) ? "local" : "session";
         return cfg;
       }
-    } catch (e) { /* defektes JSON oder blockierter Storage -> ignorieren */ }
+    } catch (e) { /* broken JSON or blocked storage -> ignore */ }
   }
   return { baseUrl: "", apiKey: "", model: "", mode: "api", storage: qfOptions.storage || "local" };
 }
@@ -48,7 +48,7 @@ function qfSaveConfig(cfg) {
     target.setItem(QF_STORAGE_KEY, JSON.stringify(cfg));
     other.removeItem(QF_STORAGE_KEY);
   } catch (e) {
-    console.warn("qpyodide-feedback: Speichern der Konfiguration fehlgeschlagen", e);
+    console.warn("qpyodide-feedback: failed to save configuration", e);
   }
 }
 
@@ -56,11 +56,11 @@ function qfSaveConfig(cfg) {
 // Prompts
 // ---------------------------------------------------------------------------
 
-// Prompts kommen aus der Locale-Tabelle (qpyodide-locales.js), damit der Tutor
-// in der Sprache der Seite antwortet.
+// Prompts come from the locale table (qpyodide-locales.js), so the tutor
+// responds in the page's language.
 const QF_SYSTEM_PROMPT = QP_L.systemPrompt;
 
-// Zusatz-Instruktion je Hinweis-Stufe (steigt mit der Klick-Anzahl pro Zelle)
+// Extra instruction per hint level (rises with the click count per cell)
 const QF_HINT_INSTRUCTIONS = QP_L.hintInstructions;
 
 function qfBuildUserPrompt(code, output, hintLevel) {
@@ -75,7 +75,7 @@ function qfBuildUserPrompt(code, output, hintLevel) {
 }
 
 // ---------------------------------------------------------------------------
-// API-Aufruf (OpenAI-kompatibel)
+// API call (OpenAI-compatible)
 // ---------------------------------------------------------------------------
 
 async function qfRequestFeedback(cfg, messages) {
@@ -86,11 +86,11 @@ async function qfRequestFeedback(cfg, messages) {
     headers["Authorization"] = `Bearer ${cfg.apiKey}`;
   }
 
-  // Token-Limit nur als großzügiges Sicherheitsnetz gegen Endlos-Ausgaben –
-  // die eigentliche Längenbegrenzung steht im System-Prompt (~250 Wörter).
-  // So wird das Feedback nicht mehr mitten im Satz abgeschnitten.
-  // Modern: beide Token-Felder setzen; manche Anbieter lehnen eines ab – in
-  // dem Fall einmal ohne das beanstandete Feld erneut versuchen.
+  // Token limit is just a generous safety net against runaway output –
+  // the actual length limit lives in the system prompt (~250 words).
+  // This means feedback no longer gets cut off mid-sentence.
+  // Modern approach: set both token fields; some providers reject one – in
+  // that case, retry once without the rejected field.
   let body = {
     model: cfg.model,
     messages: messages,
@@ -107,7 +107,7 @@ async function qfRequestFeedback(cfg, messages) {
 
     if (!response.ok) {
       const errorText = await response.text().catch(() => "");
-      // Beanstandetes Token-Feld entfernen und erneut versuchen
+      // Remove the rejected token field and retry
       if (response.status === 400 && "max_completion_tokens" in body && /max_completion_tokens/.test(errorText)) {
         delete body.max_completion_tokens;
         continue;
@@ -130,11 +130,11 @@ async function qfRequestFeedback(cfg, messages) {
 }
 
 // ---------------------------------------------------------------------------
-// Modell-Liste abrufen (expliziter Klick im Panel – kein stilles Raten)
+// Fetch model list (explicit click in the panel – no silent guessing)
 // ---------------------------------------------------------------------------
 
-// Ist ein Modell kostenlos? true/false, oder null wenn der Anbieter keine
-// Preisinfo liefert (z. B. Groq, Cerebras, Ollama).
+// Is a model free? true/false, or null if the provider doesn't supply
+// pricing info (e.g. Groq, Cerebras, Ollama).
 function qfIsFreeModel(model) {
   if (typeof model.id === "string" && model.id.endsWith(":free")) return true;
   const pricing = model.pricing;
@@ -165,7 +165,7 @@ async function qfFetchModels(baseUrl, apiKey) {
 }
 
 // ---------------------------------------------------------------------------
-// Rendering (sicher: Modell-Ausgabe wird escaped, dann Mini-Markdown)
+// Rendering (safe: model output is escaped, then mini-Markdown)
 // ---------------------------------------------------------------------------
 
 function qfEscapeHtml(text) {
@@ -174,13 +174,13 @@ function qfEscapeHtml(text) {
     .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
 }
 
-// Sehr kleine Markdown-Teilmenge: ```Codeblöcke```, `inline code`, **fett**
+// Very small Markdown subset: ```code blocks```, `inline code`, **bold**
 function qfRenderMarkdownLite(text) {
   const parts = text.split(/```(?:[a-zA-Z0-9_-]*\n)?/);
   let html = "";
   for (let i = 0; i < parts.length; i++) {
     if (i % 2 === 1) {
-      // Inhalt zwischen ```-Zäunen
+      // Content between ``` fences
       html += "<pre class='qpyodide-feedback-code'><code>" + qfEscapeHtml(parts[i]) + "</code></pre>";
     } else {
       let chunk = qfEscapeHtml(parts[i]);
@@ -193,8 +193,18 @@ function qfRenderMarkdownLite(text) {
   return html;
 }
 
-function qfRenderFeedback(targetDiv, feedbackText, hintLevel) {
+// The settings panel can be living inside `targetDiv` (qfOpenSettingsNear
+// moved it there earlier); wiping innerHTML would silently detach it. Move
+// it back home first so it's never lost, just relocated.
+function qfClearTargetDiv(targetDiv) {
+  if (qfUi.panel && qfUi.homeParent && targetDiv.contains(qfUi.panel)) {
+    qfUi.homeParent.appendChild(qfUi.panel);
+  }
   targetDiv.innerHTML = "";
+}
+
+function qfRenderFeedback(targetDiv, feedbackText, hintLevel) {
+  qfClearTargetDiv(targetDiv);
 
   const header = document.createElement("div");
   header.className = "qpyodide-feedback-header";
@@ -210,8 +220,11 @@ function qfRenderFeedback(targetDiv, feedbackText, hintLevel) {
   targetDiv.classList.add("has-content");
 }
 
-function qfRenderError(targetDiv, message) {
-  targetDiv.innerHTML = "";
+// `showSettingsLink`: adds a button that relocates the settings panel
+// right into `targetDiv` instead of making the reader hunt for the gear
+// icon at the top of the page - used for the "not configured yet" error.
+function qfRenderError(targetDiv, message, { showSettingsLink = false } = {}) {
+  qfClearTargetDiv(targetDiv);
 
   const box = document.createElement("div");
   box.className = "qpyodide-feedback-error";
@@ -221,14 +234,27 @@ function qfRenderError(targetDiv, message) {
   text.textContent = message;
   box.appendChild(header);
   box.appendChild(text);
+
+  if (showSettingsLink) {
+    const gearBtn = document.createElement("button");
+    gearBtn.type = "button";
+    gearBtn.className = "btn btn-light btn-sm qpyodide-button qpyodide-feedback-error-gear";
+    gearBtn.innerHTML = '<i class="fa-solid fa-gear"></i> ' + QP_L.gearTitle;
+    // Moves the settings panel right into this cell's feedback area
+    // (appended after `box` below) instead of sending the reader to the
+    // top of the page.
+    gearBtn.onclick = () => qfOpenSettingsNear(targetDiv);
+    box.appendChild(gearBtn);
+  }
+
   targetDiv.appendChild(box);
 
   targetDiv.classList.add("has-content");
 }
 
-// Box mit kopierbarem Prompt (Modus "Prompt kopieren", inkl. System-Prompt)
+// Box with a copyable prompt ("Copy prompt" mode, including the system prompt)
 function qfRenderCopyPrompt(targetDiv, promptText) {
-  targetDiv.innerHTML = "";
+  qfClearTargetDiv(targetDiv);
 
   const header = document.createElement("div");
   header.className = "qpyodide-feedback-header";
@@ -256,10 +282,10 @@ function qfRenderCopyPrompt(targetDiv, promptText) {
 }
 
 // ---------------------------------------------------------------------------
-// Einstellungs-Panel
+// Settings panel
 // ---------------------------------------------------------------------------
 
-const qfUi = {};   // Referenzen auf die UI-Elemente des Panels
+const qfUi = {};   // references to the panel's UI elements
 
 function qfMakeField(labelText, input) {
   // <div> instead of <label> avoids the double-click issue on <select> wrappers
@@ -280,8 +306,8 @@ function qfBuildHelpBox() {
   return helpDiv;
 }
 
-// Anbieter-Vorlagen: füllen Base URL + Beispiel-Modell per Klick aus,
-// damit Anfänger nichts abtippen müssen. Der Key kommt vom Nutzer.
+// Provider presets: fill in base URL + example model with a click, so
+// beginners don't have to type anything themselves. The key comes from the user.
 const QF_PROVIDER_PRESETS = {
   cerebras:   { label: QP_L.presetCerebras,   baseUrl: "https://api.cerebras.ai/v1",  model: "gpt-oss-120b",                          modelsUrl: "https://inference-docs.cerebras.ai/models/overview" },
   openrouter: { label: QP_L.presetOpenrouter, baseUrl: "https://openrouter.ai/api/v1", model: "meta-llama/llama-3.3-70b-instruct:free", modelsUrl: "https://openrouter.ai/models?max_price=0" },
@@ -304,14 +330,14 @@ function qfBuildSettingsUI() {
   const panel = document.createElement("div");
   panel.className = "qpyodide-feedback-panel";
 
-  // Anbieter-Vorlage (füllt Base URL + Beispiel-Modell aus)
+  // Provider preset (fills in base URL + example model)
   const presetSelect = document.createElement("select");
   presetSelect.add(new Option(QP_L.presetPlaceholder, ""));
   for (const [key, preset] of Object.entries(QF_PROVIDER_PRESETS)) {
     presetSelect.add(new Option(preset.label, key));
   }
 
-  // Eingabefelder
+  // Input fields
   const baseUrlInput = document.createElement("input");
   baseUrlInput.type = "text";
   baseUrlInput.placeholder = QP_L.phBaseUrl;
@@ -349,9 +375,8 @@ function qfBuildSettingsUI() {
     }
   };
 
-  // „Modelle abrufen": fragt {baseUrl}/models ab und zeigt eine Auswahlliste,
-  // standardmäßig gefiltert auf kostenlose Modelle (damit niemand aus
-  // Versehen Geld ausgibt).
+  // "Fetch models": queries {baseUrl}/models and shows a picker list,
+  // filtered to free models by default (so nobody accidentally spends money).
   const fetchModelsBtn = document.createElement("button");
   fetchModelsBtn.type = "button";
   fetchModelsBtn.className = "btn btn-light btn-sm qpyodide-button";
@@ -395,7 +420,7 @@ function qfBuildSettingsUI() {
     if (hasPricingInfo && freeOnlyCheckbox.checked) {
       models = models.filter((model) => model.free === true);
     }
-    // Kostenlose zuerst, dann alphabetisch
+    // Free ones first, then alphabetically
     models = models.slice().sort((a, b) =>
       (b.free === true) - (a.free === true) || a.id.localeCompare(b.id)
     );
@@ -424,10 +449,10 @@ function qfBuildSettingsUI() {
     }
   };
 
-  // Modelle abrufen – per Button (isAuto=false) oder automatisch nach
-  // Vorlagenwahl (isAuto=true). Beim Auto-Abruf scheitert es ohne Key/CORS oft;
-  // dann bleibt das eingetragene Beispielmodell als Fallback stehen und die
-  // Meldung bleibt sanft statt als roter Fehler.
+  // Fetch models – via button (isAuto=false) or automatically after
+  // choosing a preset (isAuto=true). The auto-fetch often fails without a
+  // key/due to CORS; in that case the pre-filled example model stays as a
+  // fallback and the message stays gentle instead of a red error.
   async function doFetchModels(isAuto) {
     const baseUrl = baseUrlInput.value.trim();
     if (!baseUrl) {
@@ -484,7 +509,7 @@ function qfBuildSettingsUI() {
   panel.appendChild(modelListDiv);
   panel.appendChild(qfMakeField(QP_L.fieldMode, modeSelect));
 
-  // Aktionszeile: Speichern + Hilfe
+  // Action row: save + help
   const actionRow = document.createElement("div");
   actionRow.className = "qpyodide-feedback-actions";
 
@@ -505,12 +530,22 @@ function qfBuildSettingsUI() {
   const helpDiv = qfBuildHelpBox();
   panel.appendChild(helpDiv);
 
-  // Verhalten
+  // Behavior
   function setCollapsed(collapsed) {
     panel.style.display = collapsed ? "none" : "block";
   }
 
-  toggleBtn.onclick = () => setCollapsed(panel.style.display !== "none");
+  // The panel can be relocated next to a cell's "not configured" error (see
+  // qfOpenSettingsNear below); the header gear reclaims it back here rather
+  // than blindly toggling whatever display state it was left in there.
+  toggleBtn.onclick = () => {
+    if (panel.parentElement !== qfUi.homeParent) {
+      qfUi.homeParent.appendChild(panel);
+      setCollapsed(false);
+    } else {
+      setCollapsed(panel.style.display !== "none");
+    }
+  };
   infoBtn.onclick = () => {
     helpDiv.style.display = (helpDiv.style.display === "none") ? "block" : "none";
   };
@@ -526,23 +561,23 @@ function qfBuildSettingsUI() {
     qfSaveConfig(newCfg);
     statusSpan.textContent = QP_L.saveDone;
     setTimeout(() => { statusSpan.textContent = ""; }, 3000);
-    // Auto-Einklappen nach dem Speichern
+    // Auto-collapse after saving
     setCollapsed(true);
   };
 
-  // Immer eingeklappt starten – das Panel wird erst per Zahnrad geöffnet.
+  // Always start collapsed – the panel only opens via the gear icon.
   setCollapsed(true);
 
   qfUi.panel = panel;
   qfUi.setCollapsed = setCollapsed;
 
-  // Toggle-Button und Status-Span rechts neben die Status-Zeile einreihen
+  // Line up the toggle button and status span to the right of the status row
   const rightArea = document.getElementById("qpyodide-status-right");
   if (rightArea) {
     rightArea.appendChild(toggleBtn);
     rightArea.appendChild(statusSpan);
   } else {
-    // Fallback: vor der ersten Pyodide-Zelle
+    // Fallback: before the first Pyodide cell
     const firstCell = document.querySelector('[id^="qpyodide-insertion-location-"]');
     const wrap = document.createElement("div");
     wrap.appendChild(toggleBtn);
@@ -552,21 +587,31 @@ function qfBuildSettingsUI() {
       : document.body.prepend(wrap);
   }
 
-  // Einstellungs-Panel unterhalb der Status-Zeile anhängen
+  // Attach the settings panel below the status row. Its parent here is
+  // also the panel's "home": qfOpenSettingsNear() can relocate the panel
+  // next to a cell's error, and the header gear (above) moves it back here.
   const panelsArea = document.getElementById("qpyodide-status-panels");
-  if (panelsArea) {
-    panelsArea.appendChild(panel);
-  } else {
-    const statusArea = document.getElementById("qpyodide-status-message-area");
-    (statusArea ?? document.body).appendChild(panel);
-  }
+  const statusArea = document.getElementById("qpyodide-status-message-area");
+  qfUi.homeParent = panelsArea ?? statusArea ?? document.body;
+  qfUi.homeParent.appendChild(panel);
+}
+
+// Moves the (single, shared) settings panel right next to `container` and
+// opens it there - called from the "not configured yet" error box so the
+// reader can fix it on the spot instead of hunting for the gear icon at
+// the top of the page. The header gear (qfBuildSettingsUI above) moves the
+// panel back to its home position when clicked.
+function qfOpenSettingsNear(container) {
+  if (!qfUi.panel || !container) return;
+  container.appendChild(qfUi.panel);
+  if (qfUi.setCollapsed) qfUi.setCollapsed(false);
 }
 
 // ---------------------------------------------------------------------------
-// Klick-Handler (von den Zell-Klassen über attach() verdrahtet)
+// Click handler (wired up by the cell classes via attach())
 // ---------------------------------------------------------------------------
 
-// Klick-Zähler pro Editor-Einheit für progressive Hinweise
+// Click counter per editor unit for progressive hints
 const qfClickCounts = new Map();
 
 async function qfGiveFeedback(unit) {
@@ -576,7 +621,7 @@ async function qfGiveFeedback(unit) {
 
   const cfg = qfLoadConfig();
 
-  // Hinweis-Stufe ermitteln (0 = Feature deaktiviert)
+  // Determine hint level (0 = feature disabled)
   let hintLevel = 0;
   if (qfOptions.hints) {
     hintLevel = Math.min((qfClickCounts.get(unit.uid) || 0) + 1, 3);
@@ -589,7 +634,7 @@ async function qfGiveFeedback(unit) {
   button.innerHTML = QP_L.feedbackBusy;
 
   try {
-    // Code ausführen, um dem Modell die Interpreter-Ausgabe mitzugeben
+    // Run the code to give the model the interpreter output too
     const code = unit.getCode();
     const output = await unit.runForOutput();
 
@@ -599,10 +644,11 @@ async function qfGiveFeedback(unit) {
       return;
     }
 
-    // Direkt-API: Konfiguration prüfen (Key ist optional, z. B. bei Ollama)
+    // Direct API: check configuration (key is optional, e.g. for Ollama)
     if (!cfg.baseUrl || !cfg.model) {
-      qfRenderError(targetDiv, QP_L.errConfigMissing);
-      if (qfUi.setCollapsed) qfUi.setCollapsed(false);
+      // The error's own ⚙ button (qfOpenSettingsNear) moves the settings
+      // panel right here on demand - nothing to pre-open before that.
+      qfRenderError(targetDiv, QP_L.errConfigMissing, { showSettingsLink: true });
       return;
     }
 
@@ -624,20 +670,23 @@ async function qfGiveFeedback(unit) {
 }
 
 // ---------------------------------------------------------------------------
-// Öffentliche Schnittstelle
+// Public interface
 // ---------------------------------------------------------------------------
 
 globalThis.qpyodideFeedback = {
   enabled: !!qfOptions.enabled,
 
-  /** Feedback-Button einer Editor-Einheit verdrahten. */
+  /** Wires up the feedback button of an editor unit. */
   attach(unit) {
     if (!this.enabled || !unit.feedbackButton) return;
     unit.feedbackButton.onclick = () => qfGiveFeedback(unit);
-  }
+  },
+
+  /** Opens and scrolls to the settings panel. */
+  openSettings: qfOpenSettingsNear
 };
 
-// Einstellungs-Panel aufbauen (Module sind deferred, das DOM ist also bereit)
+// Build the settings panel (modules are deferred, so the DOM is ready)
 if (qfOptions.enabled) {
   qfBuildSettingsUI();
 }

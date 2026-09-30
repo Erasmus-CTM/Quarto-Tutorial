@@ -1,25 +1,25 @@
-// qpyodide-document-status.js – Status-Anzeige des Dokuments
+// qpyodide-document-status.js – document status display
 //
-// Baut die "Pyodide lädt …"-Statuszeile in den Titelblock ein und stellt
-// globale Helfer bereit, mit denen andere Module (Engine-Init, Zell-Klassen,
-// Feedback) den Status und die Buttons aktualisieren.
+// Builds the "Loading Python …" status line into the title block and
+// provides global helpers that other modules (engine init, cell classes,
+// feedback) use to update the status and the buttons.
 //
-// Das Einstellungs-Panel für das KI-Feedback lebt NICHT hier, sondern im
-// eigenen Modul qpyodide-feedback.js – es hängt sich an den hier erzeugten
-// Anker `#qpyodide-status-message-area`.
+// The settings panel for AI feedback does NOT live here, but in its own
+// module qpyodide-feedback.js – it attaches to the anchor created here,
+// `#qpyodide-status-message-area`.
 
 // Declare startup message element globally
 globalThis.qpyodideStartupMessage = document.createElement("p");
 
-// input()-Verfügbarkeit als globaler Zustand (Single Source of Truth für die
-// Run-Knopf-Sperre in qpyodide-cell-classes.js). input() braucht Cross-Origin-
-// Isolation; das ändert sich innerhalb eines Seitenaufrufs nicht (nur ein Reload
-// kann es aktivieren). Zustände: "ok" | "check" (noch nicht geprüft) |
-// "needs-reload" (Auto-Reload übersprungen, User muss selbst neu laden) |
-// "unavailable" (geprüft, nicht möglich). Dafür gibt es keine sichtbare UI
-// mehr – der Check-Reload unten läuft automatisch und unbemerkt im
-// Hintergrund; nur falls input() wirklich nicht verfügbar ist, zeigt die
-// betroffene Zelle selbst einen stillen Hinweis (siehe updateInputGate() in
+// input() availability as global state (single source of truth for the
+// Run button lock in qpyodide-cell-classes.js). input() needs cross-origin
+// isolation; that doesn't change within a single page load (only a reload
+// can enable it). States: "ok" | "check" (not yet checked) |
+// "needs-reload" (auto-reload skipped, user must reload manually) |
+// "unavailable" (checked, not possible). There's no visible UI for this
+// anymore – the check reload below runs automatically and unnoticed in the
+// background; only if input() is truly unavailable does the affected cell
+// itself show a quiet notice (see updateInputGate() in
 // qpyodide-cell-classes.js).
 function qpyodideSetInputState(kind) {
   globalThis.qpyodideInputState = kind;
@@ -28,34 +28,34 @@ function qpyodideSetInputState(kind) {
 globalThis.qpyodideInputAvailable = () => globalThis.qpyodideInputState === "ok";
 qpyodideSetInputState(globalThis.crossOriginIsolated ? "ok" : "check");
 
-// Merkt sich, ob der User die Seite schon bedient hat (Tastatur/Maus/Touch).
-// Verhindert, dass der automatische Check-Reload mitten in einer Eingabe
-// passiert und dabei schon getippten Code verwirft.
+// Tracks whether the user has already interacted with the page
+// (keyboard/mouse/touch). Prevents the automatic check reload from
+// happening mid-input and discarding code already typed.
 let qpyodideUserInteracted = false;
 ["keydown", "pointerdown", "input"].forEach((evt) =>
   window.addEventListener(evt, () => { qpyodideUserInteracted = true; },
     { capture: true, passive: true }));
 
-// Automatischer Check-Reload: sobald coi-serviceworker.js den Service
-// Worker registriert hat (Event "coi-sw-ready"), einmal automatisch neu
-// laden, damit input() (SharedArrayBuffer) verfügbar wird – außer der User
-// tippt in diesem Moment schon irgendwo, dann für diese Sitzung überspringen
-// (kein Verlust von ungespeichertem Code). Läuft unabhängig vom
-// Startup-Message-Panel, damit es auch bei `show-startup-message: false`
-// funktioniert – deshalb hier auf Modul-Ebene und nicht in
-// qpyodideDisplayStartupMessage().
-console.log("[qpyodide-coi] initialer Zustand: " + globalThis.qpyodideInputState +
+// Automatic check reload: as soon as coi-serviceworker.js has registered
+// the service worker (event "coi-sw-ready"), reload once automatically so
+// that input() (SharedArrayBuffer) becomes available – unless the user is
+// already typing somewhere at that moment, in which case it's skipped for
+// this session (no loss of unsaved code). Runs independently of the
+// startup message panel, so it also works with
+// `show-startup-message: false` – which is why this is at module level
+// and not in qpyodideDisplayStartupMessage().
+console.log("[qpyodide-coi] initial state: " + globalThis.qpyodideInputState +
   " (crossOriginIsolated=" + globalThis.crossOriginIsolated + ")");
 
 if (!globalThis.crossOriginIsolated) {
   function qpyodideHandleCoiReady() {
     if (qpyodideUserInteracted) {
-      console.log("[qpyodide-coi] ready, aber User hat schon interagiert – Reload übersprungen.");
+      console.log("[qpyodide-coi] ready, but the user has already interacted – reload skipped.");
       qpyodideSetInputState("needs-reload");
       return;
     }
-    console.log("[qpyodide-coi] ready – löse Reload aus.");
-    try { sessionStorage.setItem("qpyodide-coi-reload-pending", "1"); } catch (ex) { /* blockiert */ }
+    console.log("[qpyodide-coi] ready – triggering reload.");
+    try { sessionStorage.setItem("qpyodide-coi-reload-pending", "1"); } catch (ex) { /* blocked */ }
     location.reload();
   }
   function qpyodideHandleCoiUnavailable() {
@@ -63,12 +63,13 @@ if (!globalThis.crossOriginIsolated) {
     qpyodideSetInputState("unavailable");
   }
 
-  // coi-serviceworker.js legt sein Ergebnis zusätzlich zum Event synchron in
-  // globalThis.qpyodideCoiOutcome ab (siehe dort). Grund: Ist der SW schon
-  // aus einem früheren Reload aktiv, kann dieses Skript hier schneller
-  // fertig sein, als coi-serviceworker.js sein Event feuert – ein reiner
-  // Event-Listener würde das dann verpassen. Erst synchron den bereits
-  // vorliegenden Zustand prüfen, nur falls der noch fehlt auf das Event warten.
+  // coi-serviceworker.js also stores its result synchronously in
+  // globalThis.qpyodideCoiOutcome in addition to the event (see there).
+  // Reason: this script can finish faster than coi-serviceworker.js fires
+  // its event – e.g. if the SW is already active from an earlier reload –
+  // a plain event listener would then miss it. First check the state
+  // synchronously if it's already available, and only wait for the event
+  // if it's still missing.
   if (globalThis.qpyodideCoiOutcome === "ready") {
     qpyodideHandleCoiReady();
   } else if (globalThis.qpyodideCoiOutcome === "unavailable") {
@@ -77,13 +78,14 @@ if (!globalThis.crossOriginIsolated) {
     window.addEventListener("coi-sw-ready", qpyodideHandleCoiReady, { once: true });
     window.addEventListener("coi-unavailable", qpyodideHandleCoiUnavailable, { once: true });
 
-    // Fallback: Falls coi-serviceworker.js gar nicht lädt (z. B. Seite direkt
-    // als Datei geöffnet statt über einen Webserver – dann zeigt der absolute
-    // Script-Pfad "/coi-serviceworker.js" unter file:// ins Leere), feuert
-    // weder "coi-sw-ready" noch "coi-unavailable". Ohne diesen Fallback würden
-    // Zellen mit input() dauerhaft im "wird aktiviert"-Zwischenzustand hängen.
+    // Fallback: if coi-serviceworker.js doesn't load at all (e.g. the page
+    // opened directly as a file instead of via a web server – in which
+    // case the absolute script path "/coi-serviceworker.js" points nowhere
+    // under file://), neither "coi-sw-ready" nor "coi-unavailable" fires.
+    // Without this fallback, cells with input() would hang forever in the
+    // "activating" intermediate state.
     const qpyodideCoiFallback = setTimeout(() => {
-      console.log("[qpyodide-coi] 5s-Fallback ausgelöst (weder coi-sw-ready noch coi-unavailable kam an).");
+      console.log("[qpyodide-coi] 5s fallback triggered (neither coi-sw-ready nor coi-unavailable arrived).");
       qpyodideSetInputState("unavailable");
     }, 5000);
     window.addEventListener("coi-sw-ready",    () => clearTimeout(qpyodideCoiFallback), { once: true });
@@ -95,7 +97,7 @@ if (!globalThis.crossOriginIsolated) {
 globalThis.qpyodideSetInteractiveButtonState = function(buttonText, enableCodeButton = true) {
   document.querySelectorAll(".qpyodide-button-run").forEach((btn) => {
     btn.innerHTML = buttonText;
-    // input()-Zellen bleiben gesperrt, solange input() nicht verfügbar ist
+    // input() cells stay locked as long as input() is unavailable
     btn.disabled = !enableCodeButton ||
       (btn.dataset.needsInput === "1" && !globalThis.qpyodideInputAvailable());
   });
@@ -158,14 +160,14 @@ function qpyodideDisplayStartupMessage(showStartupMessage) {
   // Add `aria-live` to auto-announce the startup status to screen readers
   qpyodideStartupMessage.setAttribute("aria-live", "assertive");
 
-  // Status-Zeile: Ladetext links, Buttons rechts – eine kompakte Zeile
+  // Status row: loading text on the left, buttons on the right – one compact row
   const statusRow = document.createElement("div");
   statusRow.style.cssText = "display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap";
   qpyodideStartupMessage.style.cssText = "flex:1; margin:0";
   statusRow.appendChild(qpyodideStartupMessage);
 
-  // Rechter Bereich: KI-Feedback-Button
-  // qpyodide-feedback.js hängt seinen Toggle-Button hier ein (id: qpyodide-status-right)
+  // Right side: AI feedback button
+  // qpyodide-feedback.js attaches its toggle button here (id: qpyodide-status-right)
   const statusRight = document.createElement("div");
   statusRight.id = "qpyodide-status-right";
   statusRight.style.cssText = "display:flex; align-items:center; gap:0.5rem; flex-shrink:0";
@@ -173,8 +175,8 @@ function qpyodideDisplayStartupMessage(showStartupMessage) {
 
   statusContents.appendChild(statusRow);
 
-  // Aufklappbare Panels unterhalb der Status-Zeile
-  // qpyodide-feedback.js hängt sein Einstellungs-Panel hier ein (id: qpyodide-status-panels)
+  // Collapsible panels below the status row
+  // qpyodide-feedback.js attaches its settings panel here (id: qpyodide-status-panels)
   const statusPanels = document.createElement("div");
   statusPanels.id = "qpyodide-status-panels";
   statusContents.appendChild(statusPanels);

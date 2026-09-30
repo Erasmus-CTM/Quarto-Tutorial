@@ -1,20 +1,20 @@
-// qpyodide-cell-classes.js – Zell-Klassen der Extension `pyodide-interaktiv`
+// qpyodide-cell-classes.js – cell classes of the `pyodide-interaktiv` extension
 //
-// Aufbau (klare Trennung, keine Duplikation):
-//   qpyodideExecutePython()  – gemeinsame Ausführungs-Schicht (eine Stelle!)
-//   EditorUnit               – EIN Monaco-Editor mit Toolbar + Ausgabe-Bereichen;
-//                              wird sowohl für die Hauptzelle als auch für per
-//                              „+ Codeblock" ergänzte Zusatz-Editoren benutzt
-//   InteractiveCell          – <details>-Wrapper um eine (oder mehrere) EditorUnit(s)
-//   OutputCell               – führt Code aus und zeigt nur die Ausgabe
-//   SetupCell                – führt Code unsichtbar aus (Setup-Kontext)
-//   CellContainer            – Sammlung aller Zellen, startet setup/output/autorun
+// Structure (clear separation, no duplication):
+//   qpyodideExecutePython()  – shared execution layer (one place!)
+//   EditorUnit               – ONE Monaco editor with toolbar + output areas;
+//                              used both for the main cell and for extra
+//                              editors added via "+ Code block"
+//   InteractiveCell          – <details> wrapper around one (or more) EditorUnit(s)
+//   OutputCell               – runs code and shows only the output
+//   SetupCell                – runs code invisibly (setup context)
+//   CellContainer            – collection of all cells, starts setup/output/autorun
 //
-// Das KI-Feedback lebt vollständig in qpyodide-feedback.js und wird hier nur
-// über qpyodideFeedback.attach(unit) verdrahtet.
+// AI feedback lives entirely in qpyodide-feedback.js and is only wired up
+// here via qpyodideFeedback.attach(unit).
 
 // ---------------------------------------------------------------------------
-// Theme-Kopplung (Quarto-Dark-Mode <-> Monaco & Bootstrap-Variablen)
+// Theme coupling (Quarto dark mode <-> Monaco & Bootstrap variables)
 // ---------------------------------------------------------------------------
 
 function qpyodideIsDarkMode() {
@@ -34,12 +34,13 @@ function qpyodideSyncMonacoTheme() {
   }
 }
 
-// Bootstrap setzt seine Dark-Mode-Variablen (--bs-body-bg, --bs-border-color, ...)
-// nur unter [data-bs-theme=dark], Quarto togglet aber nur body.quarto-dark/-light.
-// Ohne diesen Sync loesen var(--bs-*)-Referenzen im Dark Mode auf generische,
-// helle Fallback-Werte auf statt auf die Farben des aktiven Themes (z. B. slate).
-// Scope bewusst auf <body> statt <html>, damit nur der Seiteninhalt betroffen
-// ist, nicht Quartos eigene Navbar (die ihr data-bs-theme="dark" schon fest hat).
+// Bootstrap only sets its dark-mode variables (--bs-body-bg,
+// --bs-border-color, ...) under [data-bs-theme=dark], but Quarto only
+// toggles body.quarto-dark/-light. Without this sync, var(--bs-*)
+// references in dark mode would resolve to generic, light fallback
+// values instead of the active theme's colors (e.g. slate). Scope is
+// deliberately <body>, not <html>, so only the page content is affected,
+// not Quarto's own navbar (which already has data-bs-theme="dark" fixed).
 function qpyodideSyncBsTheme() {
   document.body.setAttribute("data-bs-theme", qpyodideIsDarkMode() ? "dark" : "light");
 }
@@ -49,7 +50,7 @@ function qpyodideSyncTheme() {
   qpyodideSyncBsTheme();
 }
 
-// Live auf Theme-Wechsel reagieren (Quarto toggelt Klassen auf <body>)
+// React live to theme changes (Quarto toggles classes on <body>)
 new MutationObserver(qpyodideSyncTheme)
   .observe(document.body, { attributes: true, attributeFilter: ["class"] });
 window.matchMedia?.("(prefers-color-scheme: dark)")
@@ -57,39 +58,39 @@ window.matchMedia?.("(prefers-color-scheme: dark)")
 qpyodideSyncBsTheme();
 
 // ---------------------------------------------------------------------------
-// Gemeinsame Ausführungs-Schicht
+// Shared execution layer
 // ---------------------------------------------------------------------------
 
-// UI-Sperre: pro Klick rechnet eine Zelle; die Seite selbst bleibt frei,
-// weil Python im Web Worker läuft.
+// UI lock: one cell computes per click; the page itself stays free,
+// because Python runs in the Web Worker.
 let qpyodideExecutionBusy = false;
 
-// Erkennt input()-Aufrufe im Code (gleiche Heuristik wie runForOutput()).
+// Detects input() calls in the code (same heuristic as runForOutput()).
 function qpyodideCodeHasInput(code) {
   return /\binput\s*\(/.test(code || "");
 }
 
 function qpyodideSetRunButtonsEnabled(enabled) {
   document.querySelectorAll(".qpyodide-button-run").forEach((btn) => {
-    // input()-Zellen bleiben gesperrt, solange input() nicht verfügbar ist
+    // input() cells stay locked as long as input() is unavailable
     btn.disabled = !enabled ||
       (btn.dataset.needsInput === "1" && !globalThis.qpyodideInputAvailable());
   });
 }
 
 /**
- * Führt Python-Code im Pyodide-Worker aus.
- * @param {string}  code       auszuführender Python-Code
- * @param {boolean} wantPickle Figuren zusätzlich als pickle liefern
- *                             (nur nötig, wenn auf Canvas umgestellt wird)
+ * Runs Python code in the Pyodide worker.
+ * @param {string}  code       Python code to run
+ * @param {boolean} wantPickle also deliver figures as pickle
+ *                             (only needed when switching to canvas)
  * @returns {Promise<{entries: Array, text: string, html: ?string, images: string[],
  *                    pickles: string[], pickleErrors: string[],
  *                    animations: string[], animationErrors: string[]}>}
- *   entries    – stdout/stderr-Zeilen, text – als Klartext verbunden,
- *   html       – HTML-Rückgabewert der letzten Anweisung (oder null),
- *   animations – automatisch erkannte Animationen als fertiges Player-HTML,
- *   images     – die übrigen matplotlib-Figuren als base64-PNGs,
- *   pickles    – dieselben Figuren als base64-pickle (leer ohne wantPickle)
+ *   entries    – stdout/stderr lines, text – joined as plain text,
+ *   html       – HTML return value of the last statement (or null),
+ *   animations – automatically detected animations as ready-made player HTML,
+ *   images     – the remaining matplotlib figures as base64 PNGs,
+ *   pickles    – the same figures as base64 pickle (empty without wantPickle)
  */
 async function qpyodideExecutePython(code, wantPickle) {
   const pyodide = await qpyodideReady;
@@ -99,8 +100,8 @@ async function qpyodideExecutePython(code, wantPickle) {
 }
 
 /**
- * Text-Ausgabe (stdout/stderr) sicher in einen Container rendern.
- * @returns {boolean} true, wenn sichtbarer Inhalt entstanden ist.
+ * Safely render text output (stdout/stderr) into a container.
+ * @returns {boolean} true if visible content was produced.
  */
 function qpyodideRenderTextOutput(targetDiv, entries) {
   const pre = document.createElement("pre");
@@ -126,8 +127,8 @@ function qpyodideRenderTextOutput(targetDiv, entries) {
 }
 
 /**
- * matplotlib-Figuren (base64-PNGs aus dem Worker) als <figure> rendern.
- * @returns {boolean} true, wenn eine Figur eingefügt wurde.
+ * Renders matplotlib figures (base64 PNGs from the worker) as a <figure>.
+ * @returns {boolean} true if a figure was inserted.
  */
 function qpyodideRenderImages(targetDiv, images, figCap) {
   if (!images || images.length === 0) return false;
@@ -148,23 +149,23 @@ function qpyodideRenderImages(targetDiv, images, figCap) {
 }
 
 /**
- * Plot-Ausgabe eines Laufs rendern.
+ * Renders the plot output of a run.
  *
- * Zuerst die Animationen: die kommen als fertiges Player-HTML aus dem Worker
- * (matplotlib `to_jshtml`) und stehen dort schon anstelle der Figur, die sonst
- * als eingefrorenes Standbild käme. Danach die PNGs der übrigen Figuren – die
- * sind sofort da. Wenn für die Zelle interaktive Plots gewünscht sind, wird
- * anschließend im Hintergrund auf Canvas umgestellt (zweite Pyodide-Instanz,
- * siehe qpyodide-canvas-plots.js). Nicht umgestellt wird bei einer
- * HTML-Rückgabe (Plotly, zeige_svg) und wenn nicht jede Figur ein brauchbares
- * pickle hat.
+ * Animations first: they come as ready-made player HTML from the worker
+ * (matplotlib `to_jshtml`) and already stand in there instead of the
+ * figure, which would otherwise arrive as a frozen still image. Then the
+ * PNGs of the remaining figures – those are available immediately. If
+ * interactive plots are wanted for the cell, it then switches to canvas
+ * in the background (second Pyodide instance, see
+ * qpyodide-canvas-plots.js). No switch happens for an HTML return value
+ * (Plotly, zeige_svg) and when not every figure has a usable pickle.
  */
 function qpyodideRenderPlots(targetDiv, result, options) {
   const animations = result.animations || [];
   animations.forEach((animHtml) => qpyodideRenderHtmlOutput(targetDiv, animHtml));
   (result.animationErrors || []).forEach((msg) => {
-    // Figur bleibt in diesem Fall als PNG erhalten – erwartete Abstufung.
-    if (msg) console.warn("qpyodide: Animation nicht darstellbar –", msg);
+    // The figure stays as PNG in this case – expected fallback.
+    if (msg) console.warn("qpyodide: animation could not be rendered –", msg);
   });
 
   const hasImages = qpyodideRenderImages(targetDiv, result.images, options["fig-cap"]);
@@ -177,23 +178,23 @@ function qpyodideRenderPlots(targetDiv, result, options) {
   if (!globalThis.qpyodideCanvasWanted?.(options)) return;
 
   if (pickles.length !== images.length || pickles.some((p) => !p)) {
-    // Mindestens eine Figur ließ sich nicht pickeln -> beim Bild bleiben,
-    // sonst stünden Canvas und PNG gemischt untereinander.
+    // At least one figure couldn't be pickled -> stick with the image,
+    // otherwise canvas and PNG would end up mixed together.
     (result.pickleErrors || []).forEach((msg) => {
-      if (msg) console.warn("qpyodide: Figur nicht pickelbar –", msg);
+      if (msg) console.warn("qpyodide: figure could not be pickled –", msg);
     });
     return;
   }
 
-  // Absichtlich ohne await: die Zelle ist fertig, das Nachladen der
-  // zweiten Instanz darf im Hintergrund laufen.
+  // Deliberately without await: the cell is done, loading the second
+  // instance may run in the background.
   globalThis.qpyodideCanvasUpgrade(targetDiv, pickles, options);
 }
 
 /**
- * Rich-HTML-Ausgabe rendern – inkl. Ausführung eingebetteter <script>-Tags
- * (nötig für den matplotlib-to_jshtml-Player). Der Container muss dazu
- * bereits im Dokument hängen.
+ * Renders rich HTML output – including execution of embedded <script>
+ * tags (needed for the matplotlib to_jshtml player). The container must
+ * already be attached to the document for this.
  */
 async function qpyodideRenderHtmlOutput(targetDiv, html) {
   const wrapper = document.createElement("div");
@@ -201,10 +202,10 @@ async function qpyodideRenderHtmlOutput(targetDiv, html) {
   targetDiv.appendChild(wrapper);
   wrapper.innerHTML = html;
 
-  // innerHTML führt Skripte nicht aus -> durch ausführbare Klone ersetzen.
-  // Reihenfolge zählt: eine Bibliothek mit src (z. B. d3) muss fertig geladen
-  // sein, bevor ein nachfolgendes Inline-Skript sie benutzt. Deshalb der Reihe
-  // nach durchgehen und externe Skripte abwarten (Fehler nicht blockieren).
+  // innerHTML doesn't execute scripts -> replace with executable clones.
+  // Order matters: a library loaded via src (e.g. d3) must finish loading
+  // before a following inline script uses it. So we go through them in
+  // order and wait for external scripts (errors don't block).
   const scripts = Array.from(wrapper.querySelectorAll("script"));
   for (const oldScript of scripts) {
     const newScript = document.createElement("script");
@@ -224,16 +225,16 @@ async function qpyodideRenderHtmlOutput(targetDiv, html) {
 }
 
 // ---------------------------------------------------------------------------
-// EditorUnit – ein Monaco-Editor mit Toolbar und Ausgabe-Bereichen
+// EditorUnit – a Monaco editor with toolbar and output areas
 // ---------------------------------------------------------------------------
 
 class EditorUnit {
   /**
    * @param {Object} config
-   * @param {string}  config.uid       eindeutige ID (z. B. "3" oder "3.2")
-   * @param {string}  config.code      Anfangs-Code des Editors
-   * @param {Object}  config.options   Zell-Optionen (read-only, fig-cap, …)
-   * @param {Element} config.hostDiv   Container, in den die Einheit gebaut wird
+   * @param {string}  config.uid       unique ID (e.g. "3" or "3.2")
+   * @param {string}  config.code      initial code of the editor
+   * @param {Object}  config.options   cell options (read-only, fig-cap, …)
+   * @param {Element} config.hostDiv   container the unit is built into
    */
   constructor({ uid, code, options, hostDiv }) {
     this.uid = uid;
@@ -242,15 +243,15 @@ class EditorUnit {
     this.hostDiv = hostDiv;
     this.editor = null;
     this.isReadOnly = options["read-only"] === "true";
-    this.lastRunCode = null;   // Code-Stand des letzten Laufs
-    this.lastOutput = null;    // Textausgabe des letzten Laufs (für Feedback-Cache)
+    this.lastRunCode = null;   // code state of the last run
+    this.lastOutput = null;    // text output of the last run (for the feedback cache)
 
     this.buildDom();
     this.initMonaco();
     this.wireButtons();
   }
 
-  /** Toolbar + Editor- und Ausgabe-Bereiche aufbauen. */
+  /** Builds the toolbar + editor and output areas. */
   buildDom() {
     const uid = this.uid;
 
@@ -269,7 +270,7 @@ class EditorUnit {
     const rightButtonsDiv = document.createElement("div");
     rightButtonsDiv.className = "qpyodide-editor-toolbar-right-buttons";
 
-    // Run-Button
+    // Run button
     this.runButton = document.createElement("button");
     this.runButton.className = "btn btn-default qpyodide-button qpyodide-button-run";
     this.runButton.type = "button";
@@ -284,14 +285,14 @@ class EditorUnit {
     }
     leftButtonsDiv.appendChild(this.runButton);
 
-    // Editierbar/Schreibgeschützt-Label
+    // Editable/read-only label
     const readOnlyLabel = document.createElement("label");
     readOnlyLabel.className = "qpyodide-label qpyodide-readonly-label";
     readOnlyLabel.id = `qpyodide-readonly-label-${uid}`;
     readOnlyLabel.textContent = this.isReadOnly ? QP_L.labelReadOnly : QP_L.labelEditable;
     middleToolBarDiv.appendChild(readOnlyLabel);
 
-    // Reset-Button
+    // Reset button
     this.resetButton = document.createElement("button");
     this.resetButton.className = "btn btn-light btn-xs qpyodide-button qpyodide-button-reset";
     this.resetButton.type = "button";
@@ -300,7 +301,7 @@ class EditorUnit {
     this.resetButton.innerHTML = '<i class="fa-solid fa-arrows-rotate"></i>';
     rightButtonsDiv.appendChild(this.resetButton);
 
-    // Copy-Button
+    // Copy button
     this.copyButton = document.createElement("button");
     this.copyButton.className = "btn btn-light btn-xs qpyodide-button qpyodide-button-copy";
     this.copyButton.type = "button";
@@ -309,7 +310,7 @@ class EditorUnit {
     this.copyButton.innerHTML = '<i class="fa-regular fa-copy"></i>';
     rightButtonsDiv.appendChild(this.copyButton);
 
-    // Feedback-Button (nur bei aktiviertem Feature und editierbaren Zellen)
+    // Feedback button (only when the feature is enabled and the cell is editable)
     this.feedbackButton = null;
     if (globalThis.qpyodideFeedback?.enabled && !this.isReadOnly) {
       this.feedbackButton = document.createElement("button");
@@ -326,7 +327,7 @@ class EditorUnit {
     this.toolbarDiv.appendChild(middleToolBarDiv);
     this.toolbarDiv.appendChild(rightButtonsDiv);
 
-    // Konsole: Editor + Text-Ausgabe + Feedback-Ausgabe
+    // Console: editor + text output + feedback output
     const consoleAreaDiv = document.createElement("div");
     consoleAreaDiv.id = `qpyodide-console-area-${this.uid}`;
     consoleAreaDiv.className = "qpyodide-console-area";
@@ -354,13 +355,13 @@ class EditorUnit {
       consoleAreaDiv.appendChild(this.outputFeedbackDiv);
     }
 
-    // Grafik-Ausgabe (matplotlib)
+    // Graphics output (matplotlib)
     this.outputGraphDiv = document.createElement("div");
     this.outputGraphDiv.id = `qpyodide-output-graph-area-${uid}`;
     this.outputGraphDiv.className = "qpyodide-output-graph-area";
 
-    // Hinweis für input()-Zellen, wenn input() (noch) nicht verfügbar ist.
-    // Standardmäßig versteckt; updateInputGate() blendet ihn bei Bedarf ein.
+    // Hint for input() cells when input() is (not yet) available.
+    // Hidden by default; updateInputGate() shows it when needed.
     this.inputHintDiv = document.createElement("div");
     this.inputHintDiv.className = "qpyodide-cell-input-hint";
     this.inputHintDiv.hidden = true;
@@ -370,12 +371,12 @@ class EditorUnit {
     this.hostDiv.appendChild(consoleAreaDiv);
     this.hostDiv.appendChild(this.outputGraphDiv);
 
-    // Erstes Gate anhand des Anfangs-Codes (Editor existiert noch nicht;
-    // getCode() fällt auf this.code zurück).
+    // First gate check based on the initial code (the editor doesn't exist
+    // yet; getCode() falls back to this.code).
     this.updateInputGate();
   }
 
-  /** Monaco-Editor erzeugen (Höhe, EOL, Tastatur-Kürzel). */
+  /** Creates the Monaco editor (height, EOL, keyboard shortcuts). */
   initMonaco() {
     const thiz = this;
 
@@ -393,7 +394,7 @@ class EditorUnit {
         readOnly: thiz.isReadOnly
       });
 
-      // Metadaten am Editor hinterlegen (z. B. für andere Extensions)
+      // Store metadata on the editor (e.g. for other extensions)
       thiz.editor.__qpyodideCounter = thiz.uid;
       thiz.editor.__qpyodideEditorId = `qpyodide-editor-${thiz.uid}`;
       thiz.editor.__qpyodideinitialCode = thiz.code;
@@ -405,7 +406,7 @@ class EditorUnit {
       const model = thiz.editor.getModel();
       model.setEOL(monaco.editor.EndOfLineSequence.LF);
 
-      // Editor-Höhe dynamisch an den Inhalt anpassen
+      // Dynamically adjust editor height to fit the content
       const updateHeight = () => {
         const contentHeight = thiz.editor.getContentHeight();
         thiz.editorDiv.style.height = `${contentHeight}px`;
@@ -415,16 +416,16 @@ class EditorUnit {
       const isEmptyCodeText = (selected) =>
         (selected === null || selected === undefined || selected === "");
 
-      // Tastatur-Kürzel müssen beim Fokuswechsel je Editor neu registriert
-      // werden (Monaco-Regression seit 0.32.0):
+      // Keyboard shortcuts must be re-registered per editor on focus change
+      // (Monaco regression since 0.32.0):
       // https://github.com/microsoft/monaco-editor/issues/2947
       const addPyodideKeyboardShortCutCommands = () => {
-        // Shift+Enter: gesamten Zell-Inhalt ausführen
+        // Shift+Enter: run the entire cell content
         thiz.editor.addCommand(monaco.KeyMod.Shift | monaco.KeyCode.Enter, () => {
           thiz.runCode(thiz.editor.getValue());
         });
 
-        // Ctrl/Cmd+Enter: Auswahl (oder aktuelle Zeile) ausführen
+        // Ctrl/Cmd+Enter: run the selection (or the current line)
         thiz.editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter, () => {
           const selectedText = thiz.editor.getModel()
             .getValueInRange(thiz.editor.getSelection());
@@ -453,14 +454,14 @@ class EditorUnit {
 
       thiz.editor.onDidFocusEditorText(addPyodideKeyboardShortCutCommands);
       thiz.editor.onDidContentSizeChange(updateHeight);
-      // Code-Änderungen können input() ein-/ausbauen -> Gate neu bewerten
+      // Code changes can add/remove input() -> re-evaluate the gate
       thiz.editor.onDidChangeModelContent(() => thiz.updateInputGate());
       updateHeight();
       thiz.updateInputGate();
     });
   }
 
-  /** Button-Klicks verdrahten (Run/Reset/Copy/Feedback). */
+  /** Wires up button clicks (Run/Reset/Copy/Feedback). */
   wireButtons() {
     const thiz = this;
 
@@ -484,7 +485,7 @@ class EditorUnit {
       });
     };
 
-    // KI-Feedback: die gesamte Logik lebt in qpyodide-feedback.js
+    // AI feedback: all of its logic lives in qpyodide-feedback.js
     if (this.feedbackButton) {
       qpyodideFeedback.attach({
         uid: this.uid,
@@ -495,23 +496,23 @@ class EditorUnit {
       });
     }
 
-    // input()-Gate aktuell halten: bei Zustandswechsel (input() geprüft/aktiviert)
-    // und einmal, sobald die Pyodide-Runtime bereitsteht.
+    // Keep the input() gate current: on state changes (input() checked/enabled)
+    // and once as soon as the Pyodide runtime is ready.
     window.addEventListener("qpyodide-input-state", () => thiz.updateInputGate());
     if (globalThis.qpyodideReady) {
       globalThis.qpyodideReady.then(() => thiz.updateInputGate()).catch(() => {});
     }
   }
 
-  /** Aktuellen Code des Editors holen (Fallback: Anfangs-Code). */
+  /** Gets the editor's current code (fallback: initial code). */
   getCode() {
     return this.editor ? this.editor.getValue() : this.code;
   }
 
   /**
-   * Sperrt/entsperrt den Run-Knopf abhängig davon, ob die Zelle input() nutzt
-   * und ob input() auf dieser Seite verfügbar ist. Blendet bei Bedarf einen
-   * Inline-Hinweis mit Link auf das input()-Panel oben ein.
+   * Locks/unlocks the Run button depending on whether the cell uses
+   * input() and whether input() is available on this page. Shows an
+   * inline hint with a link to the input() panel above when needed.
    */
   updateInputGate() {
     if (!this.runButton) return;
@@ -520,8 +521,8 @@ class EditorUnit {
     const available  = globalThis.qpyodideInputAvailable
       ? globalThis.qpyodideInputAvailable() : true;
 
-    // Marker für die globalen Toggler (qpyodideSetRunButtonsEnabled,
-    // qpyodideSetInteractiveButtonState), damit sie die Sperre respektieren.
+    // Marker for the global togglers (qpyodideSetRunButtonsEnabled,
+    // qpyodideSetInteractiveButtonState), so they respect the lock.
     if (needsInput) {
       this.runButton.dataset.needsInput = "1";
     } else {
@@ -530,8 +531,8 @@ class EditorUnit {
 
     const blocked = needsInput && !available;
 
-    // Den Run-Knopf nur anfassen, wenn Python bereit ist und gerade nichts
-    // läuft – sonst würden wir den Lade- oder Stopp-Zustand überschreiben.
+    // Only touch the Run button when Python is ready and nothing is
+    // currently running – otherwise we'd overwrite the loading or stop state.
     if (globalThis.mainPyodide && !qpyodideExecutionBusy) {
       this.runButton.disabled = blocked;
       this.runButton.title = blocked
@@ -539,7 +540,7 @@ class EditorUnit {
         : QP_L.runTitle;
     }
 
-    // Inline-Hinweis auf-/zuklappen
+    // Expand/collapse the inline hint
     if (!this.inputHintDiv) return;
     if (!blocked) {
       this.inputHintDiv.hidden = true;
@@ -557,11 +558,11 @@ class EditorUnit {
   }
 
   /**
-   * Code im Worker ausführen und Ergebnis (Text/HTML/Plots) unterhalb des
-   * Editors anzeigen. Während der Ausführung wird der Run-Button dieser
-   * Zelle zum Stopp-Knopf (sanfter Abbruch via Interrupt, sonst harter
-   * Worker-Neustart) – die Seite bleibt dabei voll bedienbar.
-   * @returns {Promise<string>} die Text-Ausgabe des Interpreters
+   * Runs code in the worker and displays the result (text/HTML/plots)
+   * below the editor. While running, this cell's Run button turns into a
+   * Stop button (graceful abort via interrupt, otherwise a hard worker
+   * restart) – the page stays fully usable throughout.
+   * @returns {Promise<string>} the interpreter's text output
    */
   async runCode(code) {
     if (qpyodideExecutionBusy) return "";
@@ -570,14 +571,14 @@ class EditorUnit {
 
     const proxy = await qpyodideReady;
 
-    // Streaming-Terminal anlegen (läuft für alle Zellen, nicht nur bei input())
+    // Create the streaming terminal (runs for all cells, not only with input())
     this.outputCodeDiv.innerHTML = "";
     const terminalDiv = document.createElement("div");
     terminalDiv.className = "qpyodide-terminal";
     this.outputCodeDiv.appendChild(terminalDiv);
     this.outputCodeDiv.classList.add("has-content");
 
-    // Gestreamter stdout/stderr: jede Zeile erscheint sofort im Terminal
+    // Streamed stdout/stderr: each line appears immediately in the terminal
     proxy.onStream = (text, type) => {
       const line = document.createElement("code");
       line.className = type === "stderr"
@@ -588,11 +589,12 @@ class EditorUnit {
       terminalDiv.appendChild(document.createTextNode("\n"));
     };
 
-    // Python-input(): Eingabefeld inline ins Terminal einfügen und dann blockieren
-    // (funktioniert nur wenn die Seite cross-origin-isoliert ist)
-    // prompt kommt direkt vom Worker (via _qpyodide_set_prompt aus Python),
-    // da Pyodide stdout nur bei vollständigen Zeilen (mit \n) flusht –
-    // input()-Prompts ohne \n würden sonst nie den Main-Thread erreichen.
+    // Python input(): insert an input field inline into the terminal and
+    // then block (only works if the page is cross-origin isolated).
+    // The prompt comes directly from the worker (via _qpyodide_set_prompt
+    // from Python), since Pyodide only flushes stdout on complete lines
+    // (with \n) – input() prompts without \n would otherwise never reach
+    // the main thread.
     proxy.onInputRequired = (prompt) => {
       const row = document.createElement("div");
       row.className = "qpyodide-input-row";
@@ -616,18 +618,18 @@ class EditorUnit {
       inp.addEventListener("keydown", (e) => {
         if (e.key !== "Enter") return;
         const val = inp.value;
-        // Eingabefeld durch Echo ersetzen (Prompt-Label bleibt erhalten)
+        // Replace the input field with the echo (the prompt label stays)
         const echo = document.createElement("code");
         echo.className = "qpyodide-output-code-stdout qpyodide-input-echo";
         echo.textContent = val;
         inp.replaceWith(echo);
         terminalDiv.appendChild(document.createTextNode("\n"));
-        // Wert an den Worker übergeben (weckt Atomics.wait in stdin())
+        // Hand the value to the worker (wakes Atomics.wait in stdin())
         proxy.provideInput(val);
       });
     };
 
-    // Run-Button in Stopp-Knopf verwandeln
+    // Turn the Run button into a Stop button
     const runButtonHtml = this.runButton.innerHTML;
     this.runButton.innerHTML = QP_L.stopLabel;
     this.runButton.title = proxy.interruptBuffer
@@ -635,7 +637,7 @@ class EditorUnit {
       : QP_L.stopTitleRestart;
     this.runButton.disabled = false;
     this.runButton.onclick = () => {
-      // Offenes Eingabefeld als "[Abgebrochen]" markieren
+      // Mark an open input field as "[Aborted]"
       terminalDiv.querySelectorAll(".qpyodide-input-row").forEach((row) => {
         const aborted = document.createElement("code");
         aborted.className = "qpyodide-output-code-stderr";
@@ -656,17 +658,17 @@ class EditorUnit {
       );
       text = result.text;
 
-      // HTML-Rückgabe (z. B. Animation) und Grafiken anhängen
+      // Append HTML return value (e.g. animation) and graphics
       if (result.html) qpyodideRenderHtmlOutput(this.outputCodeDiv, result.html);
       this.outputGraphDiv.innerHTML = "";
       qpyodideRenderPlots(this.outputGraphDiv, result, this.options);
 
-      // Terminal leer + kein HTML → has-content entfernen (kein Platz verschwenden)
+      // Terminal empty + no HTML → remove has-content (don't waste space)
       if (!terminalDiv.hasChildNodes() && !result.html) {
         this.outputCodeDiv.classList.remove("has-content");
       }
     } catch (err) {
-      // Harter Abbruch (Worker-Neustart) oder Worker-Absturz
+      // Hard abort (worker restart) or worker crash
       text = String((err && err.message) || err);
       terminalDiv.querySelectorAll(".qpyodide-input-row").forEach((r) => r.remove());
       const errCode = document.createElement("code");
@@ -688,19 +690,19 @@ class EditorUnit {
     return text;
   }
 
-  /** Für das Feedback: Interpreter-Ausgabe des letzten Laufs liefern.
-   *  Feedback führt den Code NIE selbst aus – das bleibt immer dem Nutzer überlassen.
-   *  So sieht das KI-Feedback immer genau das, was der Nutzer auch gesehen hat. */
+  /** For feedback: delivers the interpreter output of the last run.
+   *  Feedback NEVER runs the code itself – that is always left to the user.
+   *  This way, AI feedback always sees exactly what the user also saw. */
   async runForOutput() {
     const currentCode = this.getCode();
     if (this.lastOutput !== null && this.lastRunCode === currentCode) {
       return this.lastOutput;
     }
     if (this.lastOutput !== null) {
-      // Code wurde seit dem letzten Lauf verändert
+      // Code was changed since the last run
       return QP_L.outputChanged;
     }
-    // Code wurde noch nie ausgeführt
+    // Code has never been run
     const hasInput = qpyodideCodeHasInput(currentCode);
     if (hasInput) {
       return QP_L.outputNeedsInput;
@@ -710,11 +712,11 @@ class EditorUnit {
 }
 
 // ---------------------------------------------------------------------------
-// Zell-Klassen
+// Cell classes
 // ---------------------------------------------------------------------------
 
 /**
- * BaseCell – gemeinsame Basis aller Zell-Typen.
+ * BaseCell – shared base for all cell types.
  */
 class BaseCell {
   constructor(cellData) {
@@ -726,13 +728,81 @@ class BaseCell {
     );
   }
 
-  /** Wird nach dem Pyodide-Start vom CellContainer aufgerufen. */
-  async runStartup() { /* Standard: nichts zu tun */ }
+  /** Called by CellContainer after Pyodide has started. */
+  async runStartup() { /* default: nothing to do */ }
+}
+
+// ---------------------------------------------------------------------------
+// Fold nudge: shown once, under a cell the reader just expanded by hand,
+// offering to reveal every other still-folded cell in one click.
+// ---------------------------------------------------------------------------
+
+// Sets a fold <details>'s open state programmatically, marking it via the
+// data attribute ONLY when the state actually changes. A same-state
+// assignment (e.g. `.open = false` on a <details> that's already closed,
+// the common case for a cell that starts folded) never fires a `toggle`
+// event at all - flagging it anyway would leave the flag stuck forever,
+// silently swallowing that cell's next *real* user click instead of the
+// (nonexistent) programmatic event it was meant for. Used everywhere a
+// fold state is set from code: initial cell construction, "Show/Hide All
+// Code", and this nudge's own "show all" button.
+function qpyodideSetFoldOpen(details, open) {
+  if (details.open === open) return;
+  details.dataset.qpyodideProgrammatic = "1";
+  details.open = open;
+}
+globalThis.qpyodideSetFoldOpen = qpyodideSetFoldOpen;
+
+let qpyodideFoldNudgeShown = false;
+
+function qpyodideShowFoldNudge(cellDetails) {
+  if (qpyodideFoldNudgeShown) return;
+  // Only worth offering the shortcut when there's a real batch left to
+  // reveal. If a single other cell is still folded, clicking it directly
+  // is no more effort than clicking the nudge's own button, so it would
+  // just be a nag for no benefit.
+  const otherFoldedCount = Array.from(document.querySelectorAll(".qpyodide-code-fold"))
+    .filter((details) => details !== cellDetails && !details.open).length;
+  if (otherFoldedCount < 2) return;
+
+  qpyodideFoldNudgeShown = true;
+
+  const banner = document.createElement("div");
+  banner.className = "qpyodide-fold-nudge";
+
+  const text = document.createElement("span");
+  text.textContent = QP_L.foldNudgeQuestion;
+  banner.appendChild(text);
+
+  const showAllBtn = document.createElement("button");
+  showAllBtn.type = "button";
+  showAllBtn.className = "btn btn-light btn-sm qpyodide-button";
+  showAllBtn.textContent = QP_L.foldNudgeShowAll;
+  showAllBtn.onclick = () => {
+    document.querySelectorAll(".qpyodide-code-fold").forEach((details) => {
+      qpyodideSetFoldOpen(details, true);
+    });
+    banner.remove();
+  };
+  banner.appendChild(showAllBtn);
+
+  const dismissBtn = document.createElement("button");
+  dismissBtn.type = "button";
+  dismissBtn.className = "btn btn-light btn-sm qpyodide-button";
+  dismissBtn.textContent = QP_L.foldNudgeDismiss;
+  dismissBtn.onclick = () => banner.remove();
+  banner.appendChild(dismissBtn);
+
+  // Appended *inside* the <details> (not as a sibling after it): a closed
+  // <details> natively hides its children, so folding this cell back up
+  // hides the banner along with it instead of leaving it stranded on the
+  // page for a reader who never clicks either button.
+  cellDetails.appendChild(banner);
 }
 
 /**
- * InteractiveCell – einklappbare Zelle mit einer (oder per „+ Codeblock"
- * zwei) EditorUnit(s).
+ * InteractiveCell – collapsible cell with one (or, via "+ Code block",
+ * two) EditorUnit(s).
  */
 class InteractiveCell extends BaseCell {
   constructor(cellData) {
@@ -752,14 +822,30 @@ class InteractiveCell extends BaseCell {
       mainDiv.setAttribute("data-id", this.options.label);
     }
 
-    // Einklappbarer Rahmen um die ganze Zelle
+    // Collapsible frame around the whole cell. Initial open/closed state
+    // follows Quarto's `code-fold` (document/project default or this
+    // cell's own `#| code-fold:` override), resolved ahead of time by the
+    // Lua filter into this.options["code-fold"] ("hide" or "show").
     const details = document.createElement("details");
-    details.open = true;
+    details.className = "qpyodide-code-fold";
+    qpyodideSetFoldOpen(details, this.options["code-fold"] !== "hide");
+    // Distinguishes a reader manually opening this cell from any
+    // programmatic change (initial state above, "Show/Hide All Code",
+    // or the nudge's own "show all" button) via the flag those set.
+    details.addEventListener("toggle", () => {
+      if (details.dataset.qpyodideProgrammatic) {
+        delete details.dataset.qpyodideProgrammatic;
+        return;
+      }
+      if (details.open) {
+        qpyodideShowFoldNudge(details);
+      }
+    });
     const summary = document.createElement("summary");
     summary.textContent = QP_L.showPythonCode;
     details.appendChild(summary);
 
-    // Haupteditor
+    // Main editor
     const unitHost = document.createElement("div");
     details.appendChild(unitHost);
     this.primaryUnit = new EditorUnit({
@@ -770,9 +856,9 @@ class InteractiveCell extends BaseCell {
     });
     this.units.push(this.primaryUnit);
 
-    // „+ Codeblock"-Button: hängt EINEN zusätzlichen, leeren, editierbaren
-    // Editor unter die Zelle (nützlich z. B. unter schreibgeschützten
-    // Beispielen). Nutzt dieselbe EditorUnit-Klasse – keine Duplikate.
+    // "+ Code block" button: appends ONE additional, empty, editable
+    // editor below the cell (useful e.g. under read-only examples). Uses
+    // the same EditorUnit class – no duplicates.
     const addCodeBlockButton = document.createElement("button");
     addCodeBlockButton.className = "btn btn-default qpyodide-button qpyodide-button-codeblock";
     addCodeBlockButton.type = "button";
@@ -804,7 +890,7 @@ class InteractiveCell extends BaseCell {
     this.insertionLocation.appendChild(mainDiv);
   }
 
-  /** autorun-Option: Code nach dem Pyodide-Start einmal ausführen. */
+  /** autorun option: run the code once after Pyodide has started. */
   async runStartup() {
     if (this.options.autorun === "true") {
       await this.primaryUnit.runCode(this.code);
@@ -813,7 +899,7 @@ class InteractiveCell extends BaseCell {
 }
 
 /**
- * OutputCell – führt den Code beim Start aus und zeigt nur die Ausgabe.
+ * OutputCell – runs the code at startup and shows only the output.
  */
 class OutputCell extends BaseCell {
   constructor(cellData) {
@@ -832,7 +918,7 @@ class OutputCell extends BaseCell {
       mainDiv.setAttribute("data-id", this.options.label);
     }
 
-    // Lade-Hinweis, bis der Code beim Start ausgeführt wurde
+    // Loading indicator until the code has run at startup
     this.loadingContainer = document.createElement("div");
     this.loadingContainer.className =
       "qpyodide-non-interactive-loading-container qpyodide-cell-needs-evaluation";
@@ -854,8 +940,8 @@ class OutputCell extends BaseCell {
     this.insertionLocation.appendChild(mainDiv);
   }
 
-  // Idempotent: läuft nach einem harten Worker-Neustart erneut, ohne
-  // Ausgaben zu duplizieren.
+  // Idempotent: runs again after a hard worker restart without
+  // duplicating output.
   async runStartup() {
     const result = await qpyodideExecutePython(
       this.code, globalThis.qpyodideCanvasWanted?.(this.options)
@@ -876,21 +962,21 @@ class OutputCell extends BaseCell {
 }
 
 /**
- * SetupCell – führt den Code beim Start unsichtbar aus.
+ * SetupCell – runs the code invisibly at startup.
  */
 class SetupCell extends BaseCell {
   async runStartup() {
-    // Ausgabe und eventuelle Plots werden bewusst verworfen
+    // Output and any plots are deliberately discarded
     await qpyodideExecutePython(this.code);
   }
 }
 
 // ---------------------------------------------------------------------------
-// Container + Fabrik
+// Container + factory
 // ---------------------------------------------------------------------------
 
 /**
- * CellContainer – verwaltet alle Zellen in Dokument-Reihenfolge.
+ * CellContainer – manages all cells in document order.
  */
 class CellContainer {
   constructor() {
@@ -902,8 +988,8 @@ class CellContainer {
   }
 
   /**
-   * Startphase nach dem Pyodide-Boot: erst alle setup-Zellen, dann
-   * output-Zellen, zuletzt interactive-Zellen mit autorun.
+   * Startup phase after Pyodide boots: first all setup cells, then
+   * output cells, finally interactive cells with autorun.
    */
   async runStartupCells() {
     const order = { setup: 0, output: 1, interactive: 2 };
@@ -914,7 +1000,7 @@ class CellContainer {
       try {
         await cell.runStartup();
       } catch (err) {
-        console.error(`qpyodide: Startphase von Zelle ${cell.id} fehlgeschlagen`, err);
+        console.error(`qpyodide: startup phase of cell ${cell.id} failed`, err);
       }
     }
   }
@@ -938,5 +1024,5 @@ globalThis.qpyodideCreateCell = function(cellData) {
   }
 }
 
-// Globaler Container, den qpyodide-cell-initialization.js befüllt
+// Global container that qpyodide-cell-initialization.js populates
 globalThis.qpyodideCellContainer = new CellContainer();

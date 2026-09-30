@@ -1,11 +1,11 @@
-/* qpyodide-styling.css – Styling der Extension `pyodide-interaktiv`
+/* qpyodide-styling.css – styling for the `pyodide-interaktiv` extension
  *
- * Farben kommen aus den Bootstrap-/Quarto-Variablen (var(--bs-…)), damit
- * sich die Zellen automatisch an Light-/Dark-Theme anpassen. Jede Variable
- * hat einen Fallback für Seiten ohne Bootstrap. */
+ * Colors come from the Bootstrap/Quarto variables (var(--bs-…)), so the
+ * cells automatically adapt to the light/dark theme. Every variable has a
+ * fallback for pages without Bootstrap. */
 
 /* ---------------------------------------------------------------------- */
-/* Editor & Konsole                                                       */
+/* Editor & console                                                       */
 
 .monaco-editor pre {
   background-color: unset !important;
@@ -15,7 +15,7 @@
   border: 1px solid var(--bs-border-color, #dee2e6);
 }
 
-/* Light mode: Monaco editor (code area + gutter) — einheitlich sanftes Gelb */
+/* Light mode: Monaco editor (code area + gutter) — uniformly soft yellow */
 .qpyodide-editor .monaco-editor.vs .monaco-editor-background,
 .qpyodide-editor .monaco-editor.vs .overflow-guard,
 .qpyodide-editor .monaco-editor.vs .margin {
@@ -33,7 +33,7 @@
   border-radius: 0.25rem 0.25rem 0 0;
 }
 
-/* Readonly-Zellen: kein grüner Ton, nur neutrales Grau */
+/* Read-only cells: no green tint, just neutral gray */
 .qpyodide-toolbar-readonly {
   background-color: var(--bs-secondary-bg, #e9ecef);
 }
@@ -50,7 +50,7 @@
   align-self: center;
 }
 
-/* Zusätzlicher Codeblock („+ Codeblock") */
+/* Extra code block ("+ Code block") */
 .qpyodide-extra-codeblock {
   margin-top: 1rem;
 }
@@ -104,7 +104,7 @@ fieldset:disabled .qpyodide-button {
 }
 
 /* ---------------------------------------------------------------------- */
-/* Ausgabe-Bereiche                                                       */
+/* Output areas                                                           */
 
 .qpyodide-output-code-stdout {
   color: var(--bs-body-color, #111);
@@ -131,13 +131,13 @@ fieldset:disabled .qpyodide-button {
   margin-top: 0.5rem;
 }
 
-/* Rich-HTML-Ausgabe (z. B. Animations-Player, GIF) */
+/* Rich HTML output (e.g. animation player, GIF) */
 .qpyodide-html-output {
   margin-top: 0.5rem;
   overflow-x: auto;
 }
 
-/* Lade-Hinweis nicht-interaktiver Zellen */
+/* Loading indicator for non-interactive cells */
 .qpyodide-non-interactive-loading-container.qpyodide-cell-needs-evaluation,
 .qpyodide-non-interactive-loading-container.qpyodide-cell-evaluated {
   justify-content: center;
@@ -150,7 +150,7 @@ fieldset:disabled .qpyodide-button {
 }
 
 /* ---------------------------------------------------------------------- */
-/* KI-Feedback                                                            */
+/* AI feedback                                                            */
 
 .qpyodide-output-feedback-area.has-content {
   background-color: var(--bs-warning-bg-subtle, #ffe9d6);
@@ -188,8 +188,13 @@ fieldset:disabled .qpyodide-button {
   color: var(--bs-danger, #db4133);
 }
 
+.qpyodide-feedback-error-gear {
+  display: block;
+  margin-top: 0.5rem;
+}
+
 /* ---------------------------------------------------------------------- */
-/* Einstellungs-Panel (KI-Feedback einrichten)                            */
+/* Settings panel (set up AI feedback)                                    */
 
 #qpyodide-status-message-area {
   grid-column: 1 / -1;
@@ -243,7 +248,7 @@ fieldset:disabled .qpyodide-button {
   flex: 1;
 }
 
-/* Eingabe + Knopf nebeneinander (z. B. Modell-Feld + „Modelle abrufen") */
+/* Input + button side by side (e.g. model field + "Fetch models") */
 .qpyodide-feedback-inputrow {
   display: flex;
   gap: 0.5rem;
@@ -253,7 +258,7 @@ fieldset:disabled .qpyodide-button {
   flex: 1;
 }
 
-/* Abgerufene Modell-Liste */
+/* Fetched model list */
 .qpyodide-feedback-modellist {
   margin: 0 0 0.5rem 138px;
   font-size: 0.85rem;
@@ -289,76 +294,77 @@ fieldset:disabled .qpyodide-button {
 }
 
 /* ---------------------------------------------------------------------- */
-/* Dark Mode – vollständige explizite Overrides                           */
+/* Dark mode – full explicit overrides                                    */
 /*                                                                         */
-/* === WIE QUARTO CSS LÄDT (theme: {light: X, dark: Y}) ===              */
+/* === HOW QUARTO LOADS CSS (theme: {light: X, dark: Y}) ===             */
 /*                                                                         */
-/* Drei Bootstrap-<link>-Tags im gerenderten HTML:                        */
+/* Three Bootstrap <link> tags in the rendered HTML:                      */
 /*   1. Flatly  – class="quarto-color-scheme"                             */
-/*      → im Dark Mode DEAKTIVIERT (rel=disabled-stylesheet)              */
+/*      → DISABLED in dark mode (rel=disabled-stylesheet)                 */
 /*   2. Darkly  – class="quarto-color-alternate"                          */
-/*      → im Dark Mode AKTIVIERT                                          */
-/*   3. Flatly nochmal – class="quarto-color-scheme-extra"                */
-/*      → von Quarto-JS beim Seitenaufruf IMMER deaktiviert (beide Modi) */
+/*      → ENABLED in dark mode                                            */
+/*   3. Flatly again – class="quarto-color-scheme-extra"                  */
+/*      → ALWAYS disabled by Quarto JS on page load (both modes)          */
 /*                                                                         */
-/* Dark Mode = Flatly (1) weg + Darkly (2) aktiv.                        */
-/* ABER: Quarto-Kommentar in JS: "dark is layered on light, we don't     */
-/* disable primary!" → Flatly (1) BLEIBT im Dark Mode aktiv!             */
-/* → Flatly UND Darkly laufen gleichzeitig.                               */
+/* Dark mode = Flatly (1) gone + Darkly (2) active.                       */
+/* BUT: Quarto's JS comment says "dark is layered on light, we don't      */
+/* disable primary!" → Flatly (1) STAYS active in dark mode!              */
+/* → Flatly AND Darkly run at the same time.                              */
 /*                                                                         */
-/* === WARUM !important NÖTIG IST ===                                     */
+/* === WHY !important IS NECESSARY ===                                    */
 /*                                                                         */
-/* Extension-CSS wird als inline <style> in den <head> geschrieben,       */
-/* VOR den Bootstrap-<link>-Tags. Bei gleicher Spezifität gewinnt die     */
-/* spätere Regel im DOM → Bootstrap überschreibt unsere Regeln.           */
-/* Gegenmaßnahme: !important auf allen kritischen Farb-/Hintergrundwerten.*/
+/* The extension CSS is written as inline <style> into the <head>,        */
+/* BEFORE the Bootstrap <link> tags. With equal specificity, the later    */
+/* rule in the DOM wins → Bootstrap overrides our rules.                  */
+/* Countermeasure: !important on all critical color/background values.    */
 /*                                                                         */
-/* === DAS GRAUE-BALKEN-PROBLEM (Bootstrap code-Direktregeln) ===         */
+/* === THE GRAY-BARS PROBLEM (Bootstrap's direct code rules) ===          */
 /*                                                                         */
-/* Bootstrap (Darkly) setzt:                                              */
-/*   code { background-color: #f8f9fa; color: var(--bs-code-color); }    */
-/* Das ist eine DIREKTREGEL auf jedem <code>-Element.                     */
-/* Inherited color/background vom Elterndiv greift NICHT gegen            */
-/* Direktregeln → selbst body.quarto-dark .qpyodide-terminal { color }   */
-/* beeinflusst nicht die <code>-Kinder, solange Bootstrap direkt          */
-/* auf code{} zeigt.                                                       */
-/* Symptom: graue Balken (jedes <code> hat #f8f9fa Hintergrund) und       */
-/* kaum lesbarer Text.                                                     */
-/* Fix: explizite Regeln auf .qpyodide-output-code-stdout/stderr UND      */
-/* body.quarto-dark .qpyodide-terminal code mit !important.               */
+/* Bootstrap (Darkly) sets:                                               */
+/*   code { background-color: #f8f9fa; color: var(--bs-code-color); }     */
+/* This is a DIRECT rule on every <code> element.                         */
+/* Inherited color/background from the parent div does NOT beat direct    */
+/* rules → even body.quarto-dark .qpyodide-terminal { color } doesn't     */
+/* affect the <code> children as long as Bootstrap targets code{}         */
+/* directly.                                                              */
+/* Symptom: gray bars (every <code> has a #f8f9fa background) and barely  */
+/* readable text.                                                         */
+/* Fix: explicit rules on .qpyodide-output-code-stdout/stderr AND         */
+/* body.quarto-dark .qpyodide-terminal code with !important.              */
 /*                                                                         */
-/* === CSS-VARIABLEN-PROBLEM (gelöst über JS-Sync) ===                    */
+/* === CSS VARIABLE PROBLEM (solved via JS sync) ===                      */
 /*                                                                         */
-/* Bootstrap 5 setzt Dark-Mode-Variablen (--bs-body-color usw.) nur unter */
-/* [data-bs-theme=dark]. Quarto togglet aber nur body.quarto-dark, NICHT  */
-/* das Attribut. qpyodide-cell-classes.js (qpyodideSyncBsTheme) spiegelt  */
-/* body.quarto-dark/-light seit Kurzem live auf body[data-bs-theme], denn */
-/* die Werte hinter diesem Attribut sind bereits theme-korrekt kompiliert */
-/* (z. B. slate → #272b30 statt generisch #212529) – sie lagen nur brach. */
-/* Die Regeln unten nutzen deshalb var(--bs-…, <alter Hex-Wert>): sobald  */
-/* der Sync gelaufen ist, greift die Theme-Farbe; ohne Bootstrap/vor dem  */
-/* Sync bleibt der alte hartkodierte Wert als Fallback erhalten.          */
+/* Bootstrap 5 only sets dark-mode variables (--bs-body-color etc.) under */
+/* [data-bs-theme=dark]. Quarto, however, only toggles body.quarto-dark,  */
+/* NOT the attribute. qpyodide-cell-classes.js (qpyodideSyncBsTheme) has  */
+/* recently started mirroring body.quarto-dark/-light live onto           */
+/* body[data-bs-theme], because the values behind that attribute are      */
+/* already compiled theme-correctly (e.g. slate → #272b30 instead of the  */
+/* generic #212529) – they just sat unused. The rules below therefore     */
+/* use var(--bs-…, <old hex value>): once the sync has run, the theme     */
+/* color takes effect; without Bootstrap/before the sync, the old         */
+/* hardcoded value remains as a fallback.                                 */
 /*                                                                         */
-/* === OUTPUT-HTML-STRUKTUR DIESER EXTENSION ===                          */
+/* === OUTPUT HTML STRUCTURE OF THIS EXTENSION ===                        */
 /*                                                                         */
-/*   Standard-Output (kein input()):                                       */
+/*   Standard output (no input()):                                        */
 /*   <div.qpyodide-output-code-area.has-content>                          */
 /*     <pre>                                                               */
-/*       <code class="qpyodide-output-code-stdout">Zeile</code>           */
-/*       <code class="qpyodide-output-code-stderr">Fehler</code>          */
+/*       <code class="qpyodide-output-code-stdout">line</code>            */
+/*       <code class="qpyodide-output-code-stderr">error</code>           */
 /*     </pre>                                                              */
 /*   </div>                                                                */
 /*                                                                         */
-/*   Terminal-Output (streaming / mit input()):                            */
+/*   Terminal output (streaming / with input()):                          */
 /*   <div.qpyodide-output-code-area.has-content>                          */
 /*     <div.qpyodide-terminal>                                             */
-/*       <code class="qpyodide-output-code-stdout">Zeile</code>           */
-/*       <code class="qpyodide-output-code-stderr">Fehler</code>          */
+/*       <code class="qpyodide-output-code-stdout">line</code>            */
+/*       <code class="qpyodide-output-code-stderr">error</code>           */
 /*     </div>                                                              */
 /*   </div>                                                                */
-/*   (Kein <pre>! Bootstrap's pre-Regeln greifen hier NICHT.)            */
+/*   (No <pre>! Bootstrap's pre rules do NOT apply here.)                 */
 /*                                                                         */
-/* === BOOTSTRAP-5-DARK-REFERENZWERTE ===                                  */
+/* === BOOTSTRAP 5 DARK REFERENCE VALUES ===                              */
 /*   body-bg #212529 · secondary-bg #343a40 · tertiary-bg #2b3035         */
 /*   body-color #dee2e6 · border #495057                                   */
 
@@ -407,19 +413,20 @@ body.quarto-dark .qpyodide-output-code-area.has-content {
   border-color: var(--bs-border-color, #495057);
 }
 
-/* Output-Text: !important nötig, weil die Extension-CSS als <style> im <head> vor den
-   Bootstrap-<link>-Tags steht. Für gleiche Spezifität gewinnt Bootstrap (später im DOM).
-   !important hebt die Quellenreihenfolge auf und garantiert den Override. */
+/* Output text: !important is necessary because the extension CSS sits as
+   <style> in the <head> before the Bootstrap <link> tags. With equal
+   specificity, Bootstrap wins (later in the DOM). !important overrides the
+   source order and guarantees the override. */
 body.quarto-dark .qpyodide-output-code-area pre {
   color: var(--bs-body-color, #dee2e6) !important;
   background-color: transparent !important;
 }
 
 /* Bootstrap: code { background-color: #f8f9fa; color: var(--bs-code-color); }
-   Direktregeln auf <code> schlagen Vererbung vom Container → explizit überschreiben.
-   stdout/stderr brauchen unterschiedliche Farben (wie im Light-Mode-Pendant weiter
-   oben) – vorher standen beide auf body-color, stderr verlor dadurch im Dark Mode
-   seine rote Fehlerfarbe. */
+   Direct rules on <code> beat inheritance from the container → override
+   explicitly. stdout/stderr need different colors (as in the light-mode
+   counterpart above) – previously both were set to body-color, causing
+   stderr to lose its red error color in dark mode. */
 body.quarto-dark .qpyodide-output-code-stdout,
 body.quarto-dark .qpyodide-output-code-stderr {
   background-color: transparent !important;
@@ -434,30 +441,33 @@ body.quarto-dark .qpyodide-output-code-stderr {
   color: var(--bs-danger, #db4133) !important;
 }
 
-/* Terminal-Output (streaming / input()-Modus) */
+/* Terminal output (streaming / input() mode) */
 body.quarto-dark .qpyodide-terminal {
   color: var(--bs-body-color, #dee2e6) !important;
 }
 
-/* Kein pauschales `color` hier: .qpyodide-output-code-stdout/-stderr (immer auf jedem
-   <code> im Terminal vorhanden, siehe qpyodide-cell-classes.js) sind zwar spezifischer,
-   ABER beide Regeln stehen auf !important – bei gleicher Wichtigkeit gewinnt die höhere
-   Selektor-Spezifität von `.qpyodide-terminal code`, nicht die spätere Regel im Stylesheet.
-   Ein `color` hier würde also *immer* body-color erzwingen und stderr seine rote
-   Fehlerfarbe kosten (genau der Bug, den die stdout/stderr-Regeln unten beheben sollen). */
+/* No blanket `color` here: .qpyodide-output-code-stdout/-stderr (always
+   present on every <code> in the terminal, see qpyodide-cell-classes.js)
+   are more specific, BUT both rules use !important – with equal
+   importance, the higher selector specificity of `.qpyodide-terminal
+   code` wins, not the later rule in the stylesheet. A `color` here would
+   therefore *always* force body-color and cost stderr its red error color
+   (exactly the bug the stdout/stderr rules below are meant to fix). */
 body.quarto-dark .qpyodide-terminal code {
   background-color: transparent !important;
 }
 
-/* Direktregel `code{background-color:#f8f9fa}` (siehe GRAUE-BALKEN-Kommentar oben) trifft
-   JEDES <code> auf der Seite, nicht nur unsere eigenen Ausgabe-Elemente – z. B. auch
-   normalen Markdown-Inline-Code in Überschriften/Fließtext (`## Zelle 4 – verändert
-   `zahl`…`) oder den `<code>input()</code>` in .qpyodide-cell-input-hint. Erst seit
-   qpyodideSyncBsTheme() body[data-bs-theme=dark] setzt, kippt --bs-code-color dadurch auf
-   "white" (sonst bliebe es bei "inherit") → weißer Text auf nahezu weißem Grund, unlesbar.
-   Da WIR diesen Sync auslösen, ist der Seiteneffekt auch außerhalb unserer eigenen
-   Elemente unsere Verantwortung. `:not(pre) > code` lässt echte Codeblöcke
-   (<pre><code class="sourceCode">, eigenes Syntax-Highlighting) unangetastet. */
+/* The direct rule `code{background-color:#f8f9fa}` (see the GRAY-BARS
+   comment above) hits EVERY <code> on the page, not just our own output
+   elements – e.g. also normal Markdown inline code in headings/body text
+   (`## Cell 4 – changed `number`…`) or the `<code>input()</code>` in
+   .qpyodide-cell-input-hint. Only since qpyodideSyncBsTheme() sets
+   body[data-bs-theme=dark] does --bs-code-color flip to "white" (it would
+   otherwise stay at "inherit") → white text on an almost-white background,
+   unreadable. Since WE trigger this sync, this side effect outside our
+   own elements is our responsibility too. `:not(pre) > code` leaves real
+   code blocks (<pre><code class="sourceCode">, with their own syntax
+   highlighting) untouched. */
 body.quarto-dark :not(pre) > code {
   color: var(--bs-body-color, #dee2e6) !important;
   background-color: var(--bs-tertiary-bg, #2b3035) !important;
@@ -594,7 +604,7 @@ body.quarto-dark .qpyodide-feedback-help {
   padding: 0;
 }
 
-/* Zeile mit Eingabefeld (Python wartet auf input()) */
+/* Row with an input field (Python is waiting on input()) */
 .qpyodide-input-row {
   display: flex;
   align-items: center;
@@ -621,28 +631,28 @@ body.quarto-dark .qpyodide-feedback-help {
   border-style: solid;
 }
 
-/* Prompt-Text links vom Eingabefeld (kommt aus Python's input("...")) */
+/* Prompt text to the left of the input field (comes from Python's input("...")) */
 .qpyodide-input-prompt {
   white-space: pre;
   flex-shrink: 0;
   color: inherit;
 }
 
-/* Eingegebener Text nach dem Abschicken (Echo im Terminal) */
+/* Entered text after submission (echo in the terminal) */
 .qpyodide-input-echo {
   font-style: italic;
   color: var(--bs-info-text-emphasis, #055160);
 }
 
-/* Aufklappbares Panel unterhalb der Status-Zeile (aktuell nur von
-   qpyodide-feedback.js für das Einstellungs-Panel genutzt) */
+/* Collapsible panel below the status row (currently only used by
+   qpyodide-feedback.js for the settings panel) */
 #qpyodide-status-panels {
   display: flex;
   justify-content: flex-end;
 }
 
-/* Hinweis in einer Zelle, wenn sie input() nutzt, input() aber (noch) nicht
-   verfügbar ist. Der Run-Knopf ist dann ausgegraut (.qpyodide-button:disabled). */
+/* Notice in a cell when it uses input() but input() is (not yet)
+   available. The Run button is grayed out in that case (.qpyodide-button:disabled). */
 .qpyodide-cell-input-hint {
   margin: 0.35rem 0 0.15rem;
   padding: 0.4rem 0.6rem;
@@ -664,6 +674,33 @@ body.quarto-dark .qpyodide-cell-input-hint {
   border-color: color-mix(in srgb, var(--bs-warning, #ffc107) 30%, var(--bs-secondary-bg, #343a40));
 }
 
+/* Nudge shown under a manually-expanded cell, offering to reveal every
+   other still-folded cell in one go (see qpyodide-cell-classes.js). */
+.qpyodide-fold-nudge {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.35rem 0 0.75rem;
+  padding: 0.4rem 0.6rem;
+  font-size: 0.85em;
+  line-height: 1.4;
+  color: var(--bs-body-color, #333);
+  background: var(--bs-info-bg-subtle, #cff4fc);
+  border: 1px solid var(--bs-info-border-subtle, #9eeaf9);
+  border-radius: 4px;
+}
+
+.qpyodide-fold-nudge span {
+  flex: 1 1 auto;
+}
+
+body.quarto-dark .qpyodide-fold-nudge {
+  color: var(--bs-body-color, #e9ecef);
+  background: color-mix(in srgb, var(--bs-info, #0dcaf0) 12%, var(--bs-secondary-bg, #343a40));
+  border-color: color-mix(in srgb, var(--bs-info, #0dcaf0) 30%, var(--bs-secondary-bg, #343a40));
+}
+
 body.quarto-dark .qpyodide-terminal-input {
   border-color: var(--bs-border-color, #495057);
 }
@@ -682,7 +719,24 @@ body.quarto-dark .qpyodide-input-echo {
 }
 
 /* ---------------------------------------------------------------------- */
-/* RevealJS-Präsentationen                                                */
+/* Marker cells inside a Quarto figure float                              */
+
+/* A marker cell (`# pyodide: ...` on a real `{python}` cell) keeps Quarto's
+   own figure float around the interactive editor, so that the caption and
+   the crossref anchor survive. That float brings
+   `.quarto-figure-center>figure>div{text-align:center}` with it, which is
+   right for the static image it normally wraps but wrong for an editor:
+   text-align inherits, so the source lines, the toolbar and the fold
+   summary all end up centered. Realign the cell's own containers - the
+   rules further up that deliberately center plot output and buttons target
+   those elements directly and still win over this. */
+.qpyodide-interactive-area,
+.qpyodide-non-interactive-area {
+  text-align: start;
+}
+
+/* ---------------------------------------------------------------------- */
+/* RevealJS presentations                                                 */
 
 .reveal div.qpyodide-interactive-area {
   display: block;
@@ -715,9 +769,25 @@ body.quarto-dark .qpyodide-input-echo {
   overflow: scroll;
 }
 
-/* Interaktive Plots (Canvas) ------------------------------------------------
-   Der Hinweis steht nur, solange die zweite Pyodide-Instanz laedt bzw. wenn
-   die Umstellung scheitert. Siehe qpyodide-canvas-plots.js. */
+/* Pan and zoom are toggles, but matplotlib renders no pressed state for
+   them: both buttons look identical whether the mode is on or off, so
+   nothing tells the reader whether dragging will move the plot or do
+   nothing at all. qpyodide-canvas-plots.js keeps this class in sync with
+   NavigationToolbar2.mode; colour it so the active tool is obvious.
+   The :hover twin is not redundant - matplotlib's own
+   `button.matplotlib-toolbar-button:hover` rule is injected into
+   <head> at runtime, i.e. after this file, and would otherwise win the
+   tie on equal specificity and hide the active state while hovering. */
+button.matplotlib-toolbar-button.qpyodide-toolbar-button-active,
+button.matplotlib-toolbar-button.qpyodide-toolbar-button-active:hover {
+  color: #fff;
+  background: var(--bs-primary, #2780e3);
+  border-color: var(--bs-primary, #2780e3);
+}
+
+/* Interactive plots (canvas) --------------------------------------------
+   The hint only shows while the second Pyodide instance is loading, or if
+   the switchover fails. See qpyodide-canvas-plots.js. */
 .qpyodide-canvas-hint {
   font-size: 0.8rem;
   opacity: 0.7;
@@ -725,10 +795,10 @@ body.quarto-dark .qpyodide-input-echo {
   margin: 0.25rem 0 0.5rem 0;
 }
 
-/* Plots mittig setzen. Das Canvas-Backend zentriert sich selbst (es setzt
-   margin: 0 auto auf seinen Container); fuer den PNG-Weg und die
-   Rich-HTML-Ausgaben (Animation, Plotly, zeige_svg) gab es bisher gar keine
-   Regel, die lagen deshalb links an. */
+/* Center plots. The canvas backend centers itself (it sets margin: 0 auto
+   on its container); for the PNG path and rich HTML output (animation,
+   Plotly, zeige_svg) there was previously no rule at all, so they were
+   left-aligned. */
 .qpyodide-output-graph-area figure,
 .qpyodide-canvas-figure {
   margin-inline: auto;
@@ -742,8 +812,8 @@ body.quarto-dark .qpyodide-input-echo {
   height: auto;
 }
 
-/* Bloecke mit eigener Breite (Plotly) mittig, Inline-Inhalte (der
-   Animations-Player besteht aus img + Steuerleiste) ueber text-align. */
+/* Blocks with their own width (Plotly) centered, inline content (the
+   animation player consists of img + control bar) via text-align. */
 .qpyodide-html-output {
   text-align: center;
 }
@@ -752,17 +822,17 @@ body.quarto-dark .qpyodide-input-echo {
   margin-inline: auto;
 }
 
-/* Das Canvas NICHT per CSS skalieren: die Mauskoordinaten werden zwar ueber
-   getBoundingClientRect zurueckgerechnet und bleiben damit korrekt, aber ein
-   herunterskaliertes Canvas wird unscharf. Lieber seitlich scrollen. */
+/* Do NOT scale the canvas via CSS: mouse coordinates are recalculated via
+   getBoundingClientRect and stay correct, but a downscaled canvas becomes
+   blurry. Prefer horizontal scrolling instead. */
 .qpyodide-canvas-figure {
   overflow-x: auto;
 }
 
-/* Das Backend legt pro Figur eine "Fenstertitel"-Zeile an ("Figure 1", "Figure 2", ...) -
-   das ist der Fenstertitel der urspruenglichen Desktop-GUI, hier ohne Wert. Sie hat
-   keine eigene CSS-Klasse, nur eine ID, die auf "top" endet (siehe
-   FigureCanvasWasm.show() in matplotlib-pyodide). */
+/* The backend creates a "window title" row per figure ("Figure 1",
+   "Figure 2", ...) - that's the window title of the original desktop GUI,
+   meaningless here. It has no CSS class of its own, only an ID ending in
+   "top" (see FigureCanvasWasm.show() in matplotlib-pyodide). */
 .qpyodide-canvas-figure div[id$="top"] {
   display: none;
 }

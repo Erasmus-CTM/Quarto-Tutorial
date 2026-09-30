@@ -1,15 +1,15 @@
-// qpyodide-locales.js – UI-Texte der Extension je Sprache
+// qpyodide-locales.js – UI text of the extension, per language
 //
-// Die aktive Sprache steht in globalThis.qpyodideLang; sie wird vom Lua-Filter
-// aus `pyodide: lang:` bzw. Quartos `lang:` gesetzt (qpyodide-document-settings.js).
-// Diese Datei wird direkt danach und vor allen textnutzenden Modulen injiziert.
+// The active language is stored in globalThis.qpyodideLang; it's set by the
+// Lua filter from `pyodide: lang:` or Quarto's `lang:` (qpyodide-document-settings.js).
+// This file is injected right after that and before all modules that use text.
 //
-// Neue Sprache ergaenzen:
-//   1. Block nach dem Vorbild von `de` anlegen (alle Schluessel uebernehmen).
-//   2. In qpyodide.lua den Code zu `supportedLangs` hinzufuegen.
+// Adding a new language:
+//   1. Create a block modeled on `de` (copy all keys).
+//   2. Add the code to `supportedLangs` in qpyodide.lua.
 //
-// Werte duerfen HTML enthalten (viele Texte tragen <code>, <strong>, <details>).
-// Funktionen werden fuer Texte mit eingesetzten Werten benutzt.
+// Values may contain HTML (many texts carry <code>, <strong>, <details>).
+// Functions are used for texts with interpolated values.
 
 globalThis.qpyodideLocales = {
 
@@ -17,7 +17,7 @@ globalThis.qpyodideLocales = {
   // English
   // =========================================================================
   en: {
-    // --- Zell-Werkzeugleiste ------------------------------------------------
+    // --- Cell toolbar --------------------------------------------------------
     runTitle:            "Run code (Shift + Enter)",
     runLabel:            '<i class="fa-solid fa-play qpyodide-icon-run-code"></i> <span>Run code</span>',
     runLoading:          "🟡 Python is loading …",
@@ -28,18 +28,21 @@ globalThis.qpyodideLocales = {
     feedbackTitle:       "AI feedback on the current code",
     feedbackLabel:       '<i class="fa-regular fa-comment-dots"></i> Feedback',
     showPythonCode:      "Show Python code",
+    foldNudgeQuestion:   "Show all code cells?",
+    foldNudgeShowAll:    "Show all",
+    foldNudgeDismiss:    "No, thanks",
     addCodeBlockTitle:   "Append an additional code block",
     addCodeBlockLabel:   '<i class="fa-solid fa-plus"></i> Code block',
     runAtStartup:        "Runs at startup …",
 
-    // --- Ausfuehrung / Stopp ------------------------------------------------
+    // --- Execution / stop ----------------------------------------------------
     stopLabel:           '<i class="fa-solid fa-stop"></i> <span>Stop</span>',
     stopTitle:           "Abort execution",
     stopTitleRestart:    "Abort execution (restarts Python, all variables are lost)",
     aborted:             "[Aborted]",
     abortedRestart:      "Aborted – Python was restarted (all variables have been reset).",
 
-    // --- input()-Sperre an der Zelle ---------------------------------------
+    // --- input() lock on the cell -------------------------------------------
     runTitleBlocked:     "Cannot be run – see the note below the toolbar",
     cellInputHintUnavailable:
       "⚠️ This cell uses <code>input()</code> and waits for you to type " +
@@ -54,7 +57,7 @@ globalThis.qpyodideLocales = {
       "page reload to activate. Reload the page (F5) – code you have typed " +
       "is not saved, so copy it first if needed.",
 
-    // --- Ausgabe fuer das Feedback (Code wurde nicht/anders ausgefuehrt) ----
+    // --- Output for feedback (code was not run / run differently) ----------
     outputChanged:
       "(The code has been modified since it was last run. " +
       "Please run it again so the feedback sees the current output.)",
@@ -65,12 +68,12 @@ globalThis.qpyodideLocales = {
       "Please run the code first and provide all inputs.)",
     outputNotRun:        "(Please run the code before requesting feedback.)",
 
-    // --- Dokument-Statuszeile ----------------------------------------------
+    // --- Document status line ------------------------------------------------
     loadingPython:       "🟡 Python (Pyodide) is loading …",
     engineReady:         "🟢 Ready!",
     engineFailed:        function (msg) { return "🔴 Python could not be loaded: " + msg; },
-    // Worker-Meldungen: laufen im Web Worker, werden ueber die init-Config
-    // dorthin uebergeben (der Worker sieht QP_L nicht).
+    // Worker messages: run in the Web Worker, passed there via the init
+    // config (the worker doesn't see QP_L).
     workerLoading:       "Python (Pyodide) is loading in the background …",
     workerInitPackages:  "Python packages are being initialised …",
     workerExtraPackages: "Additional packages are being installed …",
@@ -147,16 +150,16 @@ globalThis.qpyodideLocales = {
         '</div>' +
       '</details>',
 
-    // --- Interaktive Plots (Canvas ueber zweite Pyodide-Instanz) ------------
+    // --- Interactive plots (canvas via second Pyodide instance) -------------
     canvasPreparing:     "Preparing the interactive plot – loading a second Python environment (once per page) …",
     canvasRendering:     "Preparing the interactive plot …",
     canvasEngineFailed:  "The interactive view could not be loaded – showing the image instead.",
     canvasRenderFailed:  "This figure cannot be shown interactively – showing the image instead.",
     canvasBarValueLabel: "Value",
 
-    // --- KI-Prompts ---------------------------------------------------------
-    // Die Laengenvorgabe (~250 Woerter) muss in JEDER Sprache erhalten bleiben,
-    // sonst wird das Feedback wieder mitten im Satz abgeschnitten.
+    // --- AI prompts ------------------------------------------------------------
+    // The length limit (~250 words) must be kept in EVERY language,
+    // otherwise feedback gets cut off mid-sentence again.
     systemPrompt:
       "You are a patient programming tutor for Python beginners. " +
       "You receive the code from an interactive exercise cell together with the output " +
@@ -180,7 +183,7 @@ globalThis.qpyodideLocales = {
     promptOutputIntro: "And here is the output of the Python interpreter (including any error messages):",
     promptNoOutput:    "(no output)",
 
-    // --- Feedback-Ausgabe ---------------------------------------------------
+    // --- Feedback output -------------------------------------------------------
     feedbackHeader:      "AI feedback",
     feedbackHintLevel:   function (level) { return " – hint level " + level; },
     feedbackErrorHeader: "Feedback failed: ",
@@ -191,10 +194,11 @@ globalThis.qpyodideLocales = {
     errNoContent:        "The API response contains no feedback text (field choices[0].message.content is missing).",
     errTokenRejected:    "The API rejected the request repeatedly (token parameter).",
     errConfigMissing:
-      "Please click the ⚙ icon above first and enter a base URL and a model " +
+      "Please set up your AI feedback first – using the button right here, " +
+      "or the ⚙ icon above – and enter a base URL and a model " +
       "(or choose the \"copy prompt\" mode).",
 
-    // --- Einstellungs-Panel -------------------------------------------------
+    // --- Settings panel ---------------------------------------------------------
     gearTitle:           "Set up AI feedback",
     presetPlaceholder:   "– choose a template or fill in yourself –",
     presetCerebras:      "Cerebras (free tier)",
@@ -215,7 +219,7 @@ globalThis.qpyodideLocales = {
     saveDone:            "✓ saved",
     infoBtn:             "ℹ️ How do I get credentials?",
 
-    // --- Modell-Abruf -------------------------------------------------------
+    // --- Model fetch -------------------------------------------------------
     fetchModelsBtn:      '<i class="fa-solid fa-magnifying-glass"></i> Fetch models',
     fetchModelsBusy:     '<i class="fa-solid fa-spinner fa-spin"></i> loading …',
     freeOnlyLabel:       " show free models only",
@@ -250,7 +254,7 @@ globalThis.qpyodideLocales = {
   // Deutsch
   // =========================================================================
   de: {
-    // --- Zell-Werkzeugleiste ------------------------------------------------
+    // --- Cell toolbar --------------------------------------------------------
     runTitle:            "Code ausführen (Shift + Enter)",
     runLabel:            '<i class="fa-solid fa-play qpyodide-icon-run-code"></i> <span>Code ausführen</span>',
     runLoading:          "🟡 Python lädt …",
@@ -261,18 +265,21 @@ globalThis.qpyodideLocales = {
     feedbackTitle:       "KI-Feedback zum aktuellen Code",
     feedbackLabel:       '<i class="fa-regular fa-comment-dots"></i> Feedback',
     showPythonCode:      "Python-Code anzeigen",
+    foldNudgeQuestion:   "Alle Code-Zellen anzeigen?",
+    foldNudgeShowAll:    "Alle anzeigen",
+    foldNudgeDismiss:    "Nein, danke",
     addCodeBlockTitle:   "Zusätzlichen Codeblock anhängen",
     addCodeBlockLabel:   '<i class="fa-solid fa-plus"></i> Codeblock',
     runAtStartup:        "Wird beim Start ausgeführt …",
 
-    // --- Ausfuehrung / Stopp ------------------------------------------------
+    // --- Execution / stop ----------------------------------------------------
     stopLabel:           '<i class="fa-solid fa-stop"></i> <span>Stopp</span>',
     stopTitle:           "Ausführung abbrechen",
     stopTitleRestart:    "Ausführung abbrechen (startet Python neu, Variablen gehen verloren)",
     aborted:             "[Abgebrochen]",
     abortedRestart:      "Abgebrochen – Python wurde neu gestartet (alle Variablen wurden zurückgesetzt).",
 
-    // --- input()-Sperre an der Zelle ---------------------------------------
+    // --- input() lock on the cell -------------------------------------------
     runTitleBlocked:     "Ausführen nicht möglich – siehe Hinweis unter der Leiste",
     cellInputHintUnavailable:
       "⚠️ Diese Zelle nutzt <code>input()</code> und wartet damit auf eine " +
@@ -287,7 +294,7 @@ globalThis.qpyodideLocales = {
       "Seiten-Reload braucht, um aktiviert zu werden. Seite neu laden (F5) – " +
       "getippter Code wird dabei nicht gespeichert, vorher kopieren.",
 
-    // --- Ausgabe fuer das Feedback (Code wurde nicht/anders ausgefuehrt) ----
+    // --- Output for feedback (code was not run / run differently) ----------
     outputChanged:
       "(Der Code wurde seit dem letzten Ausführen verändert. " +
       "Bitte den Code erneut ausführen, damit das Feedback die aktuelle Ausgabe sieht.)",
@@ -298,12 +305,12 @@ globalThis.qpyodideLocales = {
       "zu Ende laufen. Bitte den Code zunächst ausführen und alle Eingaben tätigen.)",
     outputNotRun:        "(Bitte den Code erst ausführen, bevor Feedback angefordert wird.)",
 
-    // --- Dokument-Statuszeile ----------------------------------------------
+    // --- Document status line ------------------------------------------------
     loadingPython:       "🟡 Python (Pyodide) wird geladen …",
     engineReady:         "🟢 Bereit!",
     engineFailed:        function (msg) { return "🔴 Python konnte nicht geladen werden: " + msg; },
-    // Worker-Meldungen: laufen im Web Worker, werden ueber die init-Config
-    // dorthin uebergeben (der Worker sieht QP_L nicht).
+    // Worker messages: run in the Web Worker, passed there via the init
+    // config (the worker doesn't see QP_L).
     workerLoading:       "Python (Pyodide) wird im Hintergrund geladen …",
     workerInitPackages:  "Python-Pakete werden initialisiert …",
     workerExtraPackages: "Zusatzpakete werden installiert …",
@@ -381,16 +388,16 @@ globalThis.qpyodideLocales = {
         '</div>' +
       '</details>',
 
-    // --- Interaktive Plots (Canvas ueber zweite Pyodide-Instanz) ------------
+    // --- Interactive plots (canvas via second Pyodide instance) -------------
     canvasPreparing:     "Interaktiver Plot wird vorbereitet – dafür wird einmalig pro Seite eine zweite Python-Umgebung geladen …",
     canvasRendering:     "Interaktiver Plot wird vorbereitet …",
     canvasEngineFailed:  "Die interaktive Ansicht konnte nicht geladen werden – es bleibt beim Bild.",
     canvasRenderFailed:  "Diese Figur lässt sich nicht interaktiv anzeigen – es bleibt beim Bild.",
     canvasBarValueLabel: "Wert",
 
-    // --- KI-Prompts ---------------------------------------------------------
-    // Die Laengenvorgabe (~250 Woerter) muss in JEDER Sprache erhalten bleiben,
-    // sonst wird das Feedback wieder mitten im Satz abgeschnitten.
+    // --- AI prompts ------------------------------------------------------------
+    // The length limit (~250 words) must be kept in EVERY language,
+    // otherwise feedback gets cut off mid-sentence again.
     systemPrompt:
       "Du bist ein geduldiger Programmier-Tutor für Python-Anfänger. " +
       "Du bekommst den Code aus einer interaktiven Übungszelle sowie die Ausgabe " +
@@ -414,7 +421,7 @@ globalThis.qpyodideLocales = {
     promptOutputIntro: "Und hier die Ausgabe des Python-Interpreters (inkl. eventueller Fehlermeldungen):",
     promptNoOutput:    "(keine Ausgabe)",
 
-    // --- Feedback-Ausgabe ---------------------------------------------------
+    // --- Feedback output -------------------------------------------------------
     feedbackHeader:      "KI-Feedback",
     feedbackHintLevel:   function (level) { return " – Hinweis-Stufe " + level; },
     feedbackErrorHeader: "Feedback fehlgeschlagen: ",
@@ -425,10 +432,11 @@ globalThis.qpyodideLocales = {
     errNoContent:        "Die API-Antwort enthält keinen Feedback-Text (Feld choices[0].message.content fehlt).",
     errTokenRejected:    "Die API hat die Anfrage wiederholt abgelehnt (Token-Parameter).",
     errConfigMissing:
-      "Bitte zuerst das ⚙-Symbol oben anklicken und Base URL sowie Modell angeben " +
-      "(oder den Modus „Prompt kopieren“ wählen).",
+      "Bitte richte zuerst dein KI-Feedback ein – über den Button hier oder " +
+      "das ⚙-Symbol oben – und gib Base URL sowie Modell an " +
+      "(oder wähle den Modus „Prompt kopieren“).",
 
-    // --- Einstellungs-Panel -------------------------------------------------
+    // --- Settings panel ---------------------------------------------------------
     gearTitle:           "KI-Feedback einrichten",
     presetPlaceholder:   "– Vorlage wählen oder selbst eintragen –",
     presetCerebras:      "Cerebras (Gratis-Tier)",
@@ -449,7 +457,7 @@ globalThis.qpyodideLocales = {
     saveDone:            "✓ gespeichert",
     infoBtn:             "ℹ️ Wie komme ich an Zugangsdaten?",
 
-    // --- Modell-Abruf -------------------------------------------------------
+    // --- Model fetch -------------------------------------------------------
     fetchModelsBtn:      '<i class="fa-solid fa-magnifying-glass"></i> Modelle abrufen',
     fetchModelsBusy:     '<i class="fa-solid fa-spinner fa-spin"></i> lädt …',
     freeOnlyLabel:       " nur kostenlose Modelle anzeigen",
@@ -484,7 +492,7 @@ globalThis.qpyodideLocales = {
   // Svenska
   // =========================================================================
   sv: {
-    // --- Zell-Werkzeugleiste ------------------------------------------------
+    // --- Cell toolbar --------------------------------------------------------
     runTitle:            "Kör koden (Shift + Enter)",
     runLabel:            '<i class="fa-solid fa-play qpyodide-icon-run-code"></i> <span>Kör koden</span>',
     runLoading:          "🟡 Python laddas …",
@@ -495,18 +503,21 @@ globalThis.qpyodideLocales = {
     feedbackTitle:       "AI-feedback på den aktuella koden",
     feedbackLabel:       '<i class="fa-regular fa-comment-dots"></i> Feedback',
     showPythonCode:      "Visa Python-koden",
+    foldNudgeQuestion:   "Visa alla kodceller?",
+    foldNudgeShowAll:    "Visa alla",
+    foldNudgeDismiss:    "Nej tack",
     addCodeBlockTitle:   "Lägg till ytterligare ett kodblock",
     addCodeBlockLabel:   '<i class="fa-solid fa-plus"></i> Kodblock',
     runAtStartup:        "Körs vid start …",
 
-    // --- Ausfuehrung / Stopp ------------------------------------------------
+    // --- Execution / stop ----------------------------------------------------
     stopLabel:           '<i class="fa-solid fa-stop"></i> <span>Stoppa</span>',
     stopTitle:           "Avbryt körningen",
     stopTitleRestart:    "Avbryt körningen (startar om Python, alla variabler går förlorade)",
     aborted:             "[Avbruten]",
     abortedRestart:      "Avbruten – Python startades om (alla variabler har återställts).",
 
-    // --- input()-Sperre an der Zelle ---------------------------------------
+    // --- input() lock on the cell -------------------------------------------
     runTitleBlocked:     "Går inte att köra – se anmärkningen under verktygsraden",
     cellInputHintUnavailable:
       "⚠️ Den här cellen använder <code>input()</code> och väntar på att du " +
@@ -521,7 +532,7 @@ globalThis.qpyodideLocales = {
       "laddas om en gång för att aktiveras. Ladda om sidan (F5) – kod som du " +
       "har skrivit sparas inte, kopiera den först om det behövs.",
 
-    // --- Ausgabe fuer das Feedback (Code wurde nicht/anders ausgefuehrt) ----
+    // --- Output for feedback (code was not run / run differently) ----------
     outputChanged:
       "(Koden har ändrats sedan den kördes senast. " +
       "Kör koden igen så att feedbacken ser den aktuella utskriften.)",
@@ -532,12 +543,12 @@ globalThis.qpyodideLocales = {
       "Kör koden först och gör alla inmatningar.)",
     outputNotRun:        "(Kör koden innan du begär feedback.)",
 
-    // --- Dokument-Statuszeile ----------------------------------------------
+    // --- Document status line ------------------------------------------------
     loadingPython:       "🟡 Python (Pyodide) laddas …",
     engineReady:         "🟢 Klart!",
     engineFailed:        function (msg) { return "🔴 Python kunde inte laddas: " + msg; },
-    // Worker-Meldungen: laufen im Web Worker, werden ueber die init-Config
-    // dorthin uebergeben (der Worker sieht QP_L nicht).
+    // Worker messages: run in the Web Worker, passed there via the init
+    // config (the worker doesn't see QP_L).
     workerLoading:       "Python (Pyodide) laddas i bakgrunden …",
     workerInitPackages:  "Python-paket initieras …",
     workerExtraPackages: "Extrapaket installeras …",
@@ -615,16 +626,16 @@ globalThis.qpyodideLocales = {
         '</div>' +
       '</details>',
 
-    // --- Interaktive Plots (Canvas ueber zweite Pyodide-Instanz) ------------
+    // --- Interactive plots (canvas via second Pyodide instance) -------------
     canvasPreparing:     "Den interaktiva grafen förbereds – en andra Python-miljö laddas en gång per sida …",
     canvasRendering:     "Den interaktiva grafen förbereds …",
     canvasEngineFailed:  "Den interaktiva vyn kunde inte laddas – bilden visas i stället.",
     canvasRenderFailed:  "Den här figuren kan inte visas interaktivt – bilden visas i stället.",
     canvasBarValueLabel: "Värde",
 
-    // --- KI-Prompts ---------------------------------------------------------
-    // Die Laengenvorgabe (~250 Woerter) muss in JEDER Sprache erhalten bleiben,
-    // sonst wird das Feedback wieder mitten im Satz abgeschnitten.
+    // --- AI prompts ------------------------------------------------------------
+    // The length limit (~250 words) must be kept in EVERY language,
+    // otherwise feedback gets cut off mid-sentence again.
     systemPrompt:
       "Du är en tålmodig programmeringshandledare för nybörjare i Python. " +
       "Du får koden från en interaktiv övningscell samt utskriften från " +
@@ -648,7 +659,7 @@ globalThis.qpyodideLocales = {
     promptOutputIntro: "Och här är utskriften från Python-tolken (inklusive eventuella felmeddelanden):",
     promptNoOutput:    "(ingen utskrift)",
 
-    // --- Feedback-Ausgabe ---------------------------------------------------
+    // --- Feedback output -------------------------------------------------------
     feedbackHeader:      "AI-feedback",
     feedbackHintLevel:   function (level) { return " – ledtrådsnivå " + level; },
     feedbackErrorHeader: "Feedbacken misslyckades: ",
@@ -659,10 +670,11 @@ globalThis.qpyodideLocales = {
     errNoContent:        "API-svaret innehåller ingen feedbacktext (fältet choices[0].message.content saknas).",
     errTokenRejected:    "API:et avvisade förfrågan upprepade gånger (token-parameter).",
     errConfigMissing:
-      "Klicka först på ⚙-symbolen ovan och ange Base URL samt modell " +
+      "Ställ först in din AI-feedback – med knappen här eller ⚙-symbolen " +
+      "ovan – och ange Base URL samt modell " +
       "(eller välj läget ”Kopiera prompten”).",
 
-    // --- Einstellungs-Panel -------------------------------------------------
+    // --- Settings panel ---------------------------------------------------------
     gearTitle:           "Ställ in AI-feedback",
     presetPlaceholder:   "– välj en mall eller fyll i själv –",
     presetCerebras:      "Cerebras (gratisnivå)",
@@ -683,7 +695,7 @@ globalThis.qpyodideLocales = {
     saveDone:            "✓ sparat",
     infoBtn:             "ℹ️ Hur får jag åtkomstuppgifter?",
 
-    // --- Modell-Abruf -------------------------------------------------------
+    // --- Model fetch -------------------------------------------------------
     fetchModelsBtn:      '<i class="fa-solid fa-magnifying-glass"></i> Hämta modeller',
     fetchModelsBusy:     '<i class="fa-solid fa-spinner fa-spin"></i> laddar …',
     freeOnlyLabel:       " visa bara kostnadsfria modeller",
@@ -715,10 +727,10 @@ globalThis.qpyodideLocales = {
   },
 
   // =========================================================================
-  // Norsk (bokmål) – ueber den Alias unten auch als "nb" erreichbar
+  // Norsk (bokmål) – also reachable as "nb" via the alias below
   // =========================================================================
   no: {
-    // --- Zell-Werkzeugleiste ------------------------------------------------
+    // --- Cell toolbar --------------------------------------------------------
     runTitle:            "Kjør koden (Shift + Enter)",
     runLabel:            '<i class="fa-solid fa-play qpyodide-icon-run-code"></i> <span>Kjør koden</span>',
     runLoading:          "🟡 Python lastes …",
@@ -729,18 +741,21 @@ globalThis.qpyodideLocales = {
     feedbackTitle:       "KI-tilbakemelding på den gjeldende koden",
     feedbackLabel:       '<i class="fa-regular fa-comment-dots"></i> Tilbakemelding',
     showPythonCode:      "Vis Python-koden",
+    foldNudgeQuestion:   "Vis alle kodeceller?",
+    foldNudgeShowAll:    "Vis alle",
+    foldNudgeDismiss:    "Nei takk",
     addCodeBlockTitle:   "Legg til enda en kodeblokk",
     addCodeBlockLabel:   '<i class="fa-solid fa-plus"></i> Kodeblokk',
     runAtStartup:        "Kjøres ved oppstart …",
 
-    // --- Ausfuehrung / Stopp ------------------------------------------------
+    // --- Execution / stop ----------------------------------------------------
     stopLabel:           '<i class="fa-solid fa-stop"></i> <span>Stopp</span>',
     stopTitle:           "Avbryt kjøringen",
     stopTitleRestart:    "Avbryt kjøringen (starter Python på nytt, alle variabler går tapt)",
     aborted:             "[Avbrutt]",
     abortedRestart:      "Avbrutt – Python ble startet på nytt (alle variabler er tilbakestilt).",
 
-    // --- input()-Sperre an der Zelle ---------------------------------------
+    // --- input() lock on the cell -------------------------------------------
     runTitleBlocked:     "Kan ikke kjøres – se merknaden under verktøylinjen",
     cellInputHintUnavailable:
       "⚠️ Denne cellen bruker <code>input()</code> og venter på at du skriver " +
@@ -755,7 +770,7 @@ globalThis.qpyodideLocales = {
       "inn på nytt én gang for å bli aktivert. Last inn siden på nytt (F5) – " +
       "kode du har skrevet, blir ikke lagret, så kopier den først ved behov.",
 
-    // --- Ausgabe fuer das Feedback (Code wurde nicht/anders ausgefuehrt) ----
+    // --- Output for feedback (code was not run / run differently) ----------
     outputChanged:
       "(Koden er endret siden den sist ble kjørt. " +
       "Kjør koden på nytt slik at tilbakemeldingen ser den gjeldende utskriften.)",
@@ -766,12 +781,12 @@ globalThis.qpyodideLocales = {
       "Kjør koden først og gjør alle inntastingene.)",
     outputNotRun:        "(Kjør koden før du ber om tilbakemelding.)",
 
-    // --- Dokument-Statuszeile ----------------------------------------------
+    // --- Document status line ------------------------------------------------
     loadingPython:       "🟡 Python (Pyodide) lastes …",
     engineReady:         "🟢 Klar!",
     engineFailed:        function (msg) { return "🔴 Python kunne ikke lastes: " + msg; },
-    // Worker-Meldungen: laufen im Web Worker, werden ueber die init-Config
-    // dorthin uebergeben (der Worker sieht QP_L nicht).
+    // Worker messages: run in the Web Worker, passed there via the init
+    // config (the worker doesn't see QP_L).
     workerLoading:       "Python (Pyodide) lastes i bakgrunnen …",
     workerInitPackages:  "Python-pakker initialiseres …",
     workerExtraPackages: "Tilleggspakker installeres …",
@@ -849,16 +864,16 @@ globalThis.qpyodideLocales = {
         '</div>' +
       '</details>',
 
-    // --- Interaktive Plots (Canvas ueber zweite Pyodide-Instanz) ------------
+    // --- Interactive plots (canvas via second Pyodide instance) -------------
     canvasPreparing:     "Den interaktive grafen forberedes – et andre Python-miljø lastes én gang per side …",
     canvasRendering:     "Den interaktive grafen forberedes …",
     canvasEngineFailed:  "Den interaktive visningen kunne ikke lastes – bildet vises i stedet.",
     canvasRenderFailed:  "Denne figuren kan ikke vises interaktivt – bildet vises i stedet.",
     canvasBarValueLabel: "Verdi",
 
-    // --- KI-Prompts ---------------------------------------------------------
-    // Die Laengenvorgabe (~250 Woerter) muss in JEDER Sprache erhalten bleiben,
-    // sonst wird das Feedback wieder mitten im Satz abgeschnitten.
+    // --- AI prompts ------------------------------------------------------------
+    // The length limit (~250 words) must be kept in EVERY language,
+    // otherwise feedback gets cut off mid-sentence again.
     systemPrompt:
       "Du er en tålmodig programmeringsveileder for nybegynnere i Python. " +
       "Du får koden fra en interaktiv øvingscelle samt utskriften fra " +
@@ -882,7 +897,7 @@ globalThis.qpyodideLocales = {
     promptOutputIntro: "Og her er utskriften fra Python-tolkeren (inkludert eventuelle feilmeldinger):",
     promptNoOutput:    "(ingen utskrift)",
 
-    // --- Feedback-Ausgabe ---------------------------------------------------
+    // --- Feedback output -------------------------------------------------------
     feedbackHeader:      "KI-tilbakemelding",
     feedbackHintLevel:   function (level) { return " – hintnivå " + level; },
     feedbackErrorHeader: "Tilbakemeldingen mislyktes: ",
@@ -893,10 +908,11 @@ globalThis.qpyodideLocales = {
     errNoContent:        "API-svaret inneholder ingen tilbakemeldingstekst (feltet choices[0].message.content mangler).",
     errTokenRejected:    "API-et avviste forespørselen gjentatte ganger (token-parameter).",
     errConfigMissing:
-      "Klikk først på ⚙-symbolet ovenfor og oppgi Base URL og modell " +
+      "Sett først opp AI-tilbakemeldingen din – med knappen her eller " +
+      "⚙-symbolet ovenfor – og oppgi Base URL og modell " +
       "(eller velg modusen «Kopier prompten»).",
 
-    // --- Einstellungs-Panel -------------------------------------------------
+    // --- Settings panel ---------------------------------------------------------
     gearTitle:           "Sett opp KI-tilbakemelding",
     presetPlaceholder:   "– velg en mal eller fyll inn selv –",
     presetCerebras:      "Cerebras (gratisnivå)",
@@ -917,7 +933,7 @@ globalThis.qpyodideLocales = {
     saveDone:            "✓ lagret",
     infoBtn:             "ℹ️ Hvordan får jeg tilgangsdata?",
 
-    // --- Modell-Abruf -------------------------------------------------------
+    // --- Model fetch -------------------------------------------------------
     fetchModelsBtn:      '<i class="fa-solid fa-magnifying-glass"></i> Hent modeller',
     fetchModelsBusy:     '<i class="fa-solid fa-spinner fa-spin"></i> laster …',
     freeOnlyLabel:       " vis bare gratis modeller",
@@ -952,7 +968,7 @@ globalThis.qpyodideLocales = {
   // Dansk
   // =========================================================================
   da: {
-    // --- Zell-Werkzeugleiste ------------------------------------------------
+    // --- Cell toolbar --------------------------------------------------------
     runTitle:            "Kør koden (Shift + Enter)",
     runLabel:            '<i class="fa-solid fa-play qpyodide-icon-run-code"></i> <span>Kør koden</span>',
     runLoading:          "🟡 Python indlæses …",
@@ -963,18 +979,21 @@ globalThis.qpyodideLocales = {
     feedbackTitle:       "AI-feedback på den aktuelle kode",
     feedbackLabel:       '<i class="fa-regular fa-comment-dots"></i> Feedback',
     showPythonCode:      "Vis Python-koden",
+    foldNudgeQuestion:   "Vis alle kodeceller?",
+    foldNudgeShowAll:    "Vis alle",
+    foldNudgeDismiss:    "Nej tak",
     addCodeBlockTitle:   "Tilføj endnu en kodeblok",
     addCodeBlockLabel:   '<i class="fa-solid fa-plus"></i> Kodeblok',
     runAtStartup:        "Køres ved opstart …",
 
-    // --- Ausfuehrung / Stopp ------------------------------------------------
+    // --- Execution / stop ----------------------------------------------------
     stopLabel:           '<i class="fa-solid fa-stop"></i> <span>Stop</span>',
     stopTitle:           "Afbryd kørslen",
     stopTitleRestart:    "Afbryd kørslen (genstarter Python, alle variabler går tabt)",
     aborted:             "[Afbrudt]",
     abortedRestart:      "Afbrudt – Python blev genstartet (alle variabler er nulstillet).",
 
-    // --- input()-Sperre an der Zelle ---------------------------------------
+    // --- input() lock on the cell -------------------------------------------
     runTitleBlocked:     "Kan ikke køres – se bemærkningen under værktøjslinjen",
     cellInputHintUnavailable:
       "⚠️ Denne celle bruger <code>input()</code> og venter på, at du skriver " +
@@ -989,7 +1008,7 @@ globalThis.qpyodideLocales = {
       "genindlæses én gang for at blive aktiveret. Genindlæs siden (F5) – " +
       "kode, du har skrevet, gemmes ikke, så kopiér den først efter behov.",
 
-    // --- Ausgabe fuer das Feedback (Code wurde nicht/anders ausgefuehrt) ----
+    // --- Output for feedback (code was not run / run differently) ----------
     outputChanged:
       "(Koden er ændret, siden den sidst blev kørt. " +
       "Kør koden igen, så feedbacken ser den aktuelle udskrift.)",
@@ -1000,12 +1019,12 @@ globalThis.qpyodideLocales = {
       "Kør koden først, og foretag alle input.)",
     outputNotRun:        "(Kør koden, før du beder om feedback.)",
 
-    // --- Dokument-Statuszeile ----------------------------------------------
+    // --- Document status line ------------------------------------------------
     loadingPython:       "🟡 Python (Pyodide) indlæses …",
     engineReady:         "🟢 Klar!",
     engineFailed:        function (msg) { return "🔴 Python kunne ikke indlæses: " + msg; },
-    // Worker-Meldungen: laufen im Web Worker, werden ueber die init-Config
-    // dorthin uebergeben (der Worker sieht QP_L nicht).
+    // Worker messages: run in the Web Worker, passed there via the init
+    // config (the worker doesn't see QP_L).
     workerLoading:       "Python (Pyodide) indlæses i baggrunden …",
     workerInitPackages:  "Python-pakker initialiseres …",
     workerExtraPackages: "Ekstra pakker installeres …",
@@ -1083,16 +1102,16 @@ globalThis.qpyodideLocales = {
         '</div>' +
       '</details>',
 
-    // --- Interaktive Plots (Canvas ueber zweite Pyodide-Instanz) ------------
+    // --- Interactive plots (canvas via second Pyodide instance) -------------
     canvasPreparing:     "Det interaktive plot forberedes – der indlæses et andet Python-miljø én gang pr. side …",
     canvasRendering:     "Det interaktive plot forberedes …",
     canvasEngineFailed:  "Den interaktive visning kunne ikke indlæses – billedet vises i stedet.",
     canvasRenderFailed:  "Denne figur kan ikke vises interaktivt – billedet vises i stedet.",
     canvasBarValueLabel: "Værdi",
 
-    // --- KI-Prompts ---------------------------------------------------------
-    // Die Laengenvorgabe (~250 Woerter) muss in JEDER Sprache erhalten bleiben,
-    // sonst wird das Feedback wieder mitten im Satz abgeschnitten.
+    // --- AI prompts ------------------------------------------------------------
+    // The length limit (~250 words) must be kept in EVERY language,
+    // otherwise feedback gets cut off mid-sentence again.
     systemPrompt:
       "Du er en tålmodig programmeringsvejleder for begyndere i Python. " +
       "Du får koden fra en interaktiv øvelsescelle samt udskriften fra " +
@@ -1116,7 +1135,7 @@ globalThis.qpyodideLocales = {
     promptOutputIntro: "Og her er udskriften fra Python-fortolkeren (inklusive eventuelle fejlmeddelelser):",
     promptNoOutput:    "(ingen udskrift)",
 
-    // --- Feedback-Ausgabe ---------------------------------------------------
+    // --- Feedback output -------------------------------------------------------
     feedbackHeader:      "AI-feedback",
     feedbackHintLevel:   function (level) { return " – hintniveau " + level; },
     feedbackErrorHeader: "Feedbacken mislykkedes: ",
@@ -1127,10 +1146,11 @@ globalThis.qpyodideLocales = {
     errNoContent:        "API-svaret indeholder ingen feedbacktekst (feltet choices[0].message.content mangler).",
     errTokenRejected:    "API-et afviste anmodningen gentagne gange (token-parameter).",
     errConfigMissing:
-      "Klik først på ⚙-symbolet ovenfor, og angiv Base URL samt model " +
+      "Opsæt først din AI-feedback – med knappen her eller ⚙-symbolet " +
+      "ovenfor – og angiv Base URL samt model " +
       "(eller vælg tilstanden »Kopiér prompten«).",
 
-    // --- Einstellungs-Panel -------------------------------------------------
+    // --- Settings panel ---------------------------------------------------------
     gearTitle:           "Opsæt AI-feedback",
     presetPlaceholder:   "– vælg en skabelon, eller udfyld selv –",
     presetCerebras:      "Cerebras (gratis niveau)",
@@ -1151,7 +1171,7 @@ globalThis.qpyodideLocales = {
     saveDone:            "✓ gemt",
     infoBtn:             "ℹ️ Hvordan får jeg adgangsoplysninger?",
 
-    // --- Modell-Abruf -------------------------------------------------------
+    // --- Model fetch -------------------------------------------------------
     fetchModelsBtn:      '<i class="fa-solid fa-magnifying-glass"></i> Hent modeller',
     fetchModelsBusy:     '<i class="fa-solid fa-spinner fa-spin"></i> indlæser …',
     freeOnlyLabel:       " vis kun gratis modeller",
@@ -1183,9 +1203,9 @@ globalThis.qpyodideLocales = {
   }
 };
 
-// Norwegisch: Bokmaal ist unter beiden gebraeuchlichen Codes erreichbar.
+// Norwegian: Bokmål is reachable under both common codes.
 globalThis.qpyodideLocales.nb = globalThis.qpyodideLocales.no;
 
-// Aktive Sprache aufloesen. Unbekannte Sprache -> Englisch (nie undefined).
+// Resolve the active language. Unknown language -> English (never undefined).
 globalThis.QP_L = globalThis.qpyodideLocales[globalThis.qpyodideLang] ||
                   globalThis.qpyodideLocales.en;
