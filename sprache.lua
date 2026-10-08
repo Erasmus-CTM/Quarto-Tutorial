@@ -1,8 +1,8 @@
--- Seitentitel je Sprache.
--- Der deutsche Wert steht in `title:` (und `subtitle:`, `description:`). Für die anderen
--- Sprachen gibt es `title-en:`, `title-sv:`, `title-no:`, `title-da:` usw. Im Lauf einer
--- Sprache ersetzt das passende Feld den deutschen Wert; alle -xx-Felder werden danach
--- entfernt. So bleibt pro Seite eine einzige .qmd-Datei für alle Sprachen.
+-- Page title per language.
+-- The German value is in `title:` (and `subtitle:`, `description:`). For the other
+-- languages there are `title-en:`, `title-sv:`, `title-no:`, `title-da:` etc. In the run
+-- of a language the matching field replaces the German value; all -xx fields are removed
+-- afterwards. This keeps a single .qmd file per page for all languages.
 local KUERZEL = { english = "en", svenska = "sv", norsk = "no", dansk = "da" }
 
 local function sprache()

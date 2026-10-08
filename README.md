@@ -58,8 +58,8 @@ The details are explained on the tutorial page *Multilanguage Projects*.
 ├── _quarto-norsk.yml
 ├── _quarto-dansk.yml
 ├── sprache.lua              ← Turns title-en/-sv/-no/-da into the title in that language's build
-├── navigation.html          ← Language and level switch in the navbar
-└── build.py                 ← Renders all combinations and serves them locally
+└── build.py                 ← Renders all combinations, sets the language/level links and the
+                                "Expand all" button (no JavaScript), serves them locally
 ```
 
 ---

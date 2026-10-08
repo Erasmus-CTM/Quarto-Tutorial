@@ -28,7 +28,7 @@ dansk     docs/da/beg/...    docs/da/int/...    docs/da/exp/...     + docs/da/in
 - **Eine `.qmd` je Seite**, alle Sprachen darin (siehe unten).
 - **Niveau-Profil** (`_quarto-beg.yml` …) legt fest, *welche Seiten* gebaut werden.
 - **Sprach-Profil** (`_quarto-deutsch.yml` …) legt fest, *wie alles heißt*: Navbar, Seitenleisten, `lang`.
-- Ein kleines Skript in der Seite verbindet alles: Sprachwechsel auf **dieselbe Seite**, Niveauwechsel auf
+- `build.py` verbindet nach dem Bauen alles: Sprachwechsel auf **dieselbe Seite**, Niveauwechsel auf
   die Startseite des Niveaus.
 
 ## Schritt 1 – Zwei Profilgruppen
@@ -108,13 +108,13 @@ Welcome! ...
 - Code-Zellen in **allen** Blöcken laufen in jedem Lauf. Wer rechnet, schreibt den Code am besten nur einmal
   außerhalb der Blöcke und übersetzt nur den Text drumherum.
 
-## Schritt 4 – Navigation ohne Nachbearbeiten
+## Schritt 4 – Navigation per Nachbearbeiten
 
 Quarto kann nicht über Profilgrenzen hinweg verlinken: Aus Sicht des Laufs `int,deutsch` gibt es `docs/en/`
-oder `docs/de/beg/` gar nicht. Früher hat `preview.py` deshalb nach dem Bauen alle HTML-Dateien umgeschrieben.
+oder `docs/de/beg/` gar nicht. Deshalb stehen in der Navbar nur Platzhalter (`#sprache-en`, `#niveau-beg`).
 
-Jetzt stehen in der Navbar nur Platzhalter (`#sprache-en`, `#niveau-beg`). Das Skript `navigation.html`
-(über `include-after-body` in jeder Seite) liest den eigenen Pfad, z. B. `/de/int/Qmd Files/…`, und setzt ein:
+Wenn alle Läufe fertig sind, geht `build.py` durch die gebauten HTML-Dateien. Am Pfad jeder Seite,
+z. B. `de/int/Qmd Files/…`, erkennt es Sprache und Niveau und setzt feste relative Links ein:
 
 | Platzhalter | Ziel |
 |---|---|
@@ -122,7 +122,10 @@ Jetzt stehen in der Navbar nur Platzhalter (`#sprache-en`, `#niveau-beg`). Das S
 | `#niveau-beg` | Startseite von Beginner in der aktuellen Sprache |
 | Titel links oben | Startseite der aktuellen Sprache |
 
-Links **im Text** zu einer bestimmten Seite eines anderen Niveaus gehen auch ohne Skript, als relativer Pfad
+Weil die Links fest im HTML stehen, braucht die Seite dafür kein JavaScript. Derselbe Schritt setzt auch
+den Knopf „Alle ausklappen“ unten in die Seitenleiste.
+
+Links **im Text** zu einer bestimmten Seite eines anderen Niveaus gehen auch ohne Nachbearbeiten, als relativer Pfad
 zur fertigen Ordnerstruktur, z. B. `../../../int/Qmd Files/Getting Started/getting_started.html`.
 
 ## Schritt 5 – Alles bauen
@@ -132,13 +135,13 @@ python build.py            # 5 Sprachen × (Startseite + 3 Niveaus) = 20 Läufe,
 python build.py --no-serve # nur bauen
 ```
 
-Das Skript rendert je Sprache zuerst die Startseite (`root`), dann die drei Niveaus in Unterordner, und
-schreibt `docs/index.html`, das in den Ordner der Browsersprache weiterleitet (Englisch, wenn es die Sprache nicht gibt).
+Das Skript rendert je Sprache zuerst die Startseite (`root`), dann die drei Niveaus in Unterordner, setzt die Navigation
+aus Schritt 4 ein und schreibt `docs/index.html`, das in den Ordner der Browsersprache weiterleitet (Englisch, wenn es die Sprache nicht gibt).
 
 ::: {.callout-warning}
 ## Grenzen
 - **Suche:** Jeder Lauf hat seinen eigenen Suchindex. Die Suche findet nur Seiten des aktuellen Niveaus in der aktuellen Sprache.
-- **`quarto preview`** zeigt nur eine Kombination; die Platzhalter-Links wirken dort nicht.
+- **`quarto preview`** zeigt nur eine Kombination; die Platzhalter-Links wirken dort nicht, und der Knopf „Alle ausklappen“ fehlt (beides setzt erst `build.py` ein).
 - **Umfang:** Jede Seite steht einmal je Sprache in derselben Datei. Bei sehr großen Projekten sind getrennte Ordner je Sprache übersichtlicher; die Navigation aus Schritt 4 funktioniert dann genauso, solange die Dateinamen gleich sind.
 :::
 ::::
@@ -162,7 +165,7 @@ dansk     docs/da/beg/...    docs/da/int/...    docs/da/exp/...     + docs/da/in
 - **One `.qmd` per page**, all languages inside (see below).
 - The **level profile** (`_quarto-beg.yml` …) decides *which pages* are rendered.
 - The **language profile** (`_quarto-english.yml` …) decides *what things are called*: navbar, sidebars, `lang`.
-- A small script in the page ties it together: switching the language keeps **the same page**, switching the
+- `build.py` ties it together after rendering: switching the language keeps **the same page**, switching the
   level goes to that level's start page.
 
 ## Step 1 — Two profile groups
@@ -242,13 +245,13 @@ Welcome! ...
 - Code cells in **all** blocks run in every run. If you compute something, write the code once outside the
   blocks and only translate the text around it.
 
-## Step 4 — Navigation without post-processing
+## Step 4 — Navigation by post-processing
 
 Quarto cannot link across profiles: from the point of view of the run `int,english`, `docs/de/` or
-`docs/en/beg/` do not exist. That is why `preview.py` used to rewrite every HTML file after rendering.
+`docs/en/beg/` do not exist. That is why the navbar only contains placeholders (`#sprache-de`, `#niveau-beg`).
 
-Now the navbar only contains placeholders (`#sprache-de`, `#niveau-beg`). The script `navigation.html`
-(added to every page via `include-after-body`) reads its own path, e.g. `/en/int/Qmd Files/…`, and fills in:
+Once all runs are done, `build.py` goes through the rendered HTML files. From the path of each page,
+e.g. `en/int/Qmd Files/…`, it knows the language and level and fills in fixed relative links:
 
 | Placeholder | Target |
 |---|---|
@@ -256,7 +259,10 @@ Now the navbar only contains placeholders (`#sprache-de`, `#niveau-beg`). The sc
 | `#niveau-beg` | Beginner start page in the current language |
 | title top left | start page of the current language |
 
-Links **in the text** to a specific page of another level work without the script, as a relative path into
+Because the links are written into the HTML, the page needs no JavaScript for this. The same step also adds
+the "Expand all" button at the bottom of the sidebar.
+
+Links **in the text** to a specific page of another level work without post-processing, as a relative path into
 the finished folder structure, e.g. `../../../int/Qmd Files/Getting Started/getting_started.html`.
 
 ## Step 5 — Build everything
@@ -267,12 +273,12 @@ python build.py --no-serve # build only
 ```
 
 For each language the script first renders the start page (`root`), then the three levels into sub-folders,
-and writes `docs/index.html`, which redirects to the folder of the browser language (English if that language is missing).
+fills in the navigation from step 4 and writes `docs/index.html`, which redirects to the folder of the browser language (English if that language is missing).
 
 ::: {.callout-warning}
 ## Limits
 - **Search:** every run has its own search index. Search only finds pages of the current level in the current language.
-- **`quarto preview`** shows a single combination; the placeholder links do nothing there.
+- **`quarto preview`** shows a single combination; the placeholder links do nothing there and the "Expand all" button is missing (both come from `build.py`).
 - **Size:** every page appears once per language in the same file. For very large projects separate folders per language are easier to maintain; the navigation from step 4 works the same way as long as file names match.
 :::
 ::::
@@ -296,7 +302,7 @@ dansk     docs/da/beg/...    docs/da/int/...    docs/da/exp/...     + docs/da/in
 - **Én `.qmd` pr. side**, med alle sprog i den samme fil (se nedenfor).
 - **Niveauprofilen** (`_quarto-beg.yml` …) afgør, *hvilke sider* der renderes.
 - **Sprogprofilen** (`_quarto-english.yml` …) afgør, *hvad tingene hedder*: menulinje, sidepaneler, `lang`.
-- Et lille script på siden binder det sammen: når du skifter sprog, bliver du på **den samme side**, når du
+- `build.py` binder det sammen efter renderingen: når du skifter sprog, bliver du på **den samme side**, når du
   skifter niveau, kommer du til det niveaus startside.
 
 ## Trin 1 – To profilgrupper
@@ -376,13 +382,13 @@ Welcome! ...
 - Kodeceller i **alle** blokke køres i hver kørsel. Hvis du beregner noget, så skriv koden én gang uden for
   blokkene, og oversæt kun teksten omkring.
 
-## Trin 4 – Navigation uden efterbehandling
+## Trin 4 – Navigation ved efterbehandling
 
 Quarto kan ikke linke på tværs af profiler: set fra kørslen `int,english` findes hverken `docs/de/` eller
-`docs/en/beg/`. Derfor omskrev `preview.py` tidligere hver HTML-fil efter renderingen.
+`docs/en/beg/`. Derfor indeholder menulinjen kun pladsholdere (`#sprache-de`, `#niveau-beg`).
 
-Nu indeholder menulinjen kun pladsholdere (`#sprache-de`, `#niveau-beg`). Scriptet `navigation.html`
-(som tilføjes på hver side med `include-after-body`) læser sin egen sti, f.eks. `/en/int/Qmd Files/…`, og udfylder:
+Når alle kørsler er færdige, gennemgår `build.py` de færdige HTML-filer. Ud fra stien til hver side,
+f.eks. `en/int/Qmd Files/…`, kender det sprog og niveau og indsætter faste relative links:
 
 | Pladsholder | Mål |
 |---|---|
@@ -390,7 +396,10 @@ Nu indeholder menulinjen kun pladsholdere (`#sprache-de`, `#niveau-beg`). Script
 | `#niveau-beg` | startsiden for Beginner på det aktuelle sprog |
 | titlen øverst til venstre | startsiden for det aktuelle sprog |
 
-Links **i teksten** til en bestemt side på et andet niveau virker uden scriptet, som en relativ sti ind i
+Fordi linkene står direkte i HTML'en, behøver siden ikke JavaScript til det. Det samme trin tilføjer også
+knappen „Fold alle ud“ nederst i sidepanelet.
+
+Links **i teksten** til en bestemt side på et andet niveau virker uden efterbehandling, som en relativ sti ind i
 den færdige mappestruktur, f.eks. `../../../int/Qmd Files/Getting Started/getting_started.html`.
 
 ## Trin 5 – Byg det hele
@@ -401,12 +410,12 @@ python build.py --no-serve # build only
 ```
 
 For hvert sprog renderer scriptet først startsiden (`root`), derefter de tre niveauer i undermapper,
-og skriver `docs/index.html`, som sender videre til mappen for browserens sprog (engelsk, hvis sproget mangler).
+indsætter navigationen fra trin 4 og skriver `docs/index.html`, som sender videre til mappen for browserens sprog (engelsk, hvis sproget mangler).
 
 ::: {.callout-warning}
 ## Begrænsninger
 - **Søgning:** hver kørsel har sit eget søgeindeks. Søgningen finder kun sider på det aktuelle niveau på det aktuelle sprog.
-- **`quarto preview`** viser en enkelt kombination, der gør pladsholderlinkene ingenting.
+- **`quarto preview`** viser en enkelt kombination, der gør pladsholderlinkene ingenting, og knappen „Fold alle ud“ mangler (begge kommer fra `build.py`).
 - **Størrelse:** hver side findes én gang pr. sprog i den samme fil. Til meget store projekter er separate mapper pr. sprog lettere at vedligeholde. Navigationen fra trin 4 virker på samme måde, så længe filnavnene passer sammen.
 :::
 ::::
@@ -430,7 +439,7 @@ dansk     docs/da/beg/...    docs/da/int/...    docs/da/exp/...     + docs/da/in
 - **Én `.qmd` per side**, med alle språkene i samme fil (se under).
 - **Nivåprofilen** (`_quarto-beg.yml` …) avgjør *hvilke sider* som rendres.
 - **Språkprofilen** (`_quarto-english.yml` …) avgjør *hva ting heter*: menylinje, sidefelt, `lang`.
-- Et lite skript på siden knytter det sammen: når du bytter språk, blir du på **samme side**, når du bytter
+- `build.py` knytter det sammen etter rendringen: når du bytter språk, blir du på **samme side**, når du bytter
   nivå, kommer du til startsiden for det nivået.
 
 ## Trinn 1 – To profilgrupper
@@ -510,13 +519,13 @@ Welcome! ...
 - Kodeceller i **alle** blokkene kjøres i hver kjøring. Hvis du beregner noe, skriver du koden én gang utenfor
   blokkene og oversetter bare teksten rundt.
 
-## Trinn 4 – Navigasjon uten etterbehandling
+## Trinn 4 – Navigasjon ved etterbehandling
 
 Quarto kan ikke lenke på tvers av profiler: sett fra kjøringen `int,english` finnes verken `docs/de/` eller
-`docs/en/beg/`. Derfor skrev `preview.py` tidligere om hver HTML-fil etter rendringen.
+`docs/en/beg/`. Derfor inneholder menylinjen bare plassholdere (`#sprache-de`, `#niveau-beg`).
 
-Nå inneholder menylinjen bare plassholdere (`#sprache-de`, `#niveau-beg`). Skriptet `navigation.html`
-(som legges til på hver side med `include-after-body`) leser sin egen bane, f.eks. `/en/int/Qmd Files/…`, og fyller inn:
+Når alle kjøringene er ferdige, går `build.py` gjennom de ferdige HTML-filene. Ut fra banen til hver side,
+f.eks. `en/int/Qmd Files/…`, vet det språk og nivå og setter inn faste relative lenker:
 
 | Plassholder | Mål |
 |---|---|
@@ -524,7 +533,10 @@ Nå inneholder menylinjen bare plassholdere (`#sprache-de`, `#niveau-beg`). Skri
 | `#niveau-beg` | startsiden for Beginner på det gjeldende språket |
 | tittelen øverst til venstre | startsiden for det gjeldende språket |
 
-Lenker **i teksten** til en bestemt side på et annet nivå virker uten skriptet, som en relativ bane inn i
+Fordi lenkene står direkte i HTML-en, trenger siden ikke JavaScript til dette. Det samme trinnet legger også
+inn knappen «Fold ut alle» nederst i sidefeltet.
+
+Lenker **i teksten** til en bestemt side på et annet nivå virker uten etterbehandling, som en relativ bane inn i
 den ferdige mappestrukturen, f.eks. `../../../int/Qmd Files/Getting Started/getting_started.html`.
 
 ## Trinn 5 – Bygg alt
@@ -535,12 +547,12 @@ python build.py --no-serve # build only
 ```
 
 For hvert språk rendrer skriptet først startsiden (`root`), deretter de tre nivåene i undermapper,
-og skriver `docs/index.html`, som sender videre til mappen for språket i nettleseren (engelsk hvis språket mangler).
+setter inn navigasjonen fra trinn 4 og skriver `docs/index.html`, som sender videre til mappen for språket i nettleseren (engelsk hvis språket mangler).
 
 ::: {.callout-warning}
 ## Begrensninger
 - **Søk:** hver kjøring har sin egen søkeindeks. Søket finner bare sider på det gjeldende nivået på det gjeldende språket.
-- **`quarto preview`** viser én enkelt kombinasjon, der gjør plassholderlenkene ingenting.
+- **`quarto preview`** viser én enkelt kombinasjon, der gjør plassholderlenkene ingenting, og knappen «Fold ut alle» mangler (begge kommer fra `build.py`).
 - **Størrelse:** hver side finnes én gang per språk i samme fil. For svært store prosjekter er egne mapper per språk lettere å vedlikeholde. Navigasjonen fra trinn 4 virker på samme måte så lenge filnavnene stemmer overens.
 :::
 ::::
@@ -564,7 +576,7 @@ dansk     docs/da/beg/...    docs/da/int/...    docs/da/exp/...     + docs/da/in
 - **En `.qmd` per sida**, med alla språk i samma fil (se nedan).
 - **Nivåprofilen** (`_quarto-beg.yml` …) avgör *vilka sidor* som renderas.
 - **Språkprofilen** (`_quarto-english.yml` …) avgör *vad saker heter*: menyrad, sidofält, `lang`.
-- Ett litet skript på sidan knyter ihop det: när du byter språk stannar du på **samma sida**, när du byter
+- `build.py` knyter ihop det efter renderingen: när du byter språk stannar du på **samma sida**, när du byter
   nivå kommer du till den nivåns startsida.
 
 ## Steg 1 – Två profilgrupper
@@ -644,13 +656,13 @@ Welcome! ...
 - Kodceller i **alla** block körs i varje körning. Om du beräknar något, skriv koden en gång utanför
   blocken och översätt bara texten runt omkring.
 
-## Steg 4 – Navigering utan efterbearbetning
+## Steg 4 – Navigering genom efterbearbetning
 
 Quarto kan inte länka mellan profiler: sett från körningen `int,english` finns varken `docs/de/` eller
-`docs/en/beg/`. Därför skrev `preview.py` tidigare om varje HTML-fil efter renderingen.
+`docs/en/beg/`. Därför innehåller menyraden bara platshållare (`#sprache-de`, `#niveau-beg`).
 
-Nu innehåller menyraden bara platshållare (`#sprache-de`, `#niveau-beg`). Skriptet `navigation.html`
-(som läggs till på varje sida med `include-after-body`) läser sin egen sökväg, t.ex. `/en/int/Qmd Files/…`, och fyller i:
+När alla körningar är klara går `build.py` igenom de färdiga HTML-filerna. Utifrån sökvägen till varje sida,
+t.ex. `en/int/Qmd Files/…`, vet det språk och nivå och fyller i fasta relativa länkar:
 
 | Platshållare | Mål |
 |---|---|
@@ -658,7 +670,10 @@ Nu innehåller menyraden bara platshållare (`#sprache-de`, `#niveau-beg`). Skri
 | `#niveau-beg` | startsidan för Beginner på det aktuella språket |
 | titeln uppe till vänster | startsidan för det aktuella språket |
 
-Länkar **i texten** till en viss sida på en annan nivå fungerar utan skriptet, som en relativ sökväg in i
+Eftersom länkarna står direkt i HTML-koden behöver sidan inget JavaScript för detta. Samma steg lägger också
+till knappen ”Fäll ut alla” längst ner i sidofältet.
+
+Länkar **i texten** till en viss sida på en annan nivå fungerar utan efterbearbetning, som en relativ sökväg in i
 den färdiga mappstrukturen, t.ex. `../../../int/Qmd Files/Getting Started/getting_started.html`.
 
 ## Steg 5 – Bygg allt
@@ -669,12 +684,12 @@ python build.py --no-serve # build only
 ```
 
 För varje språk renderar skriptet först startsidan (`root`), sedan de tre nivåerna i undermappar,
-och skriver `docs/index.html`, som skickar vidare till mappen för webbläsarens språk (engelska om språket saknas).
+fyller i navigeringen från steg 4 och skriver `docs/index.html`, som skickar vidare till mappen för webbläsarens språk (engelska om språket saknas).
 
 ::: {.callout-warning}
 ## Begränsningar
 - **Sökning:** varje körning har sitt eget sökindex. Sökningen hittar bara sidor på den aktuella nivån på det aktuella språket.
-- **`quarto preview`** visar en enda kombination, där gör platshållarlänkarna ingenting.
+- **`quarto preview`** visar en enda kombination, där gör platshållarlänkarna ingenting, och knappen ”Fäll ut alla” saknas (båda kommer från `build.py`).
 - **Storlek:** varje sida finns en gång per språk i samma fil. För mycket stora projekt är separata mappar per språk lättare att underhålla. Navigeringen från steg 4 fungerar på samma sätt så länge filnamnen stämmer överens.
 :::
 ::::

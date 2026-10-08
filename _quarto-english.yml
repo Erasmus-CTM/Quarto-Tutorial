@@ -8,7 +8,7 @@ website:
   navbar:
     search: true
     left:
-      # placeholders, navigation.html fills in the target in the current language
+      # placeholders, build.py fills in the target in the current language
       - text: "Example Page"
         href: "#niveau-beg"
       - text: "Getting Started"
@@ -36,7 +36,7 @@ website:
   sidebar:
     - id: example-sidebar
       title: "Example Pages"
-      style: docked
+      style: floating
       contents:
         - text: "Overview"
           href: "Qmd Files/Example Page/index_beg.qmd"
@@ -51,7 +51,7 @@ website:
         - text: "References"
           href: "Qmd Files/Example Page/ep_references.qmd"
     - id: getting-started-sidebar
-      style: docked
+      style: floating
       collapse-level: 1
       contents:
         - text: "Overview"
@@ -91,7 +91,7 @@ website:
             - text: "📄 Cheatsheet (PDF)"
               href: "Qmd Files/Getting Started/beg_extensions_cheatsheet.qmd"
     - id: tips-sidebar
-      style: docked
+      style: floating
       contents:
         - text: "What's covered & what you should know already"
           href: "Qmd Files/Tipps and Tricks/index_exp.qmd"

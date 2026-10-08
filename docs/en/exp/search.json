@@ -279,7 +279,7 @@
     "href": "Qmd Files/Tipps and Tricks/exp_multilanguage.html#the-idea-at-a-glance",
     "title": "Multilanguage Projects",
     "section": "The idea at a glance",
-    "text": "The idea at a glance\n                 beg                int                exp\ndeutsch   docs/de/beg/...    docs/de/int/...    docs/de/exp/...     + docs/de/index.html\nenglish   docs/en/beg/...    docs/en/int/...    docs/en/exp/...     + docs/en/index.html\nsvenska   docs/sv/beg/...    docs/sv/int/...    docs/sv/exp/...     + docs/sv/index.html\nnorsk     docs/no/beg/...    docs/no/int/...    docs/no/exp/...     + docs/no/index.html\ndansk     docs/da/beg/...    docs/da/int/...    docs/da/exp/...     + docs/da/index.html\n\nOne .qmd per page, all languages inside (see below).\nThe level profile (_quarto-beg.yml …) decides which pages are rendered.\nThe language profile (_quarto-english.yml …) decides what things are called: navbar, sidebars, lang.\nA small script in the page ties it together: switching the language keeps the same page, switching the level goes to that level’s start page.",
+    "text": "The idea at a glance\n                 beg                int                exp\ndeutsch   docs/de/beg/...    docs/de/int/...    docs/de/exp/...     + docs/de/index.html\nenglish   docs/en/beg/...    docs/en/int/...    docs/en/exp/...     + docs/en/index.html\nsvenska   docs/sv/beg/...    docs/sv/int/...    docs/sv/exp/...     + docs/sv/index.html\nnorsk     docs/no/beg/...    docs/no/int/...    docs/no/exp/...     + docs/no/index.html\ndansk     docs/da/beg/...    docs/da/int/...    docs/da/exp/...     + docs/da/index.html\n\nOne .qmd per page, all languages inside (see below).\nThe level profile (_quarto-beg.yml …) decides which pages are rendered.\nThe language profile (_quarto-english.yml …) decides what things are called: navbar, sidebars, lang.\nbuild.py ties it together after rendering: switching the language keeps the same page, switching the level goes to that level’s start page.",
     "crumbs": [
       "Example Page",
       "Multilanguage Projects"
@@ -319,11 +319,11 @@
     ]
   },
   {
-    "objectID": "Qmd Files/Tipps and Tricks/exp_multilanguage.html#step-4-navigation-without-post-processing",
-    "href": "Qmd Files/Tipps and Tricks/exp_multilanguage.html#step-4-navigation-without-post-processing",
+    "objectID": "Qmd Files/Tipps and Tricks/exp_multilanguage.html#step-4-navigation-by-post-processing",
+    "href": "Qmd Files/Tipps and Tricks/exp_multilanguage.html#step-4-navigation-by-post-processing",
     "title": "Multilanguage Projects",
-    "section": "Step 4 — Navigation without post-processing",
-    "text": "Step 4 — Navigation without post-processing\nQuarto cannot link across profiles: from the point of view of the run int,english, docs/de/ or docs/en/beg/ do not exist. That is why preview.py used to rewrite every HTML file after rendering.\nNow the navbar only contains placeholders (#sprache-de, #niveau-beg). The script navigation.html (added to every page via include-after-body) reads its own path, e.g. /en/int/Qmd Files/…, and fills in:\n\n\n\nPlaceholder\nTarget\n\n\n\n\n#sprache-de\nthe same page, /en/ → /de/\n\n\n#niveau-beg\nBeginner start page in the current language\n\n\ntitle top left\nstart page of the current language\n\n\n\nLinks in the text to a specific page of another level work without the script, as a relative path into the finished folder structure, e.g. ../../../int/Qmd Files/Getting Started/getting_started.html.",
+    "section": "Step 4 — Navigation by post-processing",
+    "text": "Step 4 — Navigation by post-processing\nQuarto cannot link across profiles: from the point of view of the run int,english, docs/de/ or docs/en/beg/ do not exist. That is why the navbar only contains placeholders (#sprache-de, #niveau-beg).\nOnce all runs are done, build.py goes through the rendered HTML files. From the path of each page, e.g. en/int/Qmd Files/…, it knows the language and level and fills in fixed relative links:\n\n\n\nPlaceholder\nTarget\n\n\n\n\n#sprache-de\nthe same page, /en/ → /de/\n\n\n#niveau-beg\nBeginner start page in the current language\n\n\ntitle top left\nstart page of the current language\n\n\n\nBecause the links are written into the HTML, the page needs no JavaScript for this. The same step also adds the “Expand all” button at the bottom of the sidebar.\nLinks in the text to a specific page of another level work without post-processing, as a relative path into the finished folder structure, e.g. ../../../int/Qmd Files/Getting Started/getting_started.html.",
     "crumbs": [
       "Example Page",
       "Multilanguage Projects"
@@ -334,7 +334,7 @@
     "href": "Qmd Files/Tipps and Tricks/exp_multilanguage.html#step-5-build-everything",
     "title": "Multilanguage Projects",
     "section": "Step 5 — Build everything",
-    "text": "Step 5 — Build everything\npython build.py            # 5 languages × (start page + 3 levels) = 20 runs, then preview\npython build.py --no-serve # build only\nFor each language the script first renders the start page (root), then the three levels into sub-folders, and writes docs/index.html, which redirects to the folder of the browser language (English if that language is missing).\n\n\n\n\n\n\nWarningLimits\n\n\n\n\nSearch: every run has its own search index. Search only finds pages of the current level in the current language.\nquarto preview shows a single combination; the placeholder links do nothing there.\nSize: every page appears once per language in the same file. For very large projects separate folders per language are easier to maintain; the navigation from step 4 works the same way as long as file names match.",
+    "text": "Step 5 — Build everything\npython build.py            # 5 languages × (start page + 3 levels) = 20 runs, then preview\npython build.py --no-serve # build only\nFor each language the script first renders the start page (root), then the three levels into sub-folders, fills in the navigation from step 4 and writes docs/index.html, which redirects to the folder of the browser language (English if that language is missing).\n\n\n\n\n\n\nWarningLimits\n\n\n\n\nSearch: every run has its own search index. Search only finds pages of the current level in the current language.\nquarto preview shows a single combination; the placeholder links do nothing there and the “Expand all” button is missing (both come from build.py).\nSize: every page appears once per language in the same file. For very large projects separate folders per language are easier to maintain; the navigation from step 4 works the same way as long as file names match.",
     "crumbs": [
       "Example Page",
       "Multilanguage Projects"

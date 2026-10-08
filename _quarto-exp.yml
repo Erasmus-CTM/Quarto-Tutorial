@@ -1,12 +1,9 @@
-# Niveau Expert (Tipps & Tricks): nur WELCHE Seiten gebaut werden.
-# Beschriftungen stehen in _quarto-deutsch.yml / _quarto-english.yml,
-# den Ausgabeordner docs/<sprache>/exp/ setzt build.py.
+# Level Expert (Tips & Tricks): only WHICH pages are rendered.
+# Labels are in _quarto-<language>.yml,
+# the output folder docs/<lang>/exp/ is set by build.py.
 project:
   render:
     - "Qmd Files/Tipps and Tricks/*.qmd"
-
-website:
-  page-navigation: true
 
 format:
   html:

@@ -1,28 +1,295 @@
-/* Navbar-Symbole wie in den anderen Tutorials (Kurvendiskussion, Matrizen, Statistik).
-   Braucht die Font-Awesome-Webschrift aus include-in-header in _quarto.yml. */
+/* Shared look for the Quarto Tutorial, applies in light and dark mode. Started as a
+   copy of the stylesheet shared by the CTM math tutorials (Kurvendiskussion, Matrizen,
+   Statistik); keep fixes in sync where it makes sense. Theme colours are in
+   Theme/morph_custom.scss and Theme/slate_custom.scss. */
 
-/* Verstecke die originalen Bootstrap Icons */
+/* --- Navbar icons: Font Awesome instead of Bootstrap Icons ---
+   Needs the Font Awesome web font from include-in-header in _quarto.yml. */
+
 .quarto-navbar-tools .bi {
     display: none;
 }
 
-/* Such-Icon */
+/* search icon */
 .quarto-search-toggle::before {
     font-family: "Font Awesome 6 Free";
     font-weight: 900;
     content: "\f002"; /* fa-magnifying-glass */
 }
 
-/* Theme-Toggle-Icon */
+/* colour scheme toggle icon */
 .quarto-color-scheme-toggle::before {
     font-family: "Font Awesome 6 Free";
     font-weight: 900;
     content: "\f042"; /* fa-circle-half-stroke */
 }
 
-/* Reader-Mode-Icon (im Reader-Mode-Button) */
+/* reader mode icon (inside the reader mode button) */
 .quarto-reader-toggle-btn::before {
     font-family: "Font Awesome 6 Free";
     font-weight: 900;
     content: "\f5da"; /* fa-book-open-reader */
+}
+
+/* --- Tables and formulas ---
+   Compact tables (Quarto class .sm): slightly smaller font so they fit into the
+   text column. */
+main table.table-sm {
+    font-size: 0.9em;
+}
+
+/* Tables, formulas and code that are too wide scroll inside their own box instead
+   of making the whole page scroll sideways (mostly on phones). */
+main table {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+}
+main .katex-display {
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 2px;
+}
+main div.sourceCode {
+    overflow-x: auto;
+}
+
+/* Workaround, really belongs in the pyodide-interaktiv extension:
+   the button bar above the code cells does not wrap otherwise and pushes the page
+   sideways on phones. Remove once fixed in CTM. */
+.qpyodide-editor-toolbar {
+    flex-wrap: wrap;
+    row-gap: 4px;
+}
+.qpyodide-editor-toolbar-right-buttons {
+    flex-wrap: wrap;
+    max-width: 100%;
+    justify-content: flex-end;
+}
+
+/* --- Large screens: everything grows ---
+   Quarto limits the page to fixed pixel widths (text column 800px, sidebars 250px
+   each). On 1920px or 2560px half of the screen stayed empty.
+   From 1700px on the base font therefore grows with the window width (17px as in
+   Morph up to 1700px, about 25.6px at 2560px, at most 28px), and Quarto's column grid
+   below is given in rem instead of px - text, formulas, sidebars and columns grow
+   together and use about three quarters of the width. Below that everything stays
+   as Quarto intends.
+   The grid is Quarto's own (Quarto 1.8, "floating" layout from 992px), only
+   converted px -> rem (1rem = 17px, so nothing jumps at 1700px). */
+@media (min-width: 1700px) {
+  :root {
+    --bs-root-font-size: clamp(17px, calc(100vw / 100), 28px);
+  }
+  #quarto-sidebar .sidebar-menu-container {
+    min-width: 13.24rem;
+  }
+  .navbar,
+  .navbar > .container-fluid {
+    min-height: 3.294rem;
+  }
+  body.floating .page-columns {
+    grid-template-columns: [screen-start] 1.5em [screen-start-inset] 5fr [page-start] minmax(1.471rem, 2.941rem) [page-start-inset] minmax(2.941rem, 8.824rem) [body-start-outset] minmax(1.471rem, 2.941rem) [body-start] 1.5em [body-content-start] minmax(29.41rem, calc(47.06rem - 3em)) [body-content-end] 1.5em [body-end] minmax(1.471rem, 2.941rem) [body-end-outset] minmax(2.941rem, 8.824rem) [page-end-inset] minmax(1.471rem, 2.941rem) [page-end] 5fr [screen-end-inset] 1.5em [screen-end];
+  }
+  body.floating.fullcontent .page-columns {
+    grid-template-columns: [screen-start] 1.5em [screen-start-inset] 5fr [page-start] 2.941rem [page-start-inset] minmax(2.941rem, 8.824rem) [body-start-outset] 2.941rem [body-start] 1.5em [body-content-start] minmax(29.41rem, calc(47.06rem - 3em)) [body-content-end] 1.5em [body-end body-end-outset page-end-inset page-end] 5fr [screen-end-inset] 1.5em [screen-end];
+  }
+  body.floating.slimcontent .page-columns {
+    grid-template-columns: [screen-start] 1.5em [screen-start-inset] 5fr [page-start] 2.941rem [page-start-inset] minmax(2.941rem, 8.824rem) [body-start-outset] 2.941rem [body-start] 1.5em [body-content-start] minmax(26.47rem, calc(44.12rem - 3em)) [body-content-end] 1.5em [body-end] 2.941rem [body-end-outset] minmax(2.941rem, 8.824rem) [page-end-inset] 2.941rem [page-end] 5fr [screen-end-inset] 1.5em [screen-end];
+  }
+  body.floating.listing .page-columns {
+    grid-template-columns: [screen-start] 1.5em [screen-start-inset] 5fr [page-start] minmax(1.471rem, 2.941rem) [page-start-inset] minmax(2.941rem, 8.824rem) [body-start-outset] minmax(1.471rem, 2.941rem) [body-start] 1.5em [body-content-start] minmax(29.41rem, calc(47.06rem - 3em)) [body-content-end] 1.5em [body-end] minmax(1.471rem, 2.941rem) [body-end-outset] minmax(2.941rem, 8.824rem) [page-end-inset] minmax(1.471rem, 2.941rem) [page-end] 5fr [screen-end-inset] 1.5em [screen-end];
+  }
+}
+
+/* math-exercise: buttons equally sized and flat in light and dark (Morph would have
+   more padding and a shadow, Slate less). Colours in Theme/*.scss. */
+.math-exercise-controls .btn,
+.py-exercise-buttons .btn,
+.py-download-section .btn {
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    font-weight: 600; /* Morph: 600, Slate: 400 - otherwise the width changes when switching */
+}
+.math-exercise-controls .btn-group {
+    box-shadow: none !important;
+    gap: 0;
+}
+.math-exercise-controls .btn-group > .btn + .btn {
+    margin-left: -1px;
+}
+.math-exercise-controls .btn-group > .btn:not(:last-child) {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.math-exercise-controls .btn-group > .btn:not(:first-child) {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+/* Navbar title: same padding in light and dark (visible in the hover box) */
+.navbar .navbar-brand {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+}
+
+/* Same dimensions in light and dark (found by comparing all pages) */
+.code-tools-button {
+    padding: 0.25rem 0.5rem;
+    border-width: 1px;
+}
+.panel-tabset .nav-tabs .nav-link {
+    padding: 0.5rem 1rem;
+    border-width: 1px;
+    font-weight: 600;
+    line-height: 1.5;
+}
+.quarto-title-breadcrumbs .breadcrumb {
+    padding: 0.6rem 1rem;
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+}
+
+/* Navbar dropdowns (language menu): active language bold (colour in each theme) */
+.navbar .dropdown-menu .dropdown-item.active {
+    font-weight: 700;
+}
+
+/* Breadcrumbs: current page semibold (same in both modes) */
+.quarto-title-breadcrumbs .breadcrumb-item:last-child a,
+.quarto-page-breadcrumbs .breadcrumb-item:last-child a {
+    font-weight: 600;
+}
+.quarto-title-breadcrumbs .breadcrumb-item a,
+.quarto-page-breadcrumbs .breadcrumb-item a {
+    text-underline-offset: 3px;
+}
+/* Reader mode: collapsible bars recognisable as buttons (same size in both modes) */
+.quarto-sidebar-toggle {
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 6px;
+}
+.quarto-sidebar-toggle-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    opacity: 1 !important;
+    border-radius: 6px;
+}
+.quarto-sidebar-toggle-icon {
+    font-size: 0.9rem;
+}
+
+/* Heading above the left sidebar, counterpart to "On this page" on the right.
+   Text per language from <html lang>, size like #toc-title; colour in the theme files. */
+#quarto-sidebar .sidebar-menu-container::before {
+    content: "Tutorial-\00DC bersicht";
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.2;
+    margin: 0.3rem 0 0.4rem;
+}
+html:lang(en) #quarto-sidebar .sidebar-menu-container::before { content: "Tutorial overview"; }
+html:lang(da) #quarto-sidebar .sidebar-menu-container::before { content: "Tutorial-oversigt"; }
+html:lang(nb) #quarto-sidebar .sidebar-menu-container::before,
+html:lang(no) #quarto-sidebar .sidebar-menu-container::before { content: "Tutorialoversikt"; }
+html:lang(sv) #quarto-sidebar .sidebar-menu-container::before { content: "Tutorial\00F6 versikt"; }
+/* - and at the same height as "On this page": the empty sidebar header and the menu
+   padding pushed the left column ~34px down */
+#quarto-sidebar .sidebar-header,
+#quarto-sidebarnav-toggle .sidebar-header {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+#quarto-sidebar .sidebar-menu-container,
+#quarto-sidebarnav-toggle .sidebar-menu-container {
+    padding-top: 0;
+}
+/* Reader mode: when expanded, Quarto shows a copy of the sidebar without the id
+   #quarto-sidebar - that is why #quarto-sidebarnav-toggle is listed here and in the
+   theme files as well. Without it there were ~58px of empty space above the first entry. */
+#quarto-sidebarnav-toggle .quarto-sidebar-toggle-contents {
+    padding-top: 0.5rem;
+}
+
+/* Current page on the left and current section on the right marked the same way:
+   bold with a 2px bar on the left (colours in the theme files). Morph coloured the
+   page on the left only minimally differently from the other entries - you could not
+   see where you are. Left via box-shadow (entries have no border), on the right it
+   doubles the 1px border. */
+#quarto-sidebar .sidebar-link.active,
+#quarto-sidebarnav-toggle .sidebar-link.active {
+    font-weight: 700;
+    padding-left: 0.4rem;
+    margin-left: -0.4rem;
+}
+#TOC a.nav-link.active {
+    box-shadow: inset 1px 0 0 currentColor;
+}
+
+/* "Expand all" button at the bottom of the sidebar: build.py inserts it as a
+   checkbox, the effect comes entirely from CSS (no JavaScript). When checked, all
+   sections are open and the arrows are rotated. Colours in the theme files. */
+.sidebar-expand-all {
+    display: block;
+    width: calc(100% - 24px);
+    margin: 12px 12px 6px;
+    padding: 5px 10px;
+    font-size: 0.78em;
+    text-align: center;
+    cursor: pointer;
+    border: 1px solid rgba(128, 128, 128, 0.3);
+    border-radius: 4px;
+    opacity: 0.65;
+}
+.sidebar-expand-all:hover,
+.sidebar-expand-all:has(input:focus-visible) {
+    opacity: 1;
+}
+.sidebar-expand-all:has(input:focus-visible) {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+}
+.sidebar-expand-all input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+.sidebar-expand-all .label-collapse,
+.sidebar-expand-all:has(input:checked) .label-expand {
+    display: none;
+}
+.sidebar-expand-all:has(input:checked) .label-collapse {
+    display: inline;
+}
+.sidebar-menu-container:has(.sidebar-expand-all input:checked) .sidebar-section.collapse {
+    display: block;
+}
+/* Arrows: Quarto rotates ::before based on aria-expanded; in Chrome ::before does not
+   reliably react to :has(), so the element itself is rotated - only the collapsed ones */
+.sidebar-item-toggle .bi-chevron-right {
+    display: inline-block;
+    transition: transform 200ms ease;
+}
+.sidebar-menu-container:has(.sidebar-expand-all input:checked) .sidebar-item-toggle[aria-expanded=false] .bi-chevron-right {
+    transform: rotate(90deg);
+}
+
+/* Reader mode bars: long titles (page title on the left) on one line with an ellipsis, arrow fixed on the right */
+.quarto-sidebar-toggle-title {
+    position: relative;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-left: 1.6em;
+    padding-right: 1.6em;
+}
+.quarto-sidebar-toggle-icon {
+    position: absolute;
+    right: 0.6em;
+    top: 50%;
+    transform: translateY(-50%);
+    float: none !important;
 }

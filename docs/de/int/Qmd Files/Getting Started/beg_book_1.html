@@ -65,6 +65,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
+<link href="../../Qmd Files/Getting Started/beg_book_2.html" rel="next">
+<link href="../../Qmd Files/Getting Started/beg_exercise_cheatsheet.pdf" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -77,9 +79,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-02c81f8a3ab08dabf57a4e4f9bd1da8f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-98c6b7addc835802dc22287f06303b48.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-02c81f8a3ab08dabf57a4e4f9bd1da8f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-8b606226c62296f12a9b1bdda37b3e99.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-815745141318bf9de57b793697f953f0.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-8b606226c62296f12a9b1bdda37b3e99.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -113,7 +115,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link rel="stylesheet" href="../../styles.css">
 </head>
 
-<body class="nav-sidebar docked nav-fixed fullcontent quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+<body class="nav-sidebar floating nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
     const toggleBodyColorMode = (bsSheetEl) => {
       const mode = bsSheetEl.getAttribute("data-mode");
       const bodyEl = window.document.querySelector("body");
@@ -256,7 +258,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       }
     };
     const authorPrefersDark = false;
-    const darkModeDefault = authorPrefersDark;
+    const queryPrefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    const darkModeDefault = queryPrefersDark.matches;
       document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
       document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
     let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
@@ -269,6 +272,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       toggleGiscusIfUsed(toAlternate, darkModeDefault);
       window.dispatchEvent(new Event('resize'));
     };
+    queryPrefersDark.addEventListener("change", e => {
+      if(window.localStorage.getItem("quarto-color-scheme") !== null)
+        return;
+      const alternate = e.matches
+      toggleColorMode(alternate);
+      localAlternateSentinel = e.matches ? 'alternate' : 'default'; // this is used alongside local storage!
+      toggleGiscusIfUsed(alternate, darkModeDefault);
+    });
     // Switch to dark mode if need be
     if (hasAlternateSentinel()) {
       toggleColorMode(true);
@@ -282,9 +293,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
     </a>
-    <a class="navbar-brand" href="../../index.html">
+    <a class="navbar-brand" href="../../../index.html">
     <span class="navbar-title">Quarto-Tutorial</span>
     </a>
   </div>
@@ -295,15 +306,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../#niveau-beg"> 
+    <a class="nav-link" href="../../../beg/Qmd%20Files/Example%20Page/index_beg.html"> 
 <span class="menu-text">Beispielseite</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../#niveau-int"> 
+    <a class="nav-link active" aria-current="page" href="../../../int/Qmd%20Files/Getting%20Started/getting_started.html"> 
 <span class="menu-text">Erste Schritte</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../#niveau-exp"> 
+    <a class="nav-link" href="../../../exp/Qmd%20Files/Tipps%20and%20Tricks/index_exp.html"> 
 <span class="menu-text">Tipps &amp; Tricks</span></a>
   </li>  
 </ul>
@@ -321,23 +332,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-bi-globe">    
         <li>
-    <a class="dropdown-item" href="../../#sprache-de">
+    <a class="dropdown-item active" aria-current="true" href="../../../../de/int/Qmd%20Files/Getting%20Started/beg_book_1.html">
  <span class="dropdown-text">Deutsch</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../#sprache-en">
+    <a class="dropdown-item" href="../../../../en/int/Qmd%20Files/Getting%20Started/beg_book_1.html">
  <span class="dropdown-text">English</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../#sprache-sv">
+    <a class="dropdown-item" href="../../../../sv/int/Qmd%20Files/Getting%20Started/beg_book_1.html">
  <span class="dropdown-text">Svenska</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../#sprache-no">
+    <a class="dropdown-item" href="../../../../no/int/Qmd%20Files/Getting%20Started/beg_book_1.html">
  <span class="dropdown-text">Norsk</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../#sprache-da">
+    <a class="dropdown-item" href="../../../../da/int/Qmd%20Files/Getting%20Started/beg_book_1.html">
  <span class="dropdown-text">Dansk</span></a>
   </li>  
     </ul>
@@ -368,7 +379,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
       <a href="../../index.html" class="sidebar-logo-link">
       </a>
@@ -504,11 +515,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       </ul>
   </li>
     </ul>
+    <label class="sidebar-expand-all"><input type="checkbox"><span class="label-expand">▼ Alle ausklappen</span><span class="label-collapse">▲ Alle einklappen</span></label>
     </div>
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Auf dieser Seite</h2>
+   
+  <ul>
+  <li><a href="#wie-ein-buch-aufgebaut-ist" id="toc-wie-ein-buch-aufgebaut-ist" class="nav-link active" data-scroll-target="#wie-ein-buch-aufgebaut-ist">Wie ein Buch aufgebaut ist</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
@@ -603,155 +623,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 
 </main> <!-- /main -->
-<!-- Navigation zwischen Sprachen UND Niveaus.
-     Die gebaute Seite liegt in docs/<sprache>/<niveau>/..., z. B. docs/de/beg/Qmd Files/...
-     Startseite je Sprache: docs/<sprache>/index.html.
-
-     In _quarto-deutsch.yml / _quarto-english.yml stehen nur Platzhalter-Links:
-       #sprache-de, #sprache-en          -> dieselbe Seite in der anderen Sprache
-       #niveau-beg, #niveau-int, #niveau-exp -> Startseite des Niveaus in der aktuellen Sprache
-     Dieses Skript setzt die echten Ziele aus dem aktuellen Pfad ein. Quarto selbst kann
-     nicht über Profilgrenzen hinweg verlinken, deshalb braucht es kein Nachbearbeiten der
-     HTML-Dateien mehr (früher preview.py: fix_cross_profile_links, fix_navbar_brand_links). -->
-<script>
-(function () {
-  var START = {
-    beg: "Qmd Files/Example Page/index_beg.html",
-    int: "Qmd Files/Getting Started/getting_started.html",
-    exp: "Qmd Files/Tipps and Tricks/index_exp.html"
-  };
-  var pfad = window.location.pathname;
-  // .../<sprache>/<niveau>/... oder .../<sprache>/ (Startseite)
-  var m = pfad.match(/^(.*?\/)(de|en|sv|no|da)\/(?:(beg|int|exp)\/)?/);
-
-  function links(anker) {
-    // Quarto macht aus "#niveau-beg" einen relativen Link wie "../../#niveau-beg"
-    return document.querySelectorAll('a[href$="#' + anker + '"]');
-  }
-  function aktiv(a) {
-    a.classList.add("active");
-    a.setAttribute("aria-current", "page");
-  }
-
-  if (!m) {
-    // quarto preview: nur ein Profil, keine Ordnerstruktur -> Links ohne Wirkung
-    ["sprache-de", "sprache-en", "sprache-sv", "sprache-no", "sprache-da", "niveau-beg", "niveau-int", "niveau-exp"].forEach(function (k) {
-      links(k).forEach(function (a) {
-        a.setAttribute("title", "Nur in der fertig gebauten Seite (python build.py)");
-      });
-    });
-    return;
-  }
-
-  var wurzel = m[1];            // alles vor /de/ bzw. /en/ (lokal "/", auf GitHub Pages "/<repo>/")
-  var sprache = m[2];
-  var niveau = m[3] || null;    // null = Startseite der Sprache
-  var basis = wurzel + sprache + "/";
-
-  // Sprache: gleiche Seite, anderes Sprach-Segment
-  ["de", "en", "sv", "no", "da"].forEach(function (s) {
-    links("sprache-" + s).forEach(function (a) {
-      a.setAttribute("href", wurzel + s + "/" + pfad.slice(basis.length) + window.location.search);
-      if (s === sprache) aktiv(a);
-    });
-  });
-
-  // Niveau: Startseite des Niveaus, gleiche Sprache
-  Object.keys(START).forEach(function (n) {
-    links("niveau-" + n).forEach(function (a) {
-      a.setAttribute("href", basis + n + "/" + encodeURI(START[n]));
-      if (n === niveau && a.classList.contains("nav-link")) aktiv(a);
-    });
-  });
-
-  // Titel links oben: immer zur Startseite der Sprache (Quarto kennt nur die Wurzel des Profils)
-  document.querySelectorAll("a.navbar-brand").forEach(function (a) {
-    a.setAttribute("href", basis);
-  });
-})();
-</script>
-<script>
-
-// Knopf „Alle ausklappen“ unten in der Seitenleiste (Text nach <html lang>)
-
-document.addEventListener("DOMContentLoaded", function () {
-
-  var sidebar = document.getElementById("quarto-sidebar");
-
-  if (!sidebar) return;
-
-  var navContainer = sidebar.querySelector(".sidebar-menu-container");
-
-  if (!navContainer) return;
-
-  // ohne einklappbare Abschnitte gäbe es nichts zu tun
-
-  if (!sidebar.querySelector(".collapse")) return;
-
-  var TEXTE = {
-
-    de: ["Alle ausklappen", "Alle einklappen"],
-
-    en: ["Expand all", "Collapse all"],
-
-    sv: ["F\u00e4ll ut alla", "F\u00e4ll ihop alla"],
-
-    nb: ["Fold ut alle", "Fold sammen alle"],
-
-    da: ["Fold alle ud", "Fold alle sammen"]
-
-  };
-
-  var t = TEXTE[(document.documentElement.lang || "").slice(0, 2)] || TEXTE.en;
-
-  var txtAuf = "\u25bc " + t[0];
-
-  var txtZu = "\u25b2 " + t[1];
-
-  var expanded = false;
-
-  var btn = document.createElement("button");
-
-  btn.id = "sidebar-toggle-all";
-
-  btn.textContent = txtAuf;
-
-  btn.style.cssText = "display:block;width:calc(100% - 24px);margin:12px 12px 6px;padding:5px 10px;font-size:0.78em;cursor:pointer;border:1px solid rgba(128,128,128,0.3);border-radius:4px;background:transparent;color:inherit;opacity:0.65;text-align:center;";
-
-  btn.addEventListener("mouseenter", function () { btn.style.opacity = "1"; });
-
-  btn.addEventListener("mouseleave", function () { btn.style.opacity = "0.65"; });
-
-  btn.addEventListener("click", function () {
-
-    expanded = !expanded;
-
-    sidebar.querySelectorAll(".collapse").forEach(function (el) {
-
-      el.classList.toggle("show", expanded);
-
-      var id = el.id;
-
-      if (id) {
-
-        var trigger = sidebar.querySelector('[data-bs-target="#' + id + '"]');
-
-        if (trigger) trigger.setAttribute("aria-expanded", String(expanded));
-
-      }
-
-    });
-
-    btn.textContent = expanded ? txtZu : txtAuf;
-
-  });
-
-  navContainer.appendChild(btn);
-
-});
-
-</script>
-
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     // Ensure there is a toggle, if there isn't float one in the top right
@@ -1215,7 +1086,19 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     }
   });
-  </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Quellcode</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../Qmd Files/Getting Started/beg_exercise_cheatsheet.pdf" class="pagination-link" aria-label="📄 Cheatsheet (PDF)">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">📄 Cheatsheet (PDF)</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../Qmd Files/Getting Started/beg_book_2.html" class="pagination-link" aria-label="Buch erstellen">
+        <span class="nav-page-text">Buch erstellen</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Quellcode</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Was du brauchst – Buch"</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="an">title-sv:</span><span class="co"> "Vad du behöver – bok"</span></span>

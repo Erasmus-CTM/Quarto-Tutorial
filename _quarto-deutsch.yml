@@ -1,5 +1,5 @@
-# Alles, was von der SPRACHE abhängt: Sprache der Oberfläche, Titel, Navbar- und
-# Seitenleisten-Beschriftungen. Welche Seiten gebaut werden, steht in _quarto-<niveau>.yml.
+# Everything that depends on the LANGUAGE (Deutsch): UI language, title, navbar and sidebar
+# labels. Which pages are rendered is set in _quarto-<level>.yml.
 lang: de
 
 website:
@@ -8,7 +8,7 @@ website:
   navbar:
     search: true
     left:
-      # Platzhalter, navigation.html setzt das Ziel in der aktuellen Sprache ein
+      # placeholders, build.py fills in the target in the current language
       - text: "Beispielseite"
         href: "#niveau-beg"
       - text: "Erste Schritte"
@@ -31,12 +31,12 @@ website:
             href: "#sprache-no"
           - text: "Dansk"
             href: "#sprache-da"
-  # Seitenleisten ALLER Niveaus. Quarto zeigt auf jeder Seite nur die, in der sie steht.
-  # Seiten eines anderen Niveaus werden in diesem Lauf nicht gebaut; das stört nicht.
+  # Sidebars of ALL levels. Quarto shows on each page only the one that lists it.
+  # Pages of another level are not rendered in this run; that does no harm.
   sidebar:
     - id: example-sidebar
       title: "Beispielseiten"
-      style: docked
+      style: floating
       contents:
         - text: "Überblick"
           href: "Qmd Files/Example Page/index_beg.qmd"
@@ -51,7 +51,7 @@ website:
         - text: "Quellen"
           href: "Qmd Files/Example Page/ep_references.qmd"
     - id: getting-started-sidebar
-      style: docked
+      style: floating
       collapse-level: 1
       contents:
         - text: "Überblick"
@@ -91,7 +91,7 @@ website:
             - text: "📄 Cheatsheet (PDF)"
               href: "Qmd Files/Getting Started/beg_extensions_cheatsheet.qmd"
     - id: tips-sidebar
-      style: docked
+      style: floating
       contents:
         - text: "Was dich erwartet & was du schon können solltest"
           href: "Qmd Files/Tipps and Tricks/index_exp.qmd"

@@ -1,20 +1,52 @@
 /*-- scss:defaults --*/
 
+// Same font as Morph (Nunito) so that only the colours change when switching.
+// The web font is already loaded by the Morph stylesheet, which Quarto always loads too.
+$font-family-sans-serif: Nunito, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+$web-font-path: "https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap";
+
+// Dark theme of the Quarto Tutorial, counterpart to morph_custom.scss.
+// Contrast checked against background #272b30.
+
+// Mermaid diagrams: Quarto derives the colours from $primary otherwise,
+// in dark mode the text in the boxes was then barely readable.
+$mermaid-node-fg-color: #e9ecef;
+$mermaid-label-fg-color: #e9ecef;
+$mermaid-node-bg-color: #3a4048;
+$mermaid-edge-color: #adb5bd;
+
+
 /*-- scss:rules --*/
+/* Bootstrap puts the dark values (--bs-tertiary-bg, --bs-border-color, the light
+   close X, ...) only under [data-bs-theme=dark]; under :root even Slate has the
+   light ones. Quarto does not set the attribute, only pyodide-interaktiv does on its
+   pages - otherwise math-/py-exercise had light boxes in dark mode.
+   @extend adds body to each of these rules; this file only applies in dark mode. */
 body {
-  color: #ddd0a0; /* Warm sandy gold — leicht gelblicher Fließtext auf dunklem Hintergrund */
+  @extend [data-bs-theme=dark] !optional;
+}
+
+body {
+  color: #e9ecef; /* 12:1, slightly softer than almost pure white (less glare) */
 }
 
 h1, h2, h3, h4, h5, h6 {
-  color: #b8aa6e; /* Überschriften in Schwarz */
+  color: #d4c27e; /* gold, 8.0:1 */
+}
+
+main h2 {
+  border-bottom: 2px solid #b8aa6e;
+  padding-bottom: 0.2rem;
 }
 
 blockquote, .blockquote {
   color: #d3d3d3ea !important;
-  border-left: none;
-  border-top: 2px solid #fd0d0d;
-  border-bottom: 2px solid #fd0d0d;
-  border-radius: 10px;
+  border-left: 4px solid #b8aa6e;
+  border-top: none;
+  border-bottom: none;
+  border-radius: 6px;
+  background-color: #3a3320;
+  padding: 0.6rem 1rem;
 }
 
 .theorem.definition {
@@ -106,12 +138,6 @@ i.python,
   color: #d3d3d3 !important;
 }
 
-/* Navbar — dark mode (counters the morph !important rule) */
-body.quarto-dark .navbar {
-  background-color: #323842 !important;
-  border-bottom: 1px solid #3d4449 !important;
-}
-
 .nav-tabs {
   background-color: #323842 !important;
 }
@@ -122,43 +148,55 @@ body.quarto-dark .navbar {
   border-bottom: 1px solid rgba(0,0,0,.6) !important;
 }
 
-/* Callout — slightly lifted from the dark page background */
-.callout {
-  background-color: #363b44 !important;
-  border-top:   1px solid #4a5060 !important;
-  border-bottom: 1px solid #4a5060 !important;
-  border-right:  1px solid #4a5060 !important;
+code {
+  color: var(--bs-code-color);
 }
 
-/* Source Code Blocks */
-div.sourceCode{
-  background-color: rgba(52, 52, 62, 0.65);
+.callout-note {
+  background-color: #1e2a38 !important;
 }
 
-/* All mermaid diagrams — general rules (same selectors as #fig-schema-mermaid, without the ID) */
-.label text,
-.nodeLabel,
-.mermaid span {
-  color: #ddd0a0 !important;
-  fill:  #ddd0a0 !important;
-}
-
-.edgePath .path,
-.flowchart-link {
-  stroke:       #8899bb !important;
-  stroke-width: 3px;
-}
-
-.marker {
-  fill:   #8899bb !important;
-  stroke: #8899bb !important;
+.callout-tip {
+  background-color: #535523 !important;
 }
 
 .callout-header, .callout-header *, .callout-title, .callout-title strong {
-  color: #b8aa6e !important;
+  color: #d4c27e !important;
 }
 
-/* Anpassungen für Bildunterschriften */
+
+/* ── Custom callout: Python tip ──────────────────────────────────────────── */
+.callout-python {
+  border-left-color: #3776ab !important;
+  background-color: #1e2d3d !important;
+}
+.callout-python .callout-icon::before {
+  background-image: none !important;
+  content: url("Theme/Icons/python.svg");
+  display: inline-block;
+  height: 1em;
+  width: 1em;
+}
+
+/* ── Custom callout: calculation note (pencil) ──────────────────────────── */
+.callout-rechnen {
+  border-left-color: #b8aa6e !important;
+  background-color: #3e3b26 !important;
+}
+.callout-rechnen .callout-icon::before {
+  background-image: none !important;
+  content: url("Theme/Icons/pencil.svg");
+  display: inline-block;
+  height: 1em;
+  width: 1em;
+}
+
+/* Lift code blocks slightly off the page background */
+div.sourceCode {
+  background-color: rgba(52, 52, 62, 0.65);
+}
+
+/* Figure captions */
 figcaption, .figure-caption {
   color: #f8f9fa !important;
 }
@@ -166,29 +204,344 @@ figcaption, .figure-caption {
 #fig-schema-mermaid .label text,
 #fig-schema-mermaid .nodeLabel,
 #fig-schema-mermaid span {
-  color: #ddd0a0 !important;         // ← Textfarbe (braucht !important wegen inline-style)
-  fill:  #ddd0a0 !important;         // ← fill für SVG-Text
+  color: white !important;         // ← text colour (needs !important because of the inline style)
+  fill:  white !important;         // ← fill for SVG text
 }
 
 #fig-schema-mermaid .edgePath .path,
 #fig-schema-mermaid .flowchart-link {
-  stroke:       rgb(131, 130, 131) !important;           // ← Farbe der Linie
-  stroke-width: 3px;               // ← Dicke (Original: 2px)
+  stroke:       rgb(131, 130, 131) !important;           // ← line colour
+  stroke-width: 3px;               // ← width (original: 2px)
 }
 
 #fig-schema-mermaid .marker {
-  fill:   rgb(131, 130, 131) !important;                 // ← Rahmen/Fill des Markers
+  fill:   rgb(131, 130, 131) !important;                 // ← marker border/fill
   stroke: rgb(131, 130, 131) !important;
 }
 
 #fig-schema-mermaid {
-  font-size: 16px;                 // ← Schriftgröße (kannst du anpassen)
-  // font-family: sans-serif;      // ← auskommentiert – Original bleibt
+  font-size: 16px;                 // ← font size
+  // font-family: sans-serif;      // ← commented out - keep the original
 }
 
-/* Deutlicheres Highlighting für den aktiven Navbar-Tab */
+/* Navbar as tall as in Morph: Slate pads the title and menu items more, the bar
+   jumped by a few pixels when switching light/dark. */
+.navbar .nav-link {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+.navbar-brand {
+  padding-top: 0.3125rem;
+  padding-bottom: 0.3125rem;
+}
+
+/* Slate gives the navbar a 1px border top/bottom, Morph does not -> padding 1px smaller */
+.navbar {
+  padding-top: calc(0.6rem - 1px) !important;
+  padding-bottom: calc(0.6rem - 1px) !important;
+}
+/* Phone: second bar (sidebar button, breadcrumbs) padded like in Morph;
+   Slate has less padding and a 1px border there */
+.quarto-secondary-nav .quarto-btn-toggle {
+  padding-top: calc(1rem - 1px);
+  padding-bottom: calc(1rem - 1px);
+}
+.quarto-secondary-nav .breadcrumb {
+  padding-top: calc(1rem - 1px);
+  padding-bottom: calc(1rem - 1px);
+}
+
+/* Centre the title in the navbar */
+.navbar {
+  min-height: 56px;
+  padding-top: 0.6rem;
+  padding-bottom: 0.6rem;
+}
+.navbar > .container-fluid {
+  min-height: 56px;
+}
+.navbar-brand {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  border-right: none !important; /* no separator directly after the title */
+}
+.navbar-brand-logo {
+  border-right: none !important;
+}
+
+/* Clearer highlighting for the active navbar tab */
 .navbar-nav .nav-link.active {
-  color: #b8aa6e !important;
+  color: #d4c27e !important;
   font-weight: bold;
-  border-bottom: 2px solid #b8aa6e;
+  border-bottom: 2px solid #d4c27e;
+}
+
+/* Callouts without their own dark colour (caution, warning, important): otherwise
+   `.callout { background }` from morph_custom.scss still applies (light yellow) and
+   the white text is barely readable. note, tip, python and rechnen have their own
+   colours above. */
+.callout:not(.callout-note):not(.callout-tip):not(.callout-python):not(.callout-rechnen) {
+  background-color: #2f343a !important;
+}
+
+/* Breadcrumb path above the title: link was Slate blue on dark (barely readable) */
+.quarto-page-breadcrumbs .breadcrumb-item a,
+.quarto-page-breadcrumbs a {
+  color: #9ec5fe; /* 8.1:1 */
+}
+
+/* Buttons of pyodide-interaktiv (gear, on the cells: reset, copy, + code block,
+   save, feedback): btn-light/btn-default have a light grey gradient in Slate, the
+   light icons were barely visible on it. "Run code" stays as it is. */
+.qpyodide-button.btn-light,
+.qpyodide-button-codeblock,
+.qpyodide-button-feedback {
+  background-image: none !important;
+  background-color: #3e444a !important;
+  border-color: #6c757d !important;
+  color: #e9ecef !important;
+}
+.qpyodide-button.btn-light:not(:disabled),
+.qpyodide-button-codeblock:not(:disabled),
+.qpyodide-button-feedback:not(:disabled) {
+  opacity: 1 !important;
+}
+.qpyodide-button.btn-light:hover,
+.qpyodide-button-codeblock:hover,
+.qpyodide-button-feedback:hover {
+  background-color: #4e555c !important;
+  color: #ffffff !important;
+}
+
+/* "</> Code" button top right: was grey #6c757d on dark */
+.code-tools-button {
+  color: #dee2e6 !important;
+}
+.code-tools-button:hover {
+  color: #ffffff !important;
+}
+
+/* Collapsible blocks ("Show Python code", <details>): were grey #6c757d (3.6:1) */
+main summary {
+  display: list-item;
+  width: fit-content;
+  color: #9ec5fe;
+  font-weight: 600;
+  cursor: pointer;
+  background-color: #343a40;
+  border: 1px solid #4a5058;
+  border-radius: 4px;
+  padding: 0.1em 0.6em;
+}
+main summary:hover {
+  background-color: #3e444a;
+}
+
+/* Inline code like `matplotlib`: had the body text colour, now pink and set off as
+   a box. pyodide-interaktiv sets via <style> with !important
+   `body:not(.quarto-light) :not(pre) > code { color: var(--bs-body-color) }` and
+   thereby overrides its own variable --qpyodide-inline-code-color (bug in the
+   extension). Hence more specific + !important here; remove once fixed in CTM. */
+body.quarto-dark main :not(pre) > code {
+  color: #f0a6ca !important;
+  background-color: #343a40;
+  border: 1px solid #4a5058;
+  border-radius: 4px;
+  padding: 0.05em 0.3em;
+}
+
+/* Breadcrumb path: current page (last part) was pale */
+.quarto-page-breadcrumbs .breadcrumb-item.active,
+.quarto-page-breadcrumbs .breadcrumb-item:last-child,
+.quarto-page-breadcrumbs .breadcrumb-item:last-child a {
+  color: #dee2e6;
+}
+
+/* Read-only cells (pyodide): stronger editor border so the block stands out */
+.qpyodide-editor {
+  border-color: #6c757d !important;
+}
+
+/* Clearly visible hover: sidebar, "On this page" and navbar.
+   box-shadow instead of padding so nothing shifts on hover. */
+#quarto-sidebar .sidebar-link:hover,
+#quarto-sidebarnav-toggle .sidebar-link:hover,
+#TOC a:hover {
+  color: #d4c27e !important;
+  background-color: rgba(212, 194, 126, 0.14);
+  box-shadow: 0 0 0 3px rgba(212, 194, 126, 0.14);
+  border-radius: 3px;
+}
+.navbar .nav-link:hover,
+.navbar .quarto-navigation-tool:hover {
+  color: #ffffff !important;
+  background-color: rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+}
+
+/* math-exercise: buttons and input fields flat and built like in light mode
+   (Slate would have light grey gradients with white text). "Check" is green. */
+.math-exercise-controls .btn,
+.py-exercise-buttons .btn,
+.py-download-section .btn {
+  box-shadow: none !important;
+  background-image: none !important;
+  border: 1px solid #6c757d !important;
+  border-radius: 6px;
+}
+.math-exercise-controls .btn-light,
+.py-exercise-buttons .btn-light,
+.py-download-section .btn {
+  background-color: #3e444a !important;
+  color: #e9ecef !important;
+}
+.math-exercise-controls .btn-light:hover,
+.py-exercise-buttons .btn-light:hover,
+.py-download-section .btn:hover {
+  background-color: #4e555c !important;
+}
+.math-exercise-controls .math-check-btn,
+.py-exercise-buttons .py-exercise-check {
+  background-color: #1e7a4a !important;
+  border-color: #1e7a4a !important;
+  color: #ffffff !important;
+}
+.math-exercise-controls .math-check-btn:hover,
+.py-exercise-buttons .py-exercise-check:hover {
+  background-color: #23905a !important;
+  border-color: #23905a !important;
+}
+.math-input {
+  background-color: #343a40;
+  border: 1px solid #6c757d;
+  color: #e9ecef;
+}
+
+/* Title and search: hover like the other navbar entries */
+.navbar .navbar-brand:hover,
+.navbar #quarto-search .aa-DetachedSearchButton:hover {
+  background-color: rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+}
+.navbar #quarto-search .aa-DetachedSearchButton:hover .aa-DetachedSearchButtonIcon {
+  color: #ffffff !important;
+}
+
+/* math-exercise: title on hover. The extension uses --bs-primary, which in Slate
+   is almost black (#3a3f44) - the title disappeared on hover. */
+.math-exercise-toggle:hover,
+.math-exercise-toggle:hover .math-chevron {
+  color: #d4c27e !important;
+  border-bottom-color: #d4c27e !important;
+}
+
+/* Found by the automated check of all pages (contrast < 4.5:1) */
+/* Slate sets the text colour variable to grey #6c757d (3:1). Only on pages with
+   pyodide cells was it overridden (by the extension) - otherwise e.g. math-exercise
+   exercises were grey. */
+body.quarto-dark {
+  --bs-body-color: #e9ecef;
+}
+/* Links in the text: Slate grey #8b8f92 was hard to tell apart from the text */
+body.quarto-dark main a:not(.btn):not(.nav-link) {
+  color: #9ec5fe;
+}
+body.quarto-dark main a:not(.btn):not(.nav-link):hover {
+  color: #cfe2ff;
+}
+.breadcrumb .breadcrumb-item a {
+  color: #9ec5fe;
+}
+.breadcrumb .breadcrumb-item:last-child a {
+  color: #dee2e6;
+}
+.qpyodide-storage-status {
+  opacity: 1 !important;
+  color: #e9ecef !important;
+}
+.py-download-hint {
+  color: #c8cdd3 !important;
+}
+.sidebar-expand-all {
+  opacity: 1 !important;
+}
+/* Navbar: Slate's left/right border made the inside 2px narrower than in light mode */
+.navbar {
+  border-left-width: 0 !important;
+  border-right-width: 0 !important;
+}
+/* Navbar dropdowns (language menu): inactive entries were #6c757d on #3e444a */
+.navbar .dropdown-menu .dropdown-item {
+  color: #e9ecef;
+}
+.navbar .dropdown-menu .dropdown-item:hover,
+.navbar .dropdown-menu .dropdown-item:focus {
+  color: #fff;
+  background-color: #4e555c;
+}
+.navbar .dropdown-menu .dropdown-item.active {
+  color: #272b30;
+  background-color: #d4c27e; /* gold like the other accents in dark mode */
+}
+/* Findings from checking the other tutorials (2026-10-08) */
+/* Static Python code: comments were light grey on dark (2.6:1) */
+body.quarto-dark code span.co { color: #a0a8b2; }
+/* Exercise headings on a grey box: gold slightly lighter */
+body.quarto-dark .theorem.exercise h4 { color: #e6d9a3; }
+/* Links in coloured callouts */
+body.quarto-dark main .callout a:not(.btn):not(.nav-link) { color: #cfe2ff; }
+/* Previous/next links at the bottom of the page */
+.nav-page .pagination-link .nav-page-text { color: #c8cdd3; }
+/* Bootstrap class .bg-light stays light otherwise, but the text becomes white */
+body.quarto-dark .bg-light { background-color: #3e444a !important; }
+/* Table of contents on the right: active entry clear */
+body.quarto-dark #TOC a.nav-link.active {
+  color: #d4c27e !important;
+  font-weight: 700 !important;
+  border-left-color: #d4c27e !important;
+}
+/* Breadcrumbs above the title: links underlined, current page as plain text */
+body.quarto-dark .quarto-title-breadcrumbs .breadcrumb-item a,
+body.quarto-dark .quarto-page-breadcrumbs .breadcrumb-item a {
+  color: #9ec5fe !important;
+  text-decoration: underline !important;
+  text-decoration-color: rgba(158, 197, 254, 0.45) !important;
+}
+body.quarto-dark .quarto-title-breadcrumbs .breadcrumb-item a:hover,
+body.quarto-dark .quarto-page-breadcrumbs .breadcrumb-item a:hover {
+  color: #cfe2ff !important;
+  text-decoration-color: #cfe2ff !important;
+}
+body.quarto-dark .quarto-title-breadcrumbs .breadcrumb-item:last-child a,
+body.quarto-dark .quarto-page-breadcrumbs .breadcrumb-item:last-child a {
+  color: #e9ecef !important;
+  text-decoration: none !important;
+}
+body.quarto-dark .breadcrumb-item + .breadcrumb-item::before {
+  color: #adb5bd !important;
+}
+/* Reader mode: collapsible bars for sidebar/table of contents */
+body.quarto-dark .quarto-sidebar-toggle {
+  background-color: #343a40 !important;
+  border-color: #6c757d !important;
+}
+body.quarto-dark .quarto-sidebar-toggle-title {
+  color: #e9ecef !important;
+}
+body.quarto-dark .quarto-sidebar-toggle-title:hover {
+  background-color: #3e444a !important;
+}
+body.quarto-dark .quarto-sidebar-toggle-icon {
+  color: #d4c27e !important;
+}
+/* Heading above the left sidebar (text/size in styles.css): like "On this page" */
+body.quarto-dark #quarto-sidebar .sidebar-menu-container::before {
+  color: #d4c27e;
+}
+/* Sidebar: current page like in the table of contents on the right (layout in styles.css) */
+body.quarto-dark #quarto-sidebar .sidebar-link.active,
+body.quarto-dark #quarto-sidebarnav-toggle .sidebar-link.active {
+  color: #d4c27e !important;
+  box-shadow: inset 2px 0 0 #d4c27e;
 }

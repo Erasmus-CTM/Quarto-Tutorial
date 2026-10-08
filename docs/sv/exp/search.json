@@ -279,7 +279,7 @@
     "href": "Qmd Files/Tipps and Tricks/exp_multilanguage.html#idén-i-korthet",
     "title": "Flerspråkiga projekt",
     "section": "Idén i korthet",
-    "text": "Idén i korthet\n                 beg                int                exp\ndeutsch   docs/de/beg/...    docs/de/int/...    docs/de/exp/...     + docs/de/index.html\nenglish   docs/en/beg/...    docs/en/int/...    docs/en/exp/...     + docs/en/index.html\nsvenska   docs/sv/beg/...    docs/sv/int/...    docs/sv/exp/...     + docs/sv/index.html\nnorsk     docs/no/beg/...    docs/no/int/...    docs/no/exp/...     + docs/no/index.html\ndansk     docs/da/beg/...    docs/da/int/...    docs/da/exp/...     + docs/da/index.html\n\nEn .qmd per sida, med alla språk i samma fil (se nedan).\nNivåprofilen (_quarto-beg.yml …) avgör vilka sidor som renderas.\nSpråkprofilen (_quarto-english.yml …) avgör vad saker heter: menyrad, sidofält, lang.\nEtt litet skript på sidan knyter ihop det: när du byter språk stannar du på samma sida, när du byter nivå kommer du till den nivåns startsida.",
+    "text": "Idén i korthet\n                 beg                int                exp\ndeutsch   docs/de/beg/...    docs/de/int/...    docs/de/exp/...     + docs/de/index.html\nenglish   docs/en/beg/...    docs/en/int/...    docs/en/exp/...     + docs/en/index.html\nsvenska   docs/sv/beg/...    docs/sv/int/...    docs/sv/exp/...     + docs/sv/index.html\nnorsk     docs/no/beg/...    docs/no/int/...    docs/no/exp/...     + docs/no/index.html\ndansk     docs/da/beg/...    docs/da/int/...    docs/da/exp/...     + docs/da/index.html\n\nEn .qmd per sida, med alla språk i samma fil (se nedan).\nNivåprofilen (_quarto-beg.yml …) avgör vilka sidor som renderas.\nSpråkprofilen (_quarto-english.yml …) avgör vad saker heter: menyrad, sidofält, lang.\nbuild.py knyter ihop det efter renderingen: när du byter språk stannar du på samma sida, när du byter nivå kommer du till den nivåns startsida.",
     "crumbs": [
       "Exempelsida",
       "Flerspråkiga projekt"
@@ -319,11 +319,11 @@
     ]
   },
   {
-    "objectID": "Qmd Files/Tipps and Tricks/exp_multilanguage.html#steg-4-navigering-utan-efterbearbetning",
-    "href": "Qmd Files/Tipps and Tricks/exp_multilanguage.html#steg-4-navigering-utan-efterbearbetning",
+    "objectID": "Qmd Files/Tipps and Tricks/exp_multilanguage.html#steg-4-navigering-genom-efterbearbetning",
+    "href": "Qmd Files/Tipps and Tricks/exp_multilanguage.html#steg-4-navigering-genom-efterbearbetning",
     "title": "Flerspråkiga projekt",
-    "section": "Steg 4 – Navigering utan efterbearbetning",
-    "text": "Steg 4 – Navigering utan efterbearbetning\nQuarto kan inte länka mellan profiler: sett från körningen int,english finns varken docs/de/ eller docs/en/beg/. Därför skrev preview.py tidigare om varje HTML-fil efter renderingen.\nNu innehåller menyraden bara platshållare (#sprache-de, #niveau-beg). Skriptet navigation.html (som läggs till på varje sida med include-after-body) läser sin egen sökväg, t.ex. /en/int/Qmd Files/…, och fyller i:\n\n\n\nPlatshållare\nMål\n\n\n\n\n#sprache-de\nsamma sida, /en/ → /de/\n\n\n#niveau-beg\nstartsidan för Beginner på det aktuella språket\n\n\ntiteln uppe till vänster\nstartsidan för det aktuella språket\n\n\n\nLänkar i texten till en viss sida på en annan nivå fungerar utan skriptet, som en relativ sökväg in i den färdiga mappstrukturen, t.ex. ../../../int/Qmd Files/Getting Started/getting_started.html.",
+    "section": "Steg 4 – Navigering genom efterbearbetning",
+    "text": "Steg 4 – Navigering genom efterbearbetning\nQuarto kan inte länka mellan profiler: sett från körningen int,english finns varken docs/de/ eller docs/en/beg/. Därför innehåller menyraden bara platshållare (#sprache-de, #niveau-beg).\nNär alla körningar är klara går build.py igenom de färdiga HTML-filerna. Utifrån sökvägen till varje sida, t.ex. en/int/Qmd Files/…, vet det språk och nivå och fyller i fasta relativa länkar:\n\n\n\nPlatshållare\nMål\n\n\n\n\n#sprache-de\nsamma sida, /en/ → /de/\n\n\n#niveau-beg\nstartsidan för Beginner på det aktuella språket\n\n\ntiteln uppe till vänster\nstartsidan för det aktuella språket\n\n\n\nEftersom länkarna står direkt i HTML-koden behöver sidan inget JavaScript för detta. Samma steg lägger också till knappen ”Fäll ut alla” längst ner i sidofältet.\nLänkar i texten till en viss sida på en annan nivå fungerar utan efterbearbetning, som en relativ sökväg in i den färdiga mappstrukturen, t.ex. ../../../int/Qmd Files/Getting Started/getting_started.html.",
     "crumbs": [
       "Exempelsida",
       "Flerspråkiga projekt"
@@ -334,7 +334,7 @@
     "href": "Qmd Files/Tipps and Tricks/exp_multilanguage.html#steg-5-bygg-allt",
     "title": "Flerspråkiga projekt",
     "section": "Steg 5 – Bygg allt",
-    "text": "Steg 5 – Bygg allt\npython build.py            # 5 languages × (start page + 3 levels) = 20 runs, then preview\npython build.py --no-serve # build only\nFör varje språk renderar skriptet först startsidan (root), sedan de tre nivåerna i undermappar, och skriver docs/index.html, som skickar vidare till mappen för webbläsarens språk (engelska om språket saknas).\n\n\n\n\n\n\nVarningBegränsningar\n\n\n\n\nSökning: varje körning har sitt eget sökindex. Sökningen hittar bara sidor på den aktuella nivån på det aktuella språket.\nquarto preview visar en enda kombination, där gör platshållarlänkarna ingenting.\nStorlek: varje sida finns en gång per språk i samma fil. För mycket stora projekt är separata mappar per språk lättare att underhålla. Navigeringen från steg 4 fungerar på samma sätt så länge filnamnen stämmer överens.",
+    "text": "Steg 5 – Bygg allt\npython build.py            # 5 languages × (start page + 3 levels) = 20 runs, then preview\npython build.py --no-serve # build only\nFör varje språk renderar skriptet först startsidan (root), sedan de tre nivåerna i undermappar, fyller i navigeringen från steg 4 och skriver docs/index.html, som skickar vidare till mappen för webbläsarens språk (engelska om språket saknas).\n\n\n\n\n\n\nVarningBegränsningar\n\n\n\n\nSökning: varje körning har sitt eget sökindex. Sökningen hittar bara sidor på den aktuella nivån på det aktuella språket.\nquarto preview visar en enda kombination, där gör platshållarlänkarna ingenting, och knappen ”Fäll ut alla” saknas (båda kommer från build.py).\nStorlek: varje sida finns en gång per språk i samma fil. För mycket stora projekt är separata mappar per språk lättare att underhålla. Navigeringen från steg 4 fungerar på samma sätt så länge filnamnen stämmer överens.",
     "crumbs": [
       "Exempelsida",
       "Flerspråkiga projekt"

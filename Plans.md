@@ -46,11 +46,11 @@ Expert structure:
         - jsxgraph
         - (Own Extension)
     - Useful Configurations
-        - yml (Mehrere Formate, Globale Variablen)
+        - yml (multiple formats, global variables)
         - qmd (Callouts, Visible when)
 
-Plan mit Claude
-===============
+Plan with Claude
+================
 
 ## Example Site — Multi-Page Structure
 

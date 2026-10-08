@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <title>Weiterleitung / Redirect</title>
 <script>
-  // Browsersprache -> Ordner; Norwegisch kommt als nb, nn oder no. Sonst Englisch.
-  var ORDNER = { de: "de", en: "en", sv: "sv", nb: "no", nn: "no", no: "no", da: "da" };
-  var sprache = (navigator.language || "de").slice(0, 2).toLowerCase();
-  window.location.replace((ORDNER[sprache] || "en") + "/");
+  // browser language -> folder; Norwegian comes as nb, nn or no. English otherwise.
+  var FOLDER = { de: "de", en: "en", sv: "sv", nb: "no", nn: "no", no: "no", da: "da" };
+  var lang = (navigator.language || "de").slice(0, 2).toLowerCase();
+  window.location.replace((FOLDER[lang] || "en") + "/");
 </script>
 <noscript><meta http-equiv="refresh" content="0; url=de/"></noscript>
 </head>

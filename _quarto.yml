@@ -4,7 +4,7 @@ project:
 execute:
   freeze: auto
 
-# title-en: im Seitenkopf wird im englischen Lauf zum Titel
+# title-en: (-sv, -no, -da) in the page header becomes the title in that language's run
 filters:
   - sprache.lua
 
@@ -13,22 +13,23 @@ format:
     theme:
       light: [morph, Theme/morph_custom.scss]
       dark:  [slate, Theme/slate_custom.scss]
-    # Navbar-Symbole (Suche, Dunkelmodus, Lesemodus) wie in den anderen Tutorials
+    respect-user-color-scheme: true
+    toc: true
+    # navbar icons (search, dark mode, reader mode) as in the other tutorials
     css: styles.css
     include-in-header:
       - text: |
           <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    include-after-body:
-      # Sprach- und Niveauwechsel (setzt die Platzhalter-Links der Navbar)
-      - navigation.html
-      # Knopf „Alle ausklappen“ in der Seitenleiste (nur wo es Abschnitte gibt)
-      - seitenleiste_ausklappen.html
 
-# Zwei Achsen: aus jeder Gruppe ist immer genau ein Profil aktiv.
+# Two axes: exactly one profile from each group is active.
 #   quarto render --profile int,english --output-dir docs/en/int
-# Alle Kombinationen baut build.py.
+# build.py renders all combinations.
 profile:
   default: [beg, deutsch]
   group:
-    - [beg, int, exp, root]   # Niveau (root = Startseite je Sprache)
-    - [deutsch, english, svenska, norsk, dansk]   # Sprache
+    - [beg, int, exp, root]   # level (root = start page per language)
+    - [deutsch, english, svenska, norsk, dansk]   # language
+
+# previous/next links at the bottom of every page (all levels and languages)
+website:
+  page-navigation: true
