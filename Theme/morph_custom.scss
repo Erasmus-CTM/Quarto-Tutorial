@@ -307,7 +307,7 @@ body:not(.quarto-dark) main summary:hover {
 }
 
 /* Inline code like `matplotlib`: set off from the text as a small box */
-body:not(.quarto-dark) main :not(pre) > code {
+body:not(.quarto-dark) main :not(pre):not(.qpyodide-terminal) > code {
   color: #a3195b; /* magenta: clearly different from the navy text */
   background-color: rgba(255, 255, 255, 0.7);
   border: 1px solid #b7c3dc;

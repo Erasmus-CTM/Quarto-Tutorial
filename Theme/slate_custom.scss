@@ -343,7 +343,7 @@ main summary:hover {
    `body:not(.quarto-light) :not(pre) > code { color: var(--bs-body-color) }` and
    thereby overrides its own variable --qpyodide-inline-code-color (bug in the
    extension). Hence more specific + !important here; remove once fixed in CTM. */
-body.quarto-dark main :not(pre) > code {
+body.quarto-dark main :not(pre):not(.qpyodide-terminal) > code {
   color: #f0a6ca !important;
   background-color: #343a40;
   border: 1px solid #4a5058;

@@ -153,6 +153,27 @@
     });
   }
 
+  // Monaco has ONE theme for all editors on the page: every create({theme})
+  // switches every editor, including those of pyodide-interaktiv. So the theme
+  // must follow Quarto's dark mode (body.quarto-dark/-light), not be fixed.
+  function monacoTheme() {
+    var cls = document.body.classList;
+    if (cls.contains('quarto-dark')) return 'vs-dark';
+    if (cls.contains('quarto-light')) return 'vs';
+    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+      ? 'vs-dark' : 'vs';
+  }
+
+  // Follow theme toggles live (also needed standalone, without pyodide-interaktiv)
+  var themeObserverStarted = false;
+  function watchMonacoTheme() {
+    if (themeObserverStarted) return;
+    themeObserverStarted = true;
+    new MutationObserver(function () {
+      if (window.monaco) monaco.editor.setTheme(monacoTheme());
+    }).observe(document.body, { attributes: true, attributeFilter: ['class'] });
+  }
+
   function escapeHtml(str) {
     return String(str)
       .replace(/&/g, '&amp;')
@@ -429,7 +450,7 @@
       editor = monaco.editor.create(editorContainer, {
         value: savedCode !== null ? savedCode : starterCode,
         language: 'python',
-        theme: 'vs-light',
+        theme: monacoTheme(),
         automaticLayout: true,
         scrollBeyondLastLine: false,
         minimap: { enabled: false },
@@ -437,6 +458,8 @@
         renderLineHighlight: 'none',
         hideCursorInOverviewRuler: true,
       });
+
+      watchMonacoTheme();
 
       // Store reference so downloadAll() can read the current code later
       exerciseEditors[label] = editor;
