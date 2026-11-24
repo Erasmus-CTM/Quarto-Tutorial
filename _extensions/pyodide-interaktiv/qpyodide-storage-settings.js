@@ -33,6 +33,19 @@
   }
   document.addEventListener("ctm:store-enabled", refresh); refresh();
   const feedback = root.AIFeedback;
+  const gear = document.createElement("button"); gear.type = "button";
+  gear.className = "btn btn-light btn-sm qpyodide-button qpyodide-storage-gear";
+  gear.textContent = "⚙"; gear.title = QP_L.settingsTitleStorageOnly; gear.setAttribute("aria-label", gear.title);
+  const anchor = document.getElementById("qpyodide-status-right");
+  // With the shared CTM settings dialog the page gets exactly one gear: this one,
+  // in the status row. The autosave choice becomes its own section of that dialog.
+  if (root.CTMSettings?.mount && anchor) {
+    feedback?.buildSettings?.();
+    root.CTMSettings.register("code", QP_L.settingsTitleStorageOnly, section);
+    gear.title = root.CTMSettings.text("settings", gear.title); gear.setAttribute("aria-label", gear.title);
+    root.CTMSettings.mount(anchor, gear);
+    return;
+  }
   let dialog, open;
   if (feedback?.buildSettings) {
     dialog = feedback.buildSettings(); open = () => feedback.openSettings();
@@ -46,11 +59,7 @@
     open = () => dialog.showModal ? dialog.showModal() : dialog.setAttribute("open", "");
   }
   dialog.append(section);
-  const gear = document.createElement("button"); gear.type = "button";
-  gear.className = "btn btn-light btn-sm qpyodide-button qpyodide-storage-gear";
-  gear.textContent = "⚙"; gear.title = QP_L.settingsTitleStorageOnly; gear.setAttribute("aria-label", gear.title);
   gear.onclick = open;
-  const anchor = document.getElementById("qpyodide-status-right");
   if (anchor) anchor.append(gear);
   else {
     const first = document.querySelector('[id^="qpyodide-insertion-location-"]');
