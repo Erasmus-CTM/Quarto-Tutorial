@@ -1,0 +1,2257 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.11.9">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>An exercise with automatic checking – Quarto Tutorial</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../Qmd Files/Getting Started/beg_extensions_cheatsheet.pdf" rel="next">
+<link href="../../Qmd Files/Getting Started/beg_extensions.html" rel="prev">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/scrollable-regions/scrollable-regions.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-63b5708e65d6cd79cd7618c58d0c21e7.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-447e42e69aaa9833c0ba1b986f430b20.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-63b5708e65d6cd79cd7618c58d0c21e7.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-fb8bd99ddb08a4ae418d06bec12a5784.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-03e16ff89bb563fb8b0206a0c3f54372.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-fb8bd99ddb08a4ae418d06bec12a5784.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-contrib/ctm-resize-1/ctm-resize.js"></script>
+<link href="../../site_libs/quarto-contrib/ctm-resize-1/ctm-resize.css" rel="stylesheet">
+<script src="../../site_libs/quarto-contrib/ctm-coi-frame-startup-1/coi-frame-startup.js"></script>
+<script src="../../site_libs/quarto-contrib/ctm-assets-0.9.0/assets.js"></script>
+<link href="../../site_libs/quarto-contrib/ctm-ui-0.9.0/ctm-ui.css" rel="stylesheet">
+<script src="../../site_libs/quarto-contrib/ctm-nav-0.9.0/ctm-nav.js"></script>
+<script src="../../site_libs/quarto-contrib/ctm-locale-0.9.0/ctm-locale.js"></script>
+<script src="../../site_libs/quarto-contrib/ctm-locale-0.9.0/common.js"></script>
+<script src="../../site_libs/quarto-contrib/ctm-locale-ui-0.9.0/ui.js"></script>
+<script src="../../site_libs/quarto-contrib/ctm-layout-0.9.0/ctm-layout.js"></script>
+<script src="../../site_libs/quarto-contrib/ctm-layout-0.9.0/ctm-settings.js"></script>
+<link href="../../site_libs/quarto-contrib/ctm-layout-0.9.0/ctm-ui.css" rel="stylesheet">
+<script src="../../site_libs/quarto-contrib/ai-feedback-0.9.0/feedback-core.js"></script>
+<script src="../../site_libs/quarto-contrib/ai-feedback-0.9.0/feedback-dom.js"></script>
+<script src="../../site_libs/quarto-contrib/ai-feedback-0.9.0/ai-feedback.js"></script>
+<link href="../../site_libs/quarto-contrib/ai-feedback-0.9.0/ai-feedback.css" rel="stylesheet">
+<script src="../../site_libs/quarto-contrib/ctm-runtime-0.9.0/pyodide-runtime.js"></script>
+<script src="../../site_libs/quarto-contrib/ctm-worker-0.9.0/pyodide-worker.js"></script>
+<script src="../../site_libs/quarto-contrib/ctm-checkers-0.12.0.dev0+dfad141a/ctm-checkers.js"></script>
+<script src="../../site_libs/quarto-contrib/ctm-locale-math-exercise-0.9.0/math-exercise.js"></script>
+<link href="../../site_libs/quarto-contrib/ctm-matrix-input-0.9.0/ctm-matrix-input.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/math-exercise-0.11.0/math-exercise.css" rel="stylesheet">
+<script src="../../site_libs/quarto-contrib/ctm-copy-0.9.0/ctm-copy.js"></script>
+<script src="../../site_libs/quarto-contrib/ctm-store-0.9.0/ctm-store.js"></script>
+<script src="../../site_libs/quarto-contrib/ctm-locale-py-exercise-0.9.0/py-exercise.js"></script>
+<link href="../../site_libs/quarto-contrib/py-exercise-0.5.0/py-exercise.css" rel="stylesheet">
+<script src="../../site_libs/quarto-contrib/ctm-export-0.9.0/ctm-export.js"></script>
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<script>globalThis.CTM_ASSETS={"bases":{"font-awesome":"https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/","jsxgraph":"https://cdn.jsdelivr.net/npm/jsxgraph@1.14.2/","katex":"https://cdn.jsdelivr.net/npm/katex@0.16.47/","mathjax-newcm-font":"https://cdn.jsdelivr.net/npm/@mathjax/mathjax-newcm-font@4.1.3/","mathjax3":"https://cdn.jsdelivr.net/npm/mathjax@3.2.2/","mathjax4":"https://cdn.jsdelivr.net/npm/mathjax@4.1.3/","monaco-editor":"https://cdn.jsdelivr.net/npm/monaco-editor@0.46.0/","pyodide":"https://cdn.jsdelivr.net/pyodide/v0.28.3/full/","source-sans-pro":"https://cdn.jsdelivr.net/npm/@fontsource/source-sans-pro@5.3.0/"},"mode":"cdn","v":1};</script>
+<script src="../../coi-serviceworker.js"></script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-sidebar floating nav-fixed quarto-light"><a id="quarto-skip-link" class="visually-hidden-focusable" href="#quarto-document-content">Skip to main content</a><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          toggle.setAttribute("aria-checked", alternate ? "true" : "false");
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455).
+    // Not run on load: stylesheets are set before first paint there, and
+    // scrolling would undo the scroll to a URL fragment (#14973).
+    // The one pixel nudge keeps the reader where they were.
+    const refreshSafariScrollbar = () => {
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        const scrollY = window.scrollY;
+        window.scrollTo(0, scrollY > 0 ? scrollY - 1 : 1);
+        setTimeout(() => {
+          window.scrollTo(0, scrollY);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const queryPrefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    const darkModeDefault = queryPrefersDark.matches;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      refreshSafariScrollbar();
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    queryPrefersDark.addEventListener("change", e => {
+      if(window.localStorage.getItem("quarto-color-scheme") !== null)
+        return;
+      const alternate = e.matches
+      toggleColorMode(alternate);
+      refreshSafariScrollbar();
+      localAlternateSentinel = e.matches ? 'alternate' : 'default'; // this is used alongside local storage!
+      toggleGiscusIfUsed(alternate, darkModeDefault);
+    });
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark" aria-label="Site">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Quarto Tutorial</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../beg/Qmd%20Files/Example%20Page/index_beg.html"> 
+<span class="menu-text">Example Page</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" aria-current="page" href="../../../int/Qmd%20Files/Getting%20Started/getting_started.html"> 
+<span class="menu-text">Getting Started</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../exp/Qmd%20Files/Tipps%20and%20Tricks/index_exp.html"> 
+<span class="menu-text">Tips &amp; Tricks</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/Erasmus-CTM/Quarto-Tutorial"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-bi-globe" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-globe" role="img" aria-label="Sprache wählen / Choose language">
+</i> 
+ <span class="menu-text"></span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-bi-globe">    
+        <li>
+    <a class="dropdown-item" href="../../../../de/int/Qmd%20Files/Getting%20Started/beg_check.html">
+ <span class="dropdown-text">Deutsch</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item active" aria-current="true" href="../../../../en/int/Qmd%20Files/Getting%20Started/beg_check.html">
+ <span class="dropdown-text">English</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../sv/int/Qmd%20Files/Getting%20Started/beg_check.html">
+ <span class="dropdown-text">Svenska</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../no/int/Qmd%20Files/Getting%20Started/beg_check.html">
+ <span class="dropdown-text">Norsk</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../da/int/Qmd%20Files/Getting%20Started/beg_check.html">
+ <span class="dropdown-text">Dansk</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <button type="button" role="switch" aria-checked="false" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode" aria-label="Toggle dark mode"><i class="bi"></i></button>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+            <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav" aria-label="Toolbar">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="Breadcrumbs"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../Qmd Files/Getting Started/beg_extensions.html">Interactive Code</a></li><li class="breadcrumb-item"><a href="../../Qmd Files/Getting Started/beg_check.html">An exercise with automatic checking</a></li></ol></nav>
+        <a class="flex-grow-1" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto" aria-label="Section">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Qmd Files/Getting Started/getting_started.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Overview</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <button type="button" class="sidebar-item-text sidebar-item-toggle sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-controls="quarto-sidebar-section-1" aria-expanded="false">
+ <span class="menu-text" id="quarto-sidebar-section-1-label">Creating a Quarto Website</span><i class="bi bi-chevron-right" aria-hidden="true"></i></button>
+      </div>
+      <ul id="quarto-sidebar-section-1" aria-labelledby="quarto-sidebar-section-1-label" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Qmd Files/Getting Started/beg_website_1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">What you need</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Qmd Files/Getting Started/beg_website_2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Create a Website</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Qmd Files/Getting Started/beg_website_3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Publish a Website</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Qmd Files/Getting Started/beg_website_cheatsheet.pdf" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">📄 Cheatsheet (PDF)</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <button type="button" class="sidebar-item-text sidebar-item-toggle sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-controls="quarto-sidebar-section-2" aria-expanded="false">
+ <span class="menu-text" id="quarto-sidebar-section-2-label">Creating an Exercise Sheet with Quarto</span><i class="bi bi-chevron-right" aria-hidden="true"></i></button>
+      </div>
+      <ul id="quarto-sidebar-section-2" aria-labelledby="quarto-sidebar-section-2-label" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Qmd Files/Getting Started/beg_exercise_1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">What you need</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Qmd Files/Getting Started/beg_exercise_2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Create an Exercise Sheet</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Qmd Files/Getting Started/beg_exercise_3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Other Output Formats</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Qmd Files/Getting Started/beg_exercise_cheatsheet.pdf" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">📄 Cheatsheet (PDF)</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <button type="button" class="sidebar-item-text sidebar-item-toggle sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-controls="quarto-sidebar-section-3" aria-expanded="false">
+ <span class="menu-text" id="quarto-sidebar-section-3-label">Creating a Quarto Book</span><i class="bi bi-chevron-right" aria-hidden="true"></i></button>
+      </div>
+      <ul id="quarto-sidebar-section-3" aria-labelledby="quarto-sidebar-section-3-label" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Qmd Files/Getting Started/beg_book_1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">What you need</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Qmd Files/Getting Started/beg_book_2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Create a Book</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Qmd Files/Getting Started/beg_book_cheatsheet.pdf" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">📄 Cheatsheet (PDF)</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <button type="button" class="sidebar-item-text sidebar-item-toggle sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-controls="quarto-sidebar-section-4" aria-expanded="true">
+ <span class="menu-text" id="quarto-sidebar-section-4-label">Interactive Code</span><i class="bi bi-chevron-right" aria-hidden="true"></i></button>
+      </div>
+      <ul id="quarto-sidebar-section-4" aria-labelledby="quarto-sidebar-section-4-label" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Qmd Files/Getting Started/beg_extensions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Interactive Python with Pyodide</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Qmd Files/Getting Started/beg_check.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">An exercise with automatic checking</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Qmd Files/Getting Started/beg_extensions_cheatsheet.pdf" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">📄 Cheatsheet Pyodide (PDF)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Qmd Files/Getting Started/beg_check_cheatsheet.pdf" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">📄 Cheatsheet exercises (PDF)</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    <label class="sidebar-expand-all"><input type="checkbox"><span class="label-expand">▼ Expand all</span><span class="label-collapse">▲ Collapse all</span></label>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" aria-labelledby="toc-title" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#install-the-package" id="toc-install-the-package" class="nav-link active" data-scroll-target="#install-the-package">1 — Install the package</a></li>
+  <li><a href="#prepare-the-page" id="toc-prepare-the-page" class="nav-link" data-scroll-target="#prepare-the-page">2 — Prepare the page</a></li>
+  <li><a href="#write-a-python-exercise" id="toc-write-a-python-exercise" class="nav-link" data-scroll-target="#write-a-python-exercise">3 — Write a Python exercise</a></li>
+  <li><a href="#write-a-maths-exercise" id="toc-write-a-maths-exercise" class="nav-link" data-scroll-target="#write-a-maths-exercise">4 — Write a maths exercise</a></li>
+  <li><a href="#see-the-result" id="toc-see-the-result" class="nav-link" data-scroll-target="#see-the-result">5 — See the result</a></li>
+  <li><a href="#help-from-an-ai-optional" id="toc-help-from-an-ai-optional" class="nav-link" data-scroll-target="#help-from-an-ai-optional">6 — Help from an AI (optional)</a></li>
+  <li><a href="#answers-are-kept" id="toc-answers-are-kept" class="nav-link" data-scroll-target="#answers-are-kept">7 — Answers are kept</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content" tabindex="-1">
+
+<script>window.__aiFeedbackPolicies = {"layers":[],"pageLayers":[]};</script>
+<script>window.__aiFeedbackConfig = {"baseUrl":"","mode":"copy","model":""};</script>
+<script>window.__mathExerciseConfig = {"lang":"en","stopAfter":20};</script>
+<script>window.__pyExerciseConfig = {"feedback":false,"lang":"en","stopAfter":20,"submission":false,"submissionKey":"py-exercise"};</script>
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="Breadcrumbs"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../Qmd Files/Getting Started/beg_extensions.html">Interactive Code</a></li><li class="breadcrumb-item"><a href="../../Qmd Files/Getting Started/beg_check.html">An exercise with automatic checking</a></li></ol></nav>
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title">An exercise with automatic checking</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<!--ctm-save-generated--><div class="ctm-save-bar" role="region" aria-label="Saved answers" hidden=""><p class="ctm-save-notice">Your answers are saved only in this browser.</p><div class="ctm-save-actions"><button type="button" data-ctm-save-toggle="">Do not save on this device</button>
+<button type="button" data-ctm-export="">Export my answers</button>
+<button type="button" data-ctm-clear-page="">Delete answers on this page</button>
+<button type="button" data-ctm-clear-course="">Delete all your answers in this course</button></div><span class="ctm-save-status" role="status" aria-live="polite"></span></div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Prefer a quick reference?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This chapter as a <a href="../../Qmd Files/Getting Started/beg_check_cheatsheet.pdf">PDF cheatsheet</a>: the steps and the syntax of both exercise types, condensed for printing or quick lookup.</p>
+</div>
+</div>
+<p>An exercise with automatic checking tells students at once whether their solution is right. You write the exercise and the correct answer once, and the check runs in the browser. There are two kinds:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Exercise</th>
+<th>Students</th>
+<th>Checked</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>py-exercise</code></td>
+<td>complete a Python function</td>
+<td>with hidden tests (<code>assert</code>)</td>
+</tr>
+<tr class="even">
+<td><code>math-exercise</code></td>
+<td>type a mathematical answer</td>
+<td>with SymPy, equivalent forms count</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Interactive in HTML only
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Checking works only in <strong>HTML output</strong>, that is in websites (<code>format: html</code>) and books. In PDF or Word only the text of the exercise appears.</p>
+</div>
+</div>
+<hr>
+<section id="install-the-package" class="level2">
+<h2 class="anchored" data-anchor-id="install-the-package">1 — Install the package</h2>
+<p>Both exercise types are in the package <strong>CTM Assessment</strong>. If you have not installed it yet, open the <strong>Terminal</strong> in VS Code (<strong>View → Terminal</strong>) and run this in the project folder:</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Windows</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">macOS / Linux</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Terminal</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-filename="Terminal" data-ai-feedback-context="Windows"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.zip</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Terminal</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" data-filename="Terminal" data-ai-feedback-context="macOS / Linux"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.tar.gz</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+</div>
+<p>This only needs to be done <strong>once per project folder</strong>. The same steps are described in more detail on the page <a href="../../Qmd Files/Getting Started/beg_extensions.html">Interactive Code with Pyodide</a>.</p>
+<hr>
+</section>
+<section id="prepare-the-page" class="level2">
+<h2 class="anchored" data-anchor-id="prepare-the-page">2 — Prepare the page</h2>
+<p>Add two things to the header of your <code>.qmd</code> file:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" data-ai-feedback-context="2 — Prepare the page
+Add two things to the header of your .qmd file:"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"My exercises"</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span><span class="at"> html</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">engine</span><span class="kw">:</span><span class="at"> markdown</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">filters</span><span class="kw">:</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> ctm-assessment</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>filters:</code> switches the package on. From Quarto 1.10 on you need <code>engine: markdown</code> on pages with exercises, otherwise the build stops at Jupyter.</p>
+<hr>
+</section>
+<section id="write-a-python-exercise" class="level2">
+<h2 class="anchored" data-anchor-id="write-a-python-exercise">3 — Write a Python exercise</h2>
+<p>A <code>py-exercise</code> block has two parts, separated by the line <code>## TESTS ##</code>. Above it is what students see, below it the hidden tests:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" data-ai-feedback-context="3 — Write a Python exercise
+A py-exercise block has two parts, separated by the line ## TESTS ##. Above it is what students see, below it the hidden tests:"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{py-exercise}</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> square(x):</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Return x squared."""</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Your solution here</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">pass</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">## TESTS ##</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> square(<span class="dv">3</span>) <span class="op">==</span> <span class="dv">9</span>,  <span class="st">"square(3) should be 9"</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> square(<span class="op">-</span><span class="dv">2</span>) <span class="op">==</span> <span class="dv">4</span>, <span class="st">"square(-2) should be 4"</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The text after the comma of an <code>assert</code> is the message when the test fails. Write it as if you were talking to the students.</p>
+<p>This is what the exercise looks like; try it right here:</p>
+<div class="py-exercise-cell" id="py-exercise-1" data-ctm-component="py-exercise" data-ctm-id="check-square" data-ctm-runtime-id="ctm-block-5" data-ctm-source="db9e9d1ec4f67f44" data-ctm-save="true">
+  <noscript>
+    Please enable JavaScript to load the interactive exercise.
+  </noscript>
+</div>
+<script>
+(window.__pyExercises = window.__pyExercises || []).push({"feedbackLanguage":"en","forbiddenImports":[],"forbiddenKeywords":[],"id":1,"label":"check-square","learnerLevel":"","save":true,"showTestHints":true,"source":"db9e9d1ec4f67f44","starter":"def square(x):\n    \"\"\"Return x squared.\"\"\"\n    # Your solution here\n    pass","storeId":"check-square","tests":"assert square(3) == 9,  \"square(3) should be 9\"\nassert square(-2) == 4, \"square(-2) should be 4\""});
+</script>
+<hr>
+</section>
+<section id="write-a-maths-exercise" class="level2">
+<h2 class="anchored" data-anchor-id="write-a-maths-exercise">4 — Write a maths exercise</h2>
+<p>In <code>math-exercise</code> the correct answer is in the question text, in square brackets after an underscore:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" data-ai-feedback-context="4 — Write a maths exercise
+In math-exercise the correct answer is in the question text, in square brackets after an underscore:"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{math-exercise}</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: circle-area</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="in">#| vars: r</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="in">A circle has radius $r = 3$. Give its area exactly (write pi for π):</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="in">$A =$ _[pi*9]</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>#| vars:</code> names the symbols that may appear in the answer. The answer in <code>[...]</code> is a SymPy expression. Try it: <code>pi*9</code>, <code>9*pi</code> and <code>3**2*pi</code> all count as correct.</p>
+<div class="math-exercise-cell" data-similar="false" data-similar-guidance="[]" data-generation-policy="[]" data-similar-data="" id="math-exercise-1" data-label="check-circle-area" data-mode="equivalent" data-reject="" data-vars="r" data-tolerance="" data-decplaces="" data-sigfigs="" data-form="" data-checker="&quot;&quot;" data-givens="&quot;&quot;" data-packages="[]" data-response="" data-embed-response="false" data-partial-credit="false" data-form-credit="0.5" data-field-labels="[]" data-vecdir="col" data-feedback-policy="{&quot;exercise&quot;:&quot;check-circle-area&quot;,&quot;name&quot;:&quot;&quot;}" data-variant-boards="[]" data-variant-board-title="" data-context-mode="auto" data-context-refs="auto" data-context="&quot;4 — Write a maths exercise\nIn math-exercise the correct answer is in the question text, in square brackets after an underscore:\n#| vars: names the symbols that may appear in the answer. The answer in [...] is a SymPy expression. Try it: pi*9, 9*pi and 3**2*pi all count as correct.&quot;" data-context-text="&quot;&quot;" data-ctm-source="7d52b5876f79f70e" data-ctm-component="math-exercise" data-ctm-save="true" data-ctm-id="check-circle-area" data-ctm-runtime-id="ctm-block-7" data-fields="[&quot;math-exercise-1-f1&quot;]" data-structural-field-labels="[&quot;&quot;]">
+<div id="check-circle-area-question" class="math-exercise-question ai-feedback-context" data-math-exercise-source="A circle has radius \(r = 3\). Give its area exactly (write pi for π):<br>
+<br>
+\(A =\) <input type=&quot;text&quot; id=&quot;math-exercise-1-f1&quot; data-vars=&quot;r&quot; autocomplete=&quot;off&quot; autocorrect=&quot;off&quot; spellcheck=&quot;false&quot; class=&quot;math-input math-input-small&quot;>">A circle has radius \(r = 3\). Give its area exactly (write pi for π):<br>
+<br>
+\(A =\) <input type="text" id="math-exercise-1-f1" data-answer="pi*9" data-vars="r" autocomplete="off" autocorrect="off" spellcheck="false" class="math-input math-input-small"></div>
+
+<div class="math-exercise-controls">
+  <button type="button" class="btn btn-primary math-check-btn">✓&nbsp;Check</button>
+  <button type="button" class="btn btn-light math-legend-btn">ⓘ&nbsp;Input help</button>
+  <div class="btn-group">
+    <button type="button" class="btn btn-light math-feedback-btn">💬&nbsp;Feedback</button>
+    <button type="button" class="btn btn-light math-reconfig-btn" title="Change AI configuration">⚙</button>
+  </div>
+</div>
+<div class="math-legend-panel" style="display:none;"></div>
+<div class="math-feedback-area"></div>
+</div>
+<hr>
+</section>
+<section id="see-the-result" class="level2">
+<h2 class="anchored" data-anchor-id="see-the-result">5 — See the result</h2>
+<p>Run <code>quarto preview</code> in the Terminal. On the first click on <strong>Run code</strong> or <strong>Check</strong>, Python loads, which takes a few seconds. Then the exercises show:</p>
+<ul>
+<li>for <code>py-exercise</code>, an editor with buttons to run and reset. After running, it shows which tests pass and which message appears for a failure.</li>
+<li>for <code>math-exercise</code>, an input field and a <strong>Check</strong> button that writes the result next to the field.</li>
+</ul>
+<p>Make a mistake on purpose and see whether the message helps students to move on. Try the correct solution too.</p>
+<hr>
+</section>
+<section id="help-from-an-ai-optional" class="level2">
+<h2 class="anchored" data-anchor-id="help-from-an-ai-optional">6 — Help from an AI (optional)</h2>
+<p>Every exercise can get a <strong>Feedback</strong> button. It turns the exercise and the current answer into a ready-made text that students paste into an AI of their choice. For <code>py-exercise</code> you switch it on and state the assignment in every exercise:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" data-ai-feedback-context="6 — Help from an AI (optional)
+Every exercise can get a Feedback button. It turns the exercise and the current answer into a ready-made text that students paste into an AI of their choice. For py-exercise you switch it on and state the assignment in every exercise:"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="an">py-exercise:</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">  feedback: true</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="in">```{py-exercise}</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">#| task: Complete square so that it returns the square of x.</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> square(x):</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">pass</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co">## TESTS ##</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> square(<span class="dv">3</span>) <span class="op">==</span> <span class="dv">9</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The tests and the expected solution are never sent. How to set hint levels and how to build a page without any AI is described on the page <a href="../../../exp/Qmd Files/Tipps and Tricks/exp_ext_feedback.html">AI feedback &amp; saving</a>.</p>
+<hr>
+</section>
+<section id="answers-are-kept" class="level2">
+<h2 class="anchored" data-anchor-id="answers-are-kept">7 — Answers are kept</h2>
+<p>What students enter stays in the browser of their device. On the next visit it is back. Nothing goes to a server. Students can switch that off in the settings dialog, export their answers or delete them.</p>
+<hr>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>What next?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>All options of both exercise types (forbidden commands, check modes, partial credit, question pools, submission) are under <a href="../../../exp/Qmd Files/Tipps and Tricks/exp_extensions.html">Tips &amp; Tricks</a>.</p>
+</div>
+</div>
+
+
+<!-- -->
+
+<!--ctm-save-generated--><script type="application/json" id="ctm-store-manifest">{"exercises":[{"component":"py-exercise","id":"check-square","order":5,"runtimeId":"ctm-block-5","save":true,"source":"db9e9d1ec4f67f44"},{"component":"math-exercise","id":"check-circle-area","order":7,"runtimeId":"ctm-block-7","save":true,"source":"7d52b5876f79f70e"}],"export":true,"messages":{"answered":"Answered, not graded","answersStorage":"Answers \u0026 storage","clearFailed":"Browser storage could not be cleared or updated. Use your browser settings to remove this course data.","confirmClearCourse":"Delete all your saved answers in this course?","confirmClearPage":"Delete all saved answers on this page?","confirmNewVariant":"Replace your filled answers with a new variant?","confirmSaveOff":"This deletes all saved answers in this course and stops saving.","copyAll":"Copy all","correct":"✓ correct","downloadHTML":"Download .html","downloadMarkdown":"Download .md","exercise":"Exercise","exportClose":"Close","exportTitle":"Export my answers","lastResult":"Last result","locale":"en","notSaving":"Answers aren’t being saved","outdated":"Outdated","partial":"½ partly correct","progressTitle":"Page progress","recordTooLarge":"This answer is too large to save. Copy it before leaving the page.","saveOff":"Do not save on this device","saveOn":"Save again","savedLocal":"Saved in this browser","savingDisabled":"Saving is off for this page.","savingLocal":"Saving in this browser","savingNotice":"Your answers are saved only in this browser.","savingOffNotice":"Saving is off on this device for this course.","settings":"Settings","showSaved":"Show your saved answer","sourceChanged":"The exercise has changed since you answered.","statusCorrect":"correct","statusInvalid":"invalid","statusPartial":"partly correct","statusWrong":"wrong","storageUnavailable":"Saving is unavailable. Your answers are kept in memory for this page only.","total":"{score} of {count}","unattempted":"– not attempted","variantChanged":"This variant has changed.","variantWithdrawn":"This variant has been withdrawn.","wrong":"✗ wrong"},"progress":false,"quizzes":[],"save":true,"v":1}</script>
+<!--ctm-layout-generated--><span id="ctm-layout-ready" hidden=""></span>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const toggle = window.document.createElement('button');
+      toggle.type = "button";
+      toggle.setAttribute("role", "switch");
+      toggle.setAttribute("aria-checked", "false");
+      toggle.classList.add('top-right');
+      toggle.classList.add('quarto-color-scheme-toggle');
+      toggle.setAttribute("aria-label", "Toggle dark mode");
+      toggle.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      toggle.appendChild(i);
+      // Put the toggle in a landmark of its own, so that landmark navigation
+      // can reach it.
+      //
+      // The container is always a fresh direct child of body, and the toggle is
+      // never moved into page furniture that the theme or the author controls.
+      // The toggle is positioned against the page, so any ancestor that
+      // establishes a containing block captures it: a positioned element or a
+      // grid for position: absolute, and transform, filter, will-change or
+      // contain for position: fixed. A direct child of body has none of these
+      // to inherit, and the shift when one appears is silent and visual.
+      //
+      // ARIA says a document should have at most one banner, and axe reports a
+      // duplicate whether or not the banners carry distinct labels. So use a
+      // header when the page has no banner yet, and a named region otherwise.
+      //
+      // A header is a banner wherever it sits, unless it is inside sectioning
+      // content, so this cannot just look at the children of body: a custom
+      // page layout wraps the title block header in a plain div. An explicit
+      // role="banner" always counts.
+      const sectioning = 'article, aside, main, nav, section, [role="article"], [role="complementary"], [role="main"], [role="navigation"], [role="region"]';
+      const hasBanner = Array.from(
+        window.document.querySelectorAll('header:not([role]), [role="banner"]')
+      ).some(function(el) {
+        return el.hasAttribute("role") || el.closest(sectioning) === null;
+      });
+      const container = window.document.createElement(hasBanner ? "div" : "header");
+      if (hasBanner) {
+        container.setAttribute("role", "region");
+        container.setAttribute("aria-label", "Toggle dark mode");
+      }
+      container.classList.add('quarto-color-scheme-toggle-container');
+      container.appendChild(toggle);
+      window.document.body.appendChild(container);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const cellDetails = window.document.querySelectorAll(".cell details.code-fold");
+        for (let i=0; i<cellDetails.length; i++) {
+          const details = cellDetails[i];
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell div.sourceCode.cell-code");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+      window.quartoDecorateExternalLinks = function (root) {
+     var links = (root || window.document).querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+          if (!link.classList.contains('no-external-icon')) {
+          }
+        }
+      }
+      };
+      window.quartoDecorateExternalLinks(window.document);
+    // Esc closes the popup (WCAG 1.4.13) and focus leaving both trigger and
+    // popup closes it (WCAG 2.4.11); tippy handles neither for interactive popups.
+    const hideOnEscAndFocusOut = {
+      name: 'hideOnEscAndFocusOut',
+      defaultValue: true,
+      fn(instance) {
+        const dismiss = () => {
+          // A show scheduled by the trigger delay would otherwise reopen it
+          instance.clearDelayTimeouts();
+          instance.hide();
+        };
+        const onKeyDown = (event) => {
+          if (event.key !== 'Escape') {
+            return;
+          }
+          // Keep Esc from also reaching page handlers (e.g. reveal.js overview),
+          // except an open reveal.js slide menu, which Esc should close too.
+          // The menu handles keys only when its keyboard option is on.
+          const menuHandlesEsc = window.Reveal?.getPlugin?.('menu')?.isOpen() &&
+            window.Reveal.getConfig().menu?.keyboard !== false;
+          if (!menuHandlesEsc) {
+            event.stopPropagation();
+          }
+          if (instance.popper.contains(window.document.activeElement)) {
+            // Disabled while refocusing so the focus trigger does not reopen it
+            instance.disable();
+            instance.reference.focus();
+            instance.enable();
+          }
+          dismiss();
+        };
+        const onFocusOut = (event) => {
+          const target = event.relatedTarget;
+          if (target && !instance.reference.contains(target) &&
+              !instance.popper.contains(target)) {
+            dismiss();
+          }
+        };
+        // On the trigger too: a click trigger (code-annotations: select) has no
+        // blur handling. Attached for the instance's lifetime so leaving the
+        // trigger also cancels a show still pending on the trigger delay.
+        instance.reference.addEventListener('focusout', onFocusOut);
+        return {
+          onShow() {
+            window.document.addEventListener('keydown', onKeyDown, true);
+            instance.popper.addEventListener('focusout', onFocusOut);
+          },
+          onHide() {
+            window.document.removeEventListener('keydown', onKeyDown, true);
+            instance.popper.removeEventListener('focusout', onFocusOut);
+          },
+          onDestroy() {
+            instance.reference.removeEventListener('focusout', onFocusOut);
+          },
+        };
+      },
+    };
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+        plugins: [hideOnEscAndFocusOut],
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          // Each band is positioned against its own containing block, which is
+          // not the offsetParent of the lines, so place it from client rects.
+          const placeBand = (band, firstEl, lastEl, codeBlock) => {
+            const container = band.offsetParent;
+            if (container === null) {
+              return;
+            }
+            const containerRect = container.getBoundingClientRect();
+            // Reveal.js scales slides with a transform, so convert client
+            // pixels back to the CSS pixels of the container.
+            const scale = containerRect.height / container.offsetHeight || 1;
+            const firstRect = firstEl.getBoundingClientRect();
+            const lastRect = lastEl.getBoundingClientRect();
+            const top = (firstRect.top - containerRect.top) / scale - container.clientTop + container.scrollTop;
+            const height = (lastRect.bottom - firstRect.top) / scale;
+            band.style.top = top - 2 + "px";
+            band.style.height = height + 4 + "px";
+            if (codeBlock) {
+              // Without the copy button wrapper, the containing block is wider
+              // than the code block, so span the code block explicitly.
+              const blockRect = codeBlock.getBoundingClientRect();
+              band.style.left = (blockRect.left - containerRect.left) / scale - container.clientLeft + container.scrollLeft + "px";
+              band.style.width = blockRect.width / scale + "px";
+            }
+          };
+          if (lineIds.length > 0) {
+            const el = window.document.getElementById(lineIds[0]);
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const parent = el.parentElement.parentElement;
+            // cook up a div (if necessary) and position it
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            placeBand(div, el, lastEl, parent.closest("div.sourceCode") || parent);
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            placeBand(gutterDiv, el, lastEl);
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+  <script type="application/javascript">
+  window.quartoScrollableRegionsLabels = {"code":"Scrollable code","output":"Scrollable output"};
+  </script>
+<nav class="page-navigation" aria-label="Page">
+  <div class="nav-page nav-page-previous">
+      <a href="../../Qmd Files/Getting Started/beg_extensions.html" class="pagination-link" aria-label="Interactive Python with Pyodide">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Interactive Python with Pyodide</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../Qmd Files/Getting Started/beg_extensions_cheatsheet.pdf" class="pagination-link" aria-label="📄 Cheatsheet Pyodide (PDF)">
+        <span class="nav-page-text">📄 Cheatsheet Pyodide (PDF)</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7" data-shortcodes="false" data-ai-feedback-context="7 — Answers are kept
+What students enter stays in the browser of their device. On the next visit it is back. Nothing goes to a server. Students can switch that off in the settings dialog, export their answers or delete them.
+What next?
+All options of both exercise types (forbidden commands, check modes, partial credit, question pools, submission) are under Tips &amp; Tricks."><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Aufgabe mit automatischer Prüfung"</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="an">title-en:</span><span class="co"> "An exercise with automatic checking"</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="an">title-sv:</span><span class="co"> "Uppgift med automatisk kontroll"</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="an">title-no:</span><span class="co"> "Oppgave med automatisk kontroll"</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="an">title-da:</span><span class="co"> "Opgave med automatisk kontrol"</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="an">engine:</span><span class="co"> markdown</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="an">filters:</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co">  - ctm-assessment</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>:::: {.content-visible when-profile="deutsch"}</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="fu">## Lieber eine Kurzfassung?</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>Dieses Kapitel gibt es als <span class="co">[</span><span class="ot">PDF-Cheatsheet</span><span class="co">](beg_check_cheatsheet.qmd)</span>: die Schritte und die Schreibweise der beiden Aufgabentypen, knapp gefasst zum Ausdrucken oder Nachschlagen.</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>Eine Aufgabe mit automatischer Prüfung sagt Studierenden sofort, ob ihre Lösung stimmt. Du schreibst die Aufgabe und die richtige Antwort einmal, die Prüfung läuft im Browser. Es gibt zwei Arten:</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Aufgabe <span class="pp">|</span> Studierende <span class="pp">|</span> Geprüft wird <span class="pp">|</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`py-exercise`</span> <span class="pp">|</span> ergänzen eine Python-Funktion <span class="pp">|</span> mit versteckten Tests (<span class="in">`assert`</span>) <span class="pp">|</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`math-exercise`</span> <span class="pp">|</span> tippen eine mathematische Antwort <span class="pp">|</span> mit SymPy, gleichwertige Schreibweisen zählen <span class="pp">|</span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>::: {.callout-warning}</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a><span class="fu">## Interaktiv nur in HTML</span></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>Prüfen geht nur in der **HTML-Ausgabe**, also in Websites (<span class="in">`format: html`</span>) und Büchern. In PDF oder Word erscheint nur der Text der Aufgabe.</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a><span class="fu">## 1 – Das Paket installieren</span></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>Beide Aufgabentypen stecken im Paket **CTM Assessment**. Falls du es noch nicht installiert hast, öffne das **Terminal** in VS Code (**View → Terminal**) und gib im Projektordner ein:</span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>::: {.panel-tabset}</span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a><span class="fu">### Windows</span></span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a><span class="in">```{.bash filename="Terminal"}</span></span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.zip</span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a><span class="fu">### macOS / Linux</span></span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a><span class="in">```{.bash filename="Terminal"}</span></span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.tar.gz</span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a>Das ist nur **einmal je Projektordner** nötig. Dieselben Schritte stehen ausführlicher auf der Seite <span class="co">[</span><span class="ot">Interaktiver Code mit Pyodide</span><span class="co">](beg_extensions.qmd)</span>.</span>
+<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a><span class="fu">## 2 – Die Seite vorbereiten</span></span>
+<span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-54"><a href="#cb7-54" aria-hidden="true" tabindex="-1"></a>Ergänze im Kopf deiner <span class="in">`.qmd`</span>-Datei zwei Dinge:</span>
+<span id="cb7-55"><a href="#cb7-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-56"><a href="#cb7-56" aria-hidden="true" tabindex="-1"></a><span class="in">```yaml</span></span>
+<span id="cb7-57"><a href="#cb7-57" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb7-58"><a href="#cb7-58" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Meine Aufgaben"</span></span>
+<span id="cb7-59"><a href="#cb7-59" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span><span class="at"> html</span></span>
+<span id="cb7-60"><a href="#cb7-60" aria-hidden="true" tabindex="-1"></a><span class="fu">engine</span><span class="kw">:</span><span class="at"> markdown</span></span>
+<span id="cb7-61"><a href="#cb7-61" aria-hidden="true" tabindex="-1"></a><span class="fu">filters</span><span class="kw">:</span></span>
+<span id="cb7-62"><a href="#cb7-62" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span>ctm-assessment</span>
+<span id="cb7-63"><a href="#cb7-63" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-65"><a href="#cb7-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-66"><a href="#cb7-66" aria-hidden="true" tabindex="-1"></a><span class="in">`filters:`</span> schaltet das Paket ein. <span class="in">`engine: markdown`</span> brauchst du ab Quarto 1.10 auf Seiten mit Aufgaben, sonst bricht der Build bei Jupyter ab.</span>
+<span id="cb7-67"><a href="#cb7-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-68"><a href="#cb7-68" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb7-69"><a href="#cb7-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-70"><a href="#cb7-70" aria-hidden="true" tabindex="-1"></a><span class="fu">## 3 – Eine Python-Aufgabe schreiben</span></span>
+<span id="cb7-71"><a href="#cb7-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-72"><a href="#cb7-72" aria-hidden="true" tabindex="-1"></a>Ein <span class="in">`py-exercise`</span>-Block hat zwei Teile, getrennt durch die Zeile <span class="in">`## TESTS ##`</span>. Oben steht, was die Studierenden sehen, darunter die versteckten Tests:</span>
+<span id="cb7-73"><a href="#cb7-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-74"><a href="#cb7-74" aria-hidden="true" tabindex="-1"></a><span class="in">````markdown</span></span>
+<span id="cb7-75"><a href="#cb7-75" aria-hidden="true" tabindex="-1"></a><span class="in">```{py-exercise}</span></span>
+<span id="cb7-76"><a href="#cb7-76" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> quadrat(x):</span>
+<span id="cb7-77"><a href="#cb7-77" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Gib das Quadrat von x zurück."""</span></span>
+<span id="cb7-78"><a href="#cb7-78" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Deine Lösung</span></span>
+<span id="cb7-79"><a href="#cb7-79" aria-hidden="true" tabindex="-1"></a>    <span class="cf">pass</span></span>
+<span id="cb7-80"><a href="#cb7-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-81"><a href="#cb7-81" aria-hidden="true" tabindex="-1"></a><span class="co">## TESTS ##</span></span>
+<span id="cb7-82"><a href="#cb7-82" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> quadrat(<span class="dv">3</span>) <span class="op">==</span> <span class="dv">9</span>,  <span class="st">"quadrat(3) sollte 9 sein"</span></span>
+<span id="cb7-83"><a href="#cb7-83" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> quadrat(<span class="op">-</span><span class="dv">2</span>) <span class="op">==</span> <span class="dv">4</span>, <span class="st">"quadrat(-2) sollte 4 sein"</span></span>
+<span id="cb7-84"><a href="#cb7-84" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-85"><a href="#cb7-85" aria-hidden="true" tabindex="-1"></a><span class="in">````</span></span>
+<span id="cb7-86"><a href="#cb7-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-87"><a href="#cb7-87" aria-hidden="true" tabindex="-1"></a>Der Text hinter dem Komma eines <span class="in">`assert`</span> ist die Rückmeldung, wenn der Test scheitert. Schreib ihn so, als würdest du mit den Studierenden sprechen.</span>
+<span id="cb7-88"><a href="#cb7-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-89"><a href="#cb7-89" aria-hidden="true" tabindex="-1"></a>So sieht die Aufgabe aus, probier sie gleich aus:</span>
+<span id="cb7-90"><a href="#cb7-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-91"><a href="#cb7-91" aria-hidden="true" tabindex="-1"></a><span class="in">```{py-exercise}</span></span>
+<span id="cb7-92"><a href="#cb7-92" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: check-quadrat</span></span>
+<span id="cb7-93"><a href="#cb7-93" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> quadrat(x):</span>
+<span id="cb7-94"><a href="#cb7-94" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Gib das Quadrat von x zurück."""</span></span>
+<span id="cb7-95"><a href="#cb7-95" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Deine Lösung</span></span>
+<span id="cb7-96"><a href="#cb7-96" aria-hidden="true" tabindex="-1"></a>    <span class="cf">pass</span></span>
+<span id="cb7-97"><a href="#cb7-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-98"><a href="#cb7-98" aria-hidden="true" tabindex="-1"></a><span class="co">## TESTS ##</span></span>
+<span id="cb7-99"><a href="#cb7-99" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> quadrat(<span class="dv">3</span>) <span class="op">==</span> <span class="dv">9</span>,  <span class="st">"quadrat(3) sollte 9 sein"</span></span>
+<span id="cb7-100"><a href="#cb7-100" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> quadrat(<span class="op">-</span><span class="dv">2</span>) <span class="op">==</span> <span class="dv">4</span>, <span class="st">"quadrat(-2) sollte 4 sein"</span></span>
+<span id="cb7-101"><a href="#cb7-101" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-102"><a href="#cb7-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-103"><a href="#cb7-103" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb7-104"><a href="#cb7-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-105"><a href="#cb7-105" aria-hidden="true" tabindex="-1"></a><span class="fu">## 4 – Eine Mathe-Aufgabe schreiben</span></span>
+<span id="cb7-106"><a href="#cb7-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-107"><a href="#cb7-107" aria-hidden="true" tabindex="-1"></a>Bei <span class="in">`math-exercise`</span> steht die richtige Antwort im Aufgabentext, in eckigen Klammern hinter einem Unterstrich:</span>
+<span id="cb7-108"><a href="#cb7-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-109"><a href="#cb7-109" aria-hidden="true" tabindex="-1"></a><span class="in">````markdown</span></span>
+<span id="cb7-110"><a href="#cb7-110" aria-hidden="true" tabindex="-1"></a><span class="in">```{math-exercise}</span></span>
+<span id="cb7-111"><a href="#cb7-111" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: kreisflaeche</span></span>
+<span id="cb7-112"><a href="#cb7-112" aria-hidden="true" tabindex="-1"></a><span class="in">#| vars: r</span></span>
+<span id="cb7-113"><a href="#cb7-113" aria-hidden="true" tabindex="-1"></a><span class="in">Ein Kreis hat den Radius $r = 3$. Gib seinen Flächeninhalt exakt an (schreibe pi für π):</span></span>
+<span id="cb7-114"><a href="#cb7-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-115"><a href="#cb7-115" aria-hidden="true" tabindex="-1"></a><span class="in">$A =$ _[pi*9]</span></span>
+<span id="cb7-116"><a href="#cb7-116" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-117"><a href="#cb7-117" aria-hidden="true" tabindex="-1"></a><span class="in">````</span></span>
+<span id="cb7-118"><a href="#cb7-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-119"><a href="#cb7-119" aria-hidden="true" tabindex="-1"></a><span class="in">`#| vars:`</span> nennt die Symbole, die in der Antwort vorkommen dürfen. Die Antwort in <span class="in">`[...]`</span> ist ein SymPy-Ausdruck. Probier es aus: <span class="in">`pi*9`</span>, <span class="in">`9*pi`</span> und <span class="in">`3**2*pi`</span> gelten alle als richtig.</span>
+<span id="cb7-120"><a href="#cb7-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-121"><a href="#cb7-121" aria-hidden="true" tabindex="-1"></a><span class="in">```{math-exercise}</span></span>
+<span id="cb7-122"><a href="#cb7-122" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: check-kreisflaeche</span></span>
+<span id="cb7-123"><a href="#cb7-123" aria-hidden="true" tabindex="-1"></a><span class="in">#| vars: r</span></span>
+<span id="cb7-124"><a href="#cb7-124" aria-hidden="true" tabindex="-1"></a><span class="in">Ein Kreis hat den Radius $r = 3$. Gib seinen Flächeninhalt exakt an (schreibe pi für π):</span></span>
+<span id="cb7-125"><a href="#cb7-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-126"><a href="#cb7-126" aria-hidden="true" tabindex="-1"></a><span class="in">$A =$ _[pi*9]</span></span>
+<span id="cb7-127"><a href="#cb7-127" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-128"><a href="#cb7-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-129"><a href="#cb7-129" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb7-130"><a href="#cb7-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-131"><a href="#cb7-131" aria-hidden="true" tabindex="-1"></a><span class="fu">## 5 – Das Ergebnis ansehen</span></span>
+<span id="cb7-132"><a href="#cb7-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-133"><a href="#cb7-133" aria-hidden="true" tabindex="-1"></a>Gib im Terminal <span class="in">`quarto preview`</span> ein. Beim ersten Klick auf **Code ausführen** oder **Überprüfen** lädt Python, das dauert einige Sekunden. Dann zeigen die Aufgaben:</span>
+<span id="cb7-134"><a href="#cb7-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-135"><a href="#cb7-135" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>bei <span class="in">`py-exercise`</span> einen Editor mit den Knöpfen zum Ausführen und Zurücksetzen. Nach dem Ausführen steht dort, welche Tests bestehen und welche Meldung bei einem Fehler erscheint.</span>
+<span id="cb7-136"><a href="#cb7-136" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>bei <span class="in">`math-exercise`</span> ein Eingabefeld und einen Knopf **Überprüfen**, der das Ergebnis neben das Feld schreibt.</span>
+<span id="cb7-137"><a href="#cb7-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-138"><a href="#cb7-138" aria-hidden="true" tabindex="-1"></a>Mach mit Absicht einen Fehler und schau, ob die Rückmeldung den Studierenden weiterhilft. Probier auch die richtige Lösung aus.</span>
+<span id="cb7-139"><a href="#cb7-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-140"><a href="#cb7-140" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb7-141"><a href="#cb7-141" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-142"><a href="#cb7-142" aria-hidden="true" tabindex="-1"></a><span class="fu">## 6 – Hilfe von einer KI (freiwillig)</span></span>
+<span id="cb7-143"><a href="#cb7-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-144"><a href="#cb7-144" aria-hidden="true" tabindex="-1"></a>Jede Aufgabe kann einen Knopf **Feedback** bekommen. Er erzeugt aus der Aufgabe und der aktuellen Antwort einen fertigen Text, den Studierende in eine KI ihrer Wahl einfügen. Für <span class="in">`py-exercise`</span> schaltest du das ein und nennst in jeder Aufgabe den Auftrag:</span>
+<span id="cb7-145"><a href="#cb7-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-146"><a href="#cb7-146" aria-hidden="true" tabindex="-1"></a><span class="in">````markdown</span></span>
+<span id="cb7-147"><a href="#cb7-147" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb7-148"><a href="#cb7-148" aria-hidden="true" tabindex="-1"></a>py-exercise:</span>
+<span id="cb7-149"><a href="#cb7-149" aria-hidden="true" tabindex="-1"></a>  feedback: true</span>
+<span id="cb7-150"><a href="#cb7-150" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb7-151"><a href="#cb7-151" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-152"><a href="#cb7-152" aria-hidden="true" tabindex="-1"></a><span class="in">```{py-exercise}</span></span>
+<span id="cb7-153"><a href="#cb7-153" aria-hidden="true" tabindex="-1"></a><span class="co">#| task: Ergänze quadrat so, dass es das Quadrat von x zurückgibt.</span></span>
+<span id="cb7-154"><a href="#cb7-154" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> quadrat(x):</span>
+<span id="cb7-155"><a href="#cb7-155" aria-hidden="true" tabindex="-1"></a>    <span class="cf">pass</span></span>
+<span id="cb7-156"><a href="#cb7-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-157"><a href="#cb7-157" aria-hidden="true" tabindex="-1"></a><span class="co">## TESTS ##</span></span>
+<span id="cb7-158"><a href="#cb7-158" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> quadrat(<span class="dv">3</span>) <span class="op">==</span> <span class="dv">9</span></span>
+<span id="cb7-159"><a href="#cb7-159" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-160"><a href="#cb7-160" aria-hidden="true" tabindex="-1"></a><span class="in">````</span></span>
+<span id="cb7-161"><a href="#cb7-161" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-162"><a href="#cb7-162" aria-hidden="true" tabindex="-1"></a>Die Tests und die erwartete Lösung werden nie mitgeschickt. Wie du Hinweisstufen festlegst und eine Seite ganz ohne KI baust, steht auf der Seite <span class="co">[</span><span class="ot">KI-Feedback &amp; Speichern</span><span class="co">](../../../exp/Qmd Files/Tipps and Tricks/exp_ext_feedback.html)</span>.</span>
+<span id="cb7-163"><a href="#cb7-163" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-164"><a href="#cb7-164" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb7-165"><a href="#cb7-165" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-166"><a href="#cb7-166" aria-hidden="true" tabindex="-1"></a><span class="fu">## 7 – Antworten bleiben erhalten</span></span>
+<span id="cb7-167"><a href="#cb7-167" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-168"><a href="#cb7-168" aria-hidden="true" tabindex="-1"></a>Was Studierende eintragen, bleibt im Browser ihres Geräts. Beim nächsten Besuch ist es wieder da. Auf einen Server geht dabei nichts. Studierende können das im Einstellungsdialog ausschalten, ihre Antworten exportieren oder löschen.</span>
+<span id="cb7-169"><a href="#cb7-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-170"><a href="#cb7-170" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb7-171"><a href="#cb7-171" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-172"><a href="#cb7-172" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
+<span id="cb7-173"><a href="#cb7-173" aria-hidden="true" tabindex="-1"></a><span class="fu">## Wie geht es weiter?</span></span>
+<span id="cb7-174"><a href="#cb7-174" aria-hidden="true" tabindex="-1"></a>Alle Optionen der beiden Aufgabentypen (verbotene Befehle, Prüfmodi, Teilpunkte, Aufgabenpools, Abgabe) stehen unter <span class="co">[</span><span class="ot">Tipps &amp; Tricks</span><span class="co">](../../../exp/Qmd Files/Tipps and Tricks/exp_extensions.html)</span>.</span>
+<span id="cb7-175"><a href="#cb7-175" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb7-176"><a href="#cb7-176" aria-hidden="true" tabindex="-1"></a>::::</span>
+<span id="cb7-177"><a href="#cb7-177" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-178"><a href="#cb7-178" aria-hidden="true" tabindex="-1"></a>:::: {.content-visible when-profile="english"}</span>
+<span id="cb7-179"><a href="#cb7-179" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
+<span id="cb7-180"><a href="#cb7-180" aria-hidden="true" tabindex="-1"></a><span class="fu">## Prefer a quick reference?</span></span>
+<span id="cb7-181"><a href="#cb7-181" aria-hidden="true" tabindex="-1"></a>This chapter as a <span class="co">[</span><span class="ot">PDF cheatsheet</span><span class="co">](beg_check_cheatsheet.qmd)</span>: the steps and the syntax of both exercise types, condensed for printing or quick lookup.</span>
+<span id="cb7-182"><a href="#cb7-182" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb7-183"><a href="#cb7-183" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-184"><a href="#cb7-184" aria-hidden="true" tabindex="-1"></a>An exercise with automatic checking tells students at once whether their solution is right. You write the exercise and the correct answer once, and the check runs in the browser. There are two kinds:</span>
+<span id="cb7-185"><a href="#cb7-185" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-186"><a href="#cb7-186" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Exercise <span class="pp">|</span> Students <span class="pp">|</span> Checked <span class="pp">|</span></span>
+<span id="cb7-187"><a href="#cb7-187" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|</span></span>
+<span id="cb7-188"><a href="#cb7-188" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`py-exercise`</span> <span class="pp">|</span> complete a Python function <span class="pp">|</span> with hidden tests (<span class="in">`assert`</span>) <span class="pp">|</span></span>
+<span id="cb7-189"><a href="#cb7-189" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`math-exercise`</span> <span class="pp">|</span> type a mathematical answer <span class="pp">|</span> with SymPy, equivalent forms count <span class="pp">|</span></span>
+<span id="cb7-190"><a href="#cb7-190" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-191"><a href="#cb7-191" aria-hidden="true" tabindex="-1"></a>::: {.callout-warning}</span>
+<span id="cb7-192"><a href="#cb7-192" aria-hidden="true" tabindex="-1"></a><span class="fu">## Interactive in HTML only</span></span>
+<span id="cb7-193"><a href="#cb7-193" aria-hidden="true" tabindex="-1"></a>Checking works only in **HTML output**, that is in websites (<span class="in">`format: html`</span>) and books. In PDF or Word only the text of the exercise appears.</span>
+<span id="cb7-194"><a href="#cb7-194" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb7-195"><a href="#cb7-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-196"><a href="#cb7-196" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb7-197"><a href="#cb7-197" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-198"><a href="#cb7-198" aria-hidden="true" tabindex="-1"></a><span class="fu">## 1 — Install the package</span></span>
+<span id="cb7-199"><a href="#cb7-199" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-200"><a href="#cb7-200" aria-hidden="true" tabindex="-1"></a>Both exercise types are in the package **CTM Assessment**. If you have not installed it yet, open the **Terminal** in VS Code (**View → Terminal**) and run this in the project folder:</span>
+<span id="cb7-201"><a href="#cb7-201" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-202"><a href="#cb7-202" aria-hidden="true" tabindex="-1"></a>::: {.panel-tabset}</span>
+<span id="cb7-203"><a href="#cb7-203" aria-hidden="true" tabindex="-1"></a><span class="fu">### Windows</span></span>
+<span id="cb7-204"><a href="#cb7-204" aria-hidden="true" tabindex="-1"></a><span class="in">```{.bash filename="Terminal"}</span></span>
+<span id="cb7-205"><a href="#cb7-205" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.zip</span>
+<span id="cb7-206"><a href="#cb7-206" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-207"><a href="#cb7-207" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-208"><a href="#cb7-208" aria-hidden="true" tabindex="-1"></a><span class="fu">### macOS / Linux</span></span>
+<span id="cb7-209"><a href="#cb7-209" aria-hidden="true" tabindex="-1"></a><span class="in">```{.bash filename="Terminal"}</span></span>
+<span id="cb7-210"><a href="#cb7-210" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.tar.gz</span>
+<span id="cb7-211"><a href="#cb7-211" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-212"><a href="#cb7-212" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb7-213"><a href="#cb7-213" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-214"><a href="#cb7-214" aria-hidden="true" tabindex="-1"></a>This only needs to be done **once per project folder**. The same steps are described in more detail on the page <span class="co">[</span><span class="ot">Interactive Code with Pyodide</span><span class="co">](beg_extensions.qmd)</span>.</span>
+<span id="cb7-215"><a href="#cb7-215" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-216"><a href="#cb7-216" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb7-217"><a href="#cb7-217" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-218"><a href="#cb7-218" aria-hidden="true" tabindex="-1"></a><span class="fu">## 2 — Prepare the page</span></span>
+<span id="cb7-219"><a href="#cb7-219" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-220"><a href="#cb7-220" aria-hidden="true" tabindex="-1"></a>Add two things to the header of your <span class="in">`.qmd`</span> file:</span>
+<span id="cb7-221"><a href="#cb7-221" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-222"><a href="#cb7-222" aria-hidden="true" tabindex="-1"></a><span class="in">```yaml</span></span>
+<span id="cb7-223"><a href="#cb7-223" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb7-224"><a href="#cb7-224" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"My exercises"</span></span>
+<span id="cb7-225"><a href="#cb7-225" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span><span class="at"> html</span></span>
+<span id="cb7-226"><a href="#cb7-226" aria-hidden="true" tabindex="-1"></a><span class="fu">engine</span><span class="kw">:</span><span class="at"> markdown</span></span>
+<span id="cb7-227"><a href="#cb7-227" aria-hidden="true" tabindex="-1"></a><span class="fu">filters</span><span class="kw">:</span></span>
+<span id="cb7-228"><a href="#cb7-228" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span>ctm-assessment</span>
+<span id="cb7-229"><a href="#cb7-229" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb7-230"><a href="#cb7-230" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-231"><a href="#cb7-231" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-232"><a href="#cb7-232" aria-hidden="true" tabindex="-1"></a><span class="in">`filters:`</span> switches the package on. From Quarto 1.10 on you need <span class="in">`engine: markdown`</span> on pages with exercises, otherwise the build stops at Jupyter.</span>
+<span id="cb7-233"><a href="#cb7-233" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-234"><a href="#cb7-234" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb7-235"><a href="#cb7-235" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-236"><a href="#cb7-236" aria-hidden="true" tabindex="-1"></a><span class="fu">## 3 — Write a Python exercise</span></span>
+<span id="cb7-237"><a href="#cb7-237" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-238"><a href="#cb7-238" aria-hidden="true" tabindex="-1"></a>A <span class="in">`py-exercise`</span> block has two parts, separated by the line <span class="in">`## TESTS ##`</span>. Above it is what students see, below it the hidden tests:</span>
+<span id="cb7-239"><a href="#cb7-239" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-240"><a href="#cb7-240" aria-hidden="true" tabindex="-1"></a><span class="in">````markdown</span></span>
+<span id="cb7-241"><a href="#cb7-241" aria-hidden="true" tabindex="-1"></a><span class="in">```{py-exercise}</span></span>
+<span id="cb7-242"><a href="#cb7-242" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> square(x):</span>
+<span id="cb7-243"><a href="#cb7-243" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Return x squared."""</span></span>
+<span id="cb7-244"><a href="#cb7-244" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Your solution here</span></span>
+<span id="cb7-245"><a href="#cb7-245" aria-hidden="true" tabindex="-1"></a>    <span class="cf">pass</span></span>
+<span id="cb7-246"><a href="#cb7-246" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-247"><a href="#cb7-247" aria-hidden="true" tabindex="-1"></a><span class="co">## TESTS ##</span></span>
+<span id="cb7-248"><a href="#cb7-248" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> square(<span class="dv">3</span>) <span class="op">==</span> <span class="dv">9</span>,  <span class="st">"square(3) should be 9"</span></span>
+<span id="cb7-249"><a href="#cb7-249" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> square(<span class="op">-</span><span class="dv">2</span>) <span class="op">==</span> <span class="dv">4</span>, <span class="st">"square(-2) should be 4"</span></span>
+<span id="cb7-250"><a href="#cb7-250" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-251"><a href="#cb7-251" aria-hidden="true" tabindex="-1"></a><span class="in">````</span></span>
+<span id="cb7-252"><a href="#cb7-252" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-253"><a href="#cb7-253" aria-hidden="true" tabindex="-1"></a>The text after the comma of an <span class="in">`assert`</span> is the message when the test fails. Write it as if you were talking to the students.</span>
+<span id="cb7-254"><a href="#cb7-254" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-255"><a href="#cb7-255" aria-hidden="true" tabindex="-1"></a>This is what the exercise looks like; try it right here:</span>
+<span id="cb7-256"><a href="#cb7-256" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-257"><a href="#cb7-257" aria-hidden="true" tabindex="-1"></a><span class="in">```{py-exercise}</span></span>
+<span id="cb7-258"><a href="#cb7-258" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: check-square</span></span>
+<span id="cb7-259"><a href="#cb7-259" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> square(x):</span>
+<span id="cb7-260"><a href="#cb7-260" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Return x squared."""</span></span>
+<span id="cb7-261"><a href="#cb7-261" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Your solution here</span></span>
+<span id="cb7-262"><a href="#cb7-262" aria-hidden="true" tabindex="-1"></a>    <span class="cf">pass</span></span>
+<span id="cb7-263"><a href="#cb7-263" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-264"><a href="#cb7-264" aria-hidden="true" tabindex="-1"></a><span class="co">## TESTS ##</span></span>
+<span id="cb7-265"><a href="#cb7-265" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> square(<span class="dv">3</span>) <span class="op">==</span> <span class="dv">9</span>,  <span class="st">"square(3) should be 9"</span></span>
+<span id="cb7-266"><a href="#cb7-266" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> square(<span class="op">-</span><span class="dv">2</span>) <span class="op">==</span> <span class="dv">4</span>, <span class="st">"square(-2) should be 4"</span></span>
+<span id="cb7-267"><a href="#cb7-267" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-268"><a href="#cb7-268" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-269"><a href="#cb7-269" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb7-270"><a href="#cb7-270" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-271"><a href="#cb7-271" aria-hidden="true" tabindex="-1"></a><span class="fu">## 4 — Write a maths exercise</span></span>
+<span id="cb7-272"><a href="#cb7-272" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-273"><a href="#cb7-273" aria-hidden="true" tabindex="-1"></a>In <span class="in">`math-exercise`</span> the correct answer is in the question text, in square brackets after an underscore:</span>
+<span id="cb7-274"><a href="#cb7-274" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-275"><a href="#cb7-275" aria-hidden="true" tabindex="-1"></a><span class="in">````markdown</span></span>
+<span id="cb7-276"><a href="#cb7-276" aria-hidden="true" tabindex="-1"></a><span class="in">```{math-exercise}</span></span>
+<span id="cb7-277"><a href="#cb7-277" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: circle-area</span></span>
+<span id="cb7-278"><a href="#cb7-278" aria-hidden="true" tabindex="-1"></a><span class="in">#| vars: r</span></span>
+<span id="cb7-279"><a href="#cb7-279" aria-hidden="true" tabindex="-1"></a><span class="in">A circle has radius $r = 3$. Give its area exactly (write pi for π):</span></span>
+<span id="cb7-280"><a href="#cb7-280" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-281"><a href="#cb7-281" aria-hidden="true" tabindex="-1"></a><span class="in">$A =$ _[pi*9]</span></span>
+<span id="cb7-282"><a href="#cb7-282" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-283"><a href="#cb7-283" aria-hidden="true" tabindex="-1"></a><span class="in">````</span></span>
+<span id="cb7-284"><a href="#cb7-284" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-285"><a href="#cb7-285" aria-hidden="true" tabindex="-1"></a><span class="in">`#| vars:`</span> names the symbols that may appear in the answer. The answer in <span class="in">`[...]`</span> is a SymPy expression. Try it: <span class="in">`pi*9`</span>, <span class="in">`9*pi`</span> and <span class="in">`3**2*pi`</span> all count as correct.</span>
+<span id="cb7-286"><a href="#cb7-286" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-287"><a href="#cb7-287" aria-hidden="true" tabindex="-1"></a><span class="in">```{math-exercise}</span></span>
+<span id="cb7-288"><a href="#cb7-288" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: check-circle-area</span></span>
+<span id="cb7-289"><a href="#cb7-289" aria-hidden="true" tabindex="-1"></a><span class="in">#| vars: r</span></span>
+<span id="cb7-290"><a href="#cb7-290" aria-hidden="true" tabindex="-1"></a><span class="in">A circle has radius $r = 3$. Give its area exactly (write pi for π):</span></span>
+<span id="cb7-291"><a href="#cb7-291" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-292"><a href="#cb7-292" aria-hidden="true" tabindex="-1"></a><span class="in">$A =$ _[pi*9]</span></span>
+<span id="cb7-293"><a href="#cb7-293" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-294"><a href="#cb7-294" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-295"><a href="#cb7-295" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb7-296"><a href="#cb7-296" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-297"><a href="#cb7-297" aria-hidden="true" tabindex="-1"></a><span class="fu">## 5 — See the result</span></span>
+<span id="cb7-298"><a href="#cb7-298" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-299"><a href="#cb7-299" aria-hidden="true" tabindex="-1"></a>Run <span class="in">`quarto preview`</span> in the Terminal. On the first click on **Run code** or **Check**, Python loads, which takes a few seconds. Then the exercises show:</span>
+<span id="cb7-300"><a href="#cb7-300" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-301"><a href="#cb7-301" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>for <span class="in">`py-exercise`</span>, an editor with buttons to run and reset. After running, it shows which tests pass and which message appears for a failure.</span>
+<span id="cb7-302"><a href="#cb7-302" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>for <span class="in">`math-exercise`</span>, an input field and a **Check** button that writes the result next to the field.</span>
+<span id="cb7-303"><a href="#cb7-303" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-304"><a href="#cb7-304" aria-hidden="true" tabindex="-1"></a>Make a mistake on purpose and see whether the message helps students to move on. Try the correct solution too.</span>
+<span id="cb7-305"><a href="#cb7-305" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-306"><a href="#cb7-306" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb7-307"><a href="#cb7-307" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-308"><a href="#cb7-308" aria-hidden="true" tabindex="-1"></a><span class="fu">## 6 — Help from an AI (optional)</span></span>
+<span id="cb7-309"><a href="#cb7-309" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-310"><a href="#cb7-310" aria-hidden="true" tabindex="-1"></a>Every exercise can get a **Feedback** button. It turns the exercise and the current answer into a ready-made text that students paste into an AI of their choice. For <span class="in">`py-exercise`</span> you switch it on and state the assignment in every exercise:</span>
+<span id="cb7-311"><a href="#cb7-311" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-312"><a href="#cb7-312" aria-hidden="true" tabindex="-1"></a><span class="in">````markdown</span></span>
+<span id="cb7-313"><a href="#cb7-313" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb7-314"><a href="#cb7-314" aria-hidden="true" tabindex="-1"></a>py-exercise:</span>
+<span id="cb7-315"><a href="#cb7-315" aria-hidden="true" tabindex="-1"></a>  feedback: true</span>
+<span id="cb7-316"><a href="#cb7-316" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb7-317"><a href="#cb7-317" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-318"><a href="#cb7-318" aria-hidden="true" tabindex="-1"></a><span class="in">```{py-exercise}</span></span>
+<span id="cb7-319"><a href="#cb7-319" aria-hidden="true" tabindex="-1"></a><span class="co">#| task: Complete square so that it returns the square of x.</span></span>
+<span id="cb7-320"><a href="#cb7-320" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> square(x):</span>
+<span id="cb7-321"><a href="#cb7-321" aria-hidden="true" tabindex="-1"></a>    <span class="cf">pass</span></span>
+<span id="cb7-322"><a href="#cb7-322" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-323"><a href="#cb7-323" aria-hidden="true" tabindex="-1"></a><span class="co">## TESTS ##</span></span>
+<span id="cb7-324"><a href="#cb7-324" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> square(<span class="dv">3</span>) <span class="op">==</span> <span class="dv">9</span></span>
+<span id="cb7-325"><a href="#cb7-325" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-326"><a href="#cb7-326" aria-hidden="true" tabindex="-1"></a><span class="in">````</span></span>
+<span id="cb7-327"><a href="#cb7-327" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-328"><a href="#cb7-328" aria-hidden="true" tabindex="-1"></a>The tests and the expected solution are never sent. How to set hint levels and how to build a page without any AI is described on the page <span class="co">[</span><span class="ot">AI feedback &amp; saving</span><span class="co">](../../../exp/Qmd Files/Tipps and Tricks/exp_ext_feedback.html)</span>.</span>
+<span id="cb7-329"><a href="#cb7-329" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-330"><a href="#cb7-330" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb7-331"><a href="#cb7-331" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-332"><a href="#cb7-332" aria-hidden="true" tabindex="-1"></a><span class="fu">## 7 — Answers are kept</span></span>
+<span id="cb7-333"><a href="#cb7-333" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-334"><a href="#cb7-334" aria-hidden="true" tabindex="-1"></a>What students enter stays in the browser of their device. On the next visit it is back. Nothing goes to a server. Students can switch that off in the settings dialog, export their answers or delete them.</span>
+<span id="cb7-335"><a href="#cb7-335" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-336"><a href="#cb7-336" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb7-337"><a href="#cb7-337" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-338"><a href="#cb7-338" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
+<span id="cb7-339"><a href="#cb7-339" aria-hidden="true" tabindex="-1"></a><span class="fu">## What next?</span></span>
+<span id="cb7-340"><a href="#cb7-340" aria-hidden="true" tabindex="-1"></a>All options of both exercise types (forbidden commands, check modes, partial credit, question pools, submission) are under <span class="co">[</span><span class="ot">Tips &amp; Tricks</span><span class="co">](../../../exp/Qmd Files/Tipps and Tricks/exp_extensions.html)</span>.</span>
+<span id="cb7-341"><a href="#cb7-341" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb7-342"><a href="#cb7-342" aria-hidden="true" tabindex="-1"></a>::::</span>
+<span id="cb7-343"><a href="#cb7-343" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-344"><a href="#cb7-344" aria-hidden="true" tabindex="-1"></a>:::: {.content-visible when-profile="svenska"}</span>
+<span id="cb7-345"><a href="#cb7-345" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
+<span id="cb7-346"><a href="#cb7-346" aria-hidden="true" tabindex="-1"></a><span class="fu">## Vill du hellre ha en kortversion?</span></span>
+<span id="cb7-347"><a href="#cb7-347" aria-hidden="true" tabindex="-1"></a>Det här kapitlet finns som <span class="co">[</span><span class="ot">PDF-lathund</span><span class="co">](beg_check_cheatsheet.qmd)</span>: stegen och skrivsättet för de två uppgiftstyperna, kortfattat för utskrift eller snabb uppslagning.</span>
+<span id="cb7-348"><a href="#cb7-348" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb7-349"><a href="#cb7-349" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-350"><a href="#cb7-350" aria-hidden="true" tabindex="-1"></a>En uppgift med automatisk kontroll talar direkt om för studenterna om deras lösning stämmer. Du skriver uppgiften och det rätta svaret en gång, och kontrollen körs i webbläsaren. Det finns två slag:</span>
+<span id="cb7-351"><a href="#cb7-351" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-352"><a href="#cb7-352" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Uppgift <span class="pp">|</span> Studenterna <span class="pp">|</span> Kontrolleras <span class="pp">|</span></span>
+<span id="cb7-353"><a href="#cb7-353" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|</span></span>
+<span id="cb7-354"><a href="#cb7-354" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`py-exercise`</span> <span class="pp">|</span> kompletterar en Python-funktion <span class="pp">|</span> med dolda tester (<span class="in">`assert`</span>) <span class="pp">|</span></span>
+<span id="cb7-355"><a href="#cb7-355" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`math-exercise`</span> <span class="pp">|</span> skriver ett matematiskt svar <span class="pp">|</span> med SymPy, likvärdiga skrivsätt räknas <span class="pp">|</span></span>
+<span id="cb7-356"><a href="#cb7-356" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-357"><a href="#cb7-357" aria-hidden="true" tabindex="-1"></a>::: {.callout-warning}</span>
+<span id="cb7-358"><a href="#cb7-358" aria-hidden="true" tabindex="-1"></a><span class="fu">## Interaktivt bara i HTML</span></span>
+<span id="cb7-359"><a href="#cb7-359" aria-hidden="true" tabindex="-1"></a>Kontrollen fungerar bara i **HTML-utdata**, alltså i webbplatser (<span class="in">`format: html`</span>) och böcker. I PDF eller Word visas bara uppgiftens text.</span>
+<span id="cb7-360"><a href="#cb7-360" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb7-361"><a href="#cb7-361" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-362"><a href="#cb7-362" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb7-363"><a href="#cb7-363" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-364"><a href="#cb7-364" aria-hidden="true" tabindex="-1"></a><span class="fu">## 1 – Installera paketet</span></span>
+<span id="cb7-365"><a href="#cb7-365" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-366"><a href="#cb7-366" aria-hidden="true" tabindex="-1"></a>Båda uppgiftstyperna finns i paketet **CTM Assessment**. Om du inte har installerat det än, öppna **terminalen** i VS Code (**View → Terminal**) och skriv i projektmappen:</span>
+<span id="cb7-367"><a href="#cb7-367" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-368"><a href="#cb7-368" aria-hidden="true" tabindex="-1"></a>::: {.panel-tabset}</span>
+<span id="cb7-369"><a href="#cb7-369" aria-hidden="true" tabindex="-1"></a><span class="fu">### Windows</span></span>
+<span id="cb7-370"><a href="#cb7-370" aria-hidden="true" tabindex="-1"></a><span class="in">```{.bash filename="Terminal"}</span></span>
+<span id="cb7-371"><a href="#cb7-371" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.zip</span>
+<span id="cb7-372"><a href="#cb7-372" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-373"><a href="#cb7-373" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-374"><a href="#cb7-374" aria-hidden="true" tabindex="-1"></a><span class="fu">### macOS / Linux</span></span>
+<span id="cb7-375"><a href="#cb7-375" aria-hidden="true" tabindex="-1"></a><span class="in">```{.bash filename="Terminal"}</span></span>
+<span id="cb7-376"><a href="#cb7-376" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.tar.gz</span>
+<span id="cb7-377"><a href="#cb7-377" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-378"><a href="#cb7-378" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb7-379"><a href="#cb7-379" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-380"><a href="#cb7-380" aria-hidden="true" tabindex="-1"></a>Det behövs bara **en gång per projektmapp**. Samma steg beskrivs utförligare på sidan <span class="co">[</span><span class="ot">Interaktiv kod med Pyodide</span><span class="co">](beg_extensions.qmd)</span>.</span>
+<span id="cb7-381"><a href="#cb7-381" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-382"><a href="#cb7-382" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb7-383"><a href="#cb7-383" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-384"><a href="#cb7-384" aria-hidden="true" tabindex="-1"></a><span class="fu">## 2 – Förbereda sidan</span></span>
+<span id="cb7-385"><a href="#cb7-385" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-386"><a href="#cb7-386" aria-hidden="true" tabindex="-1"></a>Lägg till två saker i huvudet på din <span class="in">`.qmd`</span>-fil:</span>
+<span id="cb7-387"><a href="#cb7-387" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-388"><a href="#cb7-388" aria-hidden="true" tabindex="-1"></a><span class="in">```yaml</span></span>
+<span id="cb7-389"><a href="#cb7-389" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb7-390"><a href="#cb7-390" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Mina uppgifter"</span></span>
+<span id="cb7-391"><a href="#cb7-391" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span><span class="at"> html</span></span>
+<span id="cb7-392"><a href="#cb7-392" aria-hidden="true" tabindex="-1"></a><span class="fu">engine</span><span class="kw">:</span><span class="at"> markdown</span></span>
+<span id="cb7-393"><a href="#cb7-393" aria-hidden="true" tabindex="-1"></a><span class="fu">filters</span><span class="kw">:</span></span>
+<span id="cb7-394"><a href="#cb7-394" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span>ctm-assessment</span>
+<span id="cb7-395"><a href="#cb7-395" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb7-396"><a href="#cb7-396" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-397"><a href="#cb7-397" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-398"><a href="#cb7-398" aria-hidden="true" tabindex="-1"></a><span class="in">`filters:`</span> slår på paketet. Från Quarto 1.10 behöver du <span class="in">`engine: markdown`</span> på sidor med uppgifter, annars avbryts bygget vid Jupyter.</span>
+<span id="cb7-399"><a href="#cb7-399" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-400"><a href="#cb7-400" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb7-401"><a href="#cb7-401" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-402"><a href="#cb7-402" aria-hidden="true" tabindex="-1"></a><span class="fu">## 3 – Skriva en Python-uppgift</span></span>
+<span id="cb7-403"><a href="#cb7-403" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-404"><a href="#cb7-404" aria-hidden="true" tabindex="-1"></a>Ett <span class="in">`py-exercise`</span>-block har två delar, åtskilda av raden <span class="in">`## TESTS ##`</span>. Ovanför står det studenterna ser, under står de dolda testerna:</span>
+<span id="cb7-405"><a href="#cb7-405" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-406"><a href="#cb7-406" aria-hidden="true" tabindex="-1"></a><span class="in">````markdown</span></span>
+<span id="cb7-407"><a href="#cb7-407" aria-hidden="true" tabindex="-1"></a><span class="in">```{py-exercise}</span></span>
+<span id="cb7-408"><a href="#cb7-408" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> kvadrat(x):</span>
+<span id="cb7-409"><a href="#cb7-409" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Returnera kvadraten av x."""</span></span>
+<span id="cb7-410"><a href="#cb7-410" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Din lösning här</span></span>
+<span id="cb7-411"><a href="#cb7-411" aria-hidden="true" tabindex="-1"></a>    <span class="cf">pass</span></span>
+<span id="cb7-412"><a href="#cb7-412" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-413"><a href="#cb7-413" aria-hidden="true" tabindex="-1"></a><span class="co">## TESTS ##</span></span>
+<span id="cb7-414"><a href="#cb7-414" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> kvadrat(<span class="dv">3</span>) <span class="op">==</span> <span class="dv">9</span>,  <span class="st">"kvadrat(3) ska vara 9"</span></span>
+<span id="cb7-415"><a href="#cb7-415" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> kvadrat(<span class="op">-</span><span class="dv">2</span>) <span class="op">==</span> <span class="dv">4</span>, <span class="st">"kvadrat(-2) ska vara 4"</span></span>
+<span id="cb7-416"><a href="#cb7-416" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-417"><a href="#cb7-417" aria-hidden="true" tabindex="-1"></a><span class="in">````</span></span>
+<span id="cb7-418"><a href="#cb7-418" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-419"><a href="#cb7-419" aria-hidden="true" tabindex="-1"></a>Texten efter kommatecknet i en <span class="in">`assert`</span> är meddelandet när testet misslyckas. Skriv det som om du pratade med studenterna.</span>
+<span id="cb7-420"><a href="#cb7-420" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-421"><a href="#cb7-421" aria-hidden="true" tabindex="-1"></a>Så här ser uppgiften ut, prova den direkt:</span>
+<span id="cb7-422"><a href="#cb7-422" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-423"><a href="#cb7-423" aria-hidden="true" tabindex="-1"></a><span class="in">```{py-exercise}</span></span>
+<span id="cb7-424"><a href="#cb7-424" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: check-kvadrat</span></span>
+<span id="cb7-425"><a href="#cb7-425" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> kvadrat(x):</span>
+<span id="cb7-426"><a href="#cb7-426" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Returnera kvadraten av x."""</span></span>
+<span id="cb7-427"><a href="#cb7-427" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Din lösning här</span></span>
+<span id="cb7-428"><a href="#cb7-428" aria-hidden="true" tabindex="-1"></a>    <span class="cf">pass</span></span>
+<span id="cb7-429"><a href="#cb7-429" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-430"><a href="#cb7-430" aria-hidden="true" tabindex="-1"></a><span class="co">## TESTS ##</span></span>
+<span id="cb7-431"><a href="#cb7-431" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> kvadrat(<span class="dv">3</span>) <span class="op">==</span> <span class="dv">9</span>,  <span class="st">"kvadrat(3) ska vara 9"</span></span>
+<span id="cb7-432"><a href="#cb7-432" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> kvadrat(<span class="op">-</span><span class="dv">2</span>) <span class="op">==</span> <span class="dv">4</span>, <span class="st">"kvadrat(-2) ska vara 4"</span></span>
+<span id="cb7-433"><a href="#cb7-433" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-434"><a href="#cb7-434" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-435"><a href="#cb7-435" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb7-436"><a href="#cb7-436" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-437"><a href="#cb7-437" aria-hidden="true" tabindex="-1"></a><span class="fu">## 4 – Skriva en matteuppgift</span></span>
+<span id="cb7-438"><a href="#cb7-438" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-439"><a href="#cb7-439" aria-hidden="true" tabindex="-1"></a>I <span class="in">`math-exercise`</span> står det rätta svaret i uppgiftstexten, inom hakparenteser efter ett understreck:</span>
+<span id="cb7-440"><a href="#cb7-440" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-441"><a href="#cb7-441" aria-hidden="true" tabindex="-1"></a><span class="in">````markdown</span></span>
+<span id="cb7-442"><a href="#cb7-442" aria-hidden="true" tabindex="-1"></a><span class="in">```{math-exercise}</span></span>
+<span id="cb7-443"><a href="#cb7-443" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: cirkelarea</span></span>
+<span id="cb7-444"><a href="#cb7-444" aria-hidden="true" tabindex="-1"></a><span class="in">#| vars: r</span></span>
+<span id="cb7-445"><a href="#cb7-445" aria-hidden="true" tabindex="-1"></a><span class="in">En cirkel har radien $r = 3$. Ange dess area exakt (skriv pi för π):</span></span>
+<span id="cb7-446"><a href="#cb7-446" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-447"><a href="#cb7-447" aria-hidden="true" tabindex="-1"></a><span class="in">$A =$ _[pi*9]</span></span>
+<span id="cb7-448"><a href="#cb7-448" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-449"><a href="#cb7-449" aria-hidden="true" tabindex="-1"></a><span class="in">````</span></span>
+<span id="cb7-450"><a href="#cb7-450" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-451"><a href="#cb7-451" aria-hidden="true" tabindex="-1"></a><span class="in">`#| vars:`</span> anger de symboler som får förekomma i svaret. Svaret inom <span class="in">`[...]`</span> är ett SymPy-uttryck. Prova: <span class="in">`pi*9`</span>, <span class="in">`9*pi`</span> och <span class="in">`3**2*pi`</span> räknas alla som rätt.</span>
+<span id="cb7-452"><a href="#cb7-452" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-453"><a href="#cb7-453" aria-hidden="true" tabindex="-1"></a><span class="in">```{math-exercise}</span></span>
+<span id="cb7-454"><a href="#cb7-454" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: check-cirkelarea</span></span>
+<span id="cb7-455"><a href="#cb7-455" aria-hidden="true" tabindex="-1"></a><span class="in">#| vars: r</span></span>
+<span id="cb7-456"><a href="#cb7-456" aria-hidden="true" tabindex="-1"></a><span class="in">En cirkel har radien $r = 3$. Ange dess area exakt (skriv pi för π):</span></span>
+<span id="cb7-457"><a href="#cb7-457" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-458"><a href="#cb7-458" aria-hidden="true" tabindex="-1"></a><span class="in">$A =$ _[pi*9]</span></span>
+<span id="cb7-459"><a href="#cb7-459" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-460"><a href="#cb7-460" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-461"><a href="#cb7-461" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb7-462"><a href="#cb7-462" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-463"><a href="#cb7-463" aria-hidden="true" tabindex="-1"></a><span class="fu">## 5 – Se resultatet</span></span>
+<span id="cb7-464"><a href="#cb7-464" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-465"><a href="#cb7-465" aria-hidden="true" tabindex="-1"></a>Skriv <span class="in">`quarto preview`</span> i terminalen. Vid första klicket på **Kör koden** eller **Kontrollera** laddas Python, vilket tar några sekunder. Sedan visar uppgifterna:</span>
+<span id="cb7-466"><a href="#cb7-466" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-467"><a href="#cb7-467" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>för <span class="in">`py-exercise`</span> en editor med knappar för att köra och återställa. Efter körningen står det vilka tester som klarades och vilket meddelande som visas vid ett fel.</span>
+<span id="cb7-468"><a href="#cb7-468" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>för <span class="in">`math-exercise`</span> ett inmatningsfält och en knapp **Kontrollera** som skriver resultatet bredvid fältet.</span>
+<span id="cb7-469"><a href="#cb7-469" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-470"><a href="#cb7-470" aria-hidden="true" tabindex="-1"></a>Gör ett fel med flit och se om meddelandet hjälper studenterna vidare. Prova också den rätta lösningen.</span>
+<span id="cb7-471"><a href="#cb7-471" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-472"><a href="#cb7-472" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb7-473"><a href="#cb7-473" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-474"><a href="#cb7-474" aria-hidden="true" tabindex="-1"></a><span class="fu">## 6 – Hjälp av en AI (frivilligt)</span></span>
+<span id="cb7-475"><a href="#cb7-475" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-476"><a href="#cb7-476" aria-hidden="true" tabindex="-1"></a>Varje uppgift kan få en knapp **Feedback**. Den gör uppgiften och det aktuella svaret till en färdig text som studenterna klistrar in i en AI efter eget val. För <span class="in">`py-exercise`</span> slår du på det och anger uppdraget i varje uppgift:</span>
+<span id="cb7-477"><a href="#cb7-477" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-478"><a href="#cb7-478" aria-hidden="true" tabindex="-1"></a><span class="in">````markdown</span></span>
+<span id="cb7-479"><a href="#cb7-479" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb7-480"><a href="#cb7-480" aria-hidden="true" tabindex="-1"></a>py-exercise:</span>
+<span id="cb7-481"><a href="#cb7-481" aria-hidden="true" tabindex="-1"></a>  feedback: true</span>
+<span id="cb7-482"><a href="#cb7-482" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb7-483"><a href="#cb7-483" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-484"><a href="#cb7-484" aria-hidden="true" tabindex="-1"></a><span class="in">```{py-exercise}</span></span>
+<span id="cb7-485"><a href="#cb7-485" aria-hidden="true" tabindex="-1"></a><span class="co">#| task: Komplettera kvadrat så att den returnerar kvadraten av x.</span></span>
+<span id="cb7-486"><a href="#cb7-486" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> kvadrat(x):</span>
+<span id="cb7-487"><a href="#cb7-487" aria-hidden="true" tabindex="-1"></a>    <span class="cf">pass</span></span>
+<span id="cb7-488"><a href="#cb7-488" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-489"><a href="#cb7-489" aria-hidden="true" tabindex="-1"></a><span class="co">## TESTS ##</span></span>
+<span id="cb7-490"><a href="#cb7-490" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> kvadrat(<span class="dv">3</span>) <span class="op">==</span> <span class="dv">9</span></span>
+<span id="cb7-491"><a href="#cb7-491" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-492"><a href="#cb7-492" aria-hidden="true" tabindex="-1"></a><span class="in">````</span></span>
+<span id="cb7-493"><a href="#cb7-493" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-494"><a href="#cb7-494" aria-hidden="true" tabindex="-1"></a>Testerna och den förväntade lösningen skickas aldrig. Hur du ställer in ledtrådsnivåer och bygger en sida helt utan AI beskrivs på sidan <span class="co">[</span><span class="ot">AI-feedback och sparande</span><span class="co">](../../../exp/Qmd Files/Tipps and Tricks/exp_ext_feedback.html)</span>.</span>
+<span id="cb7-495"><a href="#cb7-495" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-496"><a href="#cb7-496" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb7-497"><a href="#cb7-497" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-498"><a href="#cb7-498" aria-hidden="true" tabindex="-1"></a><span class="fu">## 7 – Svaren bevaras</span></span>
+<span id="cb7-499"><a href="#cb7-499" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-500"><a href="#cb7-500" aria-hidden="true" tabindex="-1"></a>Det studenterna skriver in stannar i webbläsaren på deras enhet. Nästa gång de besöker sidan finns det kvar. Ingenting går till någon server. Studenterna kan stänga av det i inställningsdialogen, exportera sina svar eller radera dem.</span>
+<span id="cb7-501"><a href="#cb7-501" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-502"><a href="#cb7-502" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb7-503"><a href="#cb7-503" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-504"><a href="#cb7-504" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
+<span id="cb7-505"><a href="#cb7-505" aria-hidden="true" tabindex="-1"></a><span class="fu">## Hur går man vidare?</span></span>
+<span id="cb7-506"><a href="#cb7-506" aria-hidden="true" tabindex="-1"></a>Alla alternativ för de två uppgiftstyperna (förbjudna kommandon, kontrolllägen, delpoäng, uppgiftspooler, inlämning) finns under <span class="co">[</span><span class="ot">Tips &amp; tricks</span><span class="co">](../../../exp/Qmd Files/Tipps and Tricks/exp_extensions.html)</span>.</span>
+<span id="cb7-507"><a href="#cb7-507" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb7-508"><a href="#cb7-508" aria-hidden="true" tabindex="-1"></a>::::</span>
+<span id="cb7-509"><a href="#cb7-509" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-510"><a href="#cb7-510" aria-hidden="true" tabindex="-1"></a>:::: {.content-visible when-profile="norsk"}</span>
+<span id="cb7-511"><a href="#cb7-511" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
+<span id="cb7-512"><a href="#cb7-512" aria-hidden="true" tabindex="-1"></a><span class="fu">## Vil du heller ha en kortversjon?</span></span>
+<span id="cb7-513"><a href="#cb7-513" aria-hidden="true" tabindex="-1"></a>Dette kapitlet finnes som <span class="co">[</span><span class="ot">PDF-cheatsheet</span><span class="co">](beg_check_cheatsheet.qmd)</span>: trinnene og skrivemåten for de to oppgavetypene, kortfattet til utskrift eller rask oppslag.</span>
+<span id="cb7-514"><a href="#cb7-514" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb7-515"><a href="#cb7-515" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-516"><a href="#cb7-516" aria-hidden="true" tabindex="-1"></a>En oppgave med automatisk kontroll forteller studentene med en gang om løsningen deres stemmer. Du skriver oppgaven og det riktige svaret én gang, og kontrollen kjører i nettleseren. Det finnes to slag:</span>
+<span id="cb7-517"><a href="#cb7-517" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-518"><a href="#cb7-518" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Oppgave <span class="pp">|</span> Studentene <span class="pp">|</span> Kontrolleres <span class="pp">|</span></span>
+<span id="cb7-519"><a href="#cb7-519" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|</span></span>
+<span id="cb7-520"><a href="#cb7-520" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`py-exercise`</span> <span class="pp">|</span> fullfører en Python-funksjon <span class="pp">|</span> med skjulte tester (<span class="in">`assert`</span>) <span class="pp">|</span></span>
+<span id="cb7-521"><a href="#cb7-521" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`math-exercise`</span> <span class="pp">|</span> skriver et matematisk svar <span class="pp">|</span> med SymPy, likeverdige skrivemåter teller <span class="pp">|</span></span>
+<span id="cb7-522"><a href="#cb7-522" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-523"><a href="#cb7-523" aria-hidden="true" tabindex="-1"></a>::: {.callout-warning}</span>
+<span id="cb7-524"><a href="#cb7-524" aria-hidden="true" tabindex="-1"></a><span class="fu">## Interaktivt bare i HTML</span></span>
+<span id="cb7-525"><a href="#cb7-525" aria-hidden="true" tabindex="-1"></a>Kontrollen fungerer bare i **HTML-utdata**, altså i nettsteder (<span class="in">`format: html`</span>) og bøker. I PDF eller Word vises bare teksten i oppgaven.</span>
+<span id="cb7-526"><a href="#cb7-526" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb7-527"><a href="#cb7-527" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-528"><a href="#cb7-528" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb7-529"><a href="#cb7-529" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-530"><a href="#cb7-530" aria-hidden="true" tabindex="-1"></a><span class="fu">## 1 – Installere pakken</span></span>
+<span id="cb7-531"><a href="#cb7-531" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-532"><a href="#cb7-532" aria-hidden="true" tabindex="-1"></a>Begge oppgavetypene ligger i pakken **CTM Assessment**. Hvis du ikke har installert den ennå, åpner du **terminalen** i VS Code (**View → Terminal**) og skriver i prosjektmappen:</span>
+<span id="cb7-533"><a href="#cb7-533" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-534"><a href="#cb7-534" aria-hidden="true" tabindex="-1"></a>::: {.panel-tabset}</span>
+<span id="cb7-535"><a href="#cb7-535" aria-hidden="true" tabindex="-1"></a><span class="fu">### Windows</span></span>
+<span id="cb7-536"><a href="#cb7-536" aria-hidden="true" tabindex="-1"></a><span class="in">```{.bash filename="Terminal"}</span></span>
+<span id="cb7-537"><a href="#cb7-537" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.zip</span>
+<span id="cb7-538"><a href="#cb7-538" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-539"><a href="#cb7-539" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-540"><a href="#cb7-540" aria-hidden="true" tabindex="-1"></a><span class="fu">### macOS / Linux</span></span>
+<span id="cb7-541"><a href="#cb7-541" aria-hidden="true" tabindex="-1"></a><span class="in">```{.bash filename="Terminal"}</span></span>
+<span id="cb7-542"><a href="#cb7-542" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.tar.gz</span>
+<span id="cb7-543"><a href="#cb7-543" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-544"><a href="#cb7-544" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb7-545"><a href="#cb7-545" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-546"><a href="#cb7-546" aria-hidden="true" tabindex="-1"></a>Det trengs bare **én gang per prosjektmappe**. De samme trinnene er beskrevet mer utførlig på siden <span class="co">[</span><span class="ot">Interaktiv kode med Pyodide</span><span class="co">](beg_extensions.qmd)</span>.</span>
+<span id="cb7-547"><a href="#cb7-547" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-548"><a href="#cb7-548" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb7-549"><a href="#cb7-549" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-550"><a href="#cb7-550" aria-hidden="true" tabindex="-1"></a><span class="fu">## 2 – Forberede siden</span></span>
+<span id="cb7-551"><a href="#cb7-551" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-552"><a href="#cb7-552" aria-hidden="true" tabindex="-1"></a>Legg til to ting i hodet på <span class="in">`.qmd`</span>-filen din:</span>
+<span id="cb7-553"><a href="#cb7-553" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-554"><a href="#cb7-554" aria-hidden="true" tabindex="-1"></a><span class="in">```yaml</span></span>
+<span id="cb7-555"><a href="#cb7-555" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb7-556"><a href="#cb7-556" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Oppgavene mine"</span></span>
+<span id="cb7-557"><a href="#cb7-557" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span><span class="at"> html</span></span>
+<span id="cb7-558"><a href="#cb7-558" aria-hidden="true" tabindex="-1"></a><span class="fu">engine</span><span class="kw">:</span><span class="at"> markdown</span></span>
+<span id="cb7-559"><a href="#cb7-559" aria-hidden="true" tabindex="-1"></a><span class="fu">filters</span><span class="kw">:</span></span>
+<span id="cb7-560"><a href="#cb7-560" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span>ctm-assessment</span>
+<span id="cb7-561"><a href="#cb7-561" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb7-562"><a href="#cb7-562" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-563"><a href="#cb7-563" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-564"><a href="#cb7-564" aria-hidden="true" tabindex="-1"></a><span class="in">`filters:`</span> slår på pakken. Fra Quarto 1.10 trenger du <span class="in">`engine: markdown`</span> på sider med oppgaver, ellers stopper byggingen ved Jupyter.</span>
+<span id="cb7-565"><a href="#cb7-565" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-566"><a href="#cb7-566" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb7-567"><a href="#cb7-567" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-568"><a href="#cb7-568" aria-hidden="true" tabindex="-1"></a><span class="fu">## 3 – Skrive en Python-oppgave</span></span>
+<span id="cb7-569"><a href="#cb7-569" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-570"><a href="#cb7-570" aria-hidden="true" tabindex="-1"></a>En <span class="in">`py-exercise`</span>-blokk har to deler, adskilt av linjen <span class="in">`## TESTS ##`</span>. Over står det studentene ser, under står de skjulte testene:</span>
+<span id="cb7-571"><a href="#cb7-571" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-572"><a href="#cb7-572" aria-hidden="true" tabindex="-1"></a><span class="in">````markdown</span></span>
+<span id="cb7-573"><a href="#cb7-573" aria-hidden="true" tabindex="-1"></a><span class="in">```{py-exercise}</span></span>
+<span id="cb7-574"><a href="#cb7-574" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> kvadrat(x):</span>
+<span id="cb7-575"><a href="#cb7-575" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Returner kvadratet av x."""</span></span>
+<span id="cb7-576"><a href="#cb7-576" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Din løsning her</span></span>
+<span id="cb7-577"><a href="#cb7-577" aria-hidden="true" tabindex="-1"></a>    <span class="cf">pass</span></span>
+<span id="cb7-578"><a href="#cb7-578" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-579"><a href="#cb7-579" aria-hidden="true" tabindex="-1"></a><span class="co">## TESTS ##</span></span>
+<span id="cb7-580"><a href="#cb7-580" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> kvadrat(<span class="dv">3</span>) <span class="op">==</span> <span class="dv">9</span>,  <span class="st">"kvadrat(3) skal være 9"</span></span>
+<span id="cb7-581"><a href="#cb7-581" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> kvadrat(<span class="op">-</span><span class="dv">2</span>) <span class="op">==</span> <span class="dv">4</span>, <span class="st">"kvadrat(-2) skal være 4"</span></span>
+<span id="cb7-582"><a href="#cb7-582" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-583"><a href="#cb7-583" aria-hidden="true" tabindex="-1"></a><span class="in">````</span></span>
+<span id="cb7-584"><a href="#cb7-584" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-585"><a href="#cb7-585" aria-hidden="true" tabindex="-1"></a>Teksten etter kommaet i en <span class="in">`assert`</span> er meldingen når testen mislykkes. Skriv den som om du snakket med studentene.</span>
+<span id="cb7-586"><a href="#cb7-586" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-587"><a href="#cb7-587" aria-hidden="true" tabindex="-1"></a>Slik ser oppgaven ut, prøv den med en gang:</span>
+<span id="cb7-588"><a href="#cb7-588" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-589"><a href="#cb7-589" aria-hidden="true" tabindex="-1"></a><span class="in">```{py-exercise}</span></span>
+<span id="cb7-590"><a href="#cb7-590" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: check-kvadrat</span></span>
+<span id="cb7-591"><a href="#cb7-591" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> kvadrat(x):</span>
+<span id="cb7-592"><a href="#cb7-592" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Returner kvadratet av x."""</span></span>
+<span id="cb7-593"><a href="#cb7-593" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Din løsning her</span></span>
+<span id="cb7-594"><a href="#cb7-594" aria-hidden="true" tabindex="-1"></a>    <span class="cf">pass</span></span>
+<span id="cb7-595"><a href="#cb7-595" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-596"><a href="#cb7-596" aria-hidden="true" tabindex="-1"></a><span class="co">## TESTS ##</span></span>
+<span id="cb7-597"><a href="#cb7-597" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> kvadrat(<span class="dv">3</span>) <span class="op">==</span> <span class="dv">9</span>,  <span class="st">"kvadrat(3) skal være 9"</span></span>
+<span id="cb7-598"><a href="#cb7-598" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> kvadrat(<span class="op">-</span><span class="dv">2</span>) <span class="op">==</span> <span class="dv">4</span>, <span class="st">"kvadrat(-2) skal være 4"</span></span>
+<span id="cb7-599"><a href="#cb7-599" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-600"><a href="#cb7-600" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-601"><a href="#cb7-601" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb7-602"><a href="#cb7-602" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-603"><a href="#cb7-603" aria-hidden="true" tabindex="-1"></a><span class="fu">## 4 – Skrive en matteoppgave</span></span>
+<span id="cb7-604"><a href="#cb7-604" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-605"><a href="#cb7-605" aria-hidden="true" tabindex="-1"></a>I <span class="in">`math-exercise`</span> står det riktige svaret i oppgaveteksten, i hakeparenteser etter en understrek:</span>
+<span id="cb7-606"><a href="#cb7-606" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-607"><a href="#cb7-607" aria-hidden="true" tabindex="-1"></a><span class="in">````markdown</span></span>
+<span id="cb7-608"><a href="#cb7-608" aria-hidden="true" tabindex="-1"></a><span class="in">```{math-exercise}</span></span>
+<span id="cb7-609"><a href="#cb7-609" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: sirkelareal</span></span>
+<span id="cb7-610"><a href="#cb7-610" aria-hidden="true" tabindex="-1"></a><span class="in">#| vars: r</span></span>
+<span id="cb7-611"><a href="#cb7-611" aria-hidden="true" tabindex="-1"></a><span class="in">En sirkel har radius $r = 3$. Oppgi arealet eksakt (skriv pi for π):</span></span>
+<span id="cb7-612"><a href="#cb7-612" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-613"><a href="#cb7-613" aria-hidden="true" tabindex="-1"></a><span class="in">$A =$ _[pi*9]</span></span>
+<span id="cb7-614"><a href="#cb7-614" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-615"><a href="#cb7-615" aria-hidden="true" tabindex="-1"></a><span class="in">````</span></span>
+<span id="cb7-616"><a href="#cb7-616" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-617"><a href="#cb7-617" aria-hidden="true" tabindex="-1"></a><span class="in">`#| vars:`</span> angir symbolene som kan forekomme i svaret. Svaret i <span class="in">`[...]`</span> er et SymPy-uttrykk. Prøv: <span class="in">`pi*9`</span>, <span class="in">`9*pi`</span> og <span class="in">`3**2*pi`</span> teller alle som riktig.</span>
+<span id="cb7-618"><a href="#cb7-618" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-619"><a href="#cb7-619" aria-hidden="true" tabindex="-1"></a><span class="in">```{math-exercise}</span></span>
+<span id="cb7-620"><a href="#cb7-620" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: check-sirkelareal</span></span>
+<span id="cb7-621"><a href="#cb7-621" aria-hidden="true" tabindex="-1"></a><span class="in">#| vars: r</span></span>
+<span id="cb7-622"><a href="#cb7-622" aria-hidden="true" tabindex="-1"></a><span class="in">En sirkel har radius $r = 3$. Oppgi arealet eksakt (skriv pi for π):</span></span>
+<span id="cb7-623"><a href="#cb7-623" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-624"><a href="#cb7-624" aria-hidden="true" tabindex="-1"></a><span class="in">$A =$ _[pi*9]</span></span>
+<span id="cb7-625"><a href="#cb7-625" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-626"><a href="#cb7-626" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-627"><a href="#cb7-627" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb7-628"><a href="#cb7-628" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-629"><a href="#cb7-629" aria-hidden="true" tabindex="-1"></a><span class="fu">## 5 – Se resultatet</span></span>
+<span id="cb7-630"><a href="#cb7-630" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-631"><a href="#cb7-631" aria-hidden="true" tabindex="-1"></a>Skriv <span class="in">`quarto preview`</span> i terminalen. Ved første klikk på **Kjør koden** eller **Kontroller** lastes Python, og det tar noen sekunder. Deretter viser oppgavene:</span>
+<span id="cb7-632"><a href="#cb7-632" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-633"><a href="#cb7-633" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>for <span class="in">`py-exercise`</span> en editor med knapper for å kjøre og tilbakestille. Etter kjøringen står det hvilke tester som bestod, og hvilken melding som vises ved en feil.</span>
+<span id="cb7-634"><a href="#cb7-634" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>for <span class="in">`math-exercise`</span> et inndatafelt og en knapp **Kontroller** som skriver resultatet ved siden av feltet.</span>
+<span id="cb7-635"><a href="#cb7-635" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-636"><a href="#cb7-636" aria-hidden="true" tabindex="-1"></a>Gjør en feil med vilje og se om meldingen hjelper studentene videre. Prøv også den riktige løsningen.</span>
+<span id="cb7-637"><a href="#cb7-637" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-638"><a href="#cb7-638" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb7-639"><a href="#cb7-639" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-640"><a href="#cb7-640" aria-hidden="true" tabindex="-1"></a><span class="fu">## 6 – Hjelp fra en KI (frivillig)</span></span>
+<span id="cb7-641"><a href="#cb7-641" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-642"><a href="#cb7-642" aria-hidden="true" tabindex="-1"></a>Hver oppgave kan få en knapp **Tilbakemelding**. Den gjør oppgaven og det gjeldende svaret om til en ferdig tekst som studentene limer inn i en KI etter eget valg. For <span class="in">`py-exercise`</span> slår du det på og angir oppdraget i hver oppgave:</span>
+<span id="cb7-643"><a href="#cb7-643" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-644"><a href="#cb7-644" aria-hidden="true" tabindex="-1"></a><span class="in">````markdown</span></span>
+<span id="cb7-645"><a href="#cb7-645" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb7-646"><a href="#cb7-646" aria-hidden="true" tabindex="-1"></a>py-exercise:</span>
+<span id="cb7-647"><a href="#cb7-647" aria-hidden="true" tabindex="-1"></a>  feedback: true</span>
+<span id="cb7-648"><a href="#cb7-648" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb7-649"><a href="#cb7-649" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-650"><a href="#cb7-650" aria-hidden="true" tabindex="-1"></a><span class="in">```{py-exercise}</span></span>
+<span id="cb7-651"><a href="#cb7-651" aria-hidden="true" tabindex="-1"></a><span class="co">#| task: Fullfør kvadrat slik at den returnerer kvadratet av x.</span></span>
+<span id="cb7-652"><a href="#cb7-652" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> kvadrat(x):</span>
+<span id="cb7-653"><a href="#cb7-653" aria-hidden="true" tabindex="-1"></a>    <span class="cf">pass</span></span>
+<span id="cb7-654"><a href="#cb7-654" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-655"><a href="#cb7-655" aria-hidden="true" tabindex="-1"></a><span class="co">## TESTS ##</span></span>
+<span id="cb7-656"><a href="#cb7-656" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> kvadrat(<span class="dv">3</span>) <span class="op">==</span> <span class="dv">9</span></span>
+<span id="cb7-657"><a href="#cb7-657" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-658"><a href="#cb7-658" aria-hidden="true" tabindex="-1"></a><span class="in">````</span></span>
+<span id="cb7-659"><a href="#cb7-659" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-660"><a href="#cb7-660" aria-hidden="true" tabindex="-1"></a>Testene og den forventede løsningen sendes aldri. Hvordan du stiller inn hintnivåer og bygger en side helt uten KI, står på siden <span class="co">[</span><span class="ot">KI-tilbakemelding og lagring</span><span class="co">](../../../exp/Qmd Files/Tipps and Tricks/exp_ext_feedback.html)</span>.</span>
+<span id="cb7-661"><a href="#cb7-661" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-662"><a href="#cb7-662" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb7-663"><a href="#cb7-663" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-664"><a href="#cb7-664" aria-hidden="true" tabindex="-1"></a><span class="fu">## 7 – Svarene bevares</span></span>
+<span id="cb7-665"><a href="#cb7-665" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-666"><a href="#cb7-666" aria-hidden="true" tabindex="-1"></a>Det studentene skriver inn, blir i nettleseren på enheten deres. Neste gang de besøker siden, er det der igjen. Ingenting går til noen server. Studentene kan slå det av i innstillingsdialogen, eksportere svarene sine eller slette dem.</span>
+<span id="cb7-667"><a href="#cb7-667" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-668"><a href="#cb7-668" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb7-669"><a href="#cb7-669" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-670"><a href="#cb7-670" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
+<span id="cb7-671"><a href="#cb7-671" aria-hidden="true" tabindex="-1"></a><span class="fu">## Hva nå?</span></span>
+<span id="cb7-672"><a href="#cb7-672" aria-hidden="true" tabindex="-1"></a>Alle alternativer for de to oppgavetypene (forbudte kommandoer, kontrollmoduser, delpoeng, oppgavebanker, innlevering) finner du under <span class="co">[</span><span class="ot">Tips og triks</span><span class="co">](../../../exp/Qmd Files/Tipps and Tricks/exp_extensions.html)</span>.</span>
+<span id="cb7-673"><a href="#cb7-673" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb7-674"><a href="#cb7-674" aria-hidden="true" tabindex="-1"></a>::::</span>
+<span id="cb7-675"><a href="#cb7-675" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-676"><a href="#cb7-676" aria-hidden="true" tabindex="-1"></a>:::: {.content-visible when-profile="dansk"}</span>
+<span id="cb7-677"><a href="#cb7-677" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
+<span id="cb7-678"><a href="#cb7-678" aria-hidden="true" tabindex="-1"></a><span class="fu">## Vil du hellere have en kortversion?</span></span>
+<span id="cb7-679"><a href="#cb7-679" aria-hidden="true" tabindex="-1"></a>Dette kapitel findes som <span class="co">[</span><span class="ot">PDF-cheatsheet</span><span class="co">](beg_check_cheatsheet.qmd)</span>: trinnene og skrivemåden for de to opgavetyper, kortfattet til udskrift eller hurtigt opslag.</span>
+<span id="cb7-680"><a href="#cb7-680" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb7-681"><a href="#cb7-681" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-682"><a href="#cb7-682" aria-hidden="true" tabindex="-1"></a>En opgave med automatisk kontrol fortæller med det samme de studerende, om deres løsning er rigtig. Du skriver opgaven og det rigtige svar én gang, og kontrollen kører i browseren. Der findes to slags:</span>
+<span id="cb7-683"><a href="#cb7-683" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-684"><a href="#cb7-684" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Opgave <span class="pp">|</span> De studerende <span class="pp">|</span> Kontrolleres <span class="pp">|</span></span>
+<span id="cb7-685"><a href="#cb7-685" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|</span></span>
+<span id="cb7-686"><a href="#cb7-686" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`py-exercise`</span> <span class="pp">|</span> fuldfører en Python-funktion <span class="pp">|</span> med skjulte test (<span class="in">`assert`</span>) <span class="pp">|</span></span>
+<span id="cb7-687"><a href="#cb7-687" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`math-exercise`</span> <span class="pp">|</span> skriver et matematisk svar <span class="pp">|</span> med SymPy, ligeværdige skrivemåder tæller <span class="pp">|</span></span>
+<span id="cb7-688"><a href="#cb7-688" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-689"><a href="#cb7-689" aria-hidden="true" tabindex="-1"></a>::: {.callout-warning}</span>
+<span id="cb7-690"><a href="#cb7-690" aria-hidden="true" tabindex="-1"></a><span class="fu">## Interaktivt kun i HTML</span></span>
+<span id="cb7-691"><a href="#cb7-691" aria-hidden="true" tabindex="-1"></a>Kontrollen virker kun i **HTML-output**, altså i websteder (<span class="in">`format: html`</span>) og bøger. I PDF eller Word vises kun opgavens tekst.</span>
+<span id="cb7-692"><a href="#cb7-692" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb7-693"><a href="#cb7-693" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-694"><a href="#cb7-694" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb7-695"><a href="#cb7-695" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-696"><a href="#cb7-696" aria-hidden="true" tabindex="-1"></a><span class="fu">## 1 – Installér pakken</span></span>
+<span id="cb7-697"><a href="#cb7-697" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-698"><a href="#cb7-698" aria-hidden="true" tabindex="-1"></a>Begge opgavetyper ligger i pakken **CTM Assessment**. Hvis du ikke har installeret den endnu, åbner du **terminalen** i VS Code (**View → Terminal**) og skriver i projektmappen:</span>
+<span id="cb7-699"><a href="#cb7-699" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-700"><a href="#cb7-700" aria-hidden="true" tabindex="-1"></a>::: {.panel-tabset}</span>
+<span id="cb7-701"><a href="#cb7-701" aria-hidden="true" tabindex="-1"></a><span class="fu">### Windows</span></span>
+<span id="cb7-702"><a href="#cb7-702" aria-hidden="true" tabindex="-1"></a><span class="in">```{.bash filename="Terminal"}</span></span>
+<span id="cb7-703"><a href="#cb7-703" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.zip</span>
+<span id="cb7-704"><a href="#cb7-704" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-705"><a href="#cb7-705" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-706"><a href="#cb7-706" aria-hidden="true" tabindex="-1"></a><span class="fu">### macOS / Linux</span></span>
+<span id="cb7-707"><a href="#cb7-707" aria-hidden="true" tabindex="-1"></a><span class="in">```{.bash filename="Terminal"}</span></span>
+<span id="cb7-708"><a href="#cb7-708" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.tar.gz</span>
+<span id="cb7-709"><a href="#cb7-709" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-710"><a href="#cb7-710" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb7-711"><a href="#cb7-711" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-712"><a href="#cb7-712" aria-hidden="true" tabindex="-1"></a>Det behøves kun **én gang pr. projektmappe**. De samme trin er beskrevet mere udførligt på siden <span class="co">[</span><span class="ot">Interaktiv kode med Pyodide</span><span class="co">](beg_extensions.qmd)</span>.</span>
+<span id="cb7-713"><a href="#cb7-713" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-714"><a href="#cb7-714" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb7-715"><a href="#cb7-715" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-716"><a href="#cb7-716" aria-hidden="true" tabindex="-1"></a><span class="fu">## 2 – Forbered siden</span></span>
+<span id="cb7-717"><a href="#cb7-717" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-718"><a href="#cb7-718" aria-hidden="true" tabindex="-1"></a>Tilføj to ting i hovedet på din <span class="in">`.qmd`</span>-fil:</span>
+<span id="cb7-719"><a href="#cb7-719" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-720"><a href="#cb7-720" aria-hidden="true" tabindex="-1"></a><span class="in">```yaml</span></span>
+<span id="cb7-721"><a href="#cb7-721" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb7-722"><a href="#cb7-722" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Mine opgaver"</span></span>
+<span id="cb7-723"><a href="#cb7-723" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span><span class="at"> html</span></span>
+<span id="cb7-724"><a href="#cb7-724" aria-hidden="true" tabindex="-1"></a><span class="fu">engine</span><span class="kw">:</span><span class="at"> markdown</span></span>
+<span id="cb7-725"><a href="#cb7-725" aria-hidden="true" tabindex="-1"></a><span class="fu">filters</span><span class="kw">:</span></span>
+<span id="cb7-726"><a href="#cb7-726" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span>ctm-assessment</span>
+<span id="cb7-727"><a href="#cb7-727" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb7-728"><a href="#cb7-728" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-729"><a href="#cb7-729" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-730"><a href="#cb7-730" aria-hidden="true" tabindex="-1"></a><span class="in">`filters:`</span> slår pakken til. Fra Quarto 1.10 skal du bruge <span class="in">`engine: markdown`</span> på sider med opgaver, ellers stopper bygningen ved Jupyter.</span>
+<span id="cb7-731"><a href="#cb7-731" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-732"><a href="#cb7-732" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb7-733"><a href="#cb7-733" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-734"><a href="#cb7-734" aria-hidden="true" tabindex="-1"></a><span class="fu">## 3 – Skriv en Python-opgave</span></span>
+<span id="cb7-735"><a href="#cb7-735" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-736"><a href="#cb7-736" aria-hidden="true" tabindex="-1"></a>En <span class="in">`py-exercise`</span>-blok har to dele, adskilt af linjen <span class="in">`## TESTS ##`</span>. Ovenfor står det, de studerende ser, nedenfor de skjulte test:</span>
+<span id="cb7-737"><a href="#cb7-737" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-738"><a href="#cb7-738" aria-hidden="true" tabindex="-1"></a><span class="in">````markdown</span></span>
+<span id="cb7-739"><a href="#cb7-739" aria-hidden="true" tabindex="-1"></a><span class="in">```{py-exercise}</span></span>
+<span id="cb7-740"><a href="#cb7-740" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> kvadrat(x):</span>
+<span id="cb7-741"><a href="#cb7-741" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Returnér kvadratet af x."""</span></span>
+<span id="cb7-742"><a href="#cb7-742" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Din løsning her</span></span>
+<span id="cb7-743"><a href="#cb7-743" aria-hidden="true" tabindex="-1"></a>    <span class="cf">pass</span></span>
+<span id="cb7-744"><a href="#cb7-744" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-745"><a href="#cb7-745" aria-hidden="true" tabindex="-1"></a><span class="co">## TESTS ##</span></span>
+<span id="cb7-746"><a href="#cb7-746" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> kvadrat(<span class="dv">3</span>) <span class="op">==</span> <span class="dv">9</span>,  <span class="st">"kvadrat(3) skal være 9"</span></span>
+<span id="cb7-747"><a href="#cb7-747" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> kvadrat(<span class="op">-</span><span class="dv">2</span>) <span class="op">==</span> <span class="dv">4</span>, <span class="st">"kvadrat(-2) skal være 4"</span></span>
+<span id="cb7-748"><a href="#cb7-748" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-749"><a href="#cb7-749" aria-hidden="true" tabindex="-1"></a><span class="in">````</span></span>
+<span id="cb7-750"><a href="#cb7-750" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-751"><a href="#cb7-751" aria-hidden="true" tabindex="-1"></a>Teksten efter kommaet i en <span class="in">`assert`</span> er meddelelsen, når testen mislykkes. Skriv den, som om du talte med de studerende.</span>
+<span id="cb7-752"><a href="#cb7-752" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-753"><a href="#cb7-753" aria-hidden="true" tabindex="-1"></a>Sådan ser opgaven ud, prøv den med det samme:</span>
+<span id="cb7-754"><a href="#cb7-754" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-755"><a href="#cb7-755" aria-hidden="true" tabindex="-1"></a><span class="in">```{py-exercise}</span></span>
+<span id="cb7-756"><a href="#cb7-756" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: check-kvadrat</span></span>
+<span id="cb7-757"><a href="#cb7-757" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> kvadrat(x):</span>
+<span id="cb7-758"><a href="#cb7-758" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Returnér kvadratet af x."""</span></span>
+<span id="cb7-759"><a href="#cb7-759" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Din løsning her</span></span>
+<span id="cb7-760"><a href="#cb7-760" aria-hidden="true" tabindex="-1"></a>    <span class="cf">pass</span></span>
+<span id="cb7-761"><a href="#cb7-761" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-762"><a href="#cb7-762" aria-hidden="true" tabindex="-1"></a><span class="co">## TESTS ##</span></span>
+<span id="cb7-763"><a href="#cb7-763" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> kvadrat(<span class="dv">3</span>) <span class="op">==</span> <span class="dv">9</span>,  <span class="st">"kvadrat(3) skal være 9"</span></span>
+<span id="cb7-764"><a href="#cb7-764" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> kvadrat(<span class="op">-</span><span class="dv">2</span>) <span class="op">==</span> <span class="dv">4</span>, <span class="st">"kvadrat(-2) skal være 4"</span></span>
+<span id="cb7-765"><a href="#cb7-765" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-766"><a href="#cb7-766" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-767"><a href="#cb7-767" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb7-768"><a href="#cb7-768" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-769"><a href="#cb7-769" aria-hidden="true" tabindex="-1"></a><span class="fu">## 4 – Skriv en matematikopgave</span></span>
+<span id="cb7-770"><a href="#cb7-770" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-771"><a href="#cb7-771" aria-hidden="true" tabindex="-1"></a>I <span class="in">`math-exercise`</span> står det rigtige svar i opgaveteksten, i kantede parenteser efter en understreg:</span>
+<span id="cb7-772"><a href="#cb7-772" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-773"><a href="#cb7-773" aria-hidden="true" tabindex="-1"></a><span class="in">````markdown</span></span>
+<span id="cb7-774"><a href="#cb7-774" aria-hidden="true" tabindex="-1"></a><span class="in">```{math-exercise}</span></span>
+<span id="cb7-775"><a href="#cb7-775" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: cirkelareal</span></span>
+<span id="cb7-776"><a href="#cb7-776" aria-hidden="true" tabindex="-1"></a><span class="in">#| vars: r</span></span>
+<span id="cb7-777"><a href="#cb7-777" aria-hidden="true" tabindex="-1"></a><span class="in">En cirkel har radius $r = 3$. Angiv dens areal eksakt (skriv pi for π):</span></span>
+<span id="cb7-778"><a href="#cb7-778" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-779"><a href="#cb7-779" aria-hidden="true" tabindex="-1"></a><span class="in">$A =$ _[pi*9]</span></span>
+<span id="cb7-780"><a href="#cb7-780" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-781"><a href="#cb7-781" aria-hidden="true" tabindex="-1"></a><span class="in">````</span></span>
+<span id="cb7-782"><a href="#cb7-782" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-783"><a href="#cb7-783" aria-hidden="true" tabindex="-1"></a><span class="in">`#| vars:`</span> angiver de symboler, der må forekomme i svaret. Svaret i <span class="in">`[...]`</span> er et SymPy-udtryk. Prøv: <span class="in">`pi*9`</span>, <span class="in">`9*pi`</span> og <span class="in">`3**2*pi`</span> tæller alle som rigtige.</span>
+<span id="cb7-784"><a href="#cb7-784" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-785"><a href="#cb7-785" aria-hidden="true" tabindex="-1"></a><span class="in">```{math-exercise}</span></span>
+<span id="cb7-786"><a href="#cb7-786" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: check-cirkelareal</span></span>
+<span id="cb7-787"><a href="#cb7-787" aria-hidden="true" tabindex="-1"></a><span class="in">#| vars: r</span></span>
+<span id="cb7-788"><a href="#cb7-788" aria-hidden="true" tabindex="-1"></a><span class="in">En cirkel har radius $r = 3$. Angiv dens areal eksakt (skriv pi for π):</span></span>
+<span id="cb7-789"><a href="#cb7-789" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-790"><a href="#cb7-790" aria-hidden="true" tabindex="-1"></a><span class="in">$A =$ _[pi*9]</span></span>
+<span id="cb7-791"><a href="#cb7-791" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-792"><a href="#cb7-792" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-793"><a href="#cb7-793" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb7-794"><a href="#cb7-794" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-795"><a href="#cb7-795" aria-hidden="true" tabindex="-1"></a><span class="fu">## 5 – Se resultatet</span></span>
+<span id="cb7-796"><a href="#cb7-796" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-797"><a href="#cb7-797" aria-hidden="true" tabindex="-1"></a>Skriv <span class="in">`quarto preview`</span> i terminalen. Ved første klik på **Kør koden** eller **Kontrollér** indlæses Python, og det tager nogle sekunder. Derefter viser opgaverne:</span>
+<span id="cb7-798"><a href="#cb7-798" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-799"><a href="#cb7-799" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>for <span class="in">`py-exercise`</span> en editor med knapper til at køre og nulstille. Efter kørslen står der, hvilke test der bestod, og hvilken meddelelse der vises ved en fejl.</span>
+<span id="cb7-800"><a href="#cb7-800" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>for <span class="in">`math-exercise`</span> et indtastningsfelt og en knap **Kontrollér**, der skriver resultatet ved siden af feltet.</span>
+<span id="cb7-801"><a href="#cb7-801" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-802"><a href="#cb7-802" aria-hidden="true" tabindex="-1"></a>Lav en fejl med vilje og se, om meddelelsen hjælper de studerende videre. Prøv også den rigtige løsning.</span>
+<span id="cb7-803"><a href="#cb7-803" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-804"><a href="#cb7-804" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb7-805"><a href="#cb7-805" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-806"><a href="#cb7-806" aria-hidden="true" tabindex="-1"></a><span class="fu">## 6 – Hjælp fra en AI (frivilligt)</span></span>
+<span id="cb7-807"><a href="#cb7-807" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-808"><a href="#cb7-808" aria-hidden="true" tabindex="-1"></a>Hver opgave kan få en knap **Feedback**. Den laver opgaven og det aktuelle svar om til en færdig tekst, som de studerende sætter ind i en AI efter eget valg. For <span class="in">`py-exercise`</span> slår du det til og angiver opgaven i hver opgave:</span>
+<span id="cb7-809"><a href="#cb7-809" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-810"><a href="#cb7-810" aria-hidden="true" tabindex="-1"></a><span class="in">````markdown</span></span>
+<span id="cb7-811"><a href="#cb7-811" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb7-812"><a href="#cb7-812" aria-hidden="true" tabindex="-1"></a>py-exercise:</span>
+<span id="cb7-813"><a href="#cb7-813" aria-hidden="true" tabindex="-1"></a>  feedback: true</span>
+<span id="cb7-814"><a href="#cb7-814" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb7-815"><a href="#cb7-815" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-816"><a href="#cb7-816" aria-hidden="true" tabindex="-1"></a><span class="in">```{py-exercise}</span></span>
+<span id="cb7-817"><a href="#cb7-817" aria-hidden="true" tabindex="-1"></a><span class="co">#| task: Fuldfør kvadrat, så den returnerer kvadratet af x.</span></span>
+<span id="cb7-818"><a href="#cb7-818" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> kvadrat(x):</span>
+<span id="cb7-819"><a href="#cb7-819" aria-hidden="true" tabindex="-1"></a>    <span class="cf">pass</span></span>
+<span id="cb7-820"><a href="#cb7-820" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-821"><a href="#cb7-821" aria-hidden="true" tabindex="-1"></a><span class="co">## TESTS ##</span></span>
+<span id="cb7-822"><a href="#cb7-822" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> kvadrat(<span class="dv">3</span>) <span class="op">==</span> <span class="dv">9</span></span>
+<span id="cb7-823"><a href="#cb7-823" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-824"><a href="#cb7-824" aria-hidden="true" tabindex="-1"></a><span class="in">````</span></span>
+<span id="cb7-825"><a href="#cb7-825" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-826"><a href="#cb7-826" aria-hidden="true" tabindex="-1"></a>Testene og den forventede løsning sendes aldrig. Hvordan du indstiller hintniveauer og bygger en side helt uden AI, står på siden <span class="co">[</span><span class="ot">AI-feedback og lagring</span><span class="co">](../../../exp/Qmd Files/Tipps and Tricks/exp_ext_feedback.html)</span>.</span>
+<span id="cb7-827"><a href="#cb7-827" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-828"><a href="#cb7-828" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb7-829"><a href="#cb7-829" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-830"><a href="#cb7-830" aria-hidden="true" tabindex="-1"></a><span class="fu">## 7 – Svarene bevares</span></span>
+<span id="cb7-831"><a href="#cb7-831" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-832"><a href="#cb7-832" aria-hidden="true" tabindex="-1"></a>Det, de studerende skriver ind, bliver i browseren på deres enhed. Næste gang de besøger siden, er det der igen. Intet går til nogen server. De studerende kan slå det fra i indstillingsdialogen, eksportere deres svar eller slette dem.</span>
+<span id="cb7-833"><a href="#cb7-833" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-834"><a href="#cb7-834" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb7-835"><a href="#cb7-835" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-836"><a href="#cb7-836" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
+<span id="cb7-837"><a href="#cb7-837" aria-hidden="true" tabindex="-1"></a><span class="fu">## Hvad nu?</span></span>
+<span id="cb7-838"><a href="#cb7-838" aria-hidden="true" tabindex="-1"></a>Alle muligheder for de to opgavetyper (forbudte kommandoer, kontroltilstande, delpoint, opgavepuljer, aflevering) finder du under <span class="co">[</span><span class="ot">Tips og tricks</span><span class="co">](../../../exp/Qmd Files/Tipps and Tricks/exp_extensions.html)</span>.</span>
+<span id="cb7-839"><a href="#cb7-839" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb7-840"><a href="#cb7-840" aria-hidden="true" tabindex="-1"></a>::::</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+
+
+
+
+<script src="../../site_libs/quarto-contrib/ctm-matrix-input-0.9.0/ctm-matrix-input.js"></script>
+<script src="../../site_libs/quarto-contrib/math-exercise-0.11.0/math-store.js"></script>
+<script src="../../site_libs/quarto-contrib/math-exercise-0.11.0/math-exercise.js"></script>
+<script src="../../site_libs/quarto-contrib/math-exercise-0.11.0/math-similar.js"></script>
+<script src="../../site_libs/quarto-contrib/py-exercise-0.5.0/py-exercise.js"></script>
+</body></html>

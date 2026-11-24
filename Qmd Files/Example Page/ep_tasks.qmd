@@ -1,0 +1,418 @@
+---
+title: "Aufgaben"
+title-en: "Exercises"
+title-sv: "Uppgifter"
+title-no: "Oppgaver"
+title-da: "Opgaver"
+bibliography: references.bib
+sidebar: example-sidebar
+engine: markdown
+filters:
+  - ctm-assessment
+---
+
+:::: {.content-visible when-profile="deutsch"}
+Auf dieser Seite prüft die Seite selbst, ob eine Lösung stimmt: mit versteckten Tests, mit SymPy oder an einer Grafik.
+
+## Aufgabe zum Bearbeiten
+
+Vervollständige die Funktion. Beim Überprüfen laufen die Tests automatisch:
+
+```{py-exercise}
+import math
+
+def f(x_deg):
+    """Gib sin(x) + cos(x) zurück, x ist in Grad gegeben."""
+    # Deine Lösung hier
+    pass
+
+## TESTS ##
+assert abs(f(0)  - 1.0)           < 1e-4, "f(0) sollte 1.0 sein"
+assert abs(f(90) - 1.0)           < 1e-4, "f(90°) sollte 1.0 sein"
+assert abs(f(45) - math.sqrt(2))  < 1e-4, "f(45°) sollte √2 sein"
+```
+
+## Rechenaufgabe
+
+Eine andere Art der Kontrolle: Die Antwort wird symbolisch mit SymPy geprüft,
+nicht mit Tests:
+
+```{math-exercise}
+#| label: ep-math-sin
+#| caption: Sinus an einem besonderen Winkel
+#| vars: x
+Was ist $\sin(90°)$, exakt? _[1]
+```
+
+## Grafik als Aufgabe
+
+Eine Grafik kann auch selbst die Antwort sein. Hier wird geprüft, wohin du den Punkt ziehst.
+
+```{.jsxgraph assessment_id="ep-hochpunkt"}
+var board = JXG.JSXGraph.initBoard(BOARDID, {
+    boundingbox: [-0.8, 1.6, 7, -1.6],
+    axis: true,
+    keepaspectratio: false,
+    showNavigation: false
+});
+
+var graph = board.create('functiongraph', [Math.sin, 0, 2 * Math.PI], {
+    strokeColor: '#2196F3',
+    strokeWidth: 2.5
+});
+
+var p = board.create('glider', [4, Math.sin(4), graph], {
+    name: 'P',
+    size: 6,
+    fillColor: '#E91E63',
+    strokeColor: '#c2185b'
+});
+
+JXG.QuartoAssessment.register({
+  board: board,
+  response: function () {
+    return { x: p.X(), y: p.Y() };
+  }
+});
+```
+
+```{math-exercise}
+#| label: ep-hochpunkt
+#| caption: Hochpunkt der Sinusfunktion
+#| mode: custom
+#| response: jsxgraph:ep-hochpunkt
+#| embed-response: true
+#| checker: |
+#|   def check(response, symbols):
+#|       if abs(response["x"] - 1.5708) < 0.15:
+#|           return {"score": 1, "feedback": "Richtig, der Hochpunkt liegt bei x = pi/2."}
+#|       return {"score": 0, "feedback": "Das ist noch nicht der höchste Punkt der Kurve."}
+
+Ziehe den Punkt $P$ auf den Hochpunkt von $\sin(x)$ im Intervall $[0, 2\pi]$ und klicke auf „Überprüfen“.
+```
+::::
+
+:::: {.content-visible when-profile="english"}
+On this page the page itself checks whether a solution is right: with hidden tests, with SymPy or on a graph.
+
+## Editable Exercise
+
+Complete the function — tests run automatically on checking your solution:
+
+```{py-exercise}
+import math
+
+def f(x_deg):
+    """Return sin(x) + cos(x) for x given in degrees."""
+    # Your solution here
+    pass
+
+## TESTS ##
+assert abs(f(0)  - 1.0)           < 1e-4, "f(0) should be 1.0"
+assert abs(f(90) - 1.0)           < 1e-4, "f(90°) should be 1.0"
+assert abs(f(45) - math.sqrt(2))  < 1e-4, "f(45°) should be √2"
+```
+
+## Math Exercise
+
+A different kind of check — symbolic answers, evaluated with SymPy instead of
+unit tests:
+
+```{math-exercise}
+#| label: ep-math-sin-en
+#| caption: Sine at a special angle
+#| vars: x
+What is $\sin(90°)$, exactly? _[1]
+```
+
+## Graph as an exercise
+
+A graph can also be the answer itself. Here the check looks at where you drag the point.
+
+```{.jsxgraph assessment_id="ep-hochpunkt-en"}
+var board = JXG.JSXGraph.initBoard(BOARDID, {
+    boundingbox: [-0.8, 1.6, 7, -1.6],
+    axis: true,
+    keepaspectratio: false,
+    showNavigation: false
+});
+
+var graph = board.create('functiongraph', [Math.sin, 0, 2 * Math.PI], {
+    strokeColor: '#2196F3',
+    strokeWidth: 2.5
+});
+
+var p = board.create('glider', [4, Math.sin(4), graph], {
+    name: 'P',
+    size: 6,
+    fillColor: '#E91E63',
+    strokeColor: '#c2185b'
+});
+
+JXG.QuartoAssessment.register({
+  board: board,
+  response: function () {
+    return { x: p.X(), y: p.Y() };
+  }
+});
+```
+
+```{math-exercise}
+#| label: ep-hochpunkt-en
+#| caption: Maximum of the sine function
+#| mode: custom
+#| response: jsxgraph:ep-hochpunkt-en
+#| embed-response: true
+#| checker: |
+#|   def check(response, symbols):
+#|       if abs(response["x"] - 1.5708) < 0.15:
+#|           return {"score": 1, "feedback": "Correct, the maximum is at x = pi/2."}
+#|       return {"score": 0, "feedback": "That is not yet the highest point of the curve."}
+
+Drag the point $P$ to the maximum of $\sin(x)$ on the interval $[0, 2\pi]$ and click "Check".
+```
+::::
+
+:::: {.content-visible when-profile="dansk"}
+På denne side kontrollerer siden selv, om en løsning er rigtig: med skjulte test, med SymPy eller på en graf.
+
+## Opgave, du kan redigere
+
+Gør funktionen færdig. Testene køres automatisk, når du kontrollerer din løsning:
+
+```{py-exercise}
+import math
+
+def f(x_deg):
+    """Returner sin(x) + cos(x), x er givet i grader."""
+    # Din løsning her
+    pass
+
+## TESTS ##
+assert abs(f(0)  - 1.0)           < 1e-4, "f(0) skal være 1.0"
+assert abs(f(90) - 1.0)           < 1e-4, "f(90°) skal være 1.0"
+assert abs(f(45) - math.sqrt(2))  < 1e-4, "f(45°) skal være √2"
+```
+
+## Regneopgave
+
+En anden slags kontrol: svaret kontrolleres symbolsk med SymPy
+i stedet for med test:
+
+```{math-exercise}
+#| label: ep-math-sin-da
+#| caption: Sinus til en særlig vinkel
+#| vars: x
+Hvad er $\sin(90°)$, eksakt? _[1]
+```
+
+## Graf som opgave
+
+En graf kan også selv være svaret. Her kontrolleres det, hvor du trækker punktet hen.
+
+```{.jsxgraph assessment_id="ep-hochpunkt-da"}
+var board = JXG.JSXGraph.initBoard(BOARDID, {
+    boundingbox: [-0.8, 1.6, 7, -1.6],
+    axis: true,
+    keepaspectratio: false,
+    showNavigation: false
+});
+
+var graph = board.create('functiongraph', [Math.sin, 0, 2 * Math.PI], {
+    strokeColor: '#2196F3',
+    strokeWidth: 2.5
+});
+
+var p = board.create('glider', [4, Math.sin(4), graph], {
+    name: 'P',
+    size: 6,
+    fillColor: '#E91E63',
+    strokeColor: '#c2185b'
+});
+
+JXG.QuartoAssessment.register({
+  board: board,
+  response: function () {
+    return { x: p.X(), y: p.Y() };
+  }
+});
+```
+
+```{math-exercise}
+#| label: ep-hochpunkt-da
+#| caption: Sinusfunktionens maksimum
+#| mode: custom
+#| response: jsxgraph:ep-hochpunkt-da
+#| embed-response: true
+#| checker: |
+#|   def check(response, symbols):
+#|       if abs(response["x"] - 1.5708) < 0.15:
+#|           return {"score": 1, "feedback": "Rigtigt, maksimum ligger ved x = pi/2."}
+#|       return {"score": 0, "feedback": "Det er endnu ikke kurvens højeste punkt."}
+
+Træk punktet $P$ hen til maksimum for $\sin(x)$ på intervallet $[0, 2\pi]$, og klik på "Check".
+```
+::::
+
+:::: {.content-visible when-profile="norsk"}
+På denne siden kontrollerer siden selv om en løsning stemmer: med skjulte tester, med SymPy eller på en graf.
+
+## Oppgave du kan redigere
+
+Gjør funksjonen ferdig. Testene kjøres automatisk når du kontrollerer løsningen din:
+
+```{py-exercise}
+import math
+
+def f(x_deg):
+    """Returner sin(x) + cos(x), x er gitt i grader."""
+    # Din løsning her
+    pass
+
+## TESTS ##
+assert abs(f(0)  - 1.0)           < 1e-4, "f(0) skal være 1.0"
+assert abs(f(90) - 1.0)           < 1e-4, "f(90°) skal være 1.0"
+assert abs(f(45) - math.sqrt(2))  < 1e-4, "f(45°) skal være √2"
+```
+
+## Regneoppgave
+
+En annen type kontroll: svaret kontrolleres symbolsk med SymPy
+i stedet for med tester:
+
+```{math-exercise}
+#| label: ep-math-sin-no
+#| caption: Sinus til en spesiell vinkel
+#| vars: x
+Hva er $\sin(90°)$, eksakt? _[1]
+```
+
+## Graf som oppgave
+
+En graf kan også selv være svaret. Her kontrolleres det hvor du drar punktet.
+
+```{.jsxgraph assessment_id="ep-hochpunkt-no"}
+var board = JXG.JSXGraph.initBoard(BOARDID, {
+    boundingbox: [-0.8, 1.6, 7, -1.6],
+    axis: true,
+    keepaspectratio: false,
+    showNavigation: false
+});
+
+var graph = board.create('functiongraph', [Math.sin, 0, 2 * Math.PI], {
+    strokeColor: '#2196F3',
+    strokeWidth: 2.5
+});
+
+var p = board.create('glider', [4, Math.sin(4), graph], {
+    name: 'P',
+    size: 6,
+    fillColor: '#E91E63',
+    strokeColor: '#c2185b'
+});
+
+JXG.QuartoAssessment.register({
+  board: board,
+  response: function () {
+    return { x: p.X(), y: p.Y() };
+  }
+});
+```
+
+```{math-exercise}
+#| label: ep-hochpunkt-no
+#| caption: Toppunktet til sinusfunksjonen
+#| mode: custom
+#| response: jsxgraph:ep-hochpunkt-no
+#| embed-response: true
+#| checker: |
+#|   def check(response, symbols):
+#|       if abs(response["x"] - 1.5708) < 0.15:
+#|           return {"score": 1, "feedback": "Riktig, toppunktet ligger ved x = pi/2."}
+#|       return {"score": 0, "feedback": "Det er ennå ikke det høyeste punktet på kurven."}
+
+Dra punktet $P$ til toppunktet til $\sin(x)$ på intervallet $[0, 2\pi]$ og klikk på "Sjekk".
+```
+::::
+
+:::: {.content-visible when-profile="svenska"}
+På den här sidan kontrollerar sidan själv om en lösning stämmer: med dolda tester, med SymPy eller på en graf.
+
+## Uppgift att redigera
+
+Gör färdigt funktionen. Testerna körs automatiskt när du kontrollerar din lösning:
+
+```{py-exercise}
+import math
+
+def f(x_deg):
+    """Returnera sin(x) + cos(x), x anges i grader."""
+    # Din lösning här
+    pass
+
+## TESTS ##
+assert abs(f(0)  - 1.0)           < 1e-4, "f(0) ska vara 1.0"
+assert abs(f(90) - 1.0)           < 1e-4, "f(90°) ska vara 1.0"
+assert abs(f(45) - math.sqrt(2))  < 1e-4, "f(45°) ska vara √2"
+```
+
+## Räkneuppgift
+
+En annan sorts kontroll: svaret kontrolleras symboliskt med SymPy
+i stället för med tester:
+
+```{math-exercise}
+#| label: ep-math-sin-sv
+#| caption: Sinus för en speciell vinkel
+#| vars: x
+Vad är $\sin(90°)$, exakt? _[1]
+```
+
+## Graf som uppgift
+
+En graf kan också själv vara svaret. Här kontrolleras vart du drar punkten.
+
+```{.jsxgraph assessment_id="ep-hochpunkt-sv"}
+var board = JXG.JSXGraph.initBoard(BOARDID, {
+    boundingbox: [-0.8, 1.6, 7, -1.6],
+    axis: true,
+    keepaspectratio: false,
+    showNavigation: false
+});
+
+var graph = board.create('functiongraph', [Math.sin, 0, 2 * Math.PI], {
+    strokeColor: '#2196F3',
+    strokeWidth: 2.5
+});
+
+var p = board.create('glider', [4, Math.sin(4), graph], {
+    name: 'P',
+    size: 6,
+    fillColor: '#E91E63',
+    strokeColor: '#c2185b'
+});
+
+JXG.QuartoAssessment.register({
+  board: board,
+  response: function () {
+    return { x: p.X(), y: p.Y() };
+  }
+});
+```
+
+```{math-exercise}
+#| label: ep-hochpunkt-sv
+#| caption: Sinusfunktionens maximum
+#| mode: custom
+#| response: jsxgraph:ep-hochpunkt-sv
+#| embed-response: true
+#| checker: |
+#|   def check(response, symbols):
+#|       if abs(response["x"] - 1.5708) < 0.15:
+#|           return {"score": 1, "feedback": "Rätt, maximum ligger vid x = pi/2."}
+#|       return {"score": 0, "feedback": "Det är ännu inte kurvans högsta punkt."}
+
+Dra punkten $P$ till maximum för $\sin(x)$ på intervallet $[0, 2\pi]$ och klicka på "Check".
+```
+::::
+

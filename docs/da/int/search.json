@@ -144,7 +144,7 @@
     "href": "Qmd Files/Getting Started/beg_extensions.html",
     "title": "Interaktiv kode med Pyodide",
     "section": "",
-    "text": "NoteHvad er udvidelser?\n\n\n\nUdvidelser (extensions) giver Quarto funktioner, der ikke er indbygget. Du installerer dem én gang pr. projektmappe. Hele listen finder du på quarto.org/docs/extensions.\nMed Pyodide kan de studerende køre og ændre Python-kode direkte i browseren uden at installere Python på deres computer. Du skriver koden én gang, de klikker på Kør koden.\nDenne vejledning bruger udvidelsen pyodide-interaktiv til det, en omarbejdning af coatless-quarto/pyodide. Den kører Python i en Web Worker, altså ved siden af siden i stedet for i den. Det er det, der gør rigtig input(), animationer, en stopknap og AI-feedback muligt. Mere om det i sidste afsnit.",
+    "text": "Your answers are saved only in this browser.Do not save on this device\nExport my answers\nDelete answers on this page\nDelete all your answers in this course\nMed Pyodide kan de studerende køre og ændre Python-kode direkte i browseren uden at installere Python på deres computer. Du skriver koden én gang, de klikker på Kør koden.\nDet klarer udvidelsen pyodide-interaktiv fra pakken CTM Assessment.",
     "crumbs": [
       "Interaktiv kode",
       "Interaktivt Python med Pyodide"
@@ -155,7 +155,7 @@
     "href": "Qmd Files/Getting Started/beg_extensions.html#installer-udvidelsen",
     "title": "Interaktiv kode med Pyodide",
     "section": "1 – Installer udvidelsen",
-    "text": "1 – Installer udvidelsen\n① Åbn terminalen i VS Code\nÅbn terminalen (kommandolinjen) via View → Terminal. Der åbnes et panel nederst i vinduet. Kontrollér, at den viste sti er din projektmappe.\n\n② Kør installationskommandoen\nUdvidelsen ligger på github.com/Erasmus-CTM/pyodide-interaktiv og installeres som enhver anden udvidelse:\n\n\nTerminal\n\nquarto add Erasmus-CTM/pyodide-interaktiv\n\nVent, til kommandoen er færdig. Den stiller tre spørgsmål: om du stoler på kilden, om du vil fortsætte, og om du vil se dokumentationen. Det er kun nødvendigt én gang pr. projektmappe. Bagefter ligger udvidelsen i projektets mappe _extensions/.",
+    "text": "1 – Installer udvidelsen\n① Åbn terminalen i VS Code\nÅbn terminalen (kommandolinjen) via View → Terminal. Der åbnes et panel nederst i vinduet. Kontrollér, at den viste sti er din projektmappe.\n\n② Kør installationskommandoen\nUdvidelsen følger med pakken CTM Assessment (kilde: github.com/Erasmus-CTM/ctm-assessment). Du installerer den med én kommando:\n\nWindowsmacOS / Linux\n\n\n\n\nTerminal\n\nquarto add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.zip\n\n\n\n\n\nTerminal\n\nquarto add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.tar.gz\n\n\n\n\nKun nødvendigt én gang pr. projektmappe. Kræver Quarto 1.8.27 eller nyere (quarto --version).",
     "crumbs": [
       "Interaktiv kode",
       "Interaktivt Python med Pyodide"
@@ -166,7 +166,7 @@
     "href": "Qmd Files/Getting Started/beg_extensions.html#slå-den-til-i-din-fil",
     "title": "Interaktiv kode med Pyodide",
     "section": "2 – Slå den til i din fil",
-    "text": "2 – Slå den til i din fil\nTilføj en linje filters: i hovedet på din .qmd-fil:\n---\ntitle: \"My Page\"\nformat: html\nfilters:\n  - Erasmus-CTM/pyodide-interaktiv\n---",
+    "text": "2 – Slå den til i din fil\nTilføj en linje filters: i hovedet på din .qmd-fil:\n---\ntitle: \"My Page\"\nformat: html\nengine: markdown\nfilters:\n  - ctm-assessment\n---\nLinjen engine: markdown skal du bruge fra Quarto 1.10 på sider med interaktiv kode, ellers sender Quarto siden til Jupyter, og bygningen stopper. Indeholder siden også almindelige {python}-blokke, udelader du linjen.",
     "crumbs": [
       "Interaktiv kode",
       "Interaktivt Python med Pyodide"
@@ -188,7 +188,7 @@
     "href": "Qmd Files/Getting Started/beg_extensions.html#se-resultatet",
     "title": "Interaktiv kode med Pyodide",
     "section": "4 – Se resultatet",
-    "text": "4 – Se resultatet\nKør quarto preview i terminalen. Kodeblokken vises i browseren med en række knapper. Sådan ser den ud, og du kan prøve den med det samme her:\n\nSlå JavaScript til for at kunne bruge de interaktive kodeceller på denne side.\n\nKør koden starter koden (også med Shift + Enter). Ved første klik indlæses Python, det tager nogle sekunder.\nNulstil gendanner din oprindelige kode.\nFeedback beder en AI om feedback (skal sættes op først).\nMens koden kører, vises Stop.\n\nDe studerende kan ændre koden og køre den igen uden at installere noget.",
+    "text": "4 – Se resultatet\nKør quarto preview i terminalen. Kodeblokken vises i browseren med en række knapper. Sådan ser den ud, og du kan prøve den med det samme her:\n\nSlå JavaScript til for at kunne bruge de interaktive kodeceller på denne side.\n\nKør koden starter koden (også med Shift + Enter). Ved første klik indlæses Python, det tager nogle sekunder.\nNulstil gendanner din oprindelige kode.\nFeedback laver en færdig tekst, som du sætter ind i en AI efter eget valg. Med din egen adgang henter knappen feedbacken direkte.\nMens koden kører, vises Stop.",
     "crumbs": [
       "Interaktiv kode",
       "Interaktivt Python med Pyodide"
@@ -199,7 +199,7 @@
     "href": "Qmd Files/Getting Started/beg_extensions.html#hvad-udvidelsen-ellers-kan",
     "title": "Interaktiv kode med Pyodide",
     "section": "5 – Hvad udvidelsen ellers kan",
-    "text": "5 – Hvad udvidelsen ellers kan\n\nCeller deler variabler. Alle celler på en side hører til én og samme Python-session. En senere celle kan bruge det, en tidligere har defineret eller importeret, men først når den tidligere er kørt.\nRigtig input(). En celle kan stoppe og vente på input.\nAnimationer. En FuncAnimation fra Matplotlib vises som en afspiller, med den samme kode, som du ville skrive på din egen computer.\nUendelige løkker er ufarlige. En while True: ved en fejl låser ikke siden, Stop afbryder.\nAI-feedback. Hintene bliver mere konkrete for hvert klik.\n\ninput() og delte variabler kan du prøve på siden Kode i eksempelsiden og animationen på siden Visualiseringer.\n\n\n\n\n\n\n\nTipSkal de studerende udfylde løsninger?\n\n\n\nUdvidelsen py-exercise giver kodeblokke med skjulte automatiske test: de studerende ser, om deres løsning består. Udvidelsen math-exercise gør det samme for matematiske svar, kontrolleret med SymPy. Begge installeres på samme måde:\n\n\nTerminal\n\nquarto add Erasmus-CTM/py-exercise\nquarto add Erasmus-CTM/math-exercise\n\nEksempler på begge finder du på eksempelsiden i denne vejledning.",
+    "text": "5 – Hvad udvidelsen ellers kan\n\nCeller deler variabler. Alle celler på en side hører til én og samme Python-session. En senere celle kan bruge det, en tidligere har defineret eller importeret, men først når den tidligere er kørt.\nRigtig input(). En celle kan stoppe og vente på input.\nAnimationer. En FuncAnimation fra Matplotlib vises som en afspiller, med den samme kode, som du ville skrive på din egen computer.\nUendelige løkker er ufarlige. En while True: ved en fejl låser ikke siden, Stop afbryder.\nAI-feedback. Hintene bliver mere konkrete for hvert klik.\n\ninput() og delte variabler kan du prøve på siden Kode i eksempelsiden og animationen på siden Visualiseringer.\n\n\n\n\n\n\n\nTipSkal de studerende udfylde løsninger?\n\n\n\nDen samme pakke indeholder py-exercise til programmeringsopgaver med skjulte test og math-exercise til matematiske svar kontrolleret med SymPy. Du behøver ikke installere noget mere. Siden Opgave med automatisk kontrol viser trin for trin, hvordan du bygger en sådan opgave.",
     "crumbs": [
       "Interaktiv kode",
       "Interaktivt Python med Pyodide"
@@ -269,6 +269,94 @@
     "crumbs": [
       "Opret et opgaveark med Quarto",
       "Det skal du bruge"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_check.html",
+    "href": "Qmd Files/Getting Started/beg_check.html",
+    "title": "Opgave med automatisk kontrol",
+    "section": "",
+    "text": "Your answers are saved only in this browser.Do not save on this device\nExport my answers\nDelete answers on this page\nDelete all your answers in this course\nEn opgave med automatisk kontrol fortæller med det samme de studerende, om deres løsning er rigtig. Du skriver opgaven og det rigtige svar én gang, og kontrollen kører i browseren. Der findes to slags:",
+    "crumbs": [
+      "Interaktiv kode",
+      "Opgave med automatisk kontrol"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_check.html#installér-pakken",
+    "href": "Qmd Files/Getting Started/beg_check.html#installér-pakken",
+    "title": "Opgave med automatisk kontrol",
+    "section": "1 – Installér pakken",
+    "text": "1 – Installér pakken\nBegge opgavetyper ligger i pakken CTM Assessment. Hvis du ikke har installeret den endnu, åbner du terminalen i VS Code (View → Terminal) og skriver i projektmappen:\n\nWindowsmacOS / Linux\n\n\n\n\nTerminal\n\nquarto add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.zip\n\n\n\n\n\nTerminal\n\nquarto add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.tar.gz\n\n\n\n\nDet behøves kun én gang pr. projektmappe. De samme trin er beskrevet mere udførligt på siden Interaktiv kode med Pyodide.",
+    "crumbs": [
+      "Interaktiv kode",
+      "Opgave med automatisk kontrol"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_check.html#forbered-siden",
+    "href": "Qmd Files/Getting Started/beg_check.html#forbered-siden",
+    "title": "Opgave med automatisk kontrol",
+    "section": "2 – Forbered siden",
+    "text": "2 – Forbered siden\nTilføj to ting i hovedet på din .qmd-fil:\n---\ntitle: \"Mine opgaver\"\nformat: html\nengine: markdown\nfilters:\n  - ctm-assessment\n---\nfilters: slår pakken til. Fra Quarto 1.10 skal du bruge engine: markdown på sider med opgaver, ellers stopper bygningen ved Jupyter.",
+    "crumbs": [
+      "Interaktiv kode",
+      "Opgave med automatisk kontrol"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_check.html#skriv-en-python-opgave",
+    "href": "Qmd Files/Getting Started/beg_check.html#skriv-en-python-opgave",
+    "title": "Opgave med automatisk kontrol",
+    "section": "3 – Skriv en Python-opgave",
+    "text": "3 – Skriv en Python-opgave\nEn py-exercise-blok har to dele, adskilt af linjen ## TESTS ##. Ovenfor står det, de studerende ser, nedenfor de skjulte test:\n```{py-exercise}\ndef kvadrat(x):\n    \"\"\"Returnér kvadratet af x.\"\"\"\n    # Din løsning her\n    pass\n\n## TESTS ##\nassert kvadrat(3) == 9,  \"kvadrat(3) skal være 9\"\nassert kvadrat(-2) == 4, \"kvadrat(-2) skal være 4\"\n```\nTeksten efter kommaet i en assert er meddelelsen, når testen mislykkes. Skriv den, som om du talte med de studerende.\nSådan ser opgaven ud, prøv den med det samme:\n\n  \n    Please enable JavaScript to load the interactive exercise.",
+    "crumbs": [
+      "Interaktiv kode",
+      "Opgave med automatisk kontrol"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_check.html#skriv-en-matematikopgave",
+    "href": "Qmd Files/Getting Started/beg_check.html#skriv-en-matematikopgave",
+    "title": "Opgave med automatisk kontrol",
+    "section": "4 – Skriv en matematikopgave",
+    "text": "4 – Skriv en matematikopgave\nI math-exercise står det rigtige svar i opgaveteksten, i kantede parenteser efter en understreg:\n```{math-exercise}\n#| label: cirkelareal\n#| vars: r\nEn cirkel har radius $r = 3$. Angiv dens areal eksakt (skriv pi for π):\n\n$A =$ _[pi*9]\n```\n#| vars: angiver de symboler, der må forekomme i svaret. Svaret i [...] er et SymPy-udtryk. Prøv: pi*9, 9*pi og 3**2*pi tæller alle som rigtige.\n\nEn cirkel har radius \\(r = 3\\). Angiv dens areal eksakt (skriv pi for π):\n\n\\(A =\\) \n\n\n  ✓ Check\n  ⓘ Input help\n  \n    💬 Feedback\n    ⚙",
+    "crumbs": [
+      "Interaktiv kode",
+      "Opgave med automatisk kontrol"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_check.html#se-resultatet-2",
+    "href": "Qmd Files/Getting Started/beg_check.html#se-resultatet-2",
+    "title": "Opgave med automatisk kontrol",
+    "section": "5 – Se resultatet",
+    "text": "5 – Se resultatet\nSkriv quarto preview i terminalen. Ved første klik på Kør koden eller Kontrollér indlæses Python, og det tager nogle sekunder. Derefter viser opgaverne:\n\nfor py-exercise en editor med knapper til at køre og nulstille. Efter kørslen står der, hvilke test der bestod, og hvilken meddelelse der vises ved en fejl.\nfor math-exercise et indtastningsfelt og en knap Kontrollér, der skriver resultatet ved siden af feltet.\n\nLav en fejl med vilje og se, om meddelelsen hjælper de studerende videre. Prøv også den rigtige løsning.",
+    "crumbs": [
+      "Interaktiv kode",
+      "Opgave med automatisk kontrol"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_check.html#hjælp-fra-en-ai-frivilligt",
+    "href": "Qmd Files/Getting Started/beg_check.html#hjælp-fra-en-ai-frivilligt",
+    "title": "Opgave med automatisk kontrol",
+    "section": "6 – Hjælp fra en AI (frivilligt)",
+    "text": "6 – Hjælp fra en AI (frivilligt)\nHver opgave kan få en knap Feedback. Den laver opgaven og det aktuelle svar om til en færdig tekst, som de studerende sætter ind i en AI efter eget valg. For py-exercise slår du det til og angiver opgaven i hver opgave:\n---\npy-exercise:\n  feedback: true\n---\n\n```{py-exercise}\n#| task: Fuldfør kvadrat, så den returnerer kvadratet af x.\ndef kvadrat(x):\n    pass\n\n## TESTS ##\nassert kvadrat(3) == 9\n```\nTestene og den forventede løsning sendes aldrig. Hvordan du indstiller hintniveauer og bygger en side helt uden AI, står på siden AI-feedback og lagring.",
+    "crumbs": [
+      "Interaktiv kode",
+      "Opgave med automatisk kontrol"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_check.html#svarene-bevares-1",
+    "href": "Qmd Files/Getting Started/beg_check.html#svarene-bevares-1",
+    "title": "Opgave med automatisk kontrol",
+    "section": "7 – Svarene bevares",
+    "text": "7 – Svarene bevares\nDet, de studerende skriver ind, bliver i browseren på deres enhed. Næste gang de besøger siden, er det der igen. Intet går til nogen server. De studerende kan slå det fra i indstillingsdialogen, eksportere deres svar eller slette dem.\n\n\n\n\n\n\n\nTipHvad nu?\n\n\n\nAlle muligheder for de to opgavetyper (forbudte kommandoer, kontroltilstande, delpoint, opgavepuljer, aflevering) finder du under Tips og tricks.",
+    "crumbs": [
+      "Interaktiv kode",
+      "Opgave med automatisk kontrol"
     ]
   },
   {

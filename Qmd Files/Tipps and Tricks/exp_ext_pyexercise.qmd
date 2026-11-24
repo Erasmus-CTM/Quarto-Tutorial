@@ -1,0 +1,687 @@
+---
+title: "py-exercise – Programmieraufgaben"
+title-en: "py-exercise – coding exercises"
+title-sv: "py-exercise – programmeringsuppgifter"
+title-no: "py-exercise – programmeringsoppgaver"
+title-da: "py-exercise – programmeringsopgaver"
+sidebar: tips-sidebar
+bibliography: ../../Qmd Files/Example Page/references.bib
+engine: markdown
+filters:
+  - ctm-assessment
+---
+
+:::: {.content-visible when-profile="deutsch"}
+**Installation:** gehört zu CTM Assessment, siehe [Überblick und Installation](exp_extensions.qmd)
+**Quelle:** [@py-exercise], [github.com/Erasmus-CTM/py-exercise](https://github.com/Erasmus-CTM/py-exercise)
+
+`py-exercise` prüft *Code*: Studierende ergänzen eine Funktion, und versteckte Tests entscheiden, ob sie stimmt. Dazu brauchst du keine weitere Extension für Python. Pyodide und der Editor werden beim ersten Ausführen aus dem Netz geladen. Im Kopf der Seite genügt der eine Filter:
+
+```{.yaml filename="aufgaben.qmd"}
+engine: markdown      # ab Quarto 1.10, sonst geht die Seite an Jupyter
+filters:
+  - ctm-assessment
+```
+
+::: {.panel-tabset}
+
+## Beispiel
+
+```{py-exercise}
+def quadrat(x):
+    """Gib das Quadrat von x zurück."""
+    # Deine Lösung
+    pass
+
+## TESTS ##
+assert quadrat(3) == 9,  "quadrat(3) sollte 9 sein"
+assert quadrat(0) == 0,  "quadrat(0) sollte 0 sein"
+assert quadrat(-2) == 4, "quadrat(-2) sollte 4 sein"
+```
+
+## Schreibweise
+
+````{.markdown}
+```{py-exercise}
+def meine_funktion(x):
+    """Beschreibung, die die Studierenden sehen."""
+    # Hier tragen die Studierenden ihre Lösung ein
+    pass
+
+## TESTS ##
+assert meine_funktion(2) == 4, "Rückmeldung, wenn der Test scheitert"
+assert meine_funktion(0) == 0
+```
+````
+
+Regeln:
+
+1. Oben steht das Gerüst der Funktion mit einer Beschreibung.
+2. `## TESTS ##` ist die Trennlinie. Alles darunter bleibt verborgen.
+3. Der Text hinter dem Komma eines `assert` ist die Rückmeldung, wenn der Test scheitert.
+
+::: {.callout-tip}
+Schreib die Rückmeldungen so, als würdest du mit den Studierenden sprechen:
+`"meine_funktion(2) sollte 4 ergeben. Hast du richtig multipliziert?"`
+:::
+
+## Optionen
+
+Je Aufgabe:
+
+| Option | Standard | Beschreibung |
+|---|---|---|
+| `label` | `py-exercise-N` | eindeutige Kennung der Aufgabe |
+| `caption` | – | Name der Aufgabe in der heruntergeladenen JSON-Datei. Auf der Seite steht er nicht |
+| `forbidden-imports` | – | durch Komma getrennte Importe, die die Lösung nicht benutzen darf |
+| `forbidden-keywords` | – | durch Komma getrennte Namen oder Schlüsselwörter, die die Lösung nicht benutzen darf: Aufrufe wie `sum` oder `sort` (`sort` verbietet `sort(x)` und `x.sort()`) und Anweisungen wie `for`, `while`, `lambda` oder `try` |
+| `show-test-hints` | `true` | Rückmeldung zeigen, wenn ein Test scheitert |
+
+Je Dokument, dieselben Schlüssel für alle Aufgaben der Seite:
+
+```{.yaml filename="aufgaben.qmd"}
+py-exercise:
+  forbidden-imports: [os, sys, subprocess]
+  forbidden-keywords: [for, while, sorted]
+  show-test-hints: true
+  feedback: true             # KI-Feedback an den Editoren (Standard: false)
+  stop-after: 30             # Sekunden, bis ein langer Lauf „Stopp“ anbietet (Standard: 20)
+```
+
+Die Oberfläche gibt es auf Englisch, Deutsch und Norwegisch (Bokmål). Die Sprache kommt aus `ctm-assessment: lang:` oder aus Quartos eigenem `lang:`, siehe [Mehrsprachige Projekte](exp_multilanguage.qmd).
+
+## Lösungen einschränken
+
+Verbotenes wird geprüft, **bevor** der Code läuft. Bei einem Verstoß erscheint eine Meldung statt eines Testergebnisses:
+
+````{.markdown}
+```{py-exercise}
+#| caption: Fibonacci, rekursiv
+#| forbidden-keywords: for, while
+def fib(n):
+    pass
+
+## TESTS ##
+assert fib(6) == 8,   "fib(6) sollte 8 sein"
+assert fib(10) == 55, "fib(10) sollte 55 sein"
+```
+````
+
+Typische Anwendungen: `for`/`while` verbieten, um Rekursion oder List Comprehensions zu erzwingen. `sorted` verbieten, damit der Algorithmus selbst geschrieben wird. `os`/`sys`/`subprocess` in einer offenen Lernumgebung verbieten.
+
+## Feedback
+
+Mit `feedback: true` bekommt jeder Editor einen Knopf **Feedback** und das Zahnrad ⚙. Jede Aufgabe braucht dann ein `#| task:`, das den Auftrag in einem Satz nennt:
+
+````{.markdown}
+```{py-exercise}
+#| label: preis
+#| task: Ergänze preis_mit_steuer so, dass die Steuer zum Preis addiert wird. Der Satz ist eine Dezimalzahl.
+def preis_mit_steuer(preis, satz):
+    return preis  # TODO
+
+## TESTS ##
+assert preis_mit_steuer(100, 0.25) == 125, "100 plus 25 % Steuer sind 125"
+```
+````
+
+Das Feedback sieht den aktuellen Code. Ergebnis und Ausgabe des letzten Laufs kommen nur mit, solange der Code seither unverändert ist. Die Tests, ihre Meldungen und Tracebacks werden nie mitgeschickt. Hinweisstufen, Richtlinien (`#| feedback-policy:`), Kontext und Datenschutz stehen auf der Seite [KI-Feedback & Speichern](exp_ext_feedback.qmd).
+
+## Abgabe
+
+Mit `submission: true` bekommt die Seite einen Kopf, der nach einer Studierenden-Kennung und einer Quiz-Kennung fragt. Sobald die Tests bestehen, lässt sich das Ergebnis als Zeichenkette herunterladen. Sie ist mit `submission-key` XOR-verschlüsselt und in Base64 verpackt, sodass die Ergebnisse ohne den Schlüssel nicht lesbar sind.
+
+```{.yaml filename="aufgaben.qmd"}
+py-exercise:
+  submission: true
+  submission-key: "sose25-quiz1"
+```
+
+::: {.callout-warning}
+Der Schlüssel steht in der gebauten Seite. Das hält beiläufiges Verändern ab, ist aber keine echte Verschlüsselung. Es ist ein bequemer Weg, Ergebnisse einzusammeln, kein Schutz für Prüfungen.
+:::
+
+Unabhängig davon speichert **Als JSON herunterladen** Code und Testergebnisse aller Aufgaben als Datei, zur eigenen Dokumentation. Es ist immer verfügbar und braucht keinen Server.
+
+:::
+::::
+
+:::: {.content-visible when-profile="english"}
+**Install:** part of CTM Assessment, see [Overview and installation](exp_extensions.qmd)
+**Source:** [@py-exercise], [github.com/Erasmus-CTM/py-exercise](https://github.com/Erasmus-CTM/py-exercise)
+
+`py-exercise` checks *code*: students complete a function and hidden tests decide whether it is right. You need no further extension for Python. Pyodide and the editor are loaded from the network when an exercise is first run. One filter in the page header is enough:
+
+```{.yaml filename="exercises.qmd"}
+engine: markdown      # from Quarto 1.10 on, otherwise the page goes to Jupyter
+filters:
+  - ctm-assessment
+```
+
+::: {.panel-tabset}
+
+## Example
+
+```{py-exercise}
+def square(x):
+    """Return x squared."""
+    # Your solution here
+    pass
+
+## TESTS ##
+assert square(3) == 9,  "square(3) should be 9"
+assert square(0) == 0,  "square(0) should be 0"
+assert square(-2) == 4, "square(-2) should be 4"
+```
+
+## Syntax
+
+````{.markdown}
+```{py-exercise}
+def my_function(x):
+    """Docstring shown to the reader."""
+    # Student fills this in
+    pass
+
+## TESTS ##
+assert my_function(2) == 4, "Feedback shown on failure"
+assert my_function(0) == 0
+```
+````
+
+Rules:
+
+1. Write the function stub with a docstring at the top.
+2. `## TESTS ##` is the separator. Everything below is hidden from the reader.
+3. The text after the comma of an `assert` is the feedback shown when the test fails.
+
+::: {.callout-tip}
+Write assertion messages as if you are talking to the student:
+`"my_function(2) should return 4. Did you multiply correctly?"`
+:::
+
+## Options
+
+Per exercise:
+
+| Option | Default | Description |
+|---|---|---|
+| `label` | `py-exercise-N` | unique exercise ID |
+| `caption` | — | name of the exercise in the downloaded JSON file. It is not shown on the page |
+| `forbidden-imports` | — | comma-separated imports the solution may not use |
+| `forbidden-keywords` | — | comma-separated names or keywords the solution may not use: calls such as `sum` or `sort` (`sort` forbids `sort(x)` and `x.sort()`) and statements such as `for`, `while`, `lambda` or `try` |
+| `show-test-hints` | `true` | show the assertion message when a test fails |
+
+Per document, the same keys applied to every exercise on the page:
+
+```{.yaml filename="exercises.qmd"}
+py-exercise:
+  forbidden-imports: [os, sys, subprocess]
+  forbidden-keywords: [for, while, sorted]
+  show-test-hints: true
+  feedback: true             # AI feedback on the editors (default: false)
+  stop-after: 30             # seconds until a long run offers "Stop" (default: 20)
+```
+
+The interface is available in English, German and Norwegian (Bokmål). The language comes from `ctm-assessment: lang:` or from Quarto's own `lang:`, see [Multilanguage Projects](exp_multilanguage.qmd).
+
+## Restricting solutions
+
+Forbidden constructs are checked **before** the code runs. A violation is reported instead of a test result:
+
+````{.markdown}
+```{py-exercise}
+#| caption: Fibonacci, recursively
+#| forbidden-keywords: for, while
+def fib(n):
+    pass
+
+## TESTS ##
+assert fib(6) == 8,   "fib(6) should be 8"
+assert fib(10) == 55, "fib(10) should be 55"
+```
+````
+
+Typical uses: banning `for`/`while` to force recursion or comprehensions, banning `sorted` to make students write the algorithm, banning `os`/`sys`/`subprocess` in an open learning environment.
+
+## Feedback
+
+With `feedback: true`, every editor gets a **Feedback** button and the ⚙ cogwheel. Every exercise then needs a `#| task:` that states the assignment in one sentence:
+
+````{.markdown}
+```{py-exercise}
+#| label: price
+#| task: Complete price_with_tax so that the tax is added to the price. The rate is a decimal.
+def price_with_tax(price, rate):
+    return price  # TODO
+
+## TESTS ##
+assert price_with_tax(100, 0.25) == 125, "100 plus 25% tax should be 125"
+```
+````
+
+The feedback sees the current code. The result and output of the last run are included only while the code is unchanged since then. The tests, their messages and tracebacks are never sent. Hint levels, policies (`#| feedback-policy:`), context and privacy are described on the page [AI feedback & saving](exp_ext_feedback.qmd).
+
+## Submission
+
+With `submission: true` the page gets a header asking for a student ID and a quiz ID. Once the tests pass, the result can be downloaded as a string, XOR-encoded with `submission-key` and Base64-wrapped so the results are not readable without the key.
+
+```{.yaml filename="exercises.qmd"}
+py-exercise:
+  submission: true
+  submission-key: "sose25-quiz1"
+```
+
+::: {.callout-warning}
+The key is in the rendered page, so this deters casual tampering but is not real cryptography. Treat it as a convenience for collecting results, not as an exam-grade safeguard.
+:::
+
+Independently of that, **Download as JSON** saves the code and test results of all exercises as a file, for your own records. It is always available and needs no server.
+
+:::
+::::
+
+:::: {.content-visible when-profile="svenska"}
+**Installation:** ingår i CTM Assessment, se [Översikt och installation](exp_extensions.qmd)
+**Källa:** [@py-exercise], [github.com/Erasmus-CTM/py-exercise](https://github.com/Erasmus-CTM/py-exercise)
+
+`py-exercise` kontrollerar *kod*: studenterna kompletterar en funktion och dolda tester avgör om den stämmer. Du behöver inget mer tillägg för Python. Pyodide och editorn laddas från nätet första gången en uppgift körs. Ett enda filter i sidhuvudet räcker:
+
+```{.yaml filename="uppgifter.qmd"}
+engine: markdown      # från Quarto 1.10, annars går sidan till Jupyter
+filters:
+  - ctm-assessment
+```
+
+::: {.panel-tabset}
+
+## Exempel
+
+```{py-exercise}
+def square(x):
+    """Returnera x i kvadrat."""
+    # Din lösning här
+    pass
+
+## TESTS ##
+assert square(3) == 9,  "square(3) ska vara 9"
+assert square(0) == 0,  "square(0) ska vara 0"
+assert square(-2) == 4, "square(-2) ska vara 4"
+```
+
+## Syntax
+
+````{.markdown}
+```{py-exercise}
+def my_function(x):
+    """Docstring shown to the reader."""
+    # Student fills this in
+    pass
+
+## TESTS ##
+assert my_function(2) == 4, "Feedback shown on failure"
+assert my_function(0) == 0
+```
+````
+
+Regler:
+
+1. Skriv funktionsstommen med en docstring högst upp.
+2. `## TESTS ##` är skiljelinjen. Allt under den är dolt för läsaren.
+3. Texten efter kommat i en `assert` är återkopplingen som visas när testet misslyckas.
+
+::: {.callout-tip}
+Skriv meddelandena i `assert` som om du talade med studenten:
+`"my_function(2) should return 4. Did you multiply correctly?"`
+:::
+
+## Inställningar
+
+Per uppgift:
+
+| Inställning | Standard | Beskrivning |
+|---|---|---|
+| `label` | `py-exercise-N` | unikt id för uppgiften |
+| `caption` | – | uppgiftens namn i den nedladdade JSON-filen. Det visas inte på sidan |
+| `forbidden-imports` | — | kommaseparerade importer som lösningen inte får använda |
+| `forbidden-keywords` | – | kommaseparerade namn eller nyckelord som lösningen inte får använda: anrop som `sum` eller `sort` (`sort` förbjuder både `sort(x)` och `x.sort()`) och satser som `for`, `while`, `lambda` eller `try` |
+| `show-test-hints` | `true` | visa meddelandet i `assert` när ett test misslyckas |
+
+Per dokument, samma nycklar för alla uppgifter på sidan:
+
+```{.yaml filename="exercises.qmd"}
+py-exercise:
+  forbidden-imports: [os, sys, subprocess]
+  forbidden-keywords: [for, while, sorted]
+  show-test-hints: true
+  feedback: true             # AI-feedback i editorerna (standard: false)
+  stop-after: 30             # sekunder tills en lång körning erbjuder ”Stopp” (standard: 20)
+```
+
+Gränssnittet finns på engelska, tyska och norska (bokmål). Språket kommer från `ctm-assessment: lang:` eller från Quartos eget `lang:`, se [Flerspråkiga projekt](exp_multilanguage.qmd).
+
+## Begränsa lösningar
+
+Förbjudna konstruktioner kontrolleras **innan** koden körs. En överträdelse rapporteras i stället för ett testresultat:
+
+````{.markdown}
+```{py-exercise}
+#| caption: Fibonacci, recursively
+#| forbidden-keywords: for, while
+def fib(n):
+    pass
+
+## TESTS ##
+assert fib(6) == 8,   "fib(6) should be 8"
+assert fib(10) == 55, "fib(10) should be 55"
+```
+````
+
+Typiska användningar: förbjuda `for`/`while` för att tvinga fram rekursion eller comprehensions, förbjuda `sorted` så att studenterna skriver algoritmen själva, förbjuda `os`/`sys`/`subprocess` i en öppen lärmiljö.
+
+## Feedback
+
+Med `feedback: true` får varje editor en knapp **Feedback** och kugghjulet ⚙. Varje uppgift behöver då en `#| task:` som anger uppdraget i en mening:
+
+````{.markdown}
+```{py-exercise}
+#| label: pris
+#| task: Komplettera pris_med_moms så att momsen läggs till priset. Momssatsen är ett decimaltal.
+def pris_med_moms(pris, sats):
+    return pris  # TODO
+
+## TESTS ##
+assert pris_med_moms(100, 0.25) == 125, "100 plus 25 % moms ska bli 125"
+```
+````
+
+Feedbacken ser den aktuella koden. Resultat och utdata från den senaste körningen följer bara med så länge koden inte har ändrats sedan dess. Testerna, deras meddelanden och felutskrifter skickas aldrig. Ledtrådsnivåer, riktlinjer (`#| feedback-policy:`), sammanhang och integritet beskrivs på sidan [AI-feedback och sparande](exp_ext_feedback.qmd).
+
+## Inlämning
+
+Med `submission: true` får sidan ett sidhuvud som frågar efter ett student-id och ett quiz-id. När testerna är godkända kan studenten ladda ner resultatet som en JSON-fil, XOR-kodad med `submission-key` och förpackad i Base64, så att resultaten inte går att läsa utan nyckeln.
+
+```{.yaml filename="exercises.qmd"}
+py-exercise:
+  submission: true
+  submission-key: "sose25-quiz1"
+```
+
+::: {.callout-warning}
+Nyckeln finns i den renderade sidan. Det avskräcker från enkelt fusk men är ingen riktig kryptering. Se det som ett bekvämt sätt att samla in resultat, inte som ett skydd som duger för examination.
+:::
+
+Oberoende av detta sparar **Ladda ner som JSON** koden och testresultaten för alla uppgifter som en fil, för eget bruk. Knappen finns alltid och behöver ingen server.
+
+:::
+::::
+
+:::: {.content-visible when-profile="norsk"}
+**Installasjon:** er en del av CTM Assessment, se [Oversikt og installasjon](exp_extensions.qmd)
+**Kilde:** [@py-exercise], [github.com/Erasmus-CTM/py-exercise](https://github.com/Erasmus-CTM/py-exercise)
+
+`py-exercise` kontrollerer *kode*: studentene fullfører en funksjon, og skjulte tester avgjør om den stemmer. Du trenger ingen flere utvidelser for Python. Pyodide og editoren lastes fra nettet første gang en oppgave kjøres. Ett enkelt filter i sidehodet er nok:
+
+```{.yaml filename="oppgaver.qmd"}
+engine: markdown      # fra Quarto 1.10, ellers går siden til Jupyter
+filters:
+  - ctm-assessment
+```
+
+::: {.panel-tabset}
+
+## Eksempel
+
+```{py-exercise}
+def square(x):
+    """Returner x i annen."""
+    # Din løsning her
+    pass
+
+## TESTS ##
+assert square(3) == 9,  "square(3) skal være 9"
+assert square(0) == 0,  "square(0) skal være 0"
+assert square(-2) == 4, "square(-2) skal være 4"
+```
+
+## Syntaks
+
+````{.markdown}
+```{py-exercise}
+def my_function(x):
+    """Docstring shown to the reader."""
+    # Student fills this in
+    pass
+
+## TESTS ##
+assert my_function(2) == 4, "Feedback shown on failure"
+assert my_function(0) == 0
+```
+````
+
+Regler:
+
+1. Skriv funksjonsskjelettet med en docstring øverst.
+2. `## TESTS ##` er skillelinjen. Alt under den er skjult for leseren.
+3. Teksten etter kommaet i en `assert` er tilbakemeldingen som vises når testen feiler.
+
+::: {.callout-tip}
+Skriv meldingene i `assert` som om du snakker til studenten:
+`"my_function(2) should return 4. Did you multiply correctly?"`
+:::
+
+## Innstillinger
+
+Per oppgave:
+
+| Innstilling | Standard | Beskrivelse |
+|---|---|---|
+| `label` | `py-exercise-N` | unik ID for oppgaven |
+| `caption` | – | oppgavens navn i den nedlastede JSON-filen. Det vises ikke på siden |
+| `forbidden-imports` | — | kommaseparerte importer som løsningen ikke får bruke |
+| `forbidden-keywords` | – | kommaseparerte navn eller nøkkelord som løsningen ikke får bruke: kall som `sum` eller `sort` (`sort` forbyr både `sort(x)` og `x.sort()`) og setninger som `for`, `while`, `lambda` eller `try` |
+| `show-test-hints` | `true` | vis meldingen i `assert` når en test feiler |
+
+Per dokument, de samme nøklene for alle oppgavene på siden:
+
+```{.yaml filename="exercises.qmd"}
+py-exercise:
+  forbidden-imports: [os, sys, subprocess]
+  forbidden-keywords: [for, while, sorted]
+  show-test-hints: true
+  feedback: true             # KI-tilbakemelding i editorene (standard: false)
+  stop-after: 30             # sekunder til en lang kjøring tilbyr «Stopp» (standard: 20)
+```
+
+Grensesnittet finnes på engelsk, tysk og norsk (bokmål). Språket kommer fra `ctm-assessment: lang:` eller fra Quartos eget `lang:`, se [Flerspråklige prosjekter](exp_multilanguage.qmd).
+
+## Begrense løsninger
+
+Forbudte konstruksjoner kontrolleres **før** koden kjøres. Et brudd meldes i stedet for et testresultat:
+
+````{.markdown}
+```{py-exercise}
+#| caption: Fibonacci, recursively
+#| forbidden-keywords: for, while
+def fib(n):
+    pass
+
+## TESTS ##
+assert fib(6) == 8,   "fib(6) should be 8"
+assert fib(10) == 55, "fib(10) should be 55"
+```
+````
+
+Typiske bruksområder: forby `for`/`while` for å tvinge fram rekursjon eller comprehensions, forby `sorted` slik at studentene skriver algoritmen selv, forby `os`/`sys`/`subprocess` i et åpent læringsmiljø.
+
+## Tilbakemelding
+
+Med `feedback: true` får hver editor en knapp **Tilbakemelding** og tannhjulet ⚙. Hver oppgave trenger da en `#| task:` som oppgir oppdraget i én setning:
+
+````{.markdown}
+```{py-exercise}
+#| label: pris
+#| task: Fullfør pris_med_mva slik at mva legges til prisen. Satsen er et desimaltall.
+def pris_med_mva(pris, sats):
+    return pris  # TODO
+
+## TESTS ##
+assert pris_med_mva(100, 0.25) == 125, "100 pluss 25 % mva skal bli 125"
+```
+````
+
+Tilbakemeldingen ser den gjeldende koden. Resultat og utdata fra siste kjøring følger bare med så lenge koden ikke er endret siden. Testene, meldingene deres og feilutskrifter sendes aldri. Hintnivåer, retningslinjer (`#| feedback-policy:`), kontekst og personvern er beskrevet på siden [KI-tilbakemelding og lagring](exp_ext_feedback.qmd).
+
+## Innlevering
+
+Med `submission: true` får siden et hode som spør etter en student-ID og en quiz-ID. Når testene er bestått, kan studenten laste ned resultatet som en JSON-fil, XOR-kodet med `submission-key` og pakket i Base64, slik at resultatene ikke kan leses uten nøkkelen.
+
+```{.yaml filename="exercises.qmd"}
+py-exercise:
+  submission: true
+  submission-key: "sose25-quiz1"
+```
+
+::: {.callout-warning}
+Nøkkelen ligger i den ferdige siden. Det avskrekker enkel juks, men er ingen ekte kryptering. Se på det som en praktisk måte å samle inn resultater på, ikke som en sikring som holder til eksamen.
+:::
+
+Uavhengig av dette lagrer **Last ned som JSON** koden og testresultatene for alle oppgavene som en fil, til eget bruk. Knappen finnes alltid og trenger ingen server.
+
+:::
+::::
+
+:::: {.content-visible when-profile="dansk"}
+**Installation:** er en del af CTM Assessment, se [Oversigt og installation](exp_extensions.qmd)
+**Kilde:** [@py-exercise], [github.com/Erasmus-CTM/py-exercise](https://github.com/Erasmus-CTM/py-exercise)
+
+`py-exercise` kontrollerer *kode*: de studerende fuldfører en funktion, og skjulte test afgør, om den er rigtig. Du behøver ingen yderligere udvidelse til Python. Pyodide og editoren hentes fra nettet første gang, en opgave køres. Ét filter i sidehovedet er nok:
+
+```{.yaml filename="opgaver.qmd"}
+engine: markdown      # fra Quarto 1.10, ellers går siden til Jupyter
+filters:
+  - ctm-assessment
+```
+
+::: {.panel-tabset}
+
+## Eksempel
+
+```{py-exercise}
+def square(x):
+    """Returner x i anden."""
+    # Din løsning her
+    pass
+
+## TESTS ##
+assert square(3) == 9,  "square(3) skal være 9"
+assert square(0) == 0,  "square(0) skal være 0"
+assert square(-2) == 4, "square(-2) skal være 4"
+```
+
+## Syntaks
+
+````{.markdown}
+```{py-exercise}
+def my_function(x):
+    """Docstring shown to the reader."""
+    # Student fills this in
+    pass
+
+## TESTS ##
+assert my_function(2) == 4, "Feedback shown on failure"
+assert my_function(0) == 0
+```
+````
+
+Regler:
+
+1. Skriv funktionsskelettet med en docstring øverst.
+2. `## TESTS ##` er skillelinjen. Alt under den er skjult for læseren.
+3. Teksten efter kommaet i en `assert` er den feedback, der vises, når testen fejler.
+
+::: {.callout-tip}
+Skriv beskederne i `assert`, som om du taler til den studerende:
+`"my_function(2) should return 4. Did you multiply correctly?"`
+:::
+
+## Indstillinger
+
+Pr. opgave:
+
+| Indstilling | Standard | Beskrivelse |
+|---|---|---|
+| `label` | `py-exercise-N` | entydigt id for opgaven |
+| `caption` | – | opgavens navn i den downloadede JSON-fil. Det vises ikke på siden |
+| `forbidden-imports` | — | kommaseparerede importer, som løsningen ikke må bruge |
+| `forbidden-keywords` | – | kommaseparerede navne eller nøgleord, som løsningen ikke må bruge: kald som `sum` eller `sort` (`sort` forbyder både `sort(x)` og `x.sort()`) og sætninger som `for`, `while`, `lambda` eller `try` |
+| `show-test-hints` | `true` | vis beskeden i `assert`, når en test fejler |
+
+Pr. dokument, de samme nøgler for alle opgaver på siden:
+
+```{.yaml filename="exercises.qmd"}
+py-exercise:
+  forbidden-imports: [os, sys, subprocess]
+  forbidden-keywords: [for, while, sorted]
+  show-test-hints: true
+  feedback: true             # AI-feedback i editorerne (standard: false)
+  stop-after: 30             # sekunder, til en lang kørsel tilbyder »Stop« (standard: 20)
+```
+
+Grænsefladen findes på engelsk, tysk og norsk (bokmål). Sproget kommer fra `ctm-assessment: lang:` eller fra Quartos eget `lang:`, se [Flersprogede projekter](exp_multilanguage.qmd).
+
+## Begræns løsninger
+
+Forbudte konstruktioner kontrolleres, **før** koden køres. En overtrædelse meldes i stedet for et testresultat:
+
+````{.markdown}
+```{py-exercise}
+#| caption: Fibonacci, recursively
+#| forbidden-keywords: for, while
+def fib(n):
+    pass
+
+## TESTS ##
+assert fib(6) == 8,   "fib(6) should be 8"
+assert fib(10) == 55, "fib(10) should be 55"
+```
+````
+
+Typiske anvendelser: forbyde `for`/`while` for at fremtvinge rekursion eller comprehensions, forbyde `sorted`, så de studerende selv skriver algoritmen, forbyde `os`/`sys`/`subprocess` i et åbent læringsmiljø.
+
+## Feedback
+
+Med `feedback: true` får hver editor en knap **Feedback** og tandhjulet ⚙. Hver opgave skal så have en `#| task:`, der angiver opgaven i én sætning:
+
+````{.markdown}
+```{py-exercise}
+#| label: pris
+#| task: Fuldfør pris_med_moms, så momsen lægges til prisen. Satsen er et decimaltal.
+def pris_med_moms(pris, sats):
+    return pris  # TODO
+
+## TESTS ##
+assert pris_med_moms(100, 0.25) == 125, "100 plus 25 % moms skal give 125"
+```
+````
+
+Feedbacken ser den aktuelle kode. Resultat og output fra sidste kørsel følger kun med, så længe koden ikke er ændret siden. Testene, deres meddelelser og fejludskrifter sendes aldrig. Hintniveauer, retningslinjer (`#| feedback-policy:`), kontekst og privatliv er beskrevet på siden [AI-feedback og lagring](exp_ext_feedback.qmd).
+
+## Aflevering
+
+Med `submission: true` får siden et hoved, der spørger efter et studie-id og et quiz-id. Når testene er bestået, kan den studerende hente resultatet som en JSON-fil, XOR-kodet med `submission-key` og pakket i Base64, så resultaterne ikke kan læses uden nøglen.
+
+```{.yaml filename="exercises.qmd"}
+py-exercise:
+  submission: true
+  submission-key: "sose25-quiz1"
+```
+
+::: {.callout-warning}
+Nøglen ligger i den færdige side. Det afskrækker fra simpelt snyd, men er ikke rigtig kryptering. Se det som en praktisk måde at indsamle resultater på, ikke som en sikring, der holder til eksamen.
+:::
+
+Uafhængigt af dette gemmer **Download som JSON** koden og testresultaterne for alle opgaver som en fil, til eget brug. Knappen findes altid og behøver ingen server.
+
+:::
+::::

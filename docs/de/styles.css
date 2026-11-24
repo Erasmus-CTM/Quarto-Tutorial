@@ -293,3 +293,45 @@ html:lang(sv) #quarto-sidebar .sidebar-menu-container::before { content: "Tutori
     transform: translateY(-50%);
     float: none !important;
 }
+
+/* Handy: JSXGraph-Fläche und Tabellen nicht breiter als der Bildschirm */
+iframe[id^="JXG"] { max-width: 100%; }
+main.content { overflow-x: clip; }
+
+/* Dunkelmodus: Kontext-Kasten und Zahnrad der Extensions sind fest hell gefärbt */
+body.quarto-dark .ai-feedback-context,
+body.quarto-dark .ai-context,
+body.quarto-dark .math-exercise-context,
+body.quarto-dark .feedback-source {
+  background: rgba(255, 255, 255, .07);
+  color: var(--bs-body-color);
+}
+
+/* Zahnrad: in beiden Modi wie die Nachbar-Buttons */
+.math-exercise-controls .ai-feedback-gear,
+.py-exercise-buttons .ai-feedback-gear,
+.qpyodide-editor-toolbar .ai-feedback-gear {
+  color: #1f2a5c;
+  background: rgba(255, 255, 255, .6) !important;
+  background-image: none !important;
+  border: 1px solid #7f8a99;
+  box-shadow: none;
+}
+body.quarto-dark .math-exercise-controls .ai-feedback-gear,
+body.quarto-dark .py-exercise-buttons .ai-feedback-gear,
+body.quarto-dark .qpyodide-editor-toolbar .ai-feedback-gear {
+  color: #e9ecef;
+  background: #3e444a !important;
+  border-color: #6c757d;
+}
+
+/* Mermaid-Diagramme: Beschriftung in Textfarbe statt blassem Blau */
+.cell-output-display svg .nodeLabel,
+.cell-output-display svg .nodeLabel p,
+pre.mermaid-js svg .nodeLabel,
+svg[id^="mermaid"] .nodeLabel,
+svg[id^="mermaid"] .nodeLabel p { color: var(--bs-body-color) !important; fill: var(--bs-body-color) !important; }
+
+/* Handy: lange Titel im Link zur nächsten/vorigen Seite umbrechen statt überlaufen */
+.page-navigation .nav-page { min-width: 0; max-width: 50%; }
+.page-navigation .nav-page-text { white-space: normal; overflow-wrap: anywhere; }

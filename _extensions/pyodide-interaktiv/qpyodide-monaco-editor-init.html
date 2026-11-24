@@ -1,0 +1,10 @@
+<script src="{{MONACOLOADER}}"></script>
+<script type="module" id="qpyodide-monaco-editor-init">
+
+  // Configure the Monaco Editor's loader
+  require.config({
+    paths: {
+      'vs': CTMAssets.url('monaco-editor', 'min/vs')
+    }
+  });
+</script>

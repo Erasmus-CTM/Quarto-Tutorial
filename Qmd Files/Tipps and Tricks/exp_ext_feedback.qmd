@@ -1,0 +1,853 @@
+---
+title: "KI-Feedback & Speichern"
+title-en: "AI feedback & saving"
+title-sv: "AI-feedback och sparande"
+title-no: "KI-tilbakemelding og lagring"
+title-da: "AI-feedback og lagring"
+sidebar: tips-sidebar
+engine: markdown
+py-exercise:
+  feedback: true
+filters:
+  - ctm-assessment
+---
+
+:::: {.content-visible when-profile="deutsch"}
+Feedback, das Speichern der Antworten und der Datenschutz sind für Python-Zellen (`pyodide-python`), `py-exercise` und `math-exercise` **gleich geregelt**. Sie kommen aus derselben Bibliothek (`ctm-libs`) in CTM Assessment. Du stellst sie deshalb einmal für die Seite oder das Projekt ein, nicht je Aufgabentyp.
+
+Probier es an dieser Aufgabe aus. Der Knopf **Feedback** und das Zahnrad ⚙ gehören zum gemeinsamen Dialog:
+
+```{py-exercise}
+#| label: fb-demo
+#| task: Ergänze doppelt so, dass die Funktion das Doppelte von x zurückgibt.
+def doppelt(x):
+    return x  # TODO
+
+## TESTS ##
+assert doppelt(2) == 4, "doppelt(2) sollte 4 sein"
+assert doppelt(-1) == -2, "doppelt(-1) sollte -2 sein"
+```
+
+::: {.panel-tabset}
+
+## So arbeitet das Feedback
+
+Der Knopf **Feedback** gibt es an jeder Aufgabe, die dafür eingeschaltet ist. Er arbeitet in einem von zwei Modi, die im Zahnrad ⚙ gewählt werden:
+
+| Modus | Was passiert |
+|---|---|
+| **Prompt kopieren** (Standard) | Der Knopf erzeugt einen fertigen Text mit Aufgabe und aktueller Antwort. Du fügst ihn in ChatGPT, Claude oder einen anderen Dienst ein, den du schon benutzt. Es braucht kein Konto und es geht keine Anfrage an einen Anbieter. |
+| **Direkte API** | Die Antwort erscheint unter der Aufgabe. Dafür tragen Lernende im Dialog Adresse, Modell und ihren **persönlichen Schlüssel** einer OpenAI-kompatiblen Schnittstelle ein. Die Angaben bleiben in ihrem Browser. |
+
+Die Hinweise werden mit jedem erfolgreichen Klick konkreter, und die letzte Stufe wiederholt sich. Ein neuer Lauf oder eine neue Prüfung beginnt wieder bei der ersten Stufe. Wie viele Stufen es gibt und was auf jeder steht, legt die **Richtlinie** fest (nächster Reiter).
+
+Was eine Aufgabe dafür braucht:
+
+| Aufgabentyp | Einschalten | Beschreibung der Aufgabe |
+|---|---|---|
+| `pyodide-python` | an (`pyodide: feedback: false` schaltet aus) | `#| task:` in der Zelle |
+| `py-exercise` | `py-exercise: feedback: true` | `#| task:` ist Pflicht |
+| `math-exercise` | an (`math-exercise: feedback: false` schaltet aus) | der Aufgabentext selbst |
+
+## Einstellungen
+
+Die Voreinstellungen schreibst du in die `_quarto.yml` oder in den Kopf einer Seite:
+
+```{.yaml filename="_quarto.yml"}
+ai-feedback:
+  mode: copy            # Prompt kopieren (Standard)
+  storage: local        # local: bleibt dauerhaft | session: nur für diesen Tab
+  base-url: https://dein-anbieter.example/v1   # nur für „Direkte API“
+  model: modell-name
+```
+
+Lernende ändern alles im Zahnrad ⚙ selbst. Die Einstellungen gelten dann für alle Seiten desselben Kurses.
+
+::: {.callout-important}
+## Nie einen Schlüssel ins Projekt schreiben
+Ein Schlüssel in der `_quarto.yml` oder im Seitenkopf würde mit der Seite veröffentlicht. Deshalb bricht der Build ab, sobald in einem CTM-Abschnitt ein Schlüssel wie `api-key`, `token` oder `password` steht, und zeigt den Wert nicht an. Schlüssel tragen die Lernenden selbst im Dialog ein.
+:::
+
+Einstellungen werden Schlüssel für Schlüssel zusammengesetzt: Die Seite, das Profil, die `_quarto.yml` und `_metadata.yml`-Dateien ergänzen sich. Eine Seite, die nur `mode:` setzt, behält die übrigen Schlüssel des Projekts.
+
+## Richtlinien
+
+Eine **Richtlinie** ist ein benannter Satz Anweisungen für die Art der Hilfe: zuerst eine Rückfrage, dann eine Erklärung, am Ende vielleicht der Lösungsweg. Du schreibst sie in eine YAML-Datei:
+
+```{.yaml filename="feedback.yml"}
+ai-feedback:
+  policies:
+    kurs-feedback:
+      base-prompt: Benutze die Begriffe, die im Kurs vorkommen.
+      max-words: 180
+      steps:
+        - step-prompt: Stelle eine Leitfrage.
+        - step-prompt: Erkläre die passende Idee, ohne fertigen Code.
+    kurz:
+      extends: kurs-feedback
+      max-words: 80
+```
+
+Im Seitenkopf lädst du die Datei und schaltest eine Richtlinie für die ganze Seite ein. Einzelne Aufgaben wählen mit `#| feedback-policy:` eine andere:
+
+```{.yaml filename="seite.qmd"}
+ai-feedback:
+  policy-files: feedback.yml
+  policy: kurz
+```
+
+`policy-files` meldet die Richtlinien nur an. Erst `policy` oder `#| feedback-policy:` schaltet eine ein. Eine Richtlinie mit `extends` erbt alles, was sie nicht selbst festlegt. `steps` ersetzt dabei die ganze geerbte Liste.
+
+Die ausführliche Anleitung steht im [Leitfaden zu Richtlinien](https://github.com/Erasmus-CTM/ctm-libs/blob/main/docs/feedback-policies.md).
+
+## Kontext
+
+Damit das Modell die Aufgabe im Zusammenhang versteht, bekommt es Kontext:
+
+- **Von selbst:** den erklärenden Text vor der Aufgabe.
+- **Ausdrücklich:** einen Block mit Kennung und Klasse `.ai-context`. Aufgaben verweisen mit `#| context: kennung` darauf. Derselbe Block lässt sich in allen drei Aufgabentypen verwenden. `feedback-context` ist ein gleichwertiger Name.
+- **Gar nicht:** `#| context: none`.
+
+````{.markdown}
+::: {#steuer .ai-context}
+Die Mehrwertsteuer wird als Dezimalzahl angegeben: 25 % sind 0,25.
+:::
+
+```{py-exercise}
+#| label: preis
+#| task: Gib den Preis inklusive Steuer zurück.
+#| context: steuer
+def brutto(preis, satz):
+    pass
+```
+````
+
+## Was gesendet wird
+
+Eine Anfrage an einen Anbieter enthält die Aufgabe, die aktuelle Antwort, den gewählten Kontext und die Richtlinie. Ergebnis und Ausgabe des letzten Laufs kommen nur mit, solange die Antwort seither nicht geändert wurde.
+
+Nie mitgeschickt werden die Tests, die erwarteten Antworten, der Prüfcode und rohe Fehlermeldungen. Bei Python-Zellen gehen die Ausgabe des Programms und ein allgemeiner Laufstatus mit, keine Fehlertexte, kein HTML und keine Bilder.
+
+::: {.callout-warning}
+Das alles sind Lernwerkzeuge im Browser, keine sicheren Prüfungssysteme. Wer die Seite öffnet, kann sie verändern.
+:::
+
+## Ohne KI bauen
+
+Für eine Seite ohne jedes KI-Feedback, etwa für Prüfungen oder Kurse ohne Datenschutzfreigabe, schaltest du es im Profil ab:
+
+```{.yaml filename="_quarto-no-ai.yml"}
+ai-feedback:
+  enabled: false
+```
+
+Gebaut wird mit `quarto render --profile no-ai` oder mit der Umgebungsvariablen `CTM_FEEDBACK=off`. **Keine Seite kann das wieder einschalten.** Es gibt dann keinen Feedback-Knopf und keine Felder, die nur das Feedback braucht.
+
+Aufgaben, die **nur** das KI-Feedback beurteilen kann (zum Beispiel `math-exercise` mit `mode: custom` ohne `checker`), halten den Build an, bis du sagst, was mit ihnen geschieht:
+
+```{.yaml filename="_quarto-no-ai.yml"}
+ai-feedback:
+  enabled: false
+  without-ai: text      # text | self-check | drop
+```
+
+`text` zeigt die Aufgabe ohne Antwortfeld, `drop` lässt sie weg.
+
+## Antworten speichern
+
+Antworten bleiben standardmäßig **im Browser dieses Geräts**, in einem gemeinsamen Speicher für alle Aufgabentypen. Beim nächsten Besuch sind der Code und die Eingaben wieder da. Auf einen Server geht dabei nichts.
+
+Eine Leiste am Seitenrand zeigt „Speichern in diesem Browser“ mit dem Datenschutzhinweis. Jede Aufgabe hat außerdem einen Knopf **Antwort kopieren** und die Größenschalter für den Editor.
+
+Im Einstellungsdialog finden Lernende vier Schalter: **Auf diesem Gerät nicht speichern**, **Meine Antworten exportieren**, **Antworten auf dieser Seite löschen** und **Alle Antworten dieses Kurses löschen**.
+
+Du steuerst das Speichern im Projekt:
+
+```{.yaml filename="_quarto.yml"}
+ctm-assessment:
+  save: answers          # answers (Standard) oder none
+  export: true           # „Meine Antworten exportieren“ (Standard: true)
+  storage-key: mein-kurs # Name des Kurses im Browser-Speicher
+```
+
+Für eine Komponente oder eine einzelne Aufgabe gilt die genauere Angabe: `math-exercise: {save: none}` schaltet es für alle Mathe-Aufgaben ab, `#| save: false` für eine einzelne Aufgabe. `local-storage:` aus früheren Versionen ist nur noch ein anderer Name dafür.
+
+::: {.callout-tip}
+## `storage-key` bei mehreren Kursen auf einer Domain
+Ohne `storage-key` heißt der Speicher wie der Pfad der Website. Zwei Kurse unter derselben Adresse, die dieselbe Kennung bekämen, würden sich ihre Antworten teilen. Gib ihnen eigene Namen.
+:::
+
+:::
+::::
+
+:::: {.content-visible when-profile="english"}
+Feedback, saving of answers and privacy are **handled the same way** for Python cells (`pyodide-python`), `py-exercise` and `math-exercise`. They come from the same library (`ctm-libs`) in CTM Assessment. You therefore set them up once for the page or the project, not per exercise type.
+
+Try it on this exercise. The **Feedback** button and the ⚙ cogwheel belong to the shared dialog:
+
+```{py-exercise}
+#| label: fb-demo-en
+#| task: Complete double so that the function returns twice x.
+def double(x):
+    return x  # TODO
+
+## TESTS ##
+assert double(2) == 4, "double(2) should be 4"
+assert double(-1) == -2, "double(-1) should be -2"
+```
+
+::: {.panel-tabset}
+
+## How feedback works
+
+Every exercise for which it is switched on has a **Feedback** button. It works in one of two modes, chosen in the ⚙ cogwheel:
+
+| Mode | What happens |
+|---|---|
+| **Copy prompt** (default) | The button produces a ready-made text with the task and the current answer. You paste it into ChatGPT, Claude or another service you already use. It needs no account and no request goes to a provider. |
+| **Direct API** | The answer appears under the exercise. For this, learners enter the address, model and their **personal key** of an OpenAI-compatible interface in the dialog. The details stay in their browser. |
+
+Hints get more concrete with each successful click, and the last level repeats. A new run or check starts again at the first level. How many levels there are and what each says is set by the **policy** (next tab).
+
+What an exercise needs for this:
+
+| Exercise type | Switch on | Description of the task |
+|---|---|---|
+| `pyodide-python` | on (`pyodide: feedback: false` turns it off) | `#| task:` in the cell |
+| `py-exercise` | `py-exercise: feedback: true` | `#| task:` is required |
+| `math-exercise` | on (`math-exercise: feedback: false` turns it off) | the question text itself |
+
+## Settings
+
+You write the defaults into `_quarto.yml` or into the header of a page:
+
+```{.yaml filename="_quarto.yml"}
+ai-feedback:
+  mode: copy            # Copy prompt (default)
+  storage: local        # local: persistent | session: this tab only
+  base-url: https://your-provider.example/v1   # only for "Direct API"
+  model: model-name
+```
+
+Learners change everything in the ⚙ cogwheel themselves. The settings then apply to all pages of the same course.
+
+::: {.callout-important}
+## Never put a key into the project
+A key in `_quarto.yml` or in a page header would be published with the site. That is why the build stops as soon as a CTM section contains a key such as `api-key`, `token` or `password`, and it does not show the value. Learners enter their own key in the dialog.
+:::
+
+Settings are combined key by key: the page, the profile, `_quarto.yml` and `_metadata.yml` files complement each other. A page that sets only `mode:` keeps the project's other keys.
+
+## Policies
+
+A **policy** is a named set of instructions for the kind of help: first a question, then an explanation, perhaps the solution path at the end. You write it in a YAML file:
+
+```{.yaml filename="feedback.yml"}
+ai-feedback:
+  policies:
+    course-feedback:
+      base-prompt: Use the terminology taught in this course.
+      max-words: 180
+      steps:
+        - step-prompt: Ask one guiding question.
+        - step-prompt: Explain the relevant idea without finished code.
+    brief:
+      extends: course-feedback
+      max-words: 80
+```
+
+In the page header you load the file and switch on one policy for the whole page. Single exercises pick another with `#| feedback-policy:`:
+
+```{.yaml filename="page.qmd"}
+ai-feedback:
+  policy-files: feedback.yml
+  policy: brief
+```
+
+`policy-files` only registers the policies. Only `policy` or `#| feedback-policy:` switches one on. A policy with `extends` inherits everything it does not set itself. `steps` replaces the whole inherited list.
+
+The detailed guide is the [policy guide](https://github.com/Erasmus-CTM/ctm-libs/blob/main/docs/feedback-policies.md).
+
+## Context
+
+So that the model understands the task in context, it receives context:
+
+- **Automatically:** the explanatory text before the exercise.
+- **Explicitly:** a block with an id and the class `.ai-context`. Exercises refer to it with `#| context: id`. The same block works in all three exercise types. `feedback-context` is an equivalent name.
+- **None at all:** `#| context: none`.
+
+````{.markdown}
+::: {#tax .ai-context}
+Sales tax is given as a decimal: 25% is 0.25.
+:::
+
+```{py-exercise}
+#| label: price
+#| task: Return the price including tax.
+#| context: tax
+def gross(price, rate):
+    pass
+```
+````
+
+## What is sent
+
+A request to a provider contains the task, the current answer, the selected context and the policy. The result and output of the last run are included only while the answer has not been changed since.
+
+Never sent are the tests, the expected answers, the checker code and raw error messages. For Python cells, the program's output and a general run status are sent, but no error texts, no HTML and no images.
+
+::: {.callout-warning}
+All of this is learning tooling in the browser, not a secure examination system. Anyone who opens the page can change it.
+:::
+
+## Building without AI
+
+For a site without any AI feedback, for example for exams or courses without a privacy clearance, you switch it off in a profile:
+
+```{.yaml filename="_quarto-no-ai.yml"}
+ai-feedback:
+  enabled: false
+```
+
+Build with `quarto render --profile no-ai` or with the environment variable `CTM_FEEDBACK=off`. **No page can switch it back on.** There is then no Feedback button and no fields that only the feedback needs.
+
+Exercises that **only** AI feedback can assess (for example `math-exercise` with `mode: custom` and no `checker`) stop the build until you say what happens to them:
+
+```{.yaml filename="_quarto-no-ai.yml"}
+ai-feedback:
+  enabled: false
+  without-ai: text      # text | self-check | drop
+```
+
+`text` shows the exercise without an answer field, `drop` leaves it out.
+
+## Saving answers
+
+By default, answers stay **in the browser of this device**, in one shared store for all exercise types. On the next visit the code and inputs are back. Nothing goes to a server.
+
+A bar at the edge of the page shows "Saved in this browser" with the privacy note. Every exercise also has a **Copy answer** button and the size controls for the editor.
+
+In the settings dialog, learners find four controls: **Do not save on this device**, **Export my answers**, **Delete answers on this page** and **Delete all your answers in this course**.
+
+You control saving in the project:
+
+```{.yaml filename="_quarto.yml"}
+ctm-assessment:
+  save: answers          # answers (default) or none
+  export: true           # "Export my answers" (default: true)
+  storage-key: my-course # name of the course in browser storage
+```
+
+For one component or a single exercise, the more specific setting wins: `math-exercise: {save: none}` turns it off for all maths exercises, `#| save: false` for one exercise. `local-storage:` from earlier versions is now just another name for this.
+
+::: {.callout-tip}
+## `storage-key` for several courses on one domain
+Without `storage-key`, the store is named after the path of the site. Two courses under the same address that got the same name would share their answers. Give them names of their own.
+:::
+
+:::
+::::
+
+:::: {.content-visible when-profile="svenska"}
+Feedback, sparade svar och integritet fungerar **likadant** för Python-celler (`pyodide-python`), `py-exercise` och `math-exercise`. De kommer från samma bibliotek (`ctm-libs`) i CTM Assessment. Du ställer därför in dem en gång för sidan eller projektet, inte per uppgiftstyp.
+
+Prova på den här uppgiften. Knappen **Feedback** och kugghjulet ⚙ hör till den gemensamma dialogen:
+
+```{py-exercise}
+#| label: fb-demo-sv
+#| task: Komplettera dubbelt så att funktionen returnerar två gånger x.
+def dubbelt(x):
+    return x  # TODO
+
+## TESTS ##
+assert dubbelt(2) == 4, "dubbelt(2) ska vara 4"
+assert dubbelt(-1) == -2, "dubbelt(-1) ska vara -2"
+```
+
+::: {.panel-tabset}
+
+## Så fungerar feedbacken
+
+Varje uppgift där den är påslagen har en knapp **Feedback**. Den arbetar i ett av två lägen, som väljs i kugghjulet ⚙:
+
+| Läge | Vad som händer |
+|---|---|
+| **Kopiera prompt** (standard) | Knappen skapar en färdig text med uppgiften och det aktuella svaret. Du klistrar in den i ChatGPT, Claude eller en annan tjänst som du redan använder. Det behövs inget konto och ingen förfrågan går till någon leverantör. |
+| **Direkt API** | Svaret visas under uppgiften. För det anger de studerande adress, modell och sin **personliga nyckel** till ett OpenAI-kompatibelt gränssnitt i dialogen. Uppgifterna stannar i deras webbläsare. |
+
+Ledtrådarna blir mer konkreta för varje lyckat klick, och den sista nivån upprepas. En ny körning eller kontroll börjar om på första nivån. Hur många nivåer det finns och vad var och en säger avgörs av **riktlinjen** (nästa flik).
+
+Vad en uppgift behöver för det:
+
+| Uppgiftstyp | Slå på | Beskrivning av uppgiften |
+|---|---|---|
+| `pyodide-python` | på (`pyodide: feedback: false` stänger av) | `#| task:` i cellen |
+| `py-exercise` | `py-exercise: feedback: true` | `#| task:` är obligatoriskt |
+| `math-exercise` | på (`math-exercise: feedback: false` stänger av) | själva uppgiftstexten |
+
+## Inställningar
+
+Standardvärdena skriver du i `_quarto.yml` eller i huvudet på en sida:
+
+```{.yaml filename="_quarto.yml"}
+ai-feedback:
+  mode: copy            # Kopiera prompt (standard)
+  storage: local        # local: bevaras | session: bara den här fliken
+  base-url: https://din-leverantor.example/v1   # bara för ”Direkt API”
+  model: modellnamn
+```
+
+De studerande ändrar allt i kugghjulet ⚙ själva. Inställningarna gäller sedan för alla sidor i samma kurs.
+
+::: {.callout-important}
+## Skriv aldrig en nyckel i projektet
+En nyckel i `_quarto.yml` eller i en sidas huvud skulle publiceras med sidan. Därför avbryts bygget så fort en CTM-sektion innehåller en nyckel som `api-key`, `token` eller `password`, och värdet visas inte. De studerande skriver in sin egen nyckel i dialogen.
+:::
+
+Inställningar sätts ihop nyckel för nyckel: sidan, profilen, `_quarto.yml` och `_metadata.yml`-filer kompletterar varandra. En sida som bara sätter `mode:` behåller projektets övriga nycklar.
+
+## Riktlinjer
+
+En **riktlinje** är en namngiven uppsättning instruktioner för hurdan hjälp som ges: först en motfråga, sedan en förklaring, kanske lösningsvägen sist. Du skriver den i en YAML-fil:
+
+```{.yaml filename="feedback.yml"}
+ai-feedback:
+  policies:
+    kurs-feedback:
+      base-prompt: Använd de begrepp som förekommer i kursen.
+      max-words: 180
+      steps:
+        - step-prompt: Ställ en vägledande fråga.
+        - step-prompt: Förklara den relevanta idén utan färdig kod.
+    kort:
+      extends: kurs-feedback
+      max-words: 80
+```
+
+I sidhuvudet läser du in filen och slår på en riktlinje för hela sidan. Enskilda uppgifter väljer en annan med `#| feedback-policy:`:
+
+```{.yaml filename="sida.qmd"}
+ai-feedback:
+  policy-files: feedback.yml
+  policy: kort
+```
+
+`policy-files` anmäler bara riktlinjerna. Först `policy` eller `#| feedback-policy:` slår på en. En riktlinje med `extends` ärver allt den inte själv bestämmer. `steps` ersätter hela den ärvda listan.
+
+Den utförliga beskrivningen finns i [guiden om riktlinjer](https://github.com/Erasmus-CTM/ctm-libs/blob/main/docs/feedback-policies.md).
+
+## Sammanhang
+
+För att modellen ska förstå uppgiften i sitt sammanhang får den kontext:
+
+- **Automatiskt:** den förklarande texten före uppgiften.
+- **Uttryckligen:** ett block med id och klassen `.ai-context`. Uppgifter pekar på det med `#| context: id`. Samma block fungerar i alla tre uppgiftstyperna. `feedback-context` är ett likvärdigt namn.
+- **Inget alls:** `#| context: none`.
+
+````{.markdown}
+::: {#moms .ai-context}
+Momsen anges som decimaltal: 25 % är 0,25.
+:::
+
+```{py-exercise}
+#| label: pris
+#| task: Returnera priset inklusive moms.
+#| context: moms
+def brutto(pris, sats):
+    pass
+```
+````
+
+## Vad som skickas
+
+En förfrågan till en leverantör innehåller uppgiften, det aktuella svaret, det valda sammanhanget och riktlinjen. Resultat och utdata från den senaste körningen följer bara med så länge svaret inte har ändrats sedan dess.
+
+Aldrig skickas testerna, de förväntade svaren, kontrollkoden och råa felmeddelanden. För Python-celler skickas programmets utdata och en allmän körstatus, men inga feltexter, ingen HTML och inga bilder.
+
+::: {.callout-warning}
+Allt detta är läromedel i webbläsaren, inte säkra examinationssystem. Den som öppnar sidan kan ändra den.
+:::
+
+## Bygga utan AI
+
+För en webbplats helt utan AI-feedback, till exempel för prov eller kurser utan integritetsgodkännande, stänger du av den i en profil:
+
+```{.yaml filename="_quarto-no-ai.yml"}
+ai-feedback:
+  enabled: false
+```
+
+Bygg med `quarto render --profile no-ai` eller med miljövariabeln `CTM_FEEDBACK=off`. **Ingen sida kan slå på den igen.** Då finns ingen Feedback-knapp och inga fält som bara feedbacken behöver.
+
+Uppgifter som **bara** AI-feedbacken kan bedöma (till exempel `math-exercise` med `mode: custom` utan `checker`) stoppar bygget tills du anger vad som ska hända med dem:
+
+```{.yaml filename="_quarto-no-ai.yml"}
+ai-feedback:
+  enabled: false
+  without-ai: text      # text | self-check | drop
+```
+
+`text` visar uppgiften utan svarsfält, `drop` utelämnar den.
+
+## Spara svar
+
+Som standard stannar svaren **i webbläsaren på den här enheten**, i ett gemensamt lager för alla uppgiftstyper. Nästa gång man besöker sidan finns koden och inmatningarna kvar. Ingenting går till någon server.
+
+Ett fält i sidkanten visar ”Sparat i den här webbläsaren” med integritetsinformationen. Varje uppgift har dessutom en knapp **Kopiera svar** och storleksknappar för editorn.
+
+I inställningsdialogen hittar de studerande fyra reglage: **Spara inte på den här enheten**, **Exportera mina svar**, **Radera svar på den här sidan** och **Radera alla dina svar i den här kursen**.
+
+Du styr sparandet i projektet:
+
+```{.yaml filename="_quarto.yml"}
+ctm-assessment:
+  save: answers          # answers (standard) eller none
+  export: true           # ”Exportera mina svar” (standard: true)
+  storage-key: min-kurs  # kursens namn i webbläsarens lagring
+```
+
+För en komponent eller en enskild uppgift gäller den mer specifika inställningen: `math-exercise: {save: none}` stänger av det för alla matteuppgifter, `#| save: false` för en enskild uppgift. `local-storage:` från tidigare versioner är numera bara ett annat namn för det här.
+
+::: {.callout-tip}
+## `storage-key` för flera kurser på en domän
+Utan `storage-key` är lagret uppkallat efter webbplatsens sökväg. Två kurser på samma adress som fick samma namn skulle dela sina svar. Ge dem egna namn.
+:::
+
+:::
+::::
+
+:::: {.content-visible when-profile="norsk"}
+Tilbakemelding, lagring av svar og personvern fungerer **likt** for Python-celler (`pyodide-python`), `py-exercise` og `math-exercise`. De kommer fra det samme biblioteket (`ctm-libs`) i CTM Assessment. Du stiller dem derfor inn én gang for siden eller prosjektet, ikke per oppgavetype.
+
+Prøv det på denne oppgaven. Knappen **Tilbakemelding** og tannhjulet ⚙ hører til den felles dialogen:
+
+```{py-exercise}
+#| label: fb-demo-no
+#| task: Fullfør dobbelt slik at funksjonen returnerer to ganger x.
+def dobbelt(x):
+    return x  # TODO
+
+## TESTS ##
+assert dobbelt(2) == 4, "dobbelt(2) skal være 4"
+assert dobbelt(-1) == -2, "dobbelt(-1) skal være -2"
+```
+
+::: {.panel-tabset}
+
+## Slik fungerer tilbakemeldingen
+
+Hver oppgave der den er slått på, har en knapp **Tilbakemelding**. Den arbeider i en av to moduser, som velges i tannhjulet ⚙:
+
+| Modus | Hva som skjer |
+|---|---|
+| **Kopier prompt** (standard) | Knappen lager en ferdig tekst med oppgaven og det gjeldende svaret. Du limer den inn i ChatGPT, Claude eller en annen tjeneste du allerede bruker. Det trengs ingen konto, og ingen forespørsel går til noen leverandør. |
+| **Direkte API** | Svaret vises under oppgaven. For det oppgir de som lærer adresse, modell og sin **personlige nøkkel** til et OpenAI-kompatibelt grensesnitt i dialogen. Opplysningene blir i nettleseren deres. |
+
+Hintene blir mer konkrete for hvert vellykkede klikk, og det siste nivået gjentas. En ny kjøring eller kontroll starter på nytt på første nivå. Hvor mange nivåer det finnes og hva hvert av dem sier, bestemmes av **retningslinjen** (neste fane).
+
+Hva en oppgave trenger for det:
+
+| Oppgavetype | Slå på | Beskrivelse av oppgaven |
+|---|---|---|
+| `pyodide-python` | på (`pyodide: feedback: false` slår av) | `#| task:` i cellen |
+| `py-exercise` | `py-exercise: feedback: true` | `#| task:` er obligatorisk |
+| `math-exercise` | på (`math-exercise: feedback: false` slår av) | selve oppgaveteksten |
+
+## Innstillinger
+
+Standardverdiene skriver du i `_quarto.yml` eller i hodet på en side:
+
+```{.yaml filename="_quarto.yml"}
+ai-feedback:
+  mode: copy            # Kopier prompt (standard)
+  storage: local        # local: varig | session: bare denne fanen
+  base-url: https://din-leverandor.example/v1   # bare for «Direkte API»
+  model: modellnavn
+```
+
+De som lærer, endrer alt i tannhjulet ⚙ selv. Innstillingene gjelder deretter for alle sider i det samme kurset.
+
+::: {.callout-important}
+## Skriv aldri en nøkkel i prosjektet
+En nøkkel i `_quarto.yml` eller i hodet på en side ville blitt publisert sammen med siden. Derfor stopper byggingen så snart en CTM-seksjon inneholder en nøkkel som `api-key`, `token` eller `password`, og verdien vises ikke. De som lærer, skriver inn sin egen nøkkel i dialogen.
+:::
+
+Innstillinger settes sammen nøkkel for nøkkel: siden, profilen, `_quarto.yml` og `_metadata.yml`-filer utfyller hverandre. En side som bare setter `mode:`, beholder prosjektets øvrige nøkler.
+
+## Retningslinjer
+
+En **retningslinje** er et navngitt sett med instruksjoner for hva slags hjelp som gis: først et motspørsmål, så en forklaring, kanskje løsningsveien til slutt. Du skriver den i en YAML-fil:
+
+```{.yaml filename="feedback.yml"}
+ai-feedback:
+  policies:
+    kurs-feedback:
+      base-prompt: Bruk begrepene som brukes i kurset.
+      max-words: 180
+      steps:
+        - step-prompt: Still ett veiledende spørsmål.
+        - step-prompt: Forklar den relevante ideen uten ferdig kode.
+    kort:
+      extends: kurs-feedback
+      max-words: 80
+```
+
+I sidehodet laster du inn filen og slår på én retningslinje for hele siden. Enkeltoppgaver velger en annen med `#| feedback-policy:`:
+
+```{.yaml filename="side.qmd"}
+ai-feedback:
+  policy-files: feedback.yml
+  policy: kort
+```
+
+`policy-files` melder bare inn retningslinjene. Først `policy` eller `#| feedback-policy:` slår en på. En retningslinje med `extends` arver alt den ikke selv bestemmer. `steps` erstatter hele den arvede listen.
+
+Den utførlige veiledningen er [guiden om retningslinjer](https://github.com/Erasmus-CTM/ctm-libs/blob/main/docs/feedback-policies.md).
+
+## Kontekst
+
+For at modellen skal forstå oppgaven i sammenheng, får den kontekst:
+
+- **Automatisk:** den forklarende teksten før oppgaven.
+- **Uttrykkelig:** en blokk med id og klassen `.ai-context`. Oppgaver peker til den med `#| context: id`. Den samme blokken fungerer i alle tre oppgavetypene. `feedback-context` er et likeverdig navn.
+- **Ingen i det hele tatt:** `#| context: none`.
+
+````{.markdown}
+::: {#mva .ai-context}
+Merverdiavgiften oppgis som desimaltall: 25 % er 0,25.
+:::
+
+```{py-exercise}
+#| label: pris
+#| task: Returner prisen inkludert mva.
+#| context: mva
+def brutto(pris, sats):
+    pass
+```
+````
+
+## Hva som sendes
+
+En forespørsel til en leverandør inneholder oppgaven, det gjeldende svaret, den valgte konteksten og retningslinjen. Resultat og utdata fra siste kjøring følger bare med så lenge svaret ikke er endret siden.
+
+Aldri sendt blir testene, de forventede svarene, kontrollkoden og rå feilmeldinger. For Python-celler sendes programmets utdata og en generell kjørestatus, men ingen feiltekster, ingen HTML og ingen bilder.
+
+::: {.callout-warning}
+Alt dette er læremidler i nettleseren, ikke sikre eksamenssystemer. Den som åpner siden, kan endre den.
+:::
+
+## Bygge uten KI
+
+For et nettsted helt uten KI-tilbakemelding, for eksempel til prøver eller kurs uten personvernsgodkjenning, slår du den av i en profil:
+
+```{.yaml filename="_quarto-no-ai.yml"}
+ai-feedback:
+  enabled: false
+```
+
+Bygg med `quarto render --profile no-ai` eller med miljøvariabelen `CTM_FEEDBACK=off`. **Ingen side kan slå den på igjen.** Da finnes ingen Tilbakemelding-knapp og ingen felt som bare tilbakemeldingen trenger.
+
+Oppgaver som **bare** KI-tilbakemeldingen kan vurdere (for eksempel `math-exercise` med `mode: custom` uten `checker`), stopper byggingen til du sier hva som skal skje med dem:
+
+```{.yaml filename="_quarto-no-ai.yml"}
+ai-feedback:
+  enabled: false
+  without-ai: text      # text | self-check | drop
+```
+
+`text` viser oppgaven uten svarfelt, `drop` utelater den.
+
+## Lagre svar
+
+Som standard blir svarene **i nettleseren på denne enheten**, i et felles lager for alle oppgavetyper. Neste gang man besøker siden, er koden og inndataene tilbake. Ingenting går til noen server.
+
+Et felt i kanten av siden viser «Lagret i denne nettleseren» med personverninformasjonen. Hver oppgave har dessuten en knapp **Kopier svar** og størrelsesknapper for editoren.
+
+I innstillingsdialogen finner de som lærer, fire brytere: **Ikke lagre på denne enheten**, **Eksporter svarene mine**, **Slett svar på denne siden** og **Slett alle svarene dine i dette kurset**.
+
+Du styrer lagringen i prosjektet:
+
+```{.yaml filename="_quarto.yml"}
+ctm-assessment:
+  save: answers          # answers (standard) eller none
+  export: true           # «Eksporter svarene mine» (standard: true)
+  storage-key: mitt-kurs # kursets navn i nettleserens lager
+```
+
+For én komponent eller én enkelt oppgave gjelder den mer spesifikke innstillingen: `math-exercise: {save: none}` slår det av for alle matteoppgaver, `#| save: false` for én oppgave. `local-storage:` fra tidligere versjoner er nå bare et annet navn på det samme.
+
+::: {.callout-tip}
+## `storage-key` for flere kurs på ett domene
+Uten `storage-key` er lageret oppkalt etter stien til nettstedet. To kurs på samme adresse som fikk samme navn, ville delt svarene sine. Gi dem egne navn.
+:::
+
+:::
+::::
+
+:::: {.content-visible when-profile="dansk"}
+Feedback, lagring af svar og privatliv fungerer **ens** for Python-celler (`pyodide-python`), `py-exercise` og `math-exercise`. De kommer fra det samme bibliotek (`ctm-libs`) i CTM Assessment. Du indstiller dem derfor én gang for siden eller projektet, ikke pr. opgavetype.
+
+Prøv det på denne opgave. Knappen **Feedback** og tandhjulet ⚙ hører til den fælles dialog:
+
+```{py-exercise}
+#| label: fb-demo-da
+#| task: Fuldfør dobbelt, så funktionen returnerer to gange x.
+def dobbelt(x):
+    return x  # TODO
+
+## TESTS ##
+assert dobbelt(2) == 4, "dobbelt(2) skal være 4"
+assert dobbelt(-1) == -2, "dobbelt(-1) skal være -2"
+```
+
+::: {.panel-tabset}
+
+## Sådan virker feedbacken
+
+Hver opgave, hvor den er slået til, har en knap **Feedback**. Den arbejder i en af to tilstande, som vælges i tandhjulet ⚙:
+
+| Tilstand | Hvad der sker |
+|---|---|
+| **Kopiér prompt** (standard) | Knappen laver en færdig tekst med opgaven og det aktuelle svar. Du sætter den ind i ChatGPT, Claude eller en anden tjeneste, du allerede bruger. Det kræver ingen konto, og ingen forespørgsel går til nogen udbyder. |
+| **Direkte API** | Svaret vises under opgaven. Til det indtaster de lærende adresse, model og deres **personlige nøgle** til en OpenAI-kompatibel grænseflade i dialogen. Oplysningerne bliver i deres browser. |
+
+Hintene bliver mere konkrete for hvert vellykket klik, og det sidste niveau gentages. En ny kørsel eller kontrol starter forfra på første niveau. Hvor mange niveauer der er, og hvad hvert af dem siger, afgøres af **retningslinjen** (næste fane).
+
+Hvad en opgave skal bruge til det:
+
+| Opgavetype | Slå til | Beskrivelse af opgaven |
+|---|---|---|
+| `pyodide-python` | til (`pyodide: feedback: false` slår fra) | `#| task:` i cellen |
+| `py-exercise` | `py-exercise: feedback: true` | `#| task:` er obligatorisk |
+| `math-exercise` | til (`math-exercise: feedback: false` slår fra) | selve opgaveteksten |
+
+## Indstillinger
+
+Standardværdierne skriver du i `_quarto.yml` eller i hovedet på en side:
+
+```{.yaml filename="_quarto.yml"}
+ai-feedback:
+  mode: copy            # Kopiér prompt (standard)
+  storage: local        # local: varigt | session: kun denne fane
+  base-url: https://din-udbyder.example/v1   # kun til »Direkte API«
+  model: modelnavn
+```
+
+De lærende ændrer alt i tandhjulet ⚙ selv. Indstillingerne gælder derefter for alle sider i samme kursus.
+
+::: {.callout-important}
+## Skriv aldrig en nøgle i projektet
+En nøgle i `_quarto.yml` eller i hovedet på en side ville blive udgivet sammen med siden. Derfor stopper bygningen, så snart en CTM-sektion indeholder en nøgle som `api-key`, `token` eller `password`, og værdien vises ikke. De lærende indtaster deres egen nøgle i dialogen.
+:::
+
+Indstillinger sættes sammen nøgle for nøgle: siden, profilen, `_quarto.yml` og `_metadata.yml`-filer supplerer hinanden. En side, der kun sætter `mode:`, beholder projektets øvrige nøgler.
+
+## Retningslinjer
+
+En **retningslinje** er et navngivet sæt instruktioner for, hvilken slags hjælp der gives: først et modspørgsmål, så en forklaring, måske løsningsvejen til sidst. Du skriver den i en YAML-fil:
+
+```{.yaml filename="feedback.yml"}
+ai-feedback:
+  policies:
+    kursus-feedback:
+      base-prompt: Brug de begreber, der bruges i kurset.
+      max-words: 180
+      steps:
+        - step-prompt: Stil ét vejledende spørgsmål.
+        - step-prompt: Forklar den relevante idé uden færdig kode.
+    kort:
+      extends: kursus-feedback
+      max-words: 80
+```
+
+I sidehovedet indlæser du filen og slår én retningslinje til for hele siden. Enkelte opgaver vælger en anden med `#| feedback-policy:`:
+
+```{.yaml filename="side.qmd"}
+ai-feedback:
+  policy-files: feedback.yml
+  policy: kort
+```
+
+`policy-files` anmelder kun retningslinjerne. Først `policy` eller `#| feedback-policy:` slår en til. En retningslinje med `extends` arver alt, den ikke selv bestemmer. `steps` erstatter hele den arvede liste.
+
+Den udførlige vejledning er [guiden om retningslinjer](https://github.com/Erasmus-CTM/ctm-libs/blob/main/docs/feedback-policies.md).
+
+## Kontekst
+
+For at modellen kan forstå opgaven i sammenhæng, får den kontekst:
+
+- **Automatisk:** den forklarende tekst før opgaven.
+- **Udtrykkeligt:** en blok med id og klassen `.ai-context`. Opgaver peger på den med `#| context: id`. Den samme blok virker i alle tre opgavetyper. `feedback-context` er et ligeværdigt navn.
+- **Slet ingen:** `#| context: none`.
+
+````{.markdown}
+::: {#moms .ai-context}
+Momsen angives som decimaltal: 25 % er 0,25.
+:::
+
+```{py-exercise}
+#| label: pris
+#| task: Returnér prisen inklusive moms.
+#| context: moms
+def brutto(pris, sats):
+    pass
+```
+````
+
+## Hvad der sendes
+
+En forespørgsel til en udbyder indeholder opgaven, det aktuelle svar, den valgte kontekst og retningslinjen. Resultat og output fra sidste kørsel følger kun med, så længe svaret ikke er ændret siden.
+
+Aldrig sendt bliver testene, de forventede svar, kontrolkoden og rå fejlmeddelelser. For Python-celler sendes programmets output og en generel kørselsstatus, men ingen fejltekster, ingen HTML og ingen billeder.
+
+::: {.callout-warning}
+Alt dette er læremidler i browseren, ikke sikre eksamenssystemer. Den, der åbner siden, kan ændre den.
+:::
+
+## Byg uden AI
+
+Til et websted helt uden AI-feedback, for eksempel til prøver eller kurser uden privatlivsgodkendelse, slår du den fra i en profil:
+
+```{.yaml filename="_quarto-no-ai.yml"}
+ai-feedback:
+  enabled: false
+```
+
+Byg med `quarto render --profile no-ai` eller med miljøvariablen `CTM_FEEDBACK=off`. **Ingen side kan slå den til igen.** Så findes ingen Feedback-knap og ingen felter, som kun feedbacken har brug for.
+
+Opgaver, som **kun** AI-feedbacken kan bedømme (for eksempel `math-exercise` med `mode: custom` uden `checker`), stopper bygningen, indtil du siger, hvad der skal ske med dem:
+
+```{.yaml filename="_quarto-no-ai.yml"}
+ai-feedback:
+  enabled: false
+  without-ai: text      # text | self-check | drop
+```
+
+`text` viser opgaven uden svarfelt, `drop` udelader den.
+
+## Gem svar
+
+Som standard bliver svarene **i browseren på denne enhed**, i et fælles lager for alle opgavetyper. Næste gang man besøger siden, er koden og indtastningerne tilbage. Intet går til nogen server.
+
+Et felt i kanten af siden viser »Gemt i denne browser« med privatlivsoplysningerne. Hver opgave har desuden en knap **Kopiér svar** og størrelsesknapper til editoren.
+
+I indstillingsdialogen finder de lærende fire kontakter: **Gem ikke på denne enhed**, **Eksportér mine svar**, **Slet svar på denne side** og **Slet alle dine svar i dette kursus**.
+
+Du styrer lagringen i projektet:
+
+```{.yaml filename="_quarto.yml"}
+ctm-assessment:
+  save: answers          # answers (standard) eller none
+  export: true           # »Eksportér mine svar« (standard: true)
+  storage-key: mit-kursus # kursets navn i browserens lager
+```
+
+For én komponent eller én enkelt opgave gælder den mere specifikke indstilling: `math-exercise: {save: none}` slår det fra for alle matematikopgaver, `#| save: false` for én opgave. `local-storage:` fra tidligere versioner er nu blot et andet navn for det samme.
+
+::: {.callout-tip}
+## `storage-key` til flere kurser på ét domæne
+Uden `storage-key` er lageret opkaldt efter stien til webstedet. To kurser på samme adresse, der fik samme navn, ville dele deres svar. Giv dem egne navne.
+:::
+
+:::
+::::

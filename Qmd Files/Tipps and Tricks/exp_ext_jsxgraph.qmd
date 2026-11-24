@@ -1,0 +1,822 @@
+---
+title: "JSXGraph – interaktive Grafiken"
+title-en: "JSXGraph – interactive graphs"
+title-sv: "JSXGraph – interaktiva grafer"
+title-no: "JSXGraph – interaktive grafer"
+title-da: "JSXGraph – interaktive grafer"
+sidebar: tips-sidebar
+bibliography: ../../Qmd Files/Example Page/references.bib
+engine: markdown
+filters:
+  - ctm-assessment
+---
+
+:::: {.content-visible when-profile="deutsch"}
+**Installation:** gehört zu CTM Assessment, siehe [Überblick und Installation](exp_extensions.qmd)
+**Quelle:** [@jsxgraph], [github.com/jsxgraph/jsxgraph-quarto](https://github.com/jsxgraph/jsxgraph-quarto)
+
+Die Fassung von JSXGraph in CTM Assessment beruht auf der Extension `jsxgraph-quarto` und ergänzt eine **Bewertungsbrücke**: Eine Grafik kann damit die Antwort auf eine `math-exercise`-Aufgabe liefern. Die JSXGraph-Bibliothek wird beim Lesen aus dem Netz geladen, ihre Version legt das Paket fest.
+
+```{.yaml filename="seite.qmd"}
+engine: markdown      # nur nötig, wenn die Seite auch math-exercise enthält (Quarto 1.10+)
+filters:
+  - ctm-assessment
+```
+
+::: {.callout-warning}
+## JSXGraph nicht noch einmal installieren
+JSXGraph kommt mit `ctm-assessment` und liegt in `_extensions/jsxgraph/`. Ein zusätzliches `quarto add jsxgraph/jsxgraph-quarto` landet verschachtelt in `_extensions/jsxgraph/jsxgraph/` und wird ignoriert. Beim Bauen erscheint dazu eine Warnung. Steht ein Einzelfilter wie `jsxgraph` im Kopf, ersetzt ihn `ctm-assessment`: Eine Seite führt entweder `ctm-assessment` auf oder einzelne Komponenten, nicht beides.
+:::
+
+::: {.panel-tabset}
+
+## Beispiel
+
+```jsxgraph
+var board = JXG.JSXGraph.initBoard(BOARDID, {
+    boundingbox: [-7, 1.8, 7, -1.8],
+    axis: true,
+    showNavigation: false
+});
+board.create('functiongraph', [Math.sin], {
+    strokeColor: '#0d6efd', strokeWidth: 2.5
+});
+var p = board.create('glider', [1.57, 0, board.defaultAxes.x], {
+    name: 'x', size: 5, fillColor: '#E91E63'
+});
+board.create('point', [
+    function() { return p.X(); },
+    function() { return Math.sin(p.X()); }
+], { name: function() { return 'sin(x) ≈ ' + Math.sin(p.X()).toFixed(3); },
+     size: 5, fillColor: '#198754', fixed: true });
+```
+
+Zieh den Punkt $x$ auf der Achse.
+
+## Schreibweise
+
+````{.markdown}
+```jsxgraph
+var board = JXG.JSXGraph.initBoard(BOARDID, {
+    boundingbox: [-5, 5, 5, -5],   // [xmin, ymax, xmax, ymin]
+    axis: true,
+    keepaspectratio: false,
+    showNavigation: false
+});
+```
+````
+
+::: {.callout-important}
+Schreib immer wörtlich `BOARDID`. Die Extension ersetzt es durch eine eindeutige Kennung.
+Eine fest eingetragene Kennung macht Seiten mit mehreren Grafiken kaputt.
+:::
+
+Optionen stehen als Attribute am Block, z. B. Breite und Höhe:
+
+````{.markdown}
+```{.jsxgraph width="600" height="300"}
+...
+```
+````
+
+## Häufige Elemente
+
+```{.javascript}
+// Funktionsgraph
+board.create('functiongraph', [Math.sin], { strokeColor: '#0d6efd' });
+
+// Verschiebbarer Punkt
+var p = board.create('point', [2, 1], { name: 'P', size: 4 });
+
+// Gleiter: Punkt, der an eine Linie oder Kurve gebunden ist
+var g = board.create('glider', [1, 0, board.defaultAxes.x], { name: 'x' });
+
+// Schieberegler
+var s = board.create('slider', [[0,-3],[4,-3],[0,1,2*Math.PI]], { name: 'a' });
+
+// Wert des Schiebereglers benutzen
+board.create('functiongraph', [function(x) { return Math.sin(s.Value()*x); }]);
+
+// Beschriftung
+board.create('text', [1, 2, function() { return 'x = ' + g.X().toFixed(2); }]);
+
+// Strecke
+board.create('segment', [p1, p2], { strokeColor: '#198754', dash: 2 });
+```
+
+## Grafik als Antwort
+
+Mit `assessment_id` und `JXG.QuartoAssessment.register(...)` meldet eine Grafik ihren Zustand an eine Aufgabe. Die Aufgabe holt ihn mit `response: jsxgraph:<assessment_id>` und prüft ihn mit eigenem Prüfcode:
+
+```{.jsxgraph assessment_id="exp-board"}
+var board = JXG.JSXGraph.initBoard(BOARDID, {
+    boundingbox: [-5, 5, 5, -5], axis: true, showNavigation: false
+});
+board.create('line', [[0, 0], [1, 1]], { strokeColor: '#0d6efd', fixed: true });
+var point = board.create('point', [2, -1], { name: 'P', size: 5 });
+
+JXG.QuartoAssessment.register({
+  board: board,
+  response: function () {
+    return { point: [point.X(), point.Y()] };
+  }
+});
+```
+
+```{math-exercise}
+#| label: exp-point-above
+#| caption: Punkt über der Geraden
+#| mode: custom
+#| response: jsxgraph:exp-board
+#| embed-response: true
+#| checker: |
+#|   def check(response, symbols):
+#|       x, y = response["point"]
+#|       return {"score": 1 if y > x else 0}
+
+Zieh den Punkt $P$ in den Bereich oberhalb der Geraden $y = x$.
+```
+
+Der Quelltext dazu:
+
+````{.markdown}
+```{.jsxgraph assessment_id="exp-board"}
+var board = JXG.JSXGraph.initBoard(BOARDID, {
+    boundingbox: [-5, 5, 5, -5], axis: true, showNavigation: false
+});
+board.create('line', [[0, 0], [1, 1]], { strokeColor: '#0d6efd', fixed: true });
+var point = board.create('point', [2, -1], { name: 'P', size: 5 });
+
+JXG.QuartoAssessment.register({
+  board: board,
+  response: function () {
+    return { point: [point.X(), point.Y()] };
+  }
+});
+```
+
+```{math-exercise}
+#| mode: custom
+#| response: jsxgraph:exp-board
+#| embed-response: true
+#| checker: |
+#|   def check(response, symbols):
+#|       x, y = response["point"]
+#|       return {"score": 1 if y > x else 0}
+
+Zieh den Punkt $P$ in den Bereich oberhalb der Geraden $y = x$.
+```
+````
+
+`response` darf beliebige Daten zurückgeben, die sich als JSON schreiben lassen. `embed-response: true` setzt die Grafik in die Aufgabenkarte. Für Aufgaben, in denen Studierende einen Graphen aus Knoten und Kanten bauen, gibt es den fertigen Editor `JXG.QuartoGraphEditor`.
+
+:::
+::::
+
+:::: {.content-visible when-profile="english"}
+**Install:** part of CTM Assessment, see [Overview and installation](exp_extensions.qmd)
+**Source:** [@jsxgraph], [github.com/jsxgraph/jsxgraph-quarto](https://github.com/jsxgraph/jsxgraph-quarto)
+
+The version of JSXGraph in CTM Assessment is based on the `jsxgraph-quarto` extension and adds an **assessment bridge**: a graph can supply the answer to a `math-exercise` exercise. The JSXGraph library is loaded from the network at read time; the package fixes its version.
+
+```{.yaml filename="page.qmd"}
+engine: markdown      # only needed if the page also contains math-exercise (Quarto 1.10+)
+filters:
+  - ctm-assessment
+```
+
+::: {.callout-warning}
+## Do not install JSXGraph a second time
+JSXGraph comes with `ctm-assessment` and sits in `_extensions/jsxgraph/`. An additional `quarto add jsxgraph/jsxgraph-quarto` ends up nested in `_extensions/jsxgraph/jsxgraph/` and is ignored. The build prints a warning about it. If a single filter such as `jsxgraph` is listed in the header, `ctm-assessment` replaces it: a page lists either `ctm-assessment` or individual components, not both.
+:::
+
+::: {.panel-tabset}
+
+## Example
+
+```jsxgraph
+var board = JXG.JSXGraph.initBoard(BOARDID, {
+    boundingbox: [-7, 1.8, 7, -1.8],
+    axis: true,
+    showNavigation: false
+});
+board.create('functiongraph', [Math.sin], {
+    strokeColor: '#0d6efd', strokeWidth: 2.5
+});
+var p = board.create('glider', [1.57, 0, board.defaultAxes.x], {
+    name: 'x', size: 5, fillColor: '#E91E63'
+});
+board.create('point', [
+    function() { return p.X(); },
+    function() { return Math.sin(p.X()); }
+], { name: function() { return 'sin(x) ≈ ' + Math.sin(p.X()).toFixed(3); },
+     size: 5, fillColor: '#198754', fixed: true });
+```
+
+Drag the point $x$ along the axis.
+
+## Syntax
+
+````{.markdown}
+```jsxgraph
+var board = JXG.JSXGraph.initBoard(BOARDID, {
+    boundingbox: [-5, 5, 5, -5],   // [xmin, ymax, xmax, ymin]
+    axis: true,
+    keepaspectratio: false,
+    showNavigation: false
+});
+```
+````
+
+::: {.callout-important}
+Always use the literal string `BOARDID`. The extension replaces it with a unique ID.
+Hardcoding an ID breaks pages with several graphs.
+:::
+
+Options are written as attributes on the block, e.g. width and height:
+
+````{.markdown}
+```{.jsxgraph width="600" height="300"}
+...
+```
+````
+
+## Common elements
+
+```{.javascript}
+// Function graph
+board.create('functiongraph', [Math.sin], { strokeColor: '#0d6efd' });
+
+// Draggable point
+var p = board.create('point', [2, 1], { name: 'P', size: 4 });
+
+// Glider: point constrained to a line or curve
+var g = board.create('glider', [1, 0, board.defaultAxes.x], { name: 'x' });
+
+// Slider
+var s = board.create('slider', [[0,-3],[4,-3],[0,1,2*Math.PI]], { name: 'a' });
+
+// Use slider value
+board.create('functiongraph', [function(x) { return Math.sin(s.Value()*x); }]);
+
+// Text label
+board.create('text', [1, 2, function() { return 'x = ' + g.X().toFixed(2); }]);
+
+// Segment
+board.create('segment', [p1, p2], { strokeColor: '#198754', dash: 2 });
+```
+
+## Graph as answer
+
+With `assessment_id` and `JXG.QuartoAssessment.register(...)`, a graph reports its state to an exercise. The exercise fetches it with `response: jsxgraph:<assessment_id>` and checks it with its own checking code:
+
+```{.jsxgraph assessment_id="exp-board-en"}
+var board = JXG.JSXGraph.initBoard(BOARDID, {
+    boundingbox: [-5, 5, 5, -5], axis: true, showNavigation: false
+});
+board.create('line', [[0, 0], [1, 1]], { strokeColor: '#0d6efd', fixed: true });
+var point = board.create('point', [2, -1], { name: 'P', size: 5 });
+
+JXG.QuartoAssessment.register({
+  board: board,
+  response: function () {
+    return { point: [point.X(), point.Y()] };
+  }
+});
+```
+
+```{math-exercise}
+#| label: exp-point-above-en
+#| caption: Point above the line
+#| mode: custom
+#| response: jsxgraph:exp-board-en
+#| embed-response: true
+#| checker: |
+#|   def check(response, symbols):
+#|       x, y = response["point"]
+#|       return {"score": 1 if y > x else 0}
+
+Drag the point $P$ into the region above the line $y = x$.
+```
+
+The source for it:
+
+````{.markdown}
+```{.jsxgraph assessment_id="exp-board"}
+var board = JXG.JSXGraph.initBoard(BOARDID, {
+    boundingbox: [-5, 5, 5, -5], axis: true, showNavigation: false
+});
+board.create('line', [[0, 0], [1, 1]], { strokeColor: '#0d6efd', fixed: true });
+var point = board.create('point', [2, -1], { name: 'P', size: 5 });
+
+JXG.QuartoAssessment.register({
+  board: board,
+  response: function () {
+    return { point: [point.X(), point.Y()] };
+  }
+});
+```
+
+```{math-exercise}
+#| mode: custom
+#| response: jsxgraph:exp-board
+#| embed-response: true
+#| checker: |
+#|   def check(response, symbols):
+#|       x, y = response["point"]
+#|       return {"score": 1 if y > x else 0}
+
+Drag the point $P$ into the region above the line $y = x$.
+```
+````
+
+`response` may return any data that can be written as JSON. `embed-response: true` moves the graph into the exercise card. For exercises in which students build a graph of vertices and edges, there is the ready-made editor `JXG.QuartoGraphEditor`.
+
+:::
+::::
+
+:::: {.content-visible when-profile="svenska"}
+**Installation:** ingår i CTM Assessment, se [Översikt och installation](exp_extensions.qmd)
+**Källa:** [@jsxgraph], [github.com/jsxgraph/jsxgraph-quarto](https://github.com/jsxgraph/jsxgraph-quarto)
+
+JSXGraph-versionen i CTM Assessment bygger på tillägget `jsxgraph-quarto` och lägger till en **bedömningsbrygga**: en graf kan leverera svaret på en `math-exercise`-uppgift. JSXGraph-biblioteket laddas från nätet när sidan läses, och paketet bestämmer vilken version som används.
+
+```{.yaml filename="sida.qmd"}
+engine: markdown      # behövs bara om sidan också innehåller math-exercise (Quarto 1.10+)
+filters:
+  - ctm-assessment
+```
+
+::: {.callout-warning}
+## Installera inte JSXGraph en gång till
+JSXGraph följer med `ctm-assessment` och ligger i `_extensions/jsxgraph/`. Ett extra `quarto add jsxgraph/jsxgraph-quarto` hamnar nästlat i `_extensions/jsxgraph/jsxgraph/` och ignoreras. Bygget skriver ut en varning om det. Står ett enskilt filter som `jsxgraph` i sidhuvudet ersätter `ctm-assessment` det: en sida anger antingen `ctm-assessment` eller enskilda komponenter, inte båda.
+:::
+
+::: {.panel-tabset}
+
+## Exempel
+
+```jsxgraph
+var board = JXG.JSXGraph.initBoard(BOARDID, {
+    boundingbox: [-7, 1.8, 7, -1.8],
+    axis: true,
+    showNavigation: false
+});
+board.create('functiongraph', [Math.sin], {
+    strokeColor: '#0d6efd', strokeWidth: 2.5
+});
+var p = board.create('glider', [1.57, 0, board.defaultAxes.x], {
+    name: 'x', size: 5, fillColor: '#E91E63'
+});
+board.create('point', [
+    function() { return p.X(); },
+    function() { return Math.sin(p.X()); }
+], { name: function() { return 'sin(x) ≈ ' + Math.sin(p.X()).toFixed(3); },
+     size: 5, fillColor: '#198754', fixed: true });
+```
+
+Dra punkten $x$ längs axeln.
+
+## Syntax
+
+````{.markdown}
+```jsxgraph
+var board = JXG.JSXGraph.initBoard(BOARDID, {
+    boundingbox: [-5, 5, 5, -5],   // [xmin, ymax, xmax, ymin]
+    axis: true,
+    keepaspectratio: false,
+    showNavigation: false
+});
+```
+````
+
+::: {.callout-important}
+Använd alltid den bokstavliga strängen `BOARDID`. Tillägget ersätter den med ett unikt id.
+Ett fast id förstör sidor med flera grafer.
+:::
+
+Inställningar skrivs som attribut på blocket, t.ex. bredd och höjd:
+
+````{.markdown}
+```{.jsxgraph width="600" height="300"}
+...
+```
+````
+
+## Vanliga element
+
+```{.javascript}
+// Function graph
+board.create('functiongraph', [Math.sin], { strokeColor: '#0d6efd' });
+
+// Draggable point
+var p = board.create('point', [2, 1], { name: 'P', size: 4 });
+
+// Glider: point constrained to a line or curve
+var g = board.create('glider', [1, 0, board.defaultAxes.x], { name: 'x' });
+
+// Slider
+var s = board.create('slider', [[0,-3],[4,-3],[0,1,2*Math.PI]], { name: 'a' });
+
+// Use slider value
+board.create('functiongraph', [function(x) { return Math.sin(s.Value()*x); }]);
+
+// Text label
+board.create('text', [1, 2, function() { return 'x = ' + g.X().toFixed(2); }]);
+
+// Segment
+board.create('segment', [p1, p2], { strokeColor: '#198754', dash: 2 });
+```
+
+## Graf som svar
+
+Med `assessment_id` och `JXG.QuartoAssessment.register(...)` rapporterar en graf sitt tillstånd till en uppgift. Uppgiften hämtar det med `response: jsxgraph:<assessment_id>` och kontrollerar det med sin egen kontrollkod:
+
+```{.jsxgraph assessment_id="exp-board-sv"}
+var board = JXG.JSXGraph.initBoard(BOARDID, {
+    boundingbox: [-5, 5, 5, -5], axis: true, showNavigation: false
+});
+board.create('line', [[0, 0], [1, 1]], { strokeColor: '#0d6efd', fixed: true });
+var point = board.create('point', [2, -1], { name: 'P', size: 5 });
+
+JXG.QuartoAssessment.register({
+  board: board,
+  response: function () {
+    return { point: [point.X(), point.Y()] };
+  }
+});
+```
+
+```{math-exercise}
+#| label: exp-point-above-sv
+#| caption: Punkt ovanför linjen
+#| mode: custom
+#| response: jsxgraph:exp-board-sv
+#| embed-response: true
+#| checker: |
+#|   def check(response, symbols):
+#|       x, y = response["point"]
+#|       return {"score": 1 if y > x else 0}
+
+Dra punkten $P$ till området ovanför linjen $y = x$.
+```
+
+Källkoden till det:
+
+````{.markdown}
+```{.jsxgraph assessment_id="exp-board"}
+var board = JXG.JSXGraph.initBoard(BOARDID, {
+    boundingbox: [-5, 5, 5, -5], axis: true, showNavigation: false
+});
+board.create('line', [[0, 0], [1, 1]], { strokeColor: '#0d6efd', fixed: true });
+var point = board.create('point', [2, -1], { name: 'P', size: 5 });
+
+JXG.QuartoAssessment.register({
+  board: board,
+  response: function () {
+    return { point: [point.X(), point.Y()] };
+  }
+});
+```
+
+```{math-exercise}
+#| mode: custom
+#| response: jsxgraph:exp-board
+#| embed-response: true
+#| checker: |
+#|   def check(response, symbols):
+#|       x, y = response["point"]
+#|       return {"score": 1 if y > x else 0}
+
+Drag the point $P$ into the region above the line $y = x$.
+```
+````
+
+`response` får returnera vilka data som helst som kan skrivas som JSON. `embed-response: true` flyttar in grafen i uppgiftens ruta. För uppgifter där studenterna bygger en graf av noder och kanter finns den färdiga redigeraren `JXG.QuartoGraphEditor`.
+
+:::
+::::
+
+:::: {.content-visible when-profile="norsk"}
+**Installasjon:** er en del av CTM Assessment, se [Oversikt og installasjon](exp_extensions.qmd)
+**Kilde:** [@jsxgraph], [github.com/jsxgraph/jsxgraph-quarto](https://github.com/jsxgraph/jsxgraph-quarto)
+
+JSXGraph-versjonen i CTM Assessment bygger på utvidelsen `jsxgraph-quarto` og legger til en **vurderingsbro**: en graf kan levere svaret på en `math-exercise`-oppgave. JSXGraph-biblioteket lastes fra nettet når siden leses, og pakken bestemmer hvilken versjon som brukes.
+
+```{.yaml filename="side.qmd"}
+engine: markdown      # trengs bare hvis siden også inneholder math-exercise (Quarto 1.10+)
+filters:
+  - ctm-assessment
+```
+
+::: {.callout-warning}
+## Ikke installer JSXGraph en gang til
+JSXGraph følger med `ctm-assessment` og ligger i `_extensions/jsxgraph/`. Et ekstra `quarto add jsxgraph/jsxgraph-quarto` havner nestet i `_extensions/jsxgraph/jsxgraph/` og blir ignorert. Byggingen skriver ut en advarsel om det. Står et enkeltfilter som `jsxgraph` i sidehodet, erstatter `ctm-assessment` det: en side oppgir enten `ctm-assessment` eller enkeltkomponenter, ikke begge.
+:::
+
+::: {.panel-tabset}
+
+## Eksempel
+
+```jsxgraph
+var board = JXG.JSXGraph.initBoard(BOARDID, {
+    boundingbox: [-7, 1.8, 7, -1.8],
+    axis: true,
+    showNavigation: false
+});
+board.create('functiongraph', [Math.sin], {
+    strokeColor: '#0d6efd', strokeWidth: 2.5
+});
+var p = board.create('glider', [1.57, 0, board.defaultAxes.x], {
+    name: 'x', size: 5, fillColor: '#E91E63'
+});
+board.create('point', [
+    function() { return p.X(); },
+    function() { return Math.sin(p.X()); }
+], { name: function() { return 'sin(x) ≈ ' + Math.sin(p.X()).toFixed(3); },
+     size: 5, fillColor: '#198754', fixed: true });
+```
+
+Dra punktet $x$ langs aksen.
+
+## Syntaks
+
+````{.markdown}
+```jsxgraph
+var board = JXG.JSXGraph.initBoard(BOARDID, {
+    boundingbox: [-5, 5, 5, -5],   // [xmin, ymax, xmax, ymin]
+    axis: true,
+    keepaspectratio: false,
+    showNavigation: false
+});
+```
+````
+
+::: {.callout-important}
+Bruk alltid den bokstavelige strengen `BOARDID`. Utvidelsen erstatter den med en unik ID.
+En fast ID ødelegger sider med flere grafer.
+:::
+
+Innstillinger skrives som attributter på blokken, f.eks. bredde og høyde:
+
+````{.markdown}
+```{.jsxgraph width="600" height="300"}
+...
+```
+````
+
+## Vanlige elementer
+
+```{.javascript}
+// Function graph
+board.create('functiongraph', [Math.sin], { strokeColor: '#0d6efd' });
+
+// Draggable point
+var p = board.create('point', [2, 1], { name: 'P', size: 4 });
+
+// Glider: point constrained to a line or curve
+var g = board.create('glider', [1, 0, board.defaultAxes.x], { name: 'x' });
+
+// Slider
+var s = board.create('slider', [[0,-3],[4,-3],[0,1,2*Math.PI]], { name: 'a' });
+
+// Use slider value
+board.create('functiongraph', [function(x) { return Math.sin(s.Value()*x); }]);
+
+// Text label
+board.create('text', [1, 2, function() { return 'x = ' + g.X().toFixed(2); }]);
+
+// Segment
+board.create('segment', [p1, p2], { strokeColor: '#198754', dash: 2 });
+```
+
+## Graf som svar
+
+Med `assessment_id` og `JXG.QuartoAssessment.register(...)` melder en graf tilstanden sin til en oppgave. Oppgaven henter den med `response: jsxgraph:<assessment_id>` og kontrollerer den med sin egen kontrollkode:
+
+```{.jsxgraph assessment_id="exp-board-no"}
+var board = JXG.JSXGraph.initBoard(BOARDID, {
+    boundingbox: [-5, 5, 5, -5], axis: true, showNavigation: false
+});
+board.create('line', [[0, 0], [1, 1]], { strokeColor: '#0d6efd', fixed: true });
+var point = board.create('point', [2, -1], { name: 'P', size: 5 });
+
+JXG.QuartoAssessment.register({
+  board: board,
+  response: function () {
+    return { point: [point.X(), point.Y()] };
+  }
+});
+```
+
+```{math-exercise}
+#| label: exp-point-above-no
+#| caption: Punkt over linjen
+#| mode: custom
+#| response: jsxgraph:exp-board-no
+#| embed-response: true
+#| checker: |
+#|   def check(response, symbols):
+#|       x, y = response["point"]
+#|       return {"score": 1 if y > x else 0}
+
+Dra punktet $P$ inn i området over linjen $y = x$.
+```
+
+Kildekoden til dette:
+
+````{.markdown}
+```{.jsxgraph assessment_id="exp-board"}
+var board = JXG.JSXGraph.initBoard(BOARDID, {
+    boundingbox: [-5, 5, 5, -5], axis: true, showNavigation: false
+});
+board.create('line', [[0, 0], [1, 1]], { strokeColor: '#0d6efd', fixed: true });
+var point = board.create('point', [2, -1], { name: 'P', size: 5 });
+
+JXG.QuartoAssessment.register({
+  board: board,
+  response: function () {
+    return { point: [point.X(), point.Y()] };
+  }
+});
+```
+
+```{math-exercise}
+#| mode: custom
+#| response: jsxgraph:exp-board
+#| embed-response: true
+#| checker: |
+#|   def check(response, symbols):
+#|       x, y = response["point"]
+#|       return {"score": 1 if y > x else 0}
+
+Drag the point $P$ into the region above the line $y = x$.
+```
+````
+
+`response` kan returnere alle data som kan skrives som JSON. `embed-response: true` flytter grafen inn i oppgaveboksen. Til oppgaver der studentene bygger en graf av noder og kanter, finnes den ferdige editoren `JXG.QuartoGraphEditor`.
+
+:::
+::::
+
+:::: {.content-visible when-profile="dansk"}
+**Installation:** er en del af CTM Assessment, se [Oversigt og installation](exp_extensions.qmd)
+**Kilde:** [@jsxgraph], [github.com/jsxgraph/jsxgraph-quarto](https://github.com/jsxgraph/jsxgraph-quarto)
+
+JSXGraph-versionen i CTM Assessment bygger på udvidelsen `jsxgraph-quarto` og tilføjer en **bedømmelsesbro**: en graf kan levere svaret på en `math-exercise`-opgave. JSXGraph-biblioteket hentes fra nettet, når siden læses, og pakken bestemmer, hvilken version der bruges.
+
+```{.yaml filename="side.qmd"}
+engine: markdown      # kun nødvendigt, hvis siden også indeholder math-exercise (Quarto 1.10+)
+filters:
+  - ctm-assessment
+```
+
+::: {.callout-warning}
+## Installér ikke JSXGraph en gang til
+JSXGraph følger med `ctm-assessment` og ligger i `_extensions/jsxgraph/`. Et ekstra `quarto add jsxgraph/jsxgraph-quarto` havner indlejret i `_extensions/jsxgraph/jsxgraph/` og bliver ignoreret. Bygningen udskriver en advarsel om det. Står et enkeltfilter som `jsxgraph` i sidehovedet, erstatter `ctm-assessment` det: en side angiver enten `ctm-assessment` eller enkelte komponenter, ikke begge.
+:::
+
+::: {.panel-tabset}
+
+## Eksempel
+
+```jsxgraph
+var board = JXG.JSXGraph.initBoard(BOARDID, {
+    boundingbox: [-7, 1.8, 7, -1.8],
+    axis: true,
+    showNavigation: false
+});
+board.create('functiongraph', [Math.sin], {
+    strokeColor: '#0d6efd', strokeWidth: 2.5
+});
+var p = board.create('glider', [1.57, 0, board.defaultAxes.x], {
+    name: 'x', size: 5, fillColor: '#E91E63'
+});
+board.create('point', [
+    function() { return p.X(); },
+    function() { return Math.sin(p.X()); }
+], { name: function() { return 'sin(x) ≈ ' + Math.sin(p.X()).toFixed(3); },
+     size: 5, fillColor: '#198754', fixed: true });
+```
+
+Træk punktet $x$ langs aksen.
+
+## Syntaks
+
+````{.markdown}
+```jsxgraph
+var board = JXG.JSXGraph.initBoard(BOARDID, {
+    boundingbox: [-5, 5, 5, -5],   // [xmin, ymax, xmax, ymin]
+    axis: true,
+    keepaspectratio: false,
+    showNavigation: false
+});
+```
+````
+
+::: {.callout-important}
+Brug altid den bogstavelige streng `BOARDID`. Udvidelsen erstatter den med et entydigt id.
+Et fast id ødelægger sider med flere grafer.
+:::
+
+Indstillinger skrives som attributter på blokken, f.eks. bredde og højde:
+
+````{.markdown}
+```{.jsxgraph width="600" height="300"}
+...
+```
+````
+
+## Almindelige elementer
+
+```{.javascript}
+// Function graph
+board.create('functiongraph', [Math.sin], { strokeColor: '#0d6efd' });
+
+// Draggable point
+var p = board.create('point', [2, 1], { name: 'P', size: 4 });
+
+// Glider: point constrained to a line or curve
+var g = board.create('glider', [1, 0, board.defaultAxes.x], { name: 'x' });
+
+// Slider
+var s = board.create('slider', [[0,-3],[4,-3],[0,1,2*Math.PI]], { name: 'a' });
+
+// Use slider value
+board.create('functiongraph', [function(x) { return Math.sin(s.Value()*x); }]);
+
+// Text label
+board.create('text', [1, 2, function() { return 'x = ' + g.X().toFixed(2); }]);
+
+// Segment
+board.create('segment', [p1, p2], { strokeColor: '#198754', dash: 2 });
+```
+
+## Graf som svar
+
+Med `assessment_id` og `JXG.QuartoAssessment.register(...)` melder en graf sin tilstand til en opgave. Opgaven henter den med `response: jsxgraph:<assessment_id>` og kontrollerer den med sin egen kontrolkode:
+
+```{.jsxgraph assessment_id="exp-board-da"}
+var board = JXG.JSXGraph.initBoard(BOARDID, {
+    boundingbox: [-5, 5, 5, -5], axis: true, showNavigation: false
+});
+board.create('line', [[0, 0], [1, 1]], { strokeColor: '#0d6efd', fixed: true });
+var point = board.create('point', [2, -1], { name: 'P', size: 5 });
+
+JXG.QuartoAssessment.register({
+  board: board,
+  response: function () {
+    return { point: [point.X(), point.Y()] };
+  }
+});
+```
+
+```{math-exercise}
+#| label: exp-point-above-da
+#| caption: Punkt over linjen
+#| mode: custom
+#| response: jsxgraph:exp-board-da
+#| embed-response: true
+#| checker: |
+#|   def check(response, symbols):
+#|       x, y = response["point"]
+#|       return {"score": 1 if y > x else 0}
+
+Træk punktet $P$ ind i området over linjen $y = x$.
+```
+
+Kildekoden til det:
+
+````{.markdown}
+```{.jsxgraph assessment_id="exp-board"}
+var board = JXG.JSXGraph.initBoard(BOARDID, {
+    boundingbox: [-5, 5, 5, -5], axis: true, showNavigation: false
+});
+board.create('line', [[0, 0], [1, 1]], { strokeColor: '#0d6efd', fixed: true });
+var point = board.create('point', [2, -1], { name: 'P', size: 5 });
+
+JXG.QuartoAssessment.register({
+  board: board,
+  response: function () {
+    return { point: [point.X(), point.Y()] };
+  }
+});
+```
+
+```{math-exercise}
+#| mode: custom
+#| response: jsxgraph:exp-board
+#| embed-response: true
+#| checker: |
+#|   def check(response, symbols):
+#|       x, y = response["point"]
+#|       return {"score": 1 if y > x else 0}
+
+Drag the point $P$ into the region above the line $y = x$.
+```
+````
+
+`response` må returnere alle data, der kan skrives som JSON. `embed-response: true` flytter grafen ind i opgaveboksen. Til opgaver, hvor de studerende bygger en graf af knuder og kanter, findes den færdige editor `JXG.QuartoGraphEditor`.
+
+:::
+::::

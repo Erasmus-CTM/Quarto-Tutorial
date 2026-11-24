@@ -144,7 +144,7 @@
     "href": "Qmd Files/Getting Started/beg_extensions.html",
     "title": "Interaktiver Code mit Pyodide",
     "section": "",
-    "text": "HinweisWas sind Extensions?\n\n\n\nExtensions ergänzen Quarto um Funktionen, die nicht eingebaut sind. Du installierst sie einmal je Projektordner. Die vollständige Liste steht unter quarto.org/docs/extensions.\nMit Pyodide führen Studierende Python-Code direkt im Browser aus und verändern ihn, ohne Python auf ihrem Rechner zu installieren. Du schreibst den Code einmal, sie klicken auf Code ausführen.\nDieses Tutorial benutzt dafür die Extension pyodide-interaktiv, eine Überarbeitung von coatless-quarto/pyodide. Sie führt Python in einem Web Worker aus, also neben der Seite statt in ihr. Das macht echtes input(), Animationen, einen Knopf „Stopp“ und KI-Feedback möglich, mehr dazu im letzten Abschnitt.",
+    "text": "Ihre Antworten werden nur in diesem Browser gespeichert.Auf diesem Gerät nicht speichern\nMeine Antworten exportieren\nAntworten auf dieser Seite löschen\nAlle Antworten in diesem Kurs löschen\nMit Pyodide führen Studierende Python-Code direkt im Browser aus und verändern ihn, ohne Python auf ihrem Rechner zu installieren. Du schreibst den Code einmal, sie klicken auf Code ausführen.\nDafür gibt es die Extension pyodide-interaktiv aus dem Paket CTM Assessment.",
     "crumbs": [
       "Interaktiver Code",
       "Interaktives Python mit Pyodide"
@@ -155,7 +155,7 @@
     "href": "Qmd Files/Getting Started/beg_extensions.html#die-extension-installieren",
     "title": "Interaktiver Code mit Pyodide",
     "section": "1 – Die Extension installieren",
-    "text": "1 – Die Extension installieren\n① Das Terminal in VS Code öffnen\nÖffne das Terminal (die Kommandozeile) über View → Terminal. Unten im Fenster geht ein Bereich auf. Achte darauf, dass der angezeigte Pfad dein Projektordner ist.\n\n② Den Installationsbefehl eingeben\nDie Extension liegt unter github.com/Erasmus-CTM/pyodide-interaktiv und wird wie jede andere installiert:\n\n\nTerminal\n\nquarto add Erasmus-CTM/pyodide-interaktiv\n\nWarte, bis der Befehl fertig ist. Er stellt dabei drei Fragen: ob du der Quelle vertraust, ob du fortfahren willst und ob du die Dokumentation ansehen möchtest. Das ist nur einmal je Projektordner nötig. Danach liegt die Extension im Ordner _extensions/ deines Projekts.",
+    "text": "1 – Die Extension installieren\n① Das Terminal in VS Code öffnen\nÖffne das Terminal (die Kommandozeile) über View → Terminal. Unten im Fenster geht ein Bereich auf. Achte darauf, dass der angezeigte Pfad dein Projektordner ist.\n\n② Den Installationsbefehl eingeben\nDie Extension kommt im Paket CTM Assessment (Quelle: github.com/Erasmus-CTM/ctm-assessment). Du installierst es mit einem Befehl:\n\nWindowsmacOS / Linux\n\n\n\n\nTerminal\n\nquarto add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.zip\n\n\n\n\n\nTerminal\n\nquarto add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.tar.gz\n\n\n\n\nEinmal je Projektordner nötig. Voraussetzung: Quarto 1.8.27 oder neuer (quarto --version).",
     "crumbs": [
       "Interaktiver Code",
       "Interaktives Python mit Pyodide"
@@ -166,7 +166,7 @@
     "href": "Qmd Files/Getting Started/beg_extensions.html#in-deiner-datei-einschalten",
     "title": "Interaktiver Code mit Pyodide",
     "section": "2 – In deiner Datei einschalten",
-    "text": "2 – In deiner Datei einschalten\nErgänze im Kopf deiner .qmd-Datei eine Zeile filters::\n---\ntitle: \"Meine Seite\"\nformat: html\nfilters:\n  - Erasmus-CTM/pyodide-interaktiv\n---",
+    "text": "2 – In deiner Datei einschalten\nErgänze im Kopf deiner .qmd-Datei eine Zeile filters::\n---\ntitle: \"Meine Seite\"\nformat: html\nengine: markdown\nfilters:\n  - ctm-assessment\n---\nDie Zeile engine: markdown brauchst du ab Quarto 1.10 auf Seiten mit interaktivem Code, sonst schickt Quarto die Seite an Jupyter und der Build bricht ab. Enthält die Seite auch gewöhnliche {python}-Blöcke, lässt du die Zeile weg.",
     "crumbs": [
       "Interaktiver Code",
       "Interaktives Python mit Pyodide"
@@ -188,7 +188,7 @@
     "href": "Qmd Files/Getting Started/beg_extensions.html#das-ergebnis-ansehen",
     "title": "Interaktiver Code mit Pyodide",
     "section": "4 – Das Ergebnis ansehen",
-    "text": "4 – Das Ergebnis ansehen\nGib im Terminal quarto preview ein. Im Browser erscheint der Codeblock mit einer Leiste aus Knöpfen. So sieht er aus, du kannst ihn gleich hier ausprobieren:\n\nBitte JavaScript aktivieren, um die interaktiven Code-Zellen dieser Seite zu nutzen.\n\nCode ausführen startet den Code (auch mit Shift + Enter). Beim ersten Klick lädt Python, das dauert einige Sekunden.\nZurücksetzen stellt deinen ursprünglichen Code wieder her.\nFeedback holt eine Rückmeldung von einer KI (muss erst eingerichtet werden).\nWährend der Code läuft, erscheint Stopp.\n\nStudierende können den Code ändern und erneut ausführen, ohne etwas zu installieren.",
+    "text": "4 – Das Ergebnis ansehen\nGib im Terminal quarto preview ein. Im Browser erscheint der Codeblock mit einer Leiste aus Knöpfen. So sieht er aus, du kannst ihn gleich hier ausprobieren:\n\nBitte JavaScript aktivieren, um die interaktiven Code-Zellen dieser Seite zu nutzen.\n\nCode ausführen startet den Code (auch mit Shift + Enter). Beim ersten Klick lädt Python, das dauert einige Sekunden.\nZurücksetzen stellt deinen ursprünglichen Code wieder her.\nFeedback erzeugt einen fertigen Text, den du in eine KI deiner Wahl einfügst. Mit einem eigenen Zugang holt der Knopf die Rückmeldung direkt.\nWährend der Code läuft, erscheint Stopp.",
     "crumbs": [
       "Interaktiver Code",
       "Interaktives Python mit Pyodide"
@@ -199,7 +199,7 @@
     "href": "Qmd Files/Getting Started/beg_extensions.html#was-die-extension-noch-kann",
     "title": "Interaktiver Code mit Pyodide",
     "section": "5 – Was die Extension noch kann",
-    "text": "5 – Was die Extension noch kann\n\nZellen teilen sich ihre Variablen. Alle Zellen einer Seite gehören zu einer Python-Sitzung. Eine spätere Zelle kann benutzen, was eine frühere definiert oder importiert hat, aber erst, nachdem die frühere ausgeführt wurde.\nEchtes input(). Eine Zelle kann anhalten und auf eine Eingabe warten.\nAnimationen. Eine FuncAnimation aus Matplotlib erscheint als Abspieler, mit demselben Code wie auf dem eigenen Rechner.\nEndlosschleifen sind harmlos. Ein versehentliches while True: blockiert die Seite nicht, Stopp bricht ab.\nKI-Feedback. Die Hinweise werden mit jedem Klick konkreter.\n\ninput() und gemeinsame Variablen kannst du auf der Seite Code der Beispielseite ausprobieren, die Animation auf der Seite Visualisierungen.\n\n\n\n\n\n\n\nTippSollen Studierende Lösungen eintragen?\n\n\n\nDie Extension py-exercise bietet Codeblöcke mit versteckten automatischen Tests: Studierende sehen, ob ihre Lösung besteht. Die Extension math-exercise leistet dasselbe für mathematische Antworten, geprüft mit SymPy. Installiert werden beide genauso:\n\n\nTerminal\n\nquarto add Erasmus-CTM/py-exercise\nquarto add Erasmus-CTM/math-exercise\n\nBeispiele zu beiden stehen auf der Beispielseite dieses Tutorials.",
+    "text": "5 – Was die Extension noch kann\n\nZellen teilen sich ihre Variablen. Alle Zellen einer Seite gehören zu einer Python-Sitzung. Eine spätere Zelle kann benutzen, was eine frühere definiert oder importiert hat, aber erst, nachdem die frühere ausgeführt wurde.\nEchtes input(). Eine Zelle kann anhalten und auf eine Eingabe warten.\nAnimationen. Eine FuncAnimation aus Matplotlib erscheint als Abspieler, mit demselben Code wie auf dem eigenen Rechner.\nEndlosschleifen sind harmlos. Ein versehentliches while True: blockiert die Seite nicht, Stopp bricht ab.\nKI-Feedback. Die Hinweise werden mit jedem Klick konkreter.\n\ninput() und gemeinsame Variablen kannst du auf der Seite Code der Beispielseite ausprobieren, die Animation auf der Seite Visualisierungen.\n\n\n\n\n\n\n\nTippSollen Studierende Lösungen eintragen?\n\n\n\nDasselbe Paket enthält py-exercise für Programmieraufgaben mit versteckten Tests und math-exercise für mathematische Antworten, geprüft mit SymPy. Du musst nichts weiter installieren. Wie du eine solche Aufgabe baust, zeigt die Seite Aufgabe mit automatischer Prüfung Schritt für Schritt.",
     "crumbs": [
       "Interaktiver Code",
       "Interaktives Python mit Pyodide"
@@ -269,6 +269,94 @@
     "crumbs": [
       "Ein Übungsblatt mit Quarto erstellen",
       "Was du brauchst"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_check.html",
+    "href": "Qmd Files/Getting Started/beg_check.html",
+    "title": "Aufgabe mit automatischer Prüfung",
+    "section": "",
+    "text": "Ihre Antworten werden nur in diesem Browser gespeichert.Auf diesem Gerät nicht speichern\nMeine Antworten exportieren\nAntworten auf dieser Seite löschen\nAlle Antworten in diesem Kurs löschen\nEine Aufgabe mit automatischer Prüfung sagt Studierenden sofort, ob ihre Lösung stimmt. Du schreibst die Aufgabe und die richtige Antwort einmal, die Prüfung läuft im Browser. Es gibt zwei Arten:",
+    "crumbs": [
+      "Interaktiver Code",
+      "Aufgabe mit automatischer Prüfung"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_check.html#das-paket-installieren",
+    "href": "Qmd Files/Getting Started/beg_check.html#das-paket-installieren",
+    "title": "Aufgabe mit automatischer Prüfung",
+    "section": "1 – Das Paket installieren",
+    "text": "1 – Das Paket installieren\nBeide Aufgabentypen stecken im Paket CTM Assessment. Falls du es noch nicht installiert hast, öffne das Terminal in VS Code (View → Terminal) und gib im Projektordner ein:\n\nWindowsmacOS / Linux\n\n\n\n\nTerminal\n\nquarto add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.zip\n\n\n\n\n\nTerminal\n\nquarto add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.tar.gz\n\n\n\n\nDas ist nur einmal je Projektordner nötig. Dieselben Schritte stehen ausführlicher auf der Seite Interaktiver Code mit Pyodide.",
+    "crumbs": [
+      "Interaktiver Code",
+      "Aufgabe mit automatischer Prüfung"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_check.html#die-seite-vorbereiten",
+    "href": "Qmd Files/Getting Started/beg_check.html#die-seite-vorbereiten",
+    "title": "Aufgabe mit automatischer Prüfung",
+    "section": "2 – Die Seite vorbereiten",
+    "text": "2 – Die Seite vorbereiten\nErgänze im Kopf deiner .qmd-Datei zwei Dinge:\n---\ntitle: \"Meine Aufgaben\"\nformat: html\nengine: markdown\nfilters:\n  - ctm-assessment\n---\nfilters: schaltet das Paket ein. engine: markdown brauchst du ab Quarto 1.10 auf Seiten mit Aufgaben, sonst bricht der Build bei Jupyter ab.",
+    "crumbs": [
+      "Interaktiver Code",
+      "Aufgabe mit automatischer Prüfung"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_check.html#eine-python-aufgabe-schreiben",
+    "href": "Qmd Files/Getting Started/beg_check.html#eine-python-aufgabe-schreiben",
+    "title": "Aufgabe mit automatischer Prüfung",
+    "section": "3 – Eine Python-Aufgabe schreiben",
+    "text": "3 – Eine Python-Aufgabe schreiben\nEin py-exercise-Block hat zwei Teile, getrennt durch die Zeile ## TESTS ##. Oben steht, was die Studierenden sehen, darunter die versteckten Tests:\n```{py-exercise}\ndef quadrat(x):\n    \"\"\"Gib das Quadrat von x zurück.\"\"\"\n    # Deine Lösung\n    pass\n\n## TESTS ##\nassert quadrat(3) == 9,  \"quadrat(3) sollte 9 sein\"\nassert quadrat(-2) == 4, \"quadrat(-2) sollte 4 sein\"\n```\nDer Text hinter dem Komma eines assert ist die Rückmeldung, wenn der Test scheitert. Schreib ihn so, als würdest du mit den Studierenden sprechen.\nSo sieht die Aufgabe aus, probier sie gleich aus:\n\n  \n    Bitte JavaScript aktivieren, um die interaktive Aufgabe zu laden.",
+    "crumbs": [
+      "Interaktiver Code",
+      "Aufgabe mit automatischer Prüfung"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_check.html#eine-mathe-aufgabe-schreiben",
+    "href": "Qmd Files/Getting Started/beg_check.html#eine-mathe-aufgabe-schreiben",
+    "title": "Aufgabe mit automatischer Prüfung",
+    "section": "4 – Eine Mathe-Aufgabe schreiben",
+    "text": "4 – Eine Mathe-Aufgabe schreiben\nBei math-exercise steht die richtige Antwort im Aufgabentext, in eckigen Klammern hinter einem Unterstrich:\n```{math-exercise}\n#| label: kreisflaeche\n#| vars: r\nEin Kreis hat den Radius $r = 3$. Gib seinen Flächeninhalt exakt an (schreibe pi für π):\n\n$A =$ _[pi*9]\n```\n#| vars: nennt die Symbole, die in der Antwort vorkommen dürfen. Die Antwort in [...] ist ein SymPy-Ausdruck. Probier es aus: pi*9, 9*pi und 3**2*pi gelten alle als richtig.\n\nEin Kreis hat den Radius \\(r = 3\\). Gib seinen Flächeninhalt exakt an (schreibe pi für π):\n\n\\(A =\\) \n\n\n  ✓ Überprüfen\n  ⓘ Eingabe-Hilfe\n  \n    💬 Feedback\n    ⚙",
+    "crumbs": [
+      "Interaktiver Code",
+      "Aufgabe mit automatischer Prüfung"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_check.html#das-ergebnis-ansehen",
+    "href": "Qmd Files/Getting Started/beg_check.html#das-ergebnis-ansehen",
+    "title": "Aufgabe mit automatischer Prüfung",
+    "section": "5 – Das Ergebnis ansehen",
+    "text": "5 – Das Ergebnis ansehen\nGib im Terminal quarto preview ein. Beim ersten Klick auf Code ausführen oder Überprüfen lädt Python, das dauert einige Sekunden. Dann zeigen die Aufgaben:\n\nbei py-exercise einen Editor mit den Knöpfen zum Ausführen und Zurücksetzen. Nach dem Ausführen steht dort, welche Tests bestehen und welche Meldung bei einem Fehler erscheint.\nbei math-exercise ein Eingabefeld und einen Knopf Überprüfen, der das Ergebnis neben das Feld schreibt.\n\nMach mit Absicht einen Fehler und schau, ob die Rückmeldung den Studierenden weiterhilft. Probier auch die richtige Lösung aus.",
+    "crumbs": [
+      "Interaktiver Code",
+      "Aufgabe mit automatischer Prüfung"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_check.html#hilfe-von-einer-ki-freiwillig",
+    "href": "Qmd Files/Getting Started/beg_check.html#hilfe-von-einer-ki-freiwillig",
+    "title": "Aufgabe mit automatischer Prüfung",
+    "section": "6 – Hilfe von einer KI (freiwillig)",
+    "text": "6 – Hilfe von einer KI (freiwillig)\nJede Aufgabe kann einen Knopf Feedback bekommen. Er erzeugt aus der Aufgabe und der aktuellen Antwort einen fertigen Text, den Studierende in eine KI ihrer Wahl einfügen. Für py-exercise schaltest du das ein und nennst in jeder Aufgabe den Auftrag:\n---\npy-exercise:\n  feedback: true\n---\n\n```{py-exercise}\n#| task: Ergänze quadrat so, dass es das Quadrat von x zurückgibt.\ndef quadrat(x):\n    pass\n\n## TESTS ##\nassert quadrat(3) == 9\n```\nDie Tests und die erwartete Lösung werden nie mitgeschickt. Wie du Hinweisstufen festlegst und eine Seite ganz ohne KI baust, steht auf der Seite KI-Feedback & Speichern.",
+    "crumbs": [
+      "Interaktiver Code",
+      "Aufgabe mit automatischer Prüfung"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_check.html#antworten-bleiben-erhalten",
+    "href": "Qmd Files/Getting Started/beg_check.html#antworten-bleiben-erhalten",
+    "title": "Aufgabe mit automatischer Prüfung",
+    "section": "7 – Antworten bleiben erhalten",
+    "text": "7 – Antworten bleiben erhalten\nWas Studierende eintragen, bleibt im Browser ihres Geräts. Beim nächsten Besuch ist es wieder da. Auf einen Server geht dabei nichts. Studierende können das im Einstellungsdialog ausschalten, ihre Antworten exportieren oder löschen.\n\n\n\n\n\n\n\nTippWie geht es weiter?\n\n\n\nAlle Optionen der beiden Aufgabentypen (verbotene Befehle, Prüfmodi, Teilpunkte, Aufgabenpools, Abgabe) stehen unter Tipps & Tricks.",
+    "crumbs": [
+      "Interaktiver Code",
+      "Aufgabe mit automatischer Prüfung"
     ]
   },
   {

@@ -1,0 +1,106 @@
+{
+  "version": 1,
+  "kind": "native-authoring",
+  "files": {
+    "LICENSE": {
+      "bytes": 34523,
+      "sha256": "8486a10c4393cee1c25392769ddd3b2d6c242d6ec7928e1414efff7dfb2f07ef"
+    },
+    "ctm-variants-artifact.py": {
+      "bytes": 397,
+      "sha256": "51cebe10dc4d357964d180dd87dff1eb8b7d7c167b62f7bb12e8e5587e2b6a2c"
+    },
+    "ctm-variants-bot.py": {
+      "bytes": 400,
+      "sha256": "18c0858c2cd99b487ef8a5471340072c877b5764d89b2e7a13bef0c67841df53"
+    },
+    "ctm-variants.py": {
+      "bytes": 396,
+      "sha256": "17a83d220c48d6b9a46fcd65d04d74c0606d6676abfe521afd196d35084121e7"
+    },
+    "ctm_variants/__init__.py": {
+      "bytes": 69,
+      "sha256": "55e8fbd008018a91926faa6c8930fa19c2fd05122d9191b6a52b1110f2c43be6"
+    },
+    "ctm_variants/batches.py": {
+      "bytes": 10732,
+      "sha256": "6dd773eff13cf8eb61a7b6c95a7937d7f681a5f6b5d7faa605e82e6424d5faee"
+    },
+    "ctm_variants/bot.py": {
+      "bytes": 11853,
+      "sha256": "d14701fbb25b0edb5a86361f5f02f48c8cabe4cec0e9bc607d58cabb118f2466"
+    },
+    "ctm_variants/browser_manifest.py": {
+      "bytes": 6539,
+      "sha256": "b7585e989a2475ab71346a039a0a7f063a9cf2b1d6c1e127c19648054bca79b7"
+    },
+    "ctm_variants/checklist.py": {
+      "bytes": 10436,
+      "sha256": "cd18e5e93aafd02f3d3fee5cc9728d0e2282f0dabc0da09b24a81f8af9aa1390"
+    },
+    "ctm_variants/cli.py": {
+      "bytes": 1106,
+      "sha256": "e4c8d137a094d57a1e0c964d64a7f2bc650fa73e85919ef05b743d26d4097719"
+    },
+    "ctm_variants/enumeration.py": {
+      "bytes": 11283,
+      "sha256": "2be2f9da0f687a441ec7f07b9490f7e241cc73e15a16a017b1021069417ec251"
+    },
+    "ctm_variants/generation.py": {
+      "bytes": 24181,
+      "sha256": "984ea1b3a62d7c934b29bbb43705a66385372beeca889baa139b572b2cd234ca"
+    },
+    "ctm_variants/github_bot.py": {
+      "bytes": 36713,
+      "sha256": "0997aca9be70d9480a48aa6e3ea2c8ba2874888ea2cc637641fbbd6ee9c5eed3"
+    },
+    "ctm_variants/history.py": {
+      "bytes": 8441,
+      "sha256": "fcbafa5cf0de6a5302f482ee4202f9d8257305818a29d50b91204ed10a7ff0fc"
+    },
+    "ctm_variants/model.py": {
+      "bytes": 11618,
+      "sha256": "b1794c18e45519b9c4ca2f684b9a6fc09f2f79a9767c19afe0c6bf9467f67bda"
+    },
+    "ctm_variants/orchestration.py": {
+      "bytes": 7171,
+      "sha256": "30359fb3c0c887a3e402c42ed97cdc23f33d7e85af84dd2648705104855aa16a"
+    },
+    "ctm_variants/placeholders.py": {
+      "bytes": 20911,
+      "sha256": "7ff645228839b1ad932df472a1f3c13f269bbbc8f82b41afed5bc76d70f16f63"
+    },
+    "ctm_variants/preview_assets.py": {
+      "bytes": 7352,
+      "sha256": "5363abc35d3615237f80985228920e067825f63b5647902a050da4c9d64d0005"
+    },
+    "ctm_variants/producer.py": {
+      "bytes": 26307,
+      "sha256": "1831b886c76f951250ecb163c66f95a907c17fa8013681c2c499249d66c5f893"
+    },
+    "ctm_variants/project_report.py": {
+      "bytes": 9849,
+      "sha256": "ef3c17bd4ac850a43ab0ef067bd9be57ac483b27e38df543d717afea7ae2d8b7"
+    },
+    "ctm_variants/rejection_hint.py": {
+      "bytes": 2115,
+      "sha256": "13243afd33be117db3769a788fdcae433fab7c2f5c3bafbab5abf9105e65a149"
+    },
+    "ctm_variants/review.py": {
+      "bytes": 35837,
+      "sha256": "10aac5b10dea28849dd328b30dd2aff3334216872d84be510dd2301c60029525"
+    },
+    "ctm_variants/stack_component.py": {
+      "bytes": 17196,
+      "sha256": "1f4a8f4b2fb4292453d57482a5102a55f11a5c89d87aa4c6b2f572bdf1c18fea"
+    },
+    "ctm_variants/streaming.py": {
+      "bytes": 15774,
+      "sha256": "0816f272f171eaade67d49b4e68b265ab5192da7b5010ac0cb9853a2169cf110"
+    },
+    "ctm_variants/validation.py": {
+      "bytes": 3249,
+      "sha256": "f68ca6ef8dec094cc693fa4ac8c87a063a9c8b4ae53cc956178ae1cf504f0856"
+    }
+  }
+}

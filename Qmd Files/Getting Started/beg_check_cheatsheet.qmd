@@ -1,0 +1,441 @@
+---
+title: "Cheatsheet: Aufgabe mit automatischer Prüfung"
+title-en: "Cheatsheet: An exercise with automatic checking"
+title-sv: "Lathund: Uppgift med automatisk kontroll"
+title-no: "Cheatsheet: Oppgave med automatisk kontroll"
+title-da: "Cheatsheet: Opgave med automatisk kontrol"
+subtitle: "Python- und Mathe-Aufgaben, die sich selbst prüfen"
+subtitle-en: "Python and maths exercises that check themselves"
+subtitle-sv: "Python- och matteuppgifter som rättar sig själva"
+subtitle-no: "Python- og matteoppgaver som retter seg selv"
+subtitle-da: "Python- og matematikopgaver, der retter sig selv"
+format:
+  pdf:
+    geometry: margin=0.9in
+    fontsize: 10pt
+    include-in-header: ../../Theme/pdf_cheatsheet.tex
+    highlight-style: github
+    colorlinks: true
+    linkcolor: cheataccent
+    urlcolor: cheataccent
+---
+
+:::: {.content-visible when-profile="deutsch"}
+
+## 1 – Installieren und einschalten
+
+::: {.callout-warning}
+## Interaktiv nur in HTML
+Prüfen geht nur in der **HTML-Ausgabe** (`format: html`), also in Websites und Büchern. In PDF oder Word erscheint nur der Text der Aufgabe.
+:::
+
+Beide Aufgabentypen stecken im Paket **CTM Assessment**. Einmal je Projektordner, im Terminal:
+
+```{.bash filename="Terminal"}
+quarto add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.zip     # Windows
+quarto add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.tar.gz  # macOS / Linux
+```
+
+Das Paket braucht Quarto **1.8.27 oder neuer** (`quarto --version`). **Einschalten** im YAML-Kopf der Seite:
+
+```yaml
+---
+title: "Meine Aufgaben"
+format: html
+engine: markdown
+filters:
+  - ctm-assessment
+---
+```
+
+`engine: markdown` ist ab Quarto 1.10 auf Seiten mit Aufgaben nötig. Enthält die Seite auch `{python}`-Blöcke, lass die Zeile weg.
+
+{{< pagebreak >}}
+
+## 2 – Aufgaben schreiben
+
+**Python-Aufgabe** mit versteckten Tests. Oben steht, was Studierende sehen, unter `## TESTS ##` die Prüfung:
+
+````markdown
+```{py-exercise}
+def quadrat(x):
+    """Gib das Quadrat von x zurück."""
+    pass
+
+## TESTS ##
+assert quadrat(3) == 9, "quadrat(3) sollte 9 sein"
+```
+````
+
+**Mathe-Aufgabe**, geprüft mit SymPy. Die richtige Antwort steht in `_[...]`:
+
+````markdown
+```{math-exercise}
+#| vars: r
+Flächeninhalt eines Kreises mit r = 3: _[pi*9]
+```
+````
+
+| Schreibweise | Bedeutung |
+|---|---|
+| `_[x]` / `__[x]` / `___[x]` | Feld schmal / mittel / breit |
+| `vec[a,b]` / `mat[a,b;c,d]` | Vektor / Matrix, ein Feld je Eintrag |
+| `vars: x, y` | Symbole, die in der Antwort vorkommen |
+| `mode: numeric` | Zahlenwerte mit `tolerance:` vergleichen |
+
+**Prüfen:** `quarto preview`. Beim ersten Klick lädt Python, das dauert einige Sekunden. Mach mit Absicht einen Fehler und lies die Rückmeldung.
+
+{{< pagebreak >}}
+
+## 3 – KI-Feedback und Speichern
+
+| Was | Wie |
+|---|---|
+| Feedback-Knopf bei `py-exercise` | `py-exercise: feedback: true` im Seitenkopf, in jeder Aufgabe `task:` |
+| Feedback-Knopf bei `math-exercise` | von selbst da, abschalten mit `math-exercise: feedback: false` |
+| Standard | **Prompt kopieren**: fertiger Text für eine KI deiner Wahl, kein Konto nötig |
+| Nicht mitgeschickt | Tests, erwartete Antworten, Prüfcode |
+| Build ganz ohne KI | `CTM_FEEDBACK=off quarto render` |
+| Antworten speichern | im Browser des Geräts, abschaltbar mit `ctm-assessment: save: none` |
+
+---
+
+Ausführlich: [Aufgabe mit automatischer Prüfung](https://erasmus-ctm.github.io/Quarto-Tutorial/de/int/Qmd%20Files/Getting%20Started/beg_check.html)
+
+::::
+
+:::: {.content-visible when-profile="english"}
+
+## 1 — Install & enable
+
+::: {.callout-warning}
+## Interactive in HTML only
+Checking works only in **HTML output** (`format: html`), that is in websites and books. In PDF or Word only the text of the exercise appears.
+:::
+
+Both exercise types are in the package **CTM Assessment**. Once per project folder, in the Terminal:
+
+```{.bash filename="Terminal"}
+quarto add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.zip     # Windows
+quarto add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.tar.gz  # macOS / Linux
+```
+
+The package needs Quarto **1.8.27 or newer** (`quarto --version`). **Enable it** in the page's YAML header:
+
+```yaml
+---
+title: "My exercises"
+format: html
+engine: markdown
+filters:
+  - ctm-assessment
+---
+```
+
+`engine: markdown` is needed from Quarto 1.10 on pages with exercises. If the page also has `{python}` blocks, leave the line out.
+
+{{< pagebreak >}}
+
+## 2 — Write exercises
+
+**Python exercise** with hidden tests. Above is what students see, below `## TESTS ##` the check:
+
+````markdown
+```{py-exercise}
+def square(x):
+    """Return x squared."""
+    pass
+
+## TESTS ##
+assert square(3) == 9, "square(3) should be 9"
+```
+````
+
+**Maths exercise**, checked with SymPy. The correct answer is in `_[...]`:
+
+````markdown
+```{math-exercise}
+#| vars: r
+Area of a circle with r = 3: _[pi*9]
+```
+````
+
+| Syntax | Meaning |
+|---|---|
+| `_[x]` / `__[x]` / `___[x]` | narrow / medium / wide field |
+| `vec[a,b]` / `mat[a,b;c,d]` | vector / matrix, one field per entry |
+| `vars: x, y` | symbols that appear in the answer |
+| `mode: numeric` | compare numbers with `tolerance:` |
+
+**Check:** `quarto preview`. On the first click Python loads, which takes a few seconds. Make a mistake on purpose and read the message.
+
+{{< pagebreak >}}
+
+## 3 — AI feedback & saving
+
+| What | How |
+|---|---|
+| Feedback button for `py-exercise` | `py-exercise: feedback: true` in the page header, `task:` in every exercise |
+| Feedback button for `math-exercise` | there by default, turn off with `math-exercise: feedback: false` |
+| Default | **Copy prompt**: ready-made text for an AI of your choice, no account needed |
+| Not sent | tests, expected answers, checker code |
+| Build with no AI at all | `CTM_FEEDBACK=off quarto render` |
+| Saving answers | in the device's browser, turn off with `ctm-assessment: save: none` |
+
+---
+
+In detail: [An exercise with automatic checking](https://erasmus-ctm.github.io/Quarto-Tutorial/en/int/Qmd%20Files/Getting%20Started/beg_check.html)
+
+::::
+
+:::: {.content-visible when-profile="svenska"}
+
+## 1 – Installera och slå på
+
+::: {.callout-warning}
+## Interaktivt bara i HTML
+Kontrollen fungerar bara i **HTML-utdata** (`format: html`), alltså i webbplatser och böcker. I PDF eller Word visas bara uppgiftens text.
+:::
+
+Båda uppgiftstyperna finns i paketet **CTM Assessment**. En gång per projektmapp, i terminalen:
+
+```{.bash filename="Terminal"}
+quarto add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.zip     # Windows
+quarto add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.tar.gz  # macOS / Linux
+```
+
+Paketet kräver Quarto **1.8.27 eller senare** (`quarto --version`). **Slå på det** i sidans YAML-huvud:
+
+```yaml
+---
+title: "Mina uppgifter"
+format: html
+engine: markdown
+filters:
+  - ctm-assessment
+---
+```
+
+`engine: markdown` behövs från Quarto 1.10 på sidor med uppgifter. Har sidan även `{python}`-block utelämnar du raden.
+
+{{< pagebreak >}}
+
+## 2 – Skriva uppgifter
+
+**Python-uppgift** med dolda tester. Ovanför står det studenterna ser, under `## TESTS ##` kontrollen:
+
+````markdown
+```{py-exercise}
+def kvadrat(x):
+    """Returnera kvadraten av x."""
+    pass
+
+## TESTS ##
+assert kvadrat(3) == 9, "kvadrat(3) ska vara 9"
+```
+````
+
+**Matteuppgift**, kontrollerad med SymPy. Det rätta svaret står i `_[...]`:
+
+````markdown
+```{math-exercise}
+#| vars: r
+Area av en cirkel med r = 3: _[pi*9]
+```
+````
+
+| Skrivsätt | Betydelse |
+|---|---|
+| `_[x]` / `__[x]` / `___[x]` | smalt / medelbrett / brett fält |
+| `vec[a,b]` / `mat[a,b;c,d]` | vektor / matris, ett fält per post |
+| `vars: x, y` | symboler som förekommer i svaret |
+| `mode: numeric` | jämför tal med `tolerance:` |
+
+**Kontrollera:** `quarto preview`. Vid första klicket laddas Python, vilket tar några sekunder. Gör ett fel med flit och läs meddelandet.
+
+{{< pagebreak >}}
+
+## 3 – AI-feedback och sparande
+
+| Vad | Hur |
+|---|---|
+| Feedback-knapp för `py-exercise` | `py-exercise: feedback: true` i sidhuvudet, `task:` i varje uppgift |
+| Feedback-knapp för `math-exercise` | finns som standard, stäng av med `math-exercise: feedback: false` |
+| Standard | **Kopiera prompt**: färdig text för en AI efter eget val, inget konto behövs |
+| Skickas inte | tester, förväntade svar, kontrollkod |
+| Bygge helt utan AI | `CTM_FEEDBACK=off quarto render` |
+| Spara svar | i enhetens webbläsare, kan stängas av med `ctm-assessment: save: none` |
+
+---
+
+Utförligt: [Uppgift med automatisk kontroll](https://erasmus-ctm.github.io/Quarto-Tutorial/sv/int/Qmd%20Files/Getting%20Started/beg_check.html)
+
+::::
+
+:::: {.content-visible when-profile="norsk"}
+
+## 1 – Installere og slå på
+
+::: {.callout-warning}
+## Interaktivt bare i HTML
+Kontrollen fungerer bare i **HTML-utdata** (`format: html`), altså i nettsteder og bøker. I PDF eller Word vises bare teksten i oppgaven.
+:::
+
+Begge oppgavetypene ligger i pakken **CTM Assessment**. Én gang per prosjektmappe, i terminalen:
+
+```{.bash filename="Terminal"}
+quarto add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.zip     # Windows
+quarto add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.tar.gz  # macOS / Linux
+```
+
+Pakken krever Quarto **1.8.27 eller nyere** (`quarto --version`). **Slå den på** i YAML-hodet på siden:
+
+```yaml
+---
+title: "Oppgavene mine"
+format: html
+engine: markdown
+filters:
+  - ctm-assessment
+---
+```
+
+`engine: markdown` trengs fra Quarto 1.10 på sider med oppgaver. Har siden også `{python}`-blokker, utelater du linjen.
+
+{{< pagebreak >}}
+
+## 2 – Skrive oppgaver
+
+**Python-oppgave** med skjulte tester. Over står det studentene ser, under `## TESTS ##` kontrollen:
+
+````markdown
+```{py-exercise}
+def kvadrat(x):
+    """Returner kvadratet av x."""
+    pass
+
+## TESTS ##
+assert kvadrat(3) == 9, "kvadrat(3) skal være 9"
+```
+````
+
+**Matteoppgave**, kontrollert med SymPy. Det riktige svaret står i `_[...]`:
+
+````markdown
+```{math-exercise}
+#| vars: r
+Areal av en sirkel med r = 3: _[pi*9]
+```
+````
+
+| Skrivemåte | Betydning |
+|---|---|
+| `_[x]` / `__[x]` / `___[x]` | smalt / middels / bredt felt |
+| `vec[a,b]` / `mat[a,b;c,d]` | vektor / matrise, ett felt per oppføring |
+| `vars: x, y` | symboler som forekommer i svaret |
+| `mode: numeric` | sammenlign tall med `tolerance:` |
+
+**Kontroller:** `quarto preview`. Ved første klikk lastes Python, og det tar noen sekunder. Gjør en feil med vilje og les meldingen.
+
+{{< pagebreak >}}
+
+## 3 – KI-tilbakemelding og lagring
+
+| Hva | Hvordan |
+|---|---|
+| Tilbakemelding-knapp for `py-exercise` | `py-exercise: feedback: true` i sidehodet, `task:` i hver oppgave |
+| Tilbakemelding-knapp for `math-exercise` | finnes som standard, slå av med `math-exercise: feedback: false` |
+| Standard | **Kopier prompt**: ferdig tekst til en KI etter eget valg, ingen konto nødvendig |
+| Sendes ikke | tester, forventede svar, kontrollkode |
+| Bygging helt uten KI | `CTM_FEEDBACK=off quarto render` |
+| Lagre svar | i nettleseren på enheten, kan slås av med `ctm-assessment: save: none` |
+
+---
+
+Utførlig: [Oppgave med automatisk kontroll](https://erasmus-ctm.github.io/Quarto-Tutorial/no/int/Qmd%20Files/Getting%20Started/beg_check.html)
+
+::::
+
+:::: {.content-visible when-profile="dansk"}
+
+## 1 – Installér og slå til
+
+::: {.callout-warning}
+## Interaktivt kun i HTML
+Kontrollen virker kun i **HTML-output** (`format: html`), altså i websteder og bøger. I PDF eller Word vises kun opgavens tekst.
+:::
+
+Begge opgavetyper ligger i pakken **CTM Assessment**. Én gang pr. projektmappe, i terminalen:
+
+```{.bash filename="Terminal"}
+quarto add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.zip     # Windows
+quarto add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.tar.gz  # macOS / Linux
+```
+
+Pakken kræver Quarto **1.8.27 eller nyere** (`quarto --version`). **Slå den til** i sidens YAML-hoved:
+
+```yaml
+---
+title: "Mine opgaver"
+format: html
+engine: markdown
+filters:
+  - ctm-assessment
+---
+```
+
+`engine: markdown` skal bruges fra Quarto 1.10 på sider med opgaver. Har siden også `{python}`-blokke, udelader du linjen.
+
+{{< pagebreak >}}
+
+## 2 – Skriv opgaver
+
+**Python-opgave** med skjulte test. Ovenfor står det, de studerende ser, under `## TESTS ##` kontrollen:
+
+````markdown
+```{py-exercise}
+def kvadrat(x):
+    """Returnér kvadratet af x."""
+    pass
+
+## TESTS ##
+assert kvadrat(3) == 9, "kvadrat(3) skal være 9"
+```
+````
+
+**Matematikopgave**, kontrolleret med SymPy. Det rigtige svar står i `_[...]`:
+
+````markdown
+```{math-exercise}
+#| vars: r
+Areal af en cirkel med r = 3: _[pi*9]
+```
+````
+
+| Skrivemåde | Betydning |
+|---|---|
+| `_[x]` / `__[x]` / `___[x]` | smalt / mellem / bredt felt |
+| `vec[a,b]` / `mat[a,b;c,d]` | vektor / matrix, ét felt pr. indgang |
+| `vars: x, y` | symboler, der forekommer i svaret |
+| `mode: numeric` | sammenlign tal med `tolerance:` |
+
+**Kontrollér:** `quarto preview`. Ved første klik indlæses Python, og det tager nogle sekunder. Lav en fejl med vilje og læs meddelelsen.
+
+{{< pagebreak >}}
+
+## 3 – AI-feedback og lagring
+
+| Hvad | Hvordan |
+|---|---|
+| Feedback-knap til `py-exercise` | `py-exercise: feedback: true` i sidehovedet, `task:` i hver opgave |
+| Feedback-knap til `math-exercise` | findes som standard, slå fra med `math-exercise: feedback: false` |
+| Standard | **Kopiér prompt**: færdig tekst til en AI efter eget valg, ingen konto nødvendig |
+| Sendes ikke | test, forventede svar, kontrolkode |
+| Bygning helt uden AI | `CTM_FEEDBACK=off quarto render` |
+| Gem svar | i enhedens browser, kan slås fra med `ctm-assessment: save: none` |
+
+---
+
+Udførligt: [Opgave med automatisk kontrol](https://erasmus-ctm.github.io/Quarto-Tutorial/da/int/Qmd%20Files/Getting%20Started/beg_check.html)
+
+::::

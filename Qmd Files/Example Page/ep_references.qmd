@@ -34,8 +34,8 @@ Alle interaktiven Elemente dieser Seiten beruhen auf frei verfügbaren Werkzeuge
 - **pyodide-interaktiv** [@pyodide-interaktiv]: führt Python direkt im Browser in einem Web Worker aus und baut auf **Pyodide** [@pyodide] von Droettboom et al. auf (siehe [Code](ep_code.qmd))
 - **JSXGraph** [@jsxgraph]: interaktive Mathematik im Browser (siehe [Visualisierungen](ep_visuals.qmd))
 - **quizdown** [@quizdown]: interaktive Multiple-Choice-Quizze im Browser (siehe [Quiz](ep_quiz.qmd))
-- **py-exercise** [@py-exercise]: Programmieraufgaben mit versteckten Tests (siehe [Visualisierungen](ep_visuals.qmd))
-- **math-exercise** [@math-exercise]: mathematische Antworten, symbolisch geprüft mit SymPy (siehe [Visualisierungen](ep_visuals.qmd))
+- **py-exercise** [@py-exercise]: Programmieraufgaben mit versteckten Tests (siehe [Aufgaben](ep_tasks.qmd))
+- **math-exercise** [@math-exercise]: mathematische Antworten, symbolisch geprüft mit SymPy (siehe [Aufgaben](ep_tasks.qmd))
 ::::
 
 :::: {.content-visible when-profile="english"}
@@ -64,8 +64,8 @@ All interactive features on this site are powered by open-source tools:
 - **pyodide-interaktiv** [@pyodide-interaktiv] — runs Python directly in the browser in a Web Worker, built on top of **Pyodide** [@pyodide] by Droettboom et al. (see [Code](ep_code.qmd))
 - **JSXGraph** [@jsxgraph] — interactive mathematics in the browser (see [Visualizations](ep_visuals.qmd))
 - **quizdown** [@quizdown] — interactive multiple-choice quizzes in the browser (see [Quiz](ep_quiz.qmd))
-- **py-exercise** [@py-exercise] — editable coding exercises with hidden tests (see [Visualizations](ep_visuals.qmd))
-- **math-exercise** [@math-exercise] — symbolic maths answers checked with SymPy (see [Visualizations](ep_visuals.qmd))
+- **py-exercise** [@py-exercise] — editable coding exercises with hidden tests (see [Exercises](ep_tasks.qmd))
+- **math-exercise** [@math-exercise] — symbolic maths answers checked with SymPy (see [Exercises](ep_tasks.qmd))
 ::::
 
 :::: {.content-visible when-profile="dansk"}
@@ -94,8 +94,8 @@ Alle interaktive elementer på disse sider bygger på frit tilgængelige værkt�
 - **pyodide-interaktiv** [@pyodide-interaktiv]: kører Python direkte i browseren i en Web Worker og bygger på **Pyodide** [@pyodide] af Droettboom m.fl. (se [Kode](ep_code.qmd))
 - **JSXGraph** [@jsxgraph]: interaktiv matematik i browseren (se [Visualiseringer](ep_visuals.qmd))
 - **quizdown** [@quizdown]: interaktive multiple choice-quizzer i browseren (se [Quiz](ep_quiz.qmd))
-- **py-exercise** [@py-exercise]: programmeringsopgaver med skjulte test (se [Visualiseringer](ep_visuals.qmd))
-- **math-exercise** [@math-exercise]: matematiske svar, der kontrolleres symbolsk med SymPy (se [Visualiseringer](ep_visuals.qmd))
+- **py-exercise** [@py-exercise]: programmeringsopgaver med skjulte test (se [Opgaver](ep_tasks.qmd))
+- **math-exercise** [@math-exercise]: matematiske svar, der kontrolleres symbolsk med SymPy (se [Opgaver](ep_tasks.qmd))
 ::::
 
 :::: {.content-visible when-profile="norsk"}
@@ -124,8 +124,8 @@ Alle interaktive elementer på disse sidene bygger på fritt tilgjengelige verkt
 - **pyodide-interaktiv** [@pyodide-interaktiv]: kjører Python direkte i nettleseren i en Web Worker og bygger på **Pyodide** [@pyodide] av Droettboom mfl. (se [Kode](ep_code.qmd))
 - **JSXGraph** [@jsxgraph]: interaktiv matematikk i nettleseren (se [Visualiseringer](ep_visuals.qmd))
 - **quizdown** [@quizdown]: interaktive flervalgsquizer i nettleseren (se [Quiz](ep_quiz.qmd))
-- **py-exercise** [@py-exercise]: programmeringsoppgaver med skjulte tester (se [Visualiseringer](ep_visuals.qmd))
-- **math-exercise** [@math-exercise]: matematiske svar som kontrolleres symbolsk med SymPy (se [Visualiseringer](ep_visuals.qmd))
+- **py-exercise** [@py-exercise]: programmeringsoppgaver med skjulte tester (se [Oppgaver](ep_tasks.qmd))
+- **math-exercise** [@math-exercise]: matematiske svar som kontrolleres symbolsk med SymPy (se [Oppgaver](ep_tasks.qmd))
 ::::
 
 :::: {.content-visible when-profile="svenska"}
@@ -154,6 +154,6 @@ Alla interaktiva delar av de här sidorna bygger på fritt tillgängliga verktyg
 - **pyodide-interaktiv** [@pyodide-interaktiv]: kör Python direkt i webbläsaren i en Web Worker och bygger på **Pyodide** [@pyodide] av Droettboom m.fl. (se [Kod](ep_code.qmd))
 - **JSXGraph** [@jsxgraph]: interaktiv matematik i webbläsaren (se [Visualiseringar](ep_visuals.qmd))
 - **quizdown** [@quizdown]: interaktiva flervalsquiz i webbläsaren (se [Quiz](ep_quiz.qmd))
-- **py-exercise** [@py-exercise]: programmeringsuppgifter med dolda tester (se [Visualiseringar](ep_visuals.qmd))
-- **math-exercise** [@math-exercise]: matematiska svar som kontrolleras symboliskt med SymPy (se [Visualiseringar](ep_visuals.qmd))
+- **py-exercise** [@py-exercise]: programmeringsuppgifter med dolda tester (se [Uppgifter](ep_tasks.qmd))
+- **math-exercise** [@math-exercise]: matematiska svar som kontrolleras symboliskt med SymPy (se [Uppgifter](ep_tasks.qmd))
 ::::

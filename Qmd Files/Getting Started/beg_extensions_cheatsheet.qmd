@@ -29,10 +29,11 @@ format:
 Ausführen und Verändern geht nur in der **HTML-Ausgabe** (`format: html`), also in Websites und Büchern. In PDF oder Word erscheint derselbe Code als gewöhnlicher, nicht ausführbarer Code. Code, der überall laufen soll, steht im Cheatsheet Übungsblatt.
 :::
 
-`pyodide-interaktiv` ist eine Überarbeitung von `coatless-quarto/pyodide` mit echtem `input()`, Animationen, einem Knopf „Stopp“ und KI-Feedback. Installiert wird sie wie jede andere Extension:
+`pyodide-interaktiv` bringt echtes `input()`, Animationen, einen Knopf „Stopp“ und KI-Feedback mit. Es gehört zum Paket **CTM Assessment**, das du einmal je Projektordner installierst (Quarto 1.8.27 oder neuer):
 
 ```{.bash filename="Terminal"}
-quarto add Erasmus-CTM/pyodide-interaktiv
+quarto add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.zip     # Windows
+quarto add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.tar.gz  # macOS / Linux
 ```
 
 **Einschalten** im YAML-Kopf der Seite:
@@ -41,10 +42,13 @@ quarto add Erasmus-CTM/pyodide-interaktiv
 ---
 title: "Meine Seite"
 format: html
+engine: markdown
 filters:
-  - Erasmus-CTM/pyodide-interaktiv
+  - ctm-assessment
 ---
 ```
+
+`engine: markdown` ist ab Quarto 1.10 nötig. Enthält die Seite auch `{python}`-Blöcke, lass die Zeile weg.
 
 {{< pagebreak >}}
 
@@ -65,7 +69,7 @@ Studierende können diesen Code direkt im Browser ändern und mit dem Knopf **Co
 
 ::: {.callout-tip}
 ## Lieber Aufgaben mit Kontrolle?
-`py-exercise` bietet Codeblöcke mit versteckten automatischen Tests, `math-exercise` prüft symbolische und numerische Antworten mit SymPy. Beide werden genauso installiert (`quarto add Erasmus-CTM/py-exercise`, `quarto add Erasmus-CTM/math-exercise`). Beispiele stehen auf der Beispielseite dieses Tutorials.
+`py-exercise` bietet Codeblöcke mit versteckten automatischen Tests, `math-exercise` prüft symbolische und numerische Antworten mit SymPy. Beide stecken schon im Paket. Siehe das Cheatsheet „Aufgabe mit automatischer Prüfung“.
 :::
 
 {{< pagebreak >}}
@@ -79,7 +83,7 @@ Python läuft in einem **Web Worker**, also neben der Seite statt in ihr. Daraus
 | Echtes `input()` | Eine Zelle kann anhalten und auf eine Eingabe warten, die Seite bleibt bedienbar |
 | Animationen | Eine `FuncAnimation` aus Matplotlib erscheint als Abspieler |
 | Harmlose Endlosschleifen | Ein versehentliches `while True:` blockiert die Seite nicht, **Stopp** bricht ab |
-| KI-Feedback | Jede Zelle hat einen Knopf **Feedback** (muss erst eingerichtet werden), die Hinweise werden mit jedem Klick konkreter |
+| KI-Feedback | Jede Zelle hat einen Knopf **Feedback**. Standard ist **Prompt kopieren**: ein fertiger Text für eine KI deiner Wahl. Die Hinweise werden mit jedem Klick konkreter |
 | Bedienbare Seite | Lange Rechnungen frieren die Seite nicht ein |
 | Gemeinsame Variablen | Alle Zellen einer Seite gehören zu einer Python-Sitzung. Eine spätere Zelle kann benutzen, was eine frühere definiert oder importiert hat, nachdem diese ausgeführt wurde |
 
@@ -100,10 +104,11 @@ Ausführlich: [Interaktiver Code mit Pyodide](https://erasmus-ctm.github.io/Quar
 Running and editing works only in **HTML output** (`format: html`), that is in websites and books. In PDF or Word the same code appears as ordinary code that cannot be run — see the Exercise Sheet cheatsheet for code that has to work everywhere.
 :::
 
-`pyodide-interaktiv` is a rework of `coatless-quarto/pyodide` that adds real `input()`, animations, a Stop button, and AI feedback. It installs like any other extension:
+`pyodide-interaktiv` brings real `input()`, animations, a Stop button, and AI feedback. It is part of the package **CTM Assessment**, which you install once per project folder (Quarto 1.8.27 or newer):
 
 ```{.bash filename="Terminal"}
-quarto add Erasmus-CTM/pyodide-interaktiv
+quarto add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.zip     # Windows
+quarto add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.tar.gz  # macOS / Linux
 ```
 
 **Enable it** in a page's YAML header:
@@ -112,10 +117,13 @@ quarto add Erasmus-CTM/pyodide-interaktiv
 ---
 title: "My Page"
 format: html
+engine: markdown
 filters:
-  - Erasmus-CTM/pyodide-interaktiv
+  - ctm-assessment
 ---
 ```
+
+`engine: markdown` is needed from Quarto 1.10 on. If the page also has `{python}` blocks, leave the line out.
 
 {{< pagebreak >}}
 
@@ -136,7 +144,7 @@ Students can edit this code directly in the browser and run it with the **Run co
 
 ::: {.callout-tip}
 ## Want graded exercises instead?
-`py-exercise` adds code blocks with hidden automated tests; `math-exercise` checks symbolic/numeric answers with SymPy. Both are installed the same way (`quarto add Erasmus-CTM/py-exercise`, `quarto add Erasmus-CTM/math-exercise`) — live examples are on the Example Page of this tutorial.
+`py-exercise` adds code blocks with hidden automated tests; `math-exercise` checks symbolic/numeric answers with SymPy. Both are already in the package. See the cheatsheet "An exercise with automatic checking".
 :::
 
 {{< pagebreak >}}
@@ -150,7 +158,7 @@ Python runs in a **Web Worker**, that is next to the page rather than inside it.
 | Real `input()` | A cell can pause and wait for typed input while the page stays usable |
 | Animations | A Matplotlib `FuncAnimation` plays as an interactive player |
 | Safe infinite loops | An accidental `while True:` does not lock up the page — **Stop** cancels it |
-| AI feedback | Every cell has a **Feedback** button (needs to be set up first); the hints get more concrete with each click |
+| AI feedback | Every cell has a **Feedback** button. The default is **Copy prompt**: a ready-made text for an AI of your choice. The hints get more concrete with each click |
 | Responsive page | Long calculations don't freeze the page |
 | Shared variables | All cells on a page belong to one Python session. A later cell can use what an earlier one defined or imported, once that one has been run |
 
@@ -170,10 +178,11 @@ Full details: [Interactive Python with Pyodide](https://erasmus-ctm.github.io/Qu
 At køre og ændre kode virker kun i **HTML** (`format: html`), altså i websteder og bøger. I PDF eller Word vises den samme kode som almindelig kode, der ikke kan køres. Kode, der skal virke overalt, er beskrevet i cheatsheetet Opgaveark.
 :::
 
-`pyodide-interaktiv` er en omarbejdning af `coatless-quarto/pyodide` med rigtig `input()`, animationer, en stopknap og AI-feedback. Den installeres som enhver anden udvidelse:
+`pyodide-interaktiv` giver ægte `input()`, animationer, en knap »Stop« og AI-feedback. Den er en del af pakken **CTM Assessment**, som du installerer én gang pr. projektmappe (Quarto 1.8.27 eller nyere):
 
 ```{.bash filename="Terminal"}
-quarto add Erasmus-CTM/pyodide-interaktiv
+quarto add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.zip     # Windows
+quarto add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.tar.gz  # macOS / Linux
 ```
 
 **Slå den til** i sidens YAML-hoved:
@@ -182,10 +191,13 @@ quarto add Erasmus-CTM/pyodide-interaktiv
 ---
 title: "My Page"
 format: html
+engine: markdown
 filters:
-  - Erasmus-CTM/pyodide-interaktiv
+  - ctm-assessment
 ---
 ```
+
+`engine: markdown` skal bruges fra Quarto 1.10. Indeholder siden også `{python}`-blokke, udelader du linjen.
 
 {{< pagebreak >}}
 
@@ -206,7 +218,7 @@ De studerende kan ændre koden direkte i browseren og køre den med knappen **K�
 
 ::: {.callout-tip}
 ## Hellere opgaver med kontrol?
-`py-exercise` giver kodeblokke med skjulte automatiske test, `math-exercise` kontrollerer symbolske og numeriske svar med SymPy. Begge installeres på samme måde (`quarto add Erasmus-CTM/py-exercise`, `quarto add Erasmus-CTM/math-exercise`). Eksempler finder du på eksempelsiden i denne vejledning.
+`py-exercise` giver kodeblokke med skjulte automatiske test, `math-exercise` kontrollerer symbolske og numeriske svar med SymPy. Begge ligger allerede i pakken. Se cheatsheetet »Opgave med automatisk kontrol«.
 :::
 
 {{< pagebreak >}}
@@ -220,7 +232,7 @@ Python kører i en **Web Worker**, altså ved siden af siden i stedet for i den.
 | Rigtig `input()` | En celle kan stoppe og vente på input, mens siden kan bruges |
 | Animationer | En `FuncAnimation` fra Matplotlib vises som en afspiller |
 | Ufarlige uendelige løkker | En `while True:` ved en fejl låser ikke siden, **Stop** afbryder |
-| AI-feedback | Hver celle har knappen **Feedback** (skal sættes op først), hintene bliver mere konkrete for hvert klik |
+| AI-feedback | Hver celle har knappen **Feedback**. Standard er **Kopiér prompt**: en færdig tekst til en AI efter eget valg. Hintene bliver mere konkrete for hvert klik |
 | Siden reagerer | Lange beregninger fryser ikke siden |
 | Delte variabler | Alle celler på en side hører til én Python-session. En senere celle kan bruge det, en tidligere har defineret eller importeret, når den tidligere er kørt |
 
@@ -239,10 +251,11 @@ Udførligt: [Interaktiv kode med Pyodide](https://erasmus-ctm.github.io/Quarto-T
 Å kjøre og endre kode virker bare i **HTML** (`format: html`), altså i nettsteder og bøker. I PDF eller Word vises den samme koden som vanlig kode som ikke kan kjøres. Kode som skal virke overalt, er beskrevet i cheatsheetet Oppgaveark.
 :::
 
-`pyodide-interaktiv` er en omarbeiding av `coatless-quarto/pyodide` med ekte `input()`, animasjoner, en stoppknapp og KI-tilbakemelding. Den installeres som enhver annen utvidelse:
+`pyodide-interaktiv` gir ekte `input()`, animasjoner, en «Stopp»-knapp og KI-tilbakemelding. Den er en del av pakken **CTM Assessment**, som du installerer én gang per prosjektmappe (Quarto 1.8.27 eller nyere):
 
 ```{.bash filename="Terminal"}
-quarto add Erasmus-CTM/pyodide-interaktiv
+quarto add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.zip     # Windows
+quarto add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.tar.gz  # macOS / Linux
 ```
 
 **Slå den på** i YAML-hodet på siden:
@@ -251,10 +264,13 @@ quarto add Erasmus-CTM/pyodide-interaktiv
 ---
 title: "My Page"
 format: html
+engine: markdown
 filters:
-  - Erasmus-CTM/pyodide-interaktiv
+  - ctm-assessment
 ---
 ```
+
+`engine: markdown` trengs fra Quarto 1.10. Har siden også `{python}`-blokker, utelater du linjen.
 
 {{< pagebreak >}}
 
@@ -275,7 +291,7 @@ Studentene kan endre koden direkte i nettleseren og kjøre den med knappen **Kj�
 
 ::: {.callout-tip}
 ## Heller oppgaver med kontroll?
-`py-exercise` gir kodeblokker med skjulte automatiske tester, `math-exercise` kontrollerer symbolske og numeriske svar med SymPy. Begge installeres på samme måte (`quarto add Erasmus-CTM/py-exercise`, `quarto add Erasmus-CTM/math-exercise`). Eksempler finner du på eksempelsiden i denne veiledningen.
+`py-exercise` gir kodeblokker med skjulte automatiske tester, `math-exercise` kontrollerer symbolske og numeriske svar med SymPy. Begge ligger allerede i pakken. Se cheatsheetet «Oppgave med automatisk kontroll».
 :::
 
 {{< pagebreak >}}
@@ -289,7 +305,7 @@ Python kjører i en **Web Worker**, altså ved siden av siden i stedet for i den
 | Ekte `input()` | En celle kan stoppe og vente på inndata mens siden kan brukes |
 | Animasjoner | En `FuncAnimation` fra Matplotlib vises som en avspiller |
 | Ufarlige evige løkker | En `while True:` ved et uhell låser ikke siden, **Stopp** avbryter |
-| KI-tilbakemelding | Hver celle har knappen **Tilbakemelding** (må settes opp først), hintene blir mer konkrete for hvert klikk |
+| KI-tilbakemelding | Hver celle har knappen **Tilbakemelding**. Standard er **Kopier prompt**: en ferdig tekst til en KI etter eget valg. Hintene blir mer konkrete for hvert klikk |
 | Siden reagerer | Lange beregninger fryser ikke siden |
 | Delte variabler | Alle cellene på en side hører til én Python-økt. En senere celle kan bruke det en tidligere har definert eller importert, når den tidligere er kjørt |
 
@@ -308,10 +324,11 @@ Utførlig: [Interaktiv kode med Pyodide](https://erasmus-ctm.github.io/Quarto-Tu
 Att köra och ändra kod fungerar bara i **HTML** (`format: html`), alltså i webbplatser och böcker. I PDF eller Word visas samma kod som vanlig kod som inte går att köra. Kod som ska fungera överallt beskrivs i lathunden Övningsblad.
 :::
 
-`pyodide-interaktiv` är en omarbetning av `coatless-quarto/pyodide` med riktigt `input()`, animationer, en stoppknapp och AI-feedback. Det installeras som vilket annat tillägg som helst:
+`pyodide-interaktiv` ger äkta `input()`, animationer, en ”Stopp”-knapp och AI-feedback. Det ingår i paketet **CTM Assessment**, som du installerar en gång per projektmapp (Quarto 1.8.27 eller senare):
 
 ```{.bash filename="Terminal"}
-quarto add Erasmus-CTM/pyodide-interaktiv
+quarto add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.zip     # Windows
+quarto add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.tar.gz  # macOS / Linux
 ```
 
 **Aktivera det** i sidans YAML-huvud:
@@ -320,10 +337,13 @@ quarto add Erasmus-CTM/pyodide-interaktiv
 ---
 title: "My Page"
 format: html
+engine: markdown
 filters:
-  - Erasmus-CTM/pyodide-interaktiv
+  - ctm-assessment
 ---
 ```
+
+`engine: markdown` behövs från Quarto 1.10. Har sidan även `{python}`-block utelämnar du raden.
 
 {{< pagebreak >}}
 
@@ -344,7 +364,7 @@ Studenterna kan ändra koden direkt i webbläsaren och köra den med knappen **K
 
 ::: {.callout-tip}
 ## Hellre uppgifter med kontroll?
-`py-exercise` ger kodblock med dolda automatiska tester, `math-exercise` kontrollerar symboliska och numeriska svar med SymPy. Båda installeras på samma sätt (`quarto add Erasmus-CTM/py-exercise`, `quarto add Erasmus-CTM/math-exercise`). Exempel finns på exempelsidan i den här handledningen.
+`py-exercise` ger kodblock med dolda automatiska tester, `math-exercise` kontrollerar symboliska och numeriska svar med SymPy. Båda finns redan i paketet. Se lathunden ”Uppgift med automatisk kontroll”.
 :::
 
 {{< pagebreak >}}
@@ -358,7 +378,7 @@ Python körs i en **Web Worker**, alltså bredvid sidan i stället för i den. D
 | Riktigt `input()` | En cell kan stanna och vänta på inmatning medan sidan går att använda |
 | Animationer | En `FuncAnimation` från Matplotlib visas som en spelare |
 | Ofarliga oändliga loopar | Ett `while True:` av misstag låser inte sidan, **Stoppa** avbryter |
-| AI-feedback | Varje cell har knappen **Feedback** (måste ställas in först), ledtrådarna blir mer konkreta för varje klick |
+| AI-feedback | Varje cell har knappen **Feedback**. Standard är **Kopiera prompt**: en färdig text för en AI efter eget val. Ledtrådarna blir mer konkreta för varje klick |
 | Sidan reagerar | Långa beräkningar fryser inte sidan |
 | Delade variabler | Alla celler på en sida hör till en Python-session. En senare cell kan använda det som en tidigare har definierat eller importerat, när den tidigare har körts |
 

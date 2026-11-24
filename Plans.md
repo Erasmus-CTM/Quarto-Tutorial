@@ -1,8 +1,7 @@
 ## TODO — Follow-ups
 
-- **[2026-09-30] Done:** `beg_extensions.qmd`, `exp_extensions.qmd`, the cheatsheet and `README.md` now teach `quarto add Erasmus-CTM/...`; the vendoring workaround and `coatless-quarto/pyodide` are gone. The note below is kept for history.
-- **[2026-08-09]** `beg_extensions.qmd` currently teaches installing the public `coatless-quarto/pyodide` extension, plus a callout that mentions the enhanced local fork `pyodide-interaktiv` (Web Worker, shared cell state, `input()`, animations, safe infinite loops) as something you'd have to vendor manually (`_extensions/Erasmus-CTM/pyodide-interaktiv/`) since it isn't on the public registry.
-  Once `pyodide-interaktiv` (and `math-exercise`) are published as installable Quarto extensions — planned for roughly the week of **2026-08-16** — rewrite the install steps in `beg_extensions.qmd` to `quarto add` them directly instead of the vendoring workaround, and drop/rephrase the "copy the folder manually" note. Also update the `README.md` extensions table entries accordingly (remove the "local/unpublished" caveat).
+- **[2026-11-24]** The tutorial now teaches the CTM Assessment package (one `quarto add`, one filter `ctm-assessment`) instead of the single extensions; the Extensions chapter is split into subpages and the intermediate level has a page "An exercise with automatic checking". The 2026-08/09 notes that were here (vendoring, `coatless-quarto/pyodide`) are obsolete.
+- Open: proofreading of the Swedish, Norwegian and Danish texts by native speakers.
 
 ---
 

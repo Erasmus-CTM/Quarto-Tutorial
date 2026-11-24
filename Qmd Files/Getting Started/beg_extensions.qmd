@@ -4,8 +4,9 @@ title-en: "Interactive Code with Pyodide"
 title-sv: "Interaktiv kod med Pyodide"
 title-no: "Interaktiv kode med Pyodide"
 title-da: "Interaktiv kode med Pyodide"
+engine: markdown
 filters:
-  - pyodide-interaktiv
+  - ctm-assessment
 ---
 
 :::: {.content-visible when-profile="deutsch"}
@@ -22,7 +23,7 @@ Dieses Kapitel gibt es als dreiseitiges [PDF-Cheatsheet](beg_extensions_cheatshe
 
 Mit **Pyodide** führen Studierende Python-Code direkt im Browser aus und verändern ihn, ohne Python auf ihrem Rechner zu installieren. Du schreibst den Code einmal, sie klicken auf **Code ausführen**.
 
-Dieses Tutorial benutzt dafür die Extension **`pyodide-interaktiv`**, eine Überarbeitung von `coatless-quarto/pyodide`. Sie führt Python in einem **Web Worker** aus, also neben der Seite statt in ihr. Das macht echtes `input()`, Animationen, einen Knopf „Stopp“ und KI-Feedback möglich, mehr dazu im letzten Abschnitt.
+Dafür gibt es die Extension **`pyodide-interaktiv`** aus dem Paket **CTM Assessment**.
 
 ::: {.callout-warning}
 ## Interaktiv nur in HTML
@@ -41,13 +42,21 @@ Ausführen und Verändern geht nur in der **HTML-Ausgabe**, also in Websites (`f
 
 **② Den Installationsbefehl eingeben**
 
-Die Extension liegt unter **[github.com/Erasmus-CTM/pyodide-interaktiv](https://github.com/Erasmus-CTM/pyodide-interaktiv)** und wird wie jede andere installiert:
+Die Extension kommt im Paket **CTM Assessment** (Quelle: **[github.com/Erasmus-CTM/ctm-assessment](https://github.com/Erasmus-CTM/ctm-assessment)**). Du installierst es mit einem Befehl:
 
+::: {.panel-tabset}
+### Windows
 ```{.bash filename="Terminal"}
-quarto add Erasmus-CTM/pyodide-interaktiv
+quarto add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.zip
 ```
 
-Warte, bis der Befehl fertig ist. Er stellt dabei drei Fragen: ob du der Quelle vertraust, ob du fortfahren willst und ob du die Dokumentation ansehen möchtest. Das ist nur **einmal je Projektordner** nötig. Danach liegt die Extension im Ordner `_extensions/` deines Projekts.
+### macOS / Linux
+```{.bash filename="Terminal"}
+quarto add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.tar.gz
+```
+:::
+
+Einmal je Projektordner nötig. Voraussetzung: Quarto **1.8.27 oder neuer** (`quarto --version`).
 
 ---
 
@@ -59,10 +68,13 @@ Ergänze im Kopf deiner `.qmd`-Datei eine Zeile `filters:`:
 ---
 title: "Meine Seite"
 format: html
+engine: markdown
 filters:
-  - Erasmus-CTM/pyodide-interaktiv
+  - ctm-assessment
 ---
 ```
+
+Die Zeile `engine: markdown` brauchst du ab Quarto 1.10 auf Seiten mit interaktivem Code, sonst schickt Quarto die Seite an Jupyter und der Build bricht ab. Enthält die Seite auch gewöhnliche `{python}`-Blöcke, lässt du die Zeile weg.
 
 ---
 
@@ -90,10 +102,8 @@ print(sum(x))
 
 - **Code ausführen** startet den Code (auch mit `Shift + Enter`). Beim ersten Klick lädt Python, das dauert einige Sekunden.
 - **Zurücksetzen** stellt deinen ursprünglichen Code wieder her.
-- **Feedback** holt eine Rückmeldung von einer KI (muss erst eingerichtet werden).
+- **Feedback** erzeugt einen fertigen Text, den du in eine KI deiner Wahl einfügst. Mit einem eigenen Zugang holt der Knopf die Rückmeldung direkt.
 - Während der Code läuft, erscheint **Stopp**.
-
-Studierende können den Code ändern und erneut ausführen, ohne etwas zu installieren.
 
 ---
 
@@ -111,14 +121,7 @@ Studierende können den Code ändern und erneut ausführen, ohne etwas zu instal
 
 ::: {.callout-tip}
 ## Sollen Studierende Lösungen eintragen?
-Die Extension `py-exercise` bietet Codeblöcke mit versteckten automatischen Tests: Studierende sehen, ob ihre Lösung besteht. Die Extension `math-exercise` leistet dasselbe für mathematische Antworten, geprüft mit SymPy. Installiert werden beide genauso:
-
-```{.bash filename="Terminal"}
-quarto add Erasmus-CTM/py-exercise
-quarto add Erasmus-CTM/math-exercise
-```
-
-Beispiele zu beiden stehen auf der **Beispielseite** dieses Tutorials.
+Dasselbe Paket enthält `py-exercise` für Programmieraufgaben mit versteckten Tests und `math-exercise` für mathematische Antworten, geprüft mit SymPy. Du musst nichts weiter installieren. Wie du eine solche Aufgabe baust, zeigt die Seite [Aufgabe mit automatischer Prüfung](beg_check.qmd) Schritt für Schritt.
 :::
 ::::
 
@@ -136,7 +139,7 @@ This chapter as a 3-page [PDF cheatsheet](beg_extensions_cheatsheet.qmd) — ins
 
 **Pyodide** lets students run and edit Python code directly in the browser, with no Python installation on their computer. You write the code once; they click **Run code**.
 
-This tutorial uses the extension **`pyodide-interaktiv`** for that, a rework of `coatless-quarto/pyodide`. It runs Python in a **Web Worker**, that is next to the page rather than inside it. That is what makes real `input()`, animations, a Stop button and AI feedback possible — more on that in the last section.
+The extension **`pyodide-interaktiv`** from the package **CTM Assessment** does that.
 
 ::: {.callout-warning}
 ## Interactive in HTML only
@@ -155,13 +158,21 @@ Open the **Terminal** (the command line interface) via **View → Terminal**. A 
 
 **② Run the install command**
 
-The extension is published at **[github.com/Erasmus-CTM/pyodide-interaktiv](https://github.com/Erasmus-CTM/pyodide-interaktiv)** and installs like any other:
+The extension comes in the package **CTM Assessment** (source: **[github.com/Erasmus-CTM/ctm-assessment](https://github.com/Erasmus-CTM/ctm-assessment)**). You install it with one command:
 
+::: {.panel-tabset}
+### Windows
 ```{.bash filename="Terminal"}
-quarto add Erasmus-CTM/pyodide-interaktiv
+quarto add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.zip
 ```
 
-Wait until it finishes. It asks three questions: whether you trust the source, whether to continue, and whether you want to view the documentation. This only needs to be done **once per project folder**. Afterwards the extension is in your project's `_extensions/` folder.
+### macOS / Linux
+```{.bash filename="Terminal"}
+quarto add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.tar.gz
+```
+:::
+
+Needed once per project folder. Requires Quarto **1.8.27 or newer** (`quarto --version`).
 
 ---
 
@@ -173,10 +184,13 @@ Add a `filters:` line to the header block of your `.qmd` file:
 ---
 title: "My Page"
 format: html
+engine: markdown
 filters:
-  - Erasmus-CTM/pyodide-interaktiv
+  - ctm-assessment
 ---
 ```
+
+From Quarto 1.10 on you need the line `engine: markdown` on pages with interactive code; otherwise Quarto sends the page to Jupyter and the build stops. If the page also contains ordinary `{python}` blocks, leave the line out.
 
 ---
 
@@ -204,10 +218,8 @@ print(sum(x))
 
 - **Run code** starts the code (also with `Shift + Enter`). On the first click Python loads, which takes a few seconds.
 - **Reset** restores your original code.
-- **Feedback** asks an AI for feedback (needs to be set up first).
+- **Feedback** produces a ready-made text that you paste into an AI of your choice. With your own access, the button fetches the feedback directly.
 - While the code is running, **Stop** appears.
-
-Students can edit the code and run it again without installing anything.
 
 ---
 
@@ -225,14 +237,7 @@ You can try `input()` and shared variables on the [Code page](../../../beg/Qmd F
 
 ::: {.callout-tip}
 ## Want students to fill in solutions?
-The `py-exercise` extension adds code blocks with hidden automated tests: students see whether their solution passes. The `math-exercise` extension does the same for mathematical answers, checked with SymPy. Both are installed the same way:
-
-```{.bash filename="Terminal"}
-quarto add Erasmus-CTM/py-exercise
-quarto add Erasmus-CTM/math-exercise
-```
-
-Both have examples on the **Example Page** of this tutorial.
+The same package contains `py-exercise` for coding exercises with hidden tests and `math-exercise` for mathematical answers checked with SymPy. You need to install nothing else. The page [An exercise with automatic checking](beg_check.qmd) shows step by step how to build one.
 :::
 ::::
 
@@ -250,7 +255,7 @@ Dette kapitel findes som et [PDF-cheatsheet](beg_extensions_cheatsheet.qmd) på 
 
 Med **Pyodide** kan de studerende køre og ændre Python-kode direkte i browseren uden at installere Python på deres computer. Du skriver koden én gang, de klikker på **Kør koden**.
 
-Denne vejledning bruger udvidelsen **`pyodide-interaktiv`** til det, en omarbejdning af `coatless-quarto/pyodide`. Den kører Python i en **Web Worker**, altså ved siden af siden i stedet for i den. Det er det, der gør rigtig `input()`, animationer, en stopknap og AI-feedback muligt. Mere om det i sidste afsnit.
+Det klarer udvidelsen **`pyodide-interaktiv`** fra pakken **CTM Assessment**.
 
 ::: {.callout-warning}
 ## Interaktivt kun i HTML
@@ -269,13 +274,21 @@ At køre og ændre kode virker kun i **HTML**, altså i websteder (`format: html
 
 **② Kør installationskommandoen**
 
-Udvidelsen ligger på **[github.com/Erasmus-CTM/pyodide-interaktiv](https://github.com/Erasmus-CTM/pyodide-interaktiv)** og installeres som enhver anden udvidelse:
+Udvidelsen følger med pakken **CTM Assessment** (kilde: **[github.com/Erasmus-CTM/ctm-assessment](https://github.com/Erasmus-CTM/ctm-assessment)**). Du installerer den med én kommando:
 
+::: {.panel-tabset}
+### Windows
 ```{.bash filename="Terminal"}
-quarto add Erasmus-CTM/pyodide-interaktiv
+quarto add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.zip
 ```
 
-Vent, til kommandoen er færdig. Den stiller tre spørgsmål: om du stoler på kilden, om du vil fortsætte, og om du vil se dokumentationen. Det er kun nødvendigt **én gang pr. projektmappe**. Bagefter ligger udvidelsen i projektets mappe `_extensions/`.
+### macOS / Linux
+```{.bash filename="Terminal"}
+quarto add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.tar.gz
+```
+:::
+
+Kun nødvendigt én gang pr. projektmappe. Kræver Quarto **1.8.27 eller nyere** (`quarto --version`).
 
 ---
 
@@ -287,10 +300,13 @@ Tilføj en linje `filters:` i hovedet på din `.qmd`-fil:
 ---
 title: "My Page"
 format: html
+engine: markdown
 filters:
-  - Erasmus-CTM/pyodide-interaktiv
+  - ctm-assessment
 ---
 ```
+
+Linjen `engine: markdown` skal du bruge fra Quarto 1.10 på sider med interaktiv kode, ellers sender Quarto siden til Jupyter, og bygningen stopper. Indeholder siden også almindelige `{python}`-blokke, udelader du linjen.
 
 ---
 
@@ -318,10 +334,8 @@ print(sum(x))
 
 - **Kør koden** starter koden (også med `Shift + Enter`). Ved første klik indlæses Python, det tager nogle sekunder.
 - **Nulstil** gendanner din oprindelige kode.
-- **Feedback** beder en AI om feedback (skal sættes op først).
+- **Feedback** laver en færdig tekst, som du sætter ind i en AI efter eget valg. Med din egen adgang henter knappen feedbacken direkte.
 - Mens koden kører, vises **Stop**.
-
-De studerende kan ændre koden og køre den igen uden at installere noget.
 
 ---
 
@@ -339,14 +353,7 @@ De studerende kan ændre koden og køre den igen uden at installere noget.
 
 ::: {.callout-tip}
 ## Skal de studerende udfylde løsninger?
-Udvidelsen `py-exercise` giver kodeblokke med skjulte automatiske test: de studerende ser, om deres løsning består. Udvidelsen `math-exercise` gør det samme for matematiske svar, kontrolleret med SymPy. Begge installeres på samme måde:
-
-```{.bash filename="Terminal"}
-quarto add Erasmus-CTM/py-exercise
-quarto add Erasmus-CTM/math-exercise
-```
-
-Eksempler på begge finder du på **eksempelsiden** i denne vejledning.
+Den samme pakke indeholder `py-exercise` til programmeringsopgaver med skjulte test og `math-exercise` til matematiske svar kontrolleret med SymPy. Du behøver ikke installere noget mere. Siden [Opgave med automatisk kontrol](beg_check.qmd) viser trin for trin, hvordan du bygger en sådan opgave.
 :::
 ::::
 
@@ -364,7 +371,7 @@ Dette kapittelet finnes som et [PDF-cheatsheet](beg_extensions_cheatsheet.qmd) p
 
 Med **Pyodide** kan studentene kjøre og endre Python-kode direkte i nettleseren, uten å installere Python på datamaskinen sin. Du skriver koden én gang, de klikker på **Kjør koden**.
 
-Denne veiledningen bruker utvidelsen **`pyodide-interaktiv`** til det, en omarbeiding av `coatless-quarto/pyodide`. Den kjører Python i en **Web Worker**, altså ved siden av siden i stedet for i den. Det er det som gjør ekte `input()`, animasjoner, en stoppknapp og KI-tilbakemelding mulig. Mer om det i siste avsnitt.
+Det gjør utvidelsen **`pyodide-interaktiv`** fra pakken **CTM Assessment**.
 
 ::: {.callout-warning}
 ## Interaktivt bare i HTML
@@ -383,13 +390,21 @@ Denne veiledningen bruker utvidelsen **`pyodide-interaktiv`** til det, en omarbe
 
 **② Kjør installasjonskommandoen**
 
-Utvidelsen ligger på **[github.com/Erasmus-CTM/pyodide-interaktiv](https://github.com/Erasmus-CTM/pyodide-interaktiv)** og installeres som enhver annen utvidelse:
+Utvidelsen følger med pakken **CTM Assessment** (kilde: **[github.com/Erasmus-CTM/ctm-assessment](https://github.com/Erasmus-CTM/ctm-assessment)**). Du installerer den med én kommando:
 
+::: {.panel-tabset}
+### Windows
 ```{.bash filename="Terminal"}
-quarto add Erasmus-CTM/pyodide-interaktiv
+quarto add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.zip
 ```
 
-Vent til kommandoen er ferdig. Den stiller tre spørsmål: om du stoler på kilden, om du vil fortsette, og om du vil se dokumentasjonen. Dette trengs bare **én gang per prosjektmappe**. Etterpå ligger utvidelsen i mappen `_extensions/` i prosjektet.
+### macOS / Linux
+```{.bash filename="Terminal"}
+quarto add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.tar.gz
+```
+:::
+
+Trengs bare én gang per prosjektmappe. Krever Quarto **1.8.27 eller nyere** (`quarto --version`).
 
 ---
 
@@ -401,10 +416,13 @@ Legg til en linje `filters:` i hodet på `.qmd`-filen din:
 ---
 title: "My Page"
 format: html
+engine: markdown
 filters:
-  - Erasmus-CTM/pyodide-interaktiv
+  - ctm-assessment
 ---
 ```
+
+Linjen `engine: markdown` trenger du fra Quarto 1.10 på sider med interaktiv kode, ellers sender Quarto siden til Jupyter, og byggingen stopper. Inneholder siden også vanlige `{python}`-blokker, utelater du linjen.
 
 ---
 
@@ -432,10 +450,8 @@ print(sum(x))
 
 - **Kjør koden** starter koden (også med `Shift + Enter`). Ved første klikk lastes Python, det tar noen sekunder.
 - **Tilbakestill** gjenoppretter den opprinnelige koden din.
-- **Tilbakemelding** ber en KI om tilbakemelding (må settes opp først).
+- **Tilbakemelding** lager en ferdig tekst som du limer inn i en KI etter eget valg. Med din egen tilgang henter knappen tilbakemeldingen direkte.
 - Mens koden kjører, vises **Stopp**.
-
-Studentene kan endre koden og kjøre den på nytt uten å installere noe.
 
 ---
 
@@ -453,14 +469,7 @@ Studentene kan endre koden og kjøre den på nytt uten å installere noe.
 
 ::: {.callout-tip}
 ## Skal studentene fylle inn løsninger?
-Utvidelsen `py-exercise` gir kodeblokker med skjulte automatiske tester: studentene ser om løsningen deres består. Utvidelsen `math-exercise` gjør det samme for matematiske svar, kontrollert med SymPy. Begge installeres på samme måte:
-
-```{.bash filename="Terminal"}
-quarto add Erasmus-CTM/py-exercise
-quarto add Erasmus-CTM/math-exercise
-```
-
-Eksempler på begge finner du på **eksempelsiden** i denne veiledningen.
+Den samme pakken inneholder `py-exercise` for programmeringsoppgaver med skjulte tester og `math-exercise` for matematiske svar kontrollert med SymPy. Du trenger ikke installere noe mer. Siden [Oppgave med automatisk kontroll](beg_check.qmd) viser steg for steg hvordan du bygger en slik oppgave.
 :::
 ::::
 
@@ -478,7 +487,7 @@ Det här kapitlet finns som en [PDF-lathund](beg_extensions_cheatsheet.qmd) på 
 
 Med **Pyodide** kan studenterna köra och ändra Python-kod direkt i webbläsaren, utan att installera Python på sin dator. Du skriver koden en gång, de klickar på **Kör koden**.
 
-Den här handledningen använder tillägget **`pyodide-interaktiv`** till det, en omarbetning av `coatless-quarto/pyodide`. Det kör Python i en **Web Worker**, alltså bredvid sidan i stället för i den. Det är det som gör riktigt `input()`, animationer, en stoppknapp och AI-feedback möjligt. Mer om det i sista avsnittet.
+Det sköter tillägget **`pyodide-interaktiv`** från paketet **CTM Assessment**.
 
 ::: {.callout-warning}
 ## Interaktivt bara i HTML
@@ -497,13 +506,21 @@ Att köra och ändra kod fungerar bara i **HTML**, alltså i webbplatser (`forma
 
 **② Kör installationskommandot**
 
-Tillägget finns på **[github.com/Erasmus-CTM/pyodide-interaktiv](https://github.com/Erasmus-CTM/pyodide-interaktiv)** och installeras som vilket annat tillägg som helst:
+Tillägget följer med paketet **CTM Assessment** (källa: **[github.com/Erasmus-CTM/ctm-assessment](https://github.com/Erasmus-CTM/ctm-assessment)**). Du installerar det med ett kommando:
 
+::: {.panel-tabset}
+### Windows
 ```{.bash filename="Terminal"}
-quarto add Erasmus-CTM/pyodide-interaktiv
+quarto add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.zip
 ```
 
-Vänta tills kommandot är klart. Det ställer tre frågor: om du litar på källan, om du vill fortsätta och om du vill se dokumentationen. Det här behövs bara **en gång per projektmapp**. Efteråt ligger tillägget i projektets mapp `_extensions/`.
+### macOS / Linux
+```{.bash filename="Terminal"}
+quarto add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.tar.gz
+```
+:::
+
+Behövs bara en gång per projektmapp. Kräver Quarto **1.8.27 eller senare** (`quarto --version`).
 
 ---
 
@@ -515,10 +532,13 @@ Lägg till en rad `filters:` i huvudet på din `.qmd`-fil:
 ---
 title: "My Page"
 format: html
+engine: markdown
 filters:
-  - Erasmus-CTM/pyodide-interaktiv
+  - ctm-assessment
 ---
 ```
+
+Raden `engine: markdown` behöver du från Quarto 1.10 på sidor med interaktiv kod, annars skickar Quarto sidan till Jupyter och bygget avbryts. Innehåller sidan också vanliga `{python}`-block utelämnar du raden.
 
 ---
 
@@ -546,10 +566,8 @@ print(sum(x))
 
 - **Kör koden** startar koden (också med `Shift + Enter`). Vid första klicket laddas Python, det tar några sekunder.
 - **Återställ** återställer din ursprungliga kod.
-- **Feedback** ber en AI om återkoppling (måste ställas in först).
+- **Feedback** skapar en färdig text som du klistrar in i en AI efter eget val. Med din egen åtkomst hämtar knappen återkopplingen direkt.
 - Medan koden körs visas **Stoppa**.
-
-Studenterna kan ändra koden och köra den igen utan att installera något.
 
 ---
 
@@ -567,13 +585,6 @@ Studenterna kan ändra koden och köra den igen utan att installera något.
 
 ::: {.callout-tip}
 ## Ska studenterna fylla i lösningar?
-Tillägget `py-exercise` ger kodblock med dolda automatiska tester: studenterna ser om deras lösning klarar testerna. Tillägget `math-exercise` gör samma sak för matematiska svar, kontrollerade med SymPy. Båda installeras på samma sätt:
-
-```{.bash filename="Terminal"}
-quarto add Erasmus-CTM/py-exercise
-quarto add Erasmus-CTM/math-exercise
-```
-
-Exempel på båda finns på **exempelsidan** i den här handledningen.
+Samma paket innehåller `py-exercise` för programmeringsuppgifter med dolda tester och `math-exercise` för matematiska svar som kontrolleras med SymPy. Du behöver inte installera något mer. Sidan [Uppgift med automatisk kontroll](beg_check.qmd) visar steg för steg hur du bygger en sådan uppgift.
 :::
 ::::

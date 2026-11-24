@@ -6,7 +6,7 @@ title-da: "Kode"
 bibliography: references.bib
 sidebar: example-sidebar
 filters:
-  - pyodide-interaktiv
+  - ctm-assessment
 ---
 
 :::: {.content-visible when-profile="deutsch"}
@@ -117,7 +117,7 @@ name = input("Wie heißt du? ")
 print(f"Hallo, {name}!")
 ```
 
-→ Eine Animation und Aufgaben zum Bearbeiten findest du auf der Seite [Visualisierungen](ep_visuals.qmd).
+→ Eine Animation findest du auf der Seite [Visualisierungen](ep_visuals.qmd), Aufgaben zum Bearbeiten auf der Seite [Aufgaben](ep_tasks.qmd).
 ::::
 
 :::: {.content-visible when-profile="english"}
@@ -172,7 +172,7 @@ name = input("What's your name? ")
 print(f"Hello, {name}!")
 ```
 
-→ An animation and exercises to fill in are on the [Visualizations page](ep_visuals.qmd).
+→ An animation is on the [Visualizations page](ep_visuals.qmd), exercises to fill in on the [Exercises page](ep_tasks.qmd).
 ::::
 
 :::: {.content-visible when-profile="dansk"}
@@ -228,7 +228,7 @@ name = input("Hvad hedder du? ")
 print(f"Hej, {name}!")
 ```
 
-→ En animation og opgaver, du kan løse, finder du på siden [Visualiseringer](ep_visuals.qmd).
+→ En animation finder du på siden [Visualiseringer](ep_visuals.qmd), opgaver, du kan løse, på siden [Opgaver](ep_tasks.qmd).
 ::::
 
 :::: {.content-visible when-profile="norsk"}
@@ -284,7 +284,7 @@ name = input("Hva heter du? ")
 print(f"Hei, {name}!")
 ```
 
-→ En animasjon og oppgaver du kan løse, finner du på siden [Visualiseringer](ep_visuals.qmd).
+→ En animasjon finner du på siden [Visualiseringer](ep_visuals.qmd), oppgaver du kan løse, på siden [Oppgaver](ep_tasks.qmd).
 ::::
 
 :::: {.content-visible when-profile="svenska"}
@@ -340,5 +340,5 @@ name = input("Vad heter du? ")
 print(f"Hej, {name}!")
 ```
 
-→ En animation och uppgifter att lösa finns på sidan [Visualiseringar](ep_visuals.qmd).
+→ En animation finns på sidan [Visualiseringar](ep_visuals.qmd), uppgifter att lösa på sidan [Uppgifter](ep_tasks.qmd).
 ::::

@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.11.9">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Exercises – Quarto Tutorial</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../Qmd Files/Example Page/ep_quiz.html" rel="next">
+<link href="../../Qmd Files/Example Page/ep_visuals.html" rel="prev">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/scrollable-regions/scrollable-regions.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-63b5708e65d6cd79cd7618c58d0c21e7.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-447e42e69aaa9833c0ba1b986f430b20.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-63b5708e65d6cd79cd7618c58d0c21e7.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-fb8bd99ddb08a4ae418d06bec12a5784.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-03e16ff89bb563fb8b0206a0c3f54372.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-fb8bd99ddb08a4ae418d06bec12a5784.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-contrib/ctm-resize-1/ctm-resize.js"></script>
+<link href="../../site_libs/quarto-contrib/ctm-resize-1/ctm-resize.css" rel="stylesheet">
+<script src="../../site_libs/quarto-contrib/ctm-coi-frame-startup-1/coi-frame-startup.js"></script>
+<script src="../../site_libs/quarto-contrib/ctm-assets-0.9.0/assets.js"></script>
+<script src="../../site_libs/quarto-contrib/ctm-locale-0.9.0/ctm-locale.js"></script>
+<script src="../../site_libs/quarto-contrib/ctm-locale-0.9.0/common.js"></script>
+<script src="../../site_libs/quarto-contrib/ctm-locale-ui-0.9.0/ui.js"></script>
+<script src="../../site_libs/quarto-contrib/ctm-layout-0.9.0/ctm-layout.js"></script>
+<script src="../../site_libs/quarto-contrib/ctm-layout-0.9.0/ctm-settings.js"></script>
+<link href="../../site_libs/quarto-contrib/ctm-layout-0.9.0/ctm-ui.css" rel="stylesheet">
+<script src="../../site_libs/quarto-contrib/ai-feedback-0.9.0/feedback-core.js"></script>
+<script src="../../site_libs/quarto-contrib/ai-feedback-0.9.0/feedback-dom.js"></script>
+<script src="../../site_libs/quarto-contrib/ai-feedback-0.9.0/ai-feedback.js"></script>
+<link href="../../site_libs/quarto-contrib/ai-feedback-0.9.0/ai-feedback.css" rel="stylesheet">
+<script src="../../site_libs/quarto-contrib/ctm-runtime-0.9.0/pyodide-runtime.js"></script>
+<script src="../../site_libs/quarto-contrib/ctm-worker-0.9.0/pyodide-worker.js"></script>
+<script src="../../site_libs/quarto-contrib/ctm-checkers-0.12.0.dev0+dfad141a/ctm-checkers.js"></script>
+<script src="../../site_libs/quarto-contrib/ctm-locale-math-exercise-0.9.0/math-exercise.js"></script>
+<link href="../../site_libs/quarto-contrib/ctm-matrix-input-0.9.0/ctm-matrix-input.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/math-exercise-0.11.0/math-exercise.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/ctm-ui-0.9.0/ctm-ui.css" rel="stylesheet">
+<script src="../../site_libs/quarto-contrib/ctm-copy-0.9.0/ctm-copy.js"></script>
+<script src="../../site_libs/quarto-contrib/ctm-store-0.9.0/ctm-store.js"></script>
+<script src="../../site_libs/quarto-contrib/ctm-locale-py-exercise-0.9.0/py-exercise.js"></script>
+<link href="../../site_libs/quarto-contrib/py-exercise-0.5.0/py-exercise.css" rel="stylesheet">
+<script src="../../site_libs/quarto-contrib/ctm-export-0.9.0/ctm-export.js"></script>
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<script>globalThis.CTM_ASSETS={"bases":{"font-awesome":"https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/","jsxgraph":"https://cdn.jsdelivr.net/npm/jsxgraph@1.14.2/","katex":"https://cdn.jsdelivr.net/npm/katex@0.16.47/","mathjax-newcm-font":"https://cdn.jsdelivr.net/npm/@mathjax/mathjax-newcm-font@4.1.3/","mathjax3":"https://cdn.jsdelivr.net/npm/mathjax@3.2.2/","mathjax4":"https://cdn.jsdelivr.net/npm/mathjax@4.1.3/","monaco-editor":"https://cdn.jsdelivr.net/npm/monaco-editor@0.46.0/","pyodide":"https://cdn.jsdelivr.net/pyodide/v0.28.3/full/","source-sans-pro":"https://cdn.jsdelivr.net/npm/@fontsource/source-sans-pro@5.3.0/"},"mode":"cdn","v":1};</script>
+<script src="../../coi-serviceworker.js"></script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-sidebar floating nav-fixed quarto-light"><a id="quarto-skip-link" class="visually-hidden-focusable" href="#quarto-document-content">Skip to main content</a><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          toggle.setAttribute("aria-checked", alternate ? "true" : "false");
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455).
+    // Not run on load: stylesheets are set before first paint there, and
+    // scrolling would undo the scroll to a URL fragment (#14973).
+    // The one pixel nudge keeps the reader where they were.
+    const refreshSafariScrollbar = () => {
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        const scrollY = window.scrollY;
+        window.scrollTo(0, scrollY > 0 ? scrollY - 1 : 1);
+        setTimeout(() => {
+          window.scrollTo(0, scrollY);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const queryPrefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    const darkModeDefault = queryPrefersDark.matches;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      refreshSafariScrollbar();
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    queryPrefersDark.addEventListener("change", e => {
+      if(window.localStorage.getItem("quarto-color-scheme") !== null)
+        return;
+      const alternate = e.matches
+      toggleColorMode(alternate);
+      refreshSafariScrollbar();
+      localAlternateSentinel = e.matches ? 'alternate' : 'default'; // this is used alongside local storage!
+      toggleGiscusIfUsed(alternate, darkModeDefault);
+    });
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark" aria-label="Site">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Quarto Tutorial</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" aria-current="page" href="../../../beg/Qmd%20Files/Example%20Page/index_beg.html"> 
+<span class="menu-text">Example Page</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../int/Qmd%20Files/Getting%20Started/getting_started.html"> 
+<span class="menu-text">Getting Started</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../exp/Qmd%20Files/Tipps%20and%20Tricks/index_exp.html"> 
+<span class="menu-text">Tips &amp; Tricks</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/Erasmus-CTM/Quarto-Tutorial"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-bi-globe" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-globe" role="img" aria-label="Sprache wählen / Choose language">
+</i> 
+ <span class="menu-text"></span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-bi-globe">    
+        <li>
+    <a class="dropdown-item" href="../../../../de/beg/Qmd%20Files/Example%20Page/ep_tasks.html">
+ <span class="dropdown-text">Deutsch</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item active" aria-current="true" href="../../../../en/beg/Qmd%20Files/Example%20Page/ep_tasks.html">
+ <span class="dropdown-text">English</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../sv/beg/Qmd%20Files/Example%20Page/ep_tasks.html">
+ <span class="dropdown-text">Svenska</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../no/beg/Qmd%20Files/Example%20Page/ep_tasks.html">
+ <span class="dropdown-text">Norsk</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../da/beg/Qmd%20Files/Example%20Page/ep_tasks.html">
+ <span class="dropdown-text">Dansk</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <button type="button" role="switch" aria-checked="false" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode" aria-label="Toggle dark mode"><i class="bi"></i></button>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+            <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav" aria-label="Toolbar">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="Breadcrumbs"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../Qmd Files/Example Page/ep_tasks.html">Exercises</a></li></ol></nav>
+        <a class="flex-grow-1" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto" aria-label="Section">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Qmd Files/Example Page/index_beg.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Overview</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Qmd Files/Example Page/ep_layout.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Layout &amp; Formatting</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Qmd Files/Example Page/ep_code.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Code</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Qmd Files/Example Page/ep_visuals.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Visualizations</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Qmd Files/Example Page/ep_tasks.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Exercises</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Qmd Files/Example Page/ep_quiz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Quiz</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Qmd Files/Example Page/ep_references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" aria-labelledby="toc-title" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#editable-exercise" id="toc-editable-exercise" class="nav-link active" data-scroll-target="#editable-exercise">Editable Exercise</a></li>
+  <li><a href="#math-exercise" id="toc-math-exercise" class="nav-link" data-scroll-target="#math-exercise">Math Exercise</a></li>
+  <li><a href="#graph-as-an-exercise" id="toc-graph-as-an-exercise" class="nav-link" data-scroll-target="#graph-as-an-exercise">Graph as an exercise</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content" tabindex="-1">
+
+<script>window.__aiFeedbackPolicies = {"layers":[],"pageLayers":[]};</script>
+<script>window.__aiFeedbackConfig = {"baseUrl":"","mode":"copy","model":""};</script>
+<script>window.__mathExerciseConfig = {"lang":"en","stopAfter":20};</script>
+<script>window.__pyExerciseConfig = {"feedback":false,"lang":"en","stopAfter":20,"submission":false,"submissionKey":"py-exercise"};</script>
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Exercises</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<!--ctm-save-generated--><div class="ctm-save-bar" role="region" aria-label="Saved answers" hidden=""><p class="ctm-save-notice">Your answers are saved only in this browser.</p><div class="ctm-save-actions"><button type="button" data-ctm-save-toggle="">Do not save on this device</button>
+<button type="button" data-ctm-export="">Export my answers</button>
+<button type="button" data-ctm-clear-page="">Delete answers on this page</button>
+<button type="button" data-ctm-clear-course="">Delete all your answers in this course</button></div><span class="ctm-save-status" role="status" aria-live="polite"></span></div>
+<p>On this page the page itself checks whether a solution is right: with hidden tests, with SymPy or on a graph.</p>
+<section id="editable-exercise" class="level2">
+<h2 class="anchored" data-anchor-id="editable-exercise">Editable Exercise</h2>
+<p>Complete the function — tests run automatically on checking your solution:</p>
+<div class="py-exercise-cell" id="py-exercise-1" data-ctm-component="py-exercise" data-ctm-id="" data-ctm-runtime-id="ctm-block-1" data-ctm-source="55d8b1901b54bf1e" data-ctm-save="false">
+  <noscript>
+    Please enable JavaScript to load the interactive exercise.
+  </noscript>
+</div>
+<script>
+(window.__pyExercises = window.__pyExercises || []).push({"feedbackLanguage":"en","forbiddenImports":[],"forbiddenKeywords":[],"id":1,"label":"py-exercise-1","learnerLevel":"","save":false,"showTestHints":true,"source":"55d8b1901b54bf1e","starter":"import math\n\ndef f(x_deg):\n    \"\"\"Return sin(x) + cos(x) for x given in degrees.\"\"\"\n    # Your solution here\n    pass","tests":"assert abs(f(0)  - 1.0)           \u003c 1e-4, \"f(0) should be 1.0\"\nassert abs(f(90) - 1.0)           \u003c 1e-4, \"f(90°) should be 1.0\"\nassert abs(f(45) - math.sqrt(2))  \u003c 1e-4, \"f(45°) should be √2\""});
+</script>
+</section>
+<section id="math-exercise" class="level2">
+<h2 class="anchored" data-anchor-id="math-exercise">Math Exercise</h2>
+<p>A different kind of check — symbolic answers, evaluated with SymPy instead of unit tests:</p>
+<div class="math-exercise-cell" data-similar="false" data-similar-guidance="[]" data-generation-policy="[]" data-similar-data="" id="math-exercise-1" data-label="ep-math-sin-en" data-mode="equivalent" data-reject="" data-vars="x" data-tolerance="" data-decplaces="" data-sigfigs="" data-form="" data-checker="&quot;&quot;" data-givens="&quot;&quot;" data-packages="[]" data-response="" data-embed-response="false" data-partial-credit="false" data-form-credit="0.5" data-field-labels="[]" data-vecdir="col" data-feedback-policy="{&quot;exercise&quot;:&quot;ep-math-sin-en&quot;,&quot;name&quot;:&quot;&quot;}" data-variant-boards="[]" data-variant-board-title="" data-context-mode="auto" data-context-refs="auto" data-context="&quot;Math Exercise\nA different kind of check — symbolic answers, evaluated with SymPy instead of unit tests:&quot;" data-context-text="&quot;&quot;" data-ctm-component="math-exercise" data-ctm-runtime-id="ctm-block-2" data-ctm-source="2e7bff0f160f7897" data-ctm-save="true" data-ctm-id="ep-math-sin-en" data-fields="[&quot;math-exercise-1-f1&quot;]" data-structural-field-labels="[&quot;&quot;]">
+<div class="math-exercise-caption math-exercise-toggle" data-math-exercise-source="Sine at a special angle" role="button" tabindex="0" aria-expanded="false"><span class="math-chevron" aria-hidden="true"></span>Sine at a special angle</div>
+
+<div class="math-exercise-body" aria-hidden="true">
+<div id="ep-math-sin-en-question" class="math-exercise-question ai-feedback-context" data-math-exercise-source="What is \(\sin(90°)\), exactly? <input type=&quot;text&quot; id=&quot;math-exercise-1-f1&quot; data-vars=&quot;x&quot; autocomplete=&quot;off&quot; autocorrect=&quot;off&quot; spellcheck=&quot;false&quot; class=&quot;math-input math-input-small&quot;>">What is \(\sin(90°)\), exactly? <input type="text" id="math-exercise-1-f1" data-answer="1" data-vars="x" autocomplete="off" autocorrect="off" spellcheck="false" class="math-input math-input-small"></div>
+
+<div class="math-exercise-controls">
+  <button type="button" class="btn btn-primary math-check-btn">✓&nbsp;Check</button>
+  <button type="button" class="btn btn-light math-legend-btn">ⓘ&nbsp;Input help</button>
+  <div class="btn-group">
+    <button type="button" class="btn btn-light math-feedback-btn">💬&nbsp;Feedback</button>
+    <button type="button" class="btn btn-light math-reconfig-btn" title="Change AI configuration">⚙</button>
+  </div>
+</div>
+<div class="math-legend-panel" style="display:none;"></div>
+<div class="math-feedback-area"></div>
+</div>
+</div>
+</section>
+<section id="graph-as-an-exercise" class="level2">
+<h2 class="anchored" data-anchor-id="graph-as-an-exercise">Graph as an exercise</h2>
+<p>A graph can also be the answer itself. Here the check looks at where you drag the point.</p>
+<iframe src="data:text/html;base64,PCFET0NUWVBFIGh0bWw+CjxodG1sIGxhbmc9ImVuIj4KPGhlYWQ+CjxtZXRhIGNoYXJzZXQ9IlVURi04Ij4KPHNjcmlwdCBzcmM9ImRhdGE6dGV4dC9qYXZhc2NyaXB0O2Jhc2U2NCxaMnh2WW1Gc1ZHaHBjeTVEVkUxZlEwOUpYMFpTUVUxRlgxTlVRVkpVVlZBOWUzQnliM1J2WTI5c09pSmpkRzB0WTI5cExXWnlZVzFsTFhOMFlYSjBkWEFpTEhabGNuTnBiMjQ2TVgwN0NpOHZJRXh2WVdRZ1ltVm1iM0psSUhSb1pTQnZjbWxuYVc1aGJDQk5ZWFJvU21GNElEUWdZbkp2ZDNObGNpQmpiMjF3YjI1bGJuUXVJRlJvYVhNZ1ptbHNaU0JqYjI1bWFXZDFjbVZ6Q2k4dklFMWhkR2hLWVhnN0lHbDBJR1JsYkdsaVpYSmhkR1ZzZVNCdVpXbDBhR1Z5SUd4dllXUnpJRzV2Y2lCeVpYQnNZV05sY3lCMGFHVWdkbVZ1Wkc5eUlITmpjbWx3ZEM0S0x5OGdRV04wYVhaaGRHbHZiaUJwYmlCS1UxaEhjbUZ3YUNCcGN5Qm5ZWFJsWkNCdmJpQmhJSE4xY0hCdmNuUmxaQ0J3Y21VdGJHOWhaR1Z5SUdodmIyc3VDaWhtZFc1amRHbHZiaUFvS1NCN0NpQWdKM1Z6WlNCemRISnBZM1FuT3dvZ0lHbG1JQ2h6Wld4bUxtOXlhV2RwYmlBaFBUMGdKMjUxYkd3bktTQnlaWFIxY200N0NpQWdZMjl1YzNRZ1kyOXVabWxuSUQwZ2QybHVaRzkzTGsxaGRHaEtZWGdnZkh3Z2UzMDdDaUFnWTI5dWMzUWdjM1JoY25SMWNDQTlJR052Ym1acFp5NXpkR0Z5ZEhWd0lIeDhJSHQ5T3dvZ0lDOHZJRUYxZEdodmNtVmtJSE4wWVhKMGRYQWdZMjlrWlM5aFpHRndkRzl5Y3lCdmQyNGdkR2hsYVhJZ2JHbG1aV041WTJ4bElHRnVaQ0IwY21GdWMzQnZjblF1SUV4bFlYWmxDaUFnTHk4Z2RHaGxhWElnWTI5dVptbG5kWEpoZEdsdmJpQnBiblJoWTNRZ2NtRjBhR1Z5SUhSb1lXNGdjMmxzWlc1MGJIa2djbVZ3YkdGamFXNW5JSFJvWVhRZ1ltVm9ZWFpwYjNJdUNpQWdhV1lnS0hOMFlYSjBkWEF1Y21WaFpIa2dJVDA5SUhWdVpHVm1hVzVsWkNCOGZBb2dJQ0FnSUNBb2MzUmhjblIxY0M1aFpHRndkRzl5SUNFOUlHNTFiR3dnSmlZZ2MzUmhjblIxY0M1aFpHRndkRzl5SUNFOVBTQW5Zbkp2ZDNObGNrRmtZWEIwYjNJbktTa2djbVYwZFhKdU93b2dJQzh2SUU5dWJIa2dkR2hsSUhCaFkydGhaMlVnY0hKdlpIVmpaWElnZEdoaGRDQmhiSE52SUdWdGFYUnpJSFJvWlNCd1lYSmxiblFnWTI5dmNtUnBibUYwYjNJZ2MyVjBjd29nSUM4dklIUm9hWE1nWTJGd1lXSnBiR2wwZVM0Z1VHeGhhVzR2WTNWemRHOXRJSE4wWVc1a1lXeHZibVVnY0hKbExXeHZZV1JsY25NZ2EyVmxjQ0J1WVhScGRtVWdkR2x0YVc1bkxnb2dJR052Ym5OMElHTnZhU0E5SUhkcGJtUnZkeTVEVkUxZlEwOUpYMFpTUVUxRlgxTlVRVkpVVlZBN0NpQWdiR1YwSUhCbGNtMXBjM05wYjI0N0NpQWdablZ1WTNScGIyNGdjR0Z5Wlc1MFVHVnliV2x6YzJsdmJpZ3BJSHNLSUNBZ0lHbG1JQ2h3WlhKdGFYTnphVzl1S1NCeVpYUjFjbTRnY0dWeWJXbHpjMmx2YmpzS0lDQWdJR2xtSUNoamIya3VjSEp2ZEc5amIyd2dJVDA5SUNkamRHMHRZMjlwTFdaeVlXMWxMWE4wWVhKMGRYQW5JSHg4SUdOdmFTNTJaWEp6YVc5dUlDRTlQU0F4Q2lBZ0lDQWdJQ0FnZkh3Z0lYZHBibVJ2ZHk1d1lYSmxiblFnZkh3Z2QybHVaRzkzTG5CaGNtVnVkQ0E5UFQwZ2QybHVaRzkzS1NCMGFISnZkeUJ1WlhjZ1JYSnliM0lvSjBsdWRtRnNhV1FnUTFSTklHWnlZVzFsSUhOMFlYSjBkWEFnWTJGd1lXSnBiR2wwZVNjcE93b2dJQ0FnWTI5dWMzUWdjR0Z5Wlc1MElEMGdkMmx1Wkc5M0xuQmhjbVZ1ZERzS0lDQWdJR052Ym5OMElHNXZibU5sSUQwZ1FYSnlZWGt1Wm5KdmJTaGpjbmx3ZEc4dVoyVjBVbUZ1Wkc5dFZtRnNkV1Z6S0c1bGR5QlZhVzUwTXpKQmNuSmhlU2cwS1Nrc0NpQWdJQ0FnSUNoMllXeDFaU2tnUFQ0Z2RtRnNkV1V1ZEc5VGRISnBibWNvTVRZcExuQmhaRk4wWVhKMEtEZ3NJQ2N3SnlrcExtcHZhVzRvSnljcE93b2dJQ0FnY0dWeWJXbHpjMmx2YmlBOUlHNWxkeUJRY205dGFYTmxLQ2h5WlhOdmJIWmxMQ0J5WldwbFkzUXBJRDArSUhzS0lDQWdJQ0FnWm5WdVkzUnBiMjRnY21WalpXbDJaU2hsZG1WdWRDa2dld29nSUNBZ0lDQWdJR052Ym5OMElHUmhkR0VnUFNCbGRtVnVkQzVrWVhSaE93b2dJQ0FnSUNBZ0lHbG1JQ2hsZG1WdWRDNXpiM1Z5WTJVZ0lUMDlJSEJoY21WdWRDQjhmQ0FoWkdGMFlTQjhmQ0JrWVhSaExuQnliM1J2WTI5c0lDRTlQU0JqYjJrdWNISnZkRzlqYjJ3S0lDQWdJQ0FnSUNBZ0lDQWdmSHdnWkdGMFlTNTJaWEp6YVc5dUlDRTlQU0JqYjJrdWRtVnljMmx2YmlCOGZDQmtZWFJoTG01dmJtTmxJQ0U5UFNCdWIyNWpaUW9nSUNBZ0lDQWdJQ0FnSUNCOGZDQW9aR0YwWVM1MGVYQmxJQ0U5UFNBbllXeHNiM2NuSUNZbUlHUmhkR0V1ZEhsd1pTQWhQVDBnSjJWeWNtOXlKeWtwSUhKbGRIVnlianNLSUNBZ0lDQWdJQ0IzYVc1a2IzY3VjbVZ0YjNabFJYWmxiblJNYVhOMFpXNWxjaWduYldWemMyRm5aU2NzSUhKbFkyVnBkbVVwT3dvZ0lDQWdJQ0FnSUdsbUlDaGtZWFJoTG5SNWNHVWdQVDA5SUNkaGJHeHZkeWNwSUhKbGMyOXNkbVVvS1RzS0lDQWdJQ0FnSUNCbGJITmxJSEpsYW1WamRDaHVaWGNnUlhKeWIzSW9KME5VVFNCbWNtRnRaU0IzYjNKclpYSWdjM1JoY25SMWNDQmtaV05wYzJsdmJpQm1ZV2xzWldRbktTazdDaUFnSUNBZ0lIMEtJQ0FnSUNBZ2QybHVaRzkzTG1Ga1pFVjJaVzUwVEdsemRHVnVaWElvSjIxbGMzTmhaMlVuTENCeVpXTmxhWFpsS1RzS0lDQWdJQ0FnY0dGeVpXNTBMbkJ2YzNSTlpYTnpZV2RsS0h0d2NtOTBiMk52YkRvZ1kyOXBMbkJ5YjNSdlkyOXNMQ0IyWlhKemFXOXVPaUJqYjJrdWRtVnljMmx2Yml3Z2RIbHdaVG9nSjNKbGNYVmxjM1FuTENCdWIyNWpaWDBzSUNjcUp5azdDaUFnSUNCOUtUc0tJQ0FnSUhKbGRIVnliaUJ3WlhKdGFYTnphVzl1T3dvZ0lIMEtJQ0F2THlCVGRHRjBhV01nYUc5emRITWdjM1ZqYUNCaGN5QkhhWFJJZFdJZ1VHRm5aWE1nWlhod2IzTmxJRU5QVWxNZ1luVjBJR05oYm01dmRDQnpkWEJ3YkhrZ1EwOVNVQzRLSUNBdkx5QlVhR2x6SUdWNGNHeHBZMmwwSUdOdmJuTjFiV1Z5SUc5d2RHbHZiaUJoWkdSeklFTlBVbE1nY21WeGRXVnpkSE03SUhSb1pTQmtaV1poZFd4MElIUnlZVzV6Y0c5eWRBb2dJQzh2SUdGdVpDQmhkWFJvYjNKbFpDQnNiMkZrWlhKeklHdGxaWEFnZEdobGFYSWdaWGhwYzNScGJtY2diM2R1WlhKemFHbHdMZ29nSUdOdmJuTjBJR052Y25NZ1BTQmtiMk4xYldWdWRDNWpkWEp5Wlc1MFUyTnlhWEIwUHk1blpYUkJkSFJ5YVdKMWRHVW9KMlJoZEdFdFkzUnRMVzFoZEdocVlYZ3RkSEpoYm5Od2IzSjBKeWtnUFQwOUlDZGpiM0p6SnpzS0lDQnBaaUFvWTI5eWN5QW1KaUJqYjI1bWFXY3ViRzloWkdWeVB5NXlaWEYxYVhKbElEMDlJRzUxYkd3cElIc0tJQ0FnSUdOdmJtWnBaeTVzYjJGa1pYSWdQU0JQWW1wbFkzUXVZWE56YVdkdUtIdDlMQ0JqYjI1bWFXY3ViRzloWkdWeUxDQjdDaUFnSUNBZ0lISmxjWFZwY21Vb1ptbHNaU2tnZXdvZ0lDQWdJQ0FnSUhKbGRIVnliaUJ1WlhjZ1VISnZiV2x6WlNnb2NtVnpiMngyWlN3Z2NtVnFaV04wS1NBOVBpQjdDaUFnSUNBZ0lDQWdJQ0JqYjI1emRDQnpZM0pwY0hRZ1BTQmtiMk4xYldWdWRDNWpjbVZoZEdWRmJHVnRaVzUwS0NkelkzSnBjSFFuS1RzS0lDQWdJQ0FnSUNBZ0lITmpjbWx3ZEM1emNtTWdQU0JtYVd4bE93b2dJQ0FnSUNBZ0lDQWdjMk55YVhCMExtTm9ZWEp6WlhRZ1BTQW5WVlJHTFRnbk93b2dJQ0FnSUNBZ0lDQWdjMk55YVhCMExtTnliM056VDNKcFoybHVJRDBnSjJGdWIyNTViVzkxY3ljN0NpQWdJQ0FnSUNBZ0lDQnpZM0pwY0hRdWIyNXNiMkZrSUQwZ2NtVnpiMngyWlRzS0lDQWdJQ0FnSUNBZ0lITmpjbWx3ZEM1dmJtVnljbTl5SUQwZ0tDa2dQVDRnY21WcVpXTjBLRzVsZHlCRmNuSnZjaWduUTJGdWJtOTBJR3h2WVdRZ1RXRjBhRXBoZUNCamIyMXdiMjVsYm5RNklDY2dLeUJtYVd4bEtTazdDaUFnSUNBZ0lDQWdJQ0JrYjJOMWJXVnVkQzVvWldGa0xtRndjR1Z1WkVOb2FXeGtLSE5qY21sd2RDazdDaUFnSUNBZ0lDQWdmU2s3Q2lBZ0lDQWdJSDBLSUNBZ0lIMHBPd29nSUgwS0lDQmpiMjVtYVdjdWMzUmhjblIxY0NBOUlFOWlhbVZqZEM1aGMzTnBaMjRvZTMwc0lITjBZWEowZFhBc0lIc0tJQ0FnSUhKbFlXUjVLQ2tnZXdvZ0lDQWdJQ0F2THlCQmJtOTBhR1Z5SUdOdmJYQnZibVZ1ZENCallXNGdjMlZzWldOMElHRnVJR0ZrWVhCMGIzSWdZV1owWlhJZ2RHaHBjeUJ3Y21VdGJHOWhaR1Z5SUhKaGJpNEtJQ0FnSUNBZ2FXWWdLRTFoZEdoS1lYZ3VZMjl1Wm1sbkxuTjBZWEowZFhBdVlXUmhjSFJ2Y2lBaFBUMGdKMkp5YjNkelpYSkJaR0Z3ZEc5eUp5a2dld29nSUNBZ0lDQWdJSEpsZEhWeWJpQk5ZWFJvU21GNExuTjBZWEowZFhBdVpHVm1ZWFZzZEZKbFlXUjVLQ2s3Q2lBZ0lDQWdJSDBLSUNBZ0lDQWdZMjl1YzNRZ1luSnZkM05sY2tGa1lYQjBiM0lnUFNCTllYUm9TbUY0TG5OMFlYSjBkWEF1WTI5dWMzUnlkV04wYjNKekxtSnliM2R6WlhKQlpHRndkRzl5T3dvZ0lDQWdJQ0JqYjI1emRDQnZjbWxuYVc1aGJFSnliM2R6WlhKQlpHRndkRzl5SUQwZ1RXRjBhRXBoZUM1ZlB5NWhaR0Z3ZEc5eWN6OHVZbkp2ZDNObGNrRmtZWEIwYjNJL0xtSnliM2R6WlhKQlpHRndkRzl5T3dvZ0lDQWdJQ0JwWmlBb0lXOXlhV2RwYm1Gc1FuSnZkM05sY2tGa1lYQjBiM0lnZkh3Z1luSnZkM05sY2tGa1lYQjBiM0lnSVQwOUlHOXlhV2RwYm1Gc1FuSnZkM05sY2tGa1lYQjBiM0lwSUhzS0lDQWdJQ0FnSUNCeVpYUjFjbTRnVFdGMGFFcGhlQzV6ZEdGeWRIVndMbVJsWm1GMWJIUlNaV0ZrZVNncE93b2dJQ0FnSUNCOUNpQWdJQ0FnSUUxaGRHaEtZWGd1YzNSaGNuUjFjQzV5WldkcGMzUmxja052Ym5OMGNuVmpkRzl5S0NkamRHMVBjR0Z4ZFdWWGIzSnJaWEpCWkdGd2RHOXlKeXdnWm5WdVkzUnBiMjRnS0NrZ2V3b2dJQ0FnSUNBZ0lHTnZibk4wSUdGa1lYQjBiM0lnUFNCaWNtOTNjMlZ5UVdSaGNIUnZjaWhOWVhSb1NtRjRMbU52Ym1acFp5NWljbTkzYzJWeVFXUmhjSFJ2Y2lrN0NpQWdJQ0FnSUNBZ1lXUmhjSFJ2Y2k1amNtVmhkR1ZYYjNKclpYSWdQU0JoYzNsdVl5Qm1kVzVqZEdsdmJpQW9iR2x6ZEdWdVpYSXNJRzl3ZEdsdmJuTXBJSHNLSUNBZ0lDQWdJQ0FnSUdsbUlDaGpiMmtwSUdGM1lXbDBJSEJoY21WdWRGQmxjbTFwYzNOcGIyNG9LVHNLSUNBZ0lDQWdJQ0FnSUdOdmJuTjBJR1pwYkdVZ1BTQnZjSFJwYjI1ekxuQmhkR2dnS3lBbkx5Y2dLeUJ2Y0hScGIyNXpMbmR2Y210bGNqc0tJQ0FnSUNBZ0lDQWdJQzh2SUZObGNtbGhiR2w2WlNCamIyNW1hV2QxY21GMGFXOXVJR0Z6SUdSaGRHRTZJRzV2SUhOMWNIQnNhV1ZrSUhaaGJIVmxJR2x6SUdWNFpXTjFkR0ZpYkdVS0lDQWdJQ0FnSUNBZ0lDOHZJSE52ZFhKalpTNGdWR2hwY3lCeWRXNXpJRTFoZEdoS1lYZ25jeUJ2Y21sbmFXNWhiQ0JUVWtVZ2QyOXlhMlZ5SUdGdVpDQnRZWFJvYldGd2N5NEtJQ0FnSUNBZ0lDQWdJR3hsZENCM2IzSnJaWEpUYjNWeVkyVWdQU0JtYVd4bE93b2dJQ0FnSUNBZ0lDQWdhV1lnS0dOdmNuTXBJSHNLSUNBZ0lDQWdJQ0FnSUNBZ1kyOXVjM1FnY21WemNHOXVjMlVnUFNCaGQyRnBkQ0JtWlhSamFDaG1hV3hsTENCN2JXOWtaVG9nSjJOdmNuTW5MQ0JqY21Wa1pXNTBhV0ZzY3pvZ0oyOXRhWFFuZlNrN0NpQWdJQ0FnSUNBZ0lDQWdJR2xtSUNnaGNtVnpjRzl1YzJVdWIyc3BJSFJvY205M0lHNWxkeUJGY25KdmNpZ25RMkZ1Ym05MElHeHZZV1FnVFdGMGFFcGhlQ0IzYjNKclpYSTZJQ2NnS3lCeVpYTndiMjV6WlM1emRHRjBkWE1nS3lBbklDY2dLeUJtYVd4bEtUc0tJQ0FnSUNBZ0lDQWdJQ0FnTHk4Z1NXMXdiM0owSUhSb1pTQjFibU5vWVc1blpXUWdiMlptYVdOcFlXd2dkMjl5YTJWeUlHSjVkR1Z6TGlCSmRITWdZV0p6YjJ4MWRHVWdiV0Z3Y3dvZ0lDQWdJQ0FnSUNBZ0lDQXZMeUJWVWt3Z2MzUnBiR3dnWW1Wc2IyNW5jeUIwYnlCTllYUm9TbUY0T3lCbVpYUmphQ0JoYm1RZ2QyOXlhMlZ5SUdWeWNtOXljeUJ3Y205d1lXZGhkR1V1Q2lBZ0lDQWdJQ0FnSUNBZ0lIZHZjbXRsY2xOdmRYSmpaU0E5SUNka1lYUmhPblJsZUhRdmFtRjJZWE5qY21sd2REdGphR0Z5YzJWMFBYVjBaaTA0TENjZ0t5QmxibU52WkdWVlVrbERiMjF3YjI1bGJuUW9ZWGRoYVhRZ2NtVnpjRzl1YzJVdWRHVjRkQ2dwS1RzS0lDQWdJQ0FnSUNBZ0lIMEtJQ0FnSUNBZ0lDQWdJR052Ym5OMElITnZkWEpqWlNBOUlDZHpaV3htTG0xaGNITWdQU0FuSUNzZ1NsTlBUaTV6ZEhKcGJtZHBabmtvYjNCMGFXOXVjeTV0WVhCektTQXJDaUFnSUNBZ0lDQWdJQ0FnSUNjN0lHbHRjRzl5ZEZOamNtbHdkSE1vSnlBcklFcFRUMDR1YzNSeWFXNW5hV1o1S0hkdmNtdGxjbE52ZFhKalpTa2dLeUFuS1Rzbk93b2dJQ0FnSUNBZ0lDQWdZMjl1YzNRZ2QyOXlhMlZ5SUQwZ2JtVjNJRmR2Y210bGNpZ25aR0YwWVRwMFpYaDBMMnBoZG1GelkzSnBjSFE3WTJoaGNuTmxkRDExZEdZdE9Dd25JQ3NnWlc1amIyUmxWVkpKUTI5dGNHOXVaVzUwS0hOdmRYSmpaU2twT3dvZ0lDQWdJQ0FnSUNBZ2QyOXlhMlZ5TG05dWJXVnpjMkZuWlNBOUlHeHBjM1JsYm1WeU93b2dJQ0FnSUNBZ0lDQWdjbVYwZFhKdUlIZHZjbXRsY2pzS0lDQWdJQ0FnSUNCOU93b2dJQ0FnSUNBZ0lISmxkSFZ5YmlCaFpHRndkRzl5T3dvZ0lDQWdJQ0I5S1RzS0lDQWdJQ0FnVFdGMGFFcGhlQzV6ZEdGeWRIVndMblZ6WlVGa1lYQjBiM0lvSjJOMGJVOXdZWEYxWlZkdmNtdGxja0ZrWVhCMGIzSW5MQ0IwY25WbEtUc0tJQ0FnSUNBZ2NtVjBkWEp1SUUxaGRHaEtZWGd1YzNSaGNuUjFjQzVrWldaaGRXeDBVbVZoWkhrb0tUc0tJQ0FnSUgwS0lDQjlLVHNLSUNCM2FXNWtiM2N1VFdGMGFFcGhlQ0E5SUdOdmJtWnBaenNLZlNrb0tUc0siPjwvc2NyaXB0Pgo8c2NyaXB0IGlkPSJNYXRoSmF4LXNjcmlwdCIgYXN5bmMgc3JjPSJodHRwczovL2Nkbi5qc2RlbGl2ci5uZXQvbnBtL21hdGhqYXhANC4xLjMvdGV4LW1tbC1zdmcuanMiPjwvc2NyaXB0Pgo8c2NyaXB0IHNyYz0iaHR0cHM6Ly9jZG4uanNkZWxpdnIubmV0L25wbS9qc3hncmFwaEAxLjE0LjIvZGlzdHJpYi9qc3hncmFwaGNvcmUuanMiPjwvc2NyaXB0Pgo8c3R5bGU+QGltcG9ydCB1cmwoImh0dHBzOi8vY2RuLmpzZGVsaXZyLm5ldC9ucG0vanN4Z3JhcGhAMS4xNC4yL2Rpc3RyaWIvanN4Z3JhcGguY3NzIik7PC9zdHlsZT4KPHN0eWxlPmh0bWwsYm9keXttYXJnaW46MDtwYWRkaW5nOjA7d2lkdGg6MTAwJTtoZWlnaHQ6MTAwJTtvdmVyZmxvdzpoaWRkZW47fS5qeGdib3h7Ym9yZGVyOm5vbmU7Ym9yZGVyLXJhZGl1czowcHg7fTwvc3R5bGU+CjwvaGVhZD4KPGJvZHk+CjxkaXYgaWQ9IkpYR2E2YzBmZTY2XzE2NmVfOTNiYV84MWQ2Xzk0YmI3YjBmIiBjbGFzcz0ianhnYm94IiBzdHlsZT0id2lkdGg6MTAwJTtoZWlnaHQ6MTAwJTtkaXNwbGF5OmJsb2NrO29iamVjdC1maXQ6ZmlsbDtib3gtc2l6aW5nOmJvcmRlci1ib3g7Ij48L2Rpdj4KPHNjcmlwdD4oZnVuY3Rpb24gKCkgewogICd1c2Ugc3RyaWN0JzsKICBjb25zdCBwcm90b2NvbCA9ICdqc3hncmFwaC1xdWFydG8tYXNzZXNzbWVudCc7CiAgY29uc3QgdmVyc2lvbiA9IDE7CiAgY29uc3QgYXNzZXNzbWVudElkID0gImVwLWhvY2hwdW5rdC1lbiI7CiAgLy8gQk9BUkRJRCBuYW1lcyB0aGUgYm9hcmQncyBjb250YWluZXIgZXZlcnl3aGVyZSBpbiB0aGUgYm9hcmQgY29kZSAoZS5nLgogIC8vIGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKEJPQVJESUQpKSwgbm90IG9ubHkgaW4gaW5pdEJvYXJkKEJPQVJESUQsIC4uLikuCiAgLy8gU2V0IGhlcmUsIHNvIHRoZSBib2FyZCBjb2RlIGlzIG5vdCBjaGFuZ2VkICgndXNlIHN0cmljdCcgc3RheXMgZmlyc3QpOwogIC8vIGEgd2luZG93IHByb3BlcnR5LCBzbyBwYWdlIGNvZGUgbWF5IHN0aWxsIGRlY2xhcmUgaXRzIG93biBCT0FSRElELgogIHdpbmRvdy5CT0FSRElEID0gIkpYR2E2YzBmZTY2XzE2NmVfOTNiYV84MWQ2Xzk0YmI3YjBmIjsKICBsZXQgcmVnaXN0cmF0aW9uID0gbnVsbDsKCiAgYXN5bmMgZnVuY3Rpb24gc3ZnVG9QbmcoZGF0YVVyaSwgYm9hcmQpIHsKICAgIHJldHVybiBuZXcgUHJvbWlzZSgocmVzb2x2ZSwgcmVqZWN0KSA9PiB7CiAgICAgIGNvbnN0IGltYWdlID0gbmV3IEltYWdlKCk7CiAgICAgIGltYWdlLm9ubG9hZCA9ICgpID0+IHsKICAgICAgICBjb25zdCBjYW52YXMgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KCdjYW52YXMnKTsKICAgICAgICBjYW52YXMud2lkdGggPSBNYXRoLm1heCgxLCBNYXRoLnJvdW5kKGJvYXJkLmNhbnZhc1dpZHRoIHx8IGltYWdlLndpZHRoIHx8IDgwMCkpOwogICAgICAgIGNhbnZhcy5oZWlnaHQgPSBNYXRoLm1heCgxLCBNYXRoLnJvdW5kKGJvYXJkLmNhbnZhc0hlaWdodCB8fCBpbWFnZS5oZWlnaHQgfHwgNjAwKSk7CiAgICAgICAgY29uc3QgY29udGV4dCA9IGNhbnZhcy5nZXRDb250ZXh0KCcyZCcpOwogICAgICAgIGNvbnRleHQuZmlsbFN0eWxlID0gJyNmZmZmZmYnOwogICAgICAgIGNvbnRleHQuZmlsbFJlY3QoMCwgMCwgY2FudmFzLndpZHRoLCBjYW52YXMuaGVpZ2h0KTsKICAgICAgICBjb250ZXh0LmRyYXdJbWFnZShpbWFnZSwgMCwgMCwgY2FudmFzLndpZHRoLCBjYW52YXMuaGVpZ2h0KTsKICAgICAgICByZXNvbHZlKGNhbnZhcy50b0RhdGFVUkwoJ2ltYWdlL3BuZycpKTsKICAgICAgfTsKICAgICAgaW1hZ2Uub25lcnJvciA9ICgpID0+IHJlamVjdChuZXcgRXJyb3IoJ0NvdWxkIG5vdCByZW5kZXIgdGhlIEpTWEdyYXBoIGJvYXJkJykpOwogICAgICBpbWFnZS5zcmMgPSBkYXRhVXJpOwogICAgfSk7CiAgfQoKICBmdW5jdGlvbiByZXNvbHZlQm9hcmQoc3BlYykgewogICAgaWYgKHNwZWMgJiYgdHlwZW9mIHNwZWMuYm9hcmQgPT09ICdmdW5jdGlvbicpIHJldHVybiBzcGVjLmJvYXJkKCk7CiAgICBpZiAoc3BlYyAmJiBzcGVjLmJvYXJkKSByZXR1cm4gc3BlYy5ib2FyZDsKICAgIGNvbnN0IGJvYXJkcyA9IE9iamVjdC52YWx1ZXMoSlhHLmJvYXJkcyB8fCB7fSk7CiAgICByZXR1cm4gYm9hcmRzLmxlbmd0aCA/IGJvYXJkc1swXSA6IG51bGw7CiAgfQoKICAvLyBUaGUgZXh0ZW5zaW9uIHJlcXVpcmVzIEpTWEdyYXBoIDEuMTQuMiBvciBsYXRlciBhbmQgaGFzIG5vIHdvcmthcm91bmRzCiAgLy8gZm9yIG9sZGVyIHZlcnNpb25zIChhIHNyY19qeGcgdGhhdCBsb2FkcyBvbmUgaXMgdXNlZCBhdCB0aGUgdXNlcidzIG93biByaXNrKS4KICB0cnkgewogICAgY29uc3QgdiA9IFN0cmluZyhKWEcudmVyc2lvbikuc3BsaXQoJy4nKS5tYXAoKG4pID0+IHBhcnNlSW50KG4sIDEwKSk7CiAgICBpZiAodlswXSA9PT0gMSAmJiAodlsxXSA8IDE0IHx8ICh2WzFdID09PSAxNCAmJiB2WzJdIDwgMikpKSB7CiAgICAgIGNvbnNvbGUud2FybignVGhlIGpzeGdyYXBoIFF1YXJ0byBleHRlbnNpb24gcmVxdWlyZXMgSlNYR3JhcGggMS4xNC4yIG9yIGxhdGVyOyB0aGlzIHBhZ2UgbG9hZHMgJyArIEpYRy52ZXJzaW9uICsgJy4nKTsKICAgIH0KICB9IGNhdGNoIChlcnJvcikgeyAvKiBubyB2ZXJzaW9uIHRvIGNoZWNrICovIH0KCiAgLy8gSlNYR3JhcGgncyBvd24gUmVzaXplT2JzZXJ2ZXIgcmVzaXplcyBlYWNoIGJvYXJkIHdpdGggaXRzIGNvbnRhaW5lciAoYQogIC8vIHRhYiBvciBjb2xsYXBzZWQgYmxvY2sgc2hvd24sIGEgbmFycm93ZXIgd2luZG93KSwgYW5kIHNpbmNlIDEuMTQuMiBhCiAgLy8gYm9hcmQgY3JlYXRlZCB3aGlsZSBoaWRkZW4gZ2V0cyB0aGUgdmlldyBpdHMgY29kZSBhc2tlZCBmb3Igd2hlbiBzaG93bi4KICAvLyBPbmUgZ2FwIHJlbWFpbnMgKHN0aWxsIG9wZW4gaW4gMS4xNC4yKTogb24gcmVzaXppbmcsIEpTWEdyYXBoIGtlZXBzIGEKICAvLyBrZWVwYXNwZWN0cmF0aW8gYm9hcmQncyB2ZXJ0aWNhbCBleHRlbnQgYW5kIGNyb3BzIHRoZSBzaWRlcyB3aGVuIHRoZQogIC8vIGNvbnRhaW5lciBnZXRzIG5hcnJvd2VyIHRoYW4gdGhlIGJveC4gU3VjaCBhIGJvYXJkIHNob3dzIHRoZSB3aG9sZSB2aWV3CiAgLy8gaXRzIGNvZGUsIHRoZSB1c2VyICh6b29tLCBwYW4pIG9yIGluaXRCb2FyZCBzZXQsIGZpdHRlZCB3aXRoIG9uZSBzY2FsZQogIC8vIGFuZCBjZW50cmVkLCBhcyBpbml0Qm9hcmQgZG9lczsgaXRzIGhvbWUgYnV0dG9uICh6b29tMTAwKSBzaG93cyB0aGUgd2hvbGUKICAvLyBpbml0aWFsIGJveCB0aGUgc2FtZSB3YXkuCiAgZnVuY3Rpb24gZml0KGJveCwgd2lkdGgsIGhlaWdodCkgeyAgLy8ga2VlcHMgdGhlIGRpcmVjdGlvbiBvZiBlYWNoIGF4aXMKICAgIGNvbnN0IGR4ID0gYm94WzJdIC0gYm94WzBdLCBkeSA9IGJveFsxXSAtIGJveFszXTsKICAgIGNvbnN0IHNjYWxlID0gTWF0aC5taW4od2lkdGggLyBNYXRoLmFicyhkeCksIGhlaWdodCAvIE1hdGguYWJzKGR5KSk7CiAgICBjb25zdCBoeCA9IE1hdGguc2lnbihkeCkgKiB3aWR0aCAvICgyICogc2NhbGUpLCBoeSA9IE1hdGguc2lnbihkeSkgKiBoZWlnaHQgLyAoMiAqIHNjYWxlKTsKICAgIGNvbnN0IGN4ID0gKGJveFswXSArIGJveFsyXSkgLyAyLCBjeSA9IChib3hbMV0gKyBib3hbM10pIC8gMjsKICAgIHJldHVybiBbY3ggLSBoeCwgY3kgKyBoeSwgY3ggKyBoeCwgY3kgLSBoeV07CiAgfQogIGNvbnN0IGZpbml0ZSA9IChib3gpID0+IEFycmF5LmlzQXJyYXkoYm94KSAmJiBib3gubGVuZ3RoID09PSA0ICYmIGJveC5ldmVyeShOdW1iZXIuaXNGaW5pdGUpOwogIGNvbnN0IHNhbWUgPSAoYSwgYikgPT4gYS5ldmVyeSgodiwgaSkgPT4gTWF0aC5hYnModiAtIGJbaV0pIDw9IDFlLTkgKiBNYXRoLm1heCgxLCBNYXRoLmFicyh2KSkpOwogIGZ1bmN0aW9uIGtlZXBWaWV3KGJvYXJkKSB7CiAgICBjb25zdCBwcm90byA9IEpYRy5Cb2FyZC5wcm90b3R5cGU7CiAgICBsZXQgdmlldyA9IGJvYXJkLmF0dHIuYm91bmRpbmdib3guc2xpY2UoKTsKICAgIGxldCBzaG93biA9IGJvYXJkLmNhbnZhc1dpZHRoID4gMCAmJiBib2FyZC5jYW52YXNIZWlnaHQgPiAwLCBsYXN0ID0gYm9hcmQuZ2V0Qm91bmRpbmdCb3goKSwgb3duID0gZmFsc2U7CiAgICBib2FyZC5zZXRCb3VuZGluZ0JveCA9IGZ1bmN0aW9uIChib3gsIGtlZXBhc3BlY3RyYXRpbywgc2V0Wm9vbSkgewogICAgICAvLyB6b29tMTAwICh0aGUgbmF2aWdhdGlvbiBiYXIncyBob21lIGJ1dHRvbikgYXNrcyBmb3IgdGhlIGluaXRpYWwgYm94CiAgICAgIC8vIHdpdGggSlNYR3JhcGgncyBydWxlLCB3aGljaCBtYXkgY3JvcCBpdDogZml0IGl0IGFzIGluaXRCb2FyZCBkb2VzLgogICAgICBpZiAoIW93biAmJiBrZWVwYXNwZWN0cmF0aW8gJiYgc2V0Wm9vbSA9PT0gJ3Jlc2V0JyAmJiBib3ggPT09IHRoaXMuYXR0ci5ib3VuZGluZ2JveCAmJgogICAgICAgICAgdGhpcy5jYW52YXNXaWR0aCA+IDAgJiYgdGhpcy5jYW52YXNIZWlnaHQgPiAwKSB7CiAgICAgICAgdmlldyA9IGJveC5zbGljZSgpOwogICAgICAgIG93biA9IHRydWU7CiAgICAgICAgdHJ5IHsKICAgICAgICAgIHByb3RvLnNldEJvdW5kaW5nQm94LmNhbGwodGhpcywgZml0KHZpZXcsIHRoaXMuY2FudmFzV2lkdGgsIHRoaXMuY2FudmFzSGVpZ2h0KSwgZmFsc2UsICdyZXNldCcpOwogICAgICAgICAgdGhpcy5rZWVwYXNwZWN0cmF0aW8gPSB0cnVlOwogICAgICAgIH0gZmluYWxseSB7IG93biA9IGZhbHNlOyB9CiAgICAgICAgbGFzdCA9IHRoaXMuZ2V0Qm91bmRpbmdCb3goKTsKICAgICAgICByZXR1cm4gdGhpczsKICAgICAgfQogICAgICBpZiAoIW93biAmJiBmaW5pdGUoYm94KSkgdmlldyA9IGJveC5zbGljZSgpOwogICAgICBwcm90by5zZXRCb3VuZGluZ0JveC5hcHBseSh0aGlzLCBhcmd1bWVudHMpOwogICAgICBpZiAoIW93bikgbGFzdCA9IHRoaXMuZ2V0Qm91bmRpbmdCb3goKTsKICAgICAgcmV0dXJuIHRoaXM7CiAgICB9OwogICAgYm9hcmQucmVzaXplQ29udGFpbmVyID0gZnVuY3Rpb24gKHcsIGgsIGRvbnRzZXQsIGRvbnRTZXRCb3VuZGluZ0JveCkgewogICAgICBpZiAoZG9udFNldEJvdW5kaW5nQm94IHx8ICEodyA+IDAgJiYgaCA+IDApIHx8ICF0aGlzLmtlZXBhc3BlY3RyYXRpbykgcmV0dXJuIHByb3RvLnJlc2l6ZUNvbnRhaW5lci5hcHBseSh0aGlzLCBhcmd1bWVudHMpOwogICAgICBjb25zdCBjdXJyZW50ID0gdGhpcy5nZXRCb3VuZGluZ0JveCgpOwogICAgICBpZiAoc2hvd24gJiYgZmluaXRlKGN1cnJlbnQpICYmICFzYW1lKGN1cnJlbnQsIGxhc3QpKSB2aWV3ID0gY3VycmVudC5zbGljZSgpOyAgLy8gcGFubmVkIHNpbmNlCiAgICAgIHByb3RvLnJlc2l6ZUNvbnRhaW5lci5jYWxsKHRoaXMsIHcsIGgsIGRvbnRzZXQsIHRydWUpOwogICAgICBvd24gPSB0cnVlOwogICAgICB0cnkgewogICAgICAgIHRoaXMuc2V0Qm91bmRpbmdCb3goZml0KHZpZXcsIHcsIGgpLCBmYWxzZSwgJ2tlZXAnKTsgIC8vIGtlZXBzIHRoZSB6b29tIGZhY3RvcnMKICAgICAgICB0aGlzLmtlZXBhc3BlY3RyYXRpbyA9IHRydWU7CiAgICAgIH0gZmluYWxseSB7IG93biA9IGZhbHNlOyB9CiAgICAgIHNob3duID0gdHJ1ZTsKICAgICAgbGFzdCA9IHRoaXMuZ2V0Qm91bmRpbmdCb3goKTsKICAgICAgcmV0dXJuIHRoaXM7CiAgICB9OwogIH0KICBpZiAoSlhHLkpTWEdyYXBoICYmIHR5cGVvZiBKWEcuSlNYR3JhcGguaW5pdEJvYXJkID09PSAnZnVuY3Rpb24nKSB7CiAgICBjb25zdCBpbml0Qm9hcmQgPSBKWEcuSlNYR3JhcGguaW5pdEJvYXJkOwogICAgSlhHLkpTWEdyYXBoLmluaXRCb2FyZCA9IGZ1bmN0aW9uICgpIHsKICAgICAgY29uc3QgYm9hcmQgPSBpbml0Qm9hcmQuYXBwbHkodGhpcywgYXJndW1lbnRzKTsKICAgICAgdHJ5IHsKICAgICAgICBpZiAoYm9hcmQua2VlcGFzcGVjdHJhdGlvICYmICEoYm9hcmQuYXR0ci51bml0eCB8fCBib2FyZC5hdHRyLnVuaXR5KSkga2VlcFZpZXcoYm9hcmQpOwogICAgICB9IGNhdGNoIChlcnJvcikgeyAvKiBrZWVwIHRoZSBib2FyZCB1c2FibGUgKi8gfQogICAgICByZXR1cm4gYm9hcmQ7CiAgICB9OwogIH0KCiAgSlhHLlF1YXJ0b0Fzc2Vzc21lbnQgPSB7CiAgICByZWdpc3RlcihzcGVjKSB7CiAgICAgIHJlZ2lzdHJhdGlvbiA9IHR5cGVvZiBzcGVjID09PSAnZnVuY3Rpb24nID8geyByZXNwb25zZTogc3BlYyB9IDogc3BlYzsKICAgICAgaWYgKCFyZWdpc3RyYXRpb24gfHwgdHlwZW9mIHJlZ2lzdHJhdGlvbi5yZXNwb25zZSAhPT0gJ2Z1bmN0aW9uJykgewogICAgICAgIHRocm93IG5ldyBUeXBlRXJyb3IoJ0Fzc2Vzc21lbnQgcmVnaXN0cmF0aW9uIHJlcXVpcmVzIGEgcmVzcG9uc2UgZnVuY3Rpb24nKTsKICAgICAgfQogICAgfQogIH07CgogIHdpbmRvdy5hZGRFdmVudExpc3RlbmVyKCdtZXNzYWdlJywgYXN5bmMgKGV2ZW50KSA9PiB7CiAgICBjb25zdCBtZXNzYWdlID0gZXZlbnQuZGF0YTsKICAgIGlmIChldmVudC5zb3VyY2UgIT09IHdpbmRvdy5wYXJlbnQgfHwgIW1lc3NhZ2UgfHwgbWVzc2FnZS5wcm90b2NvbCAhPT0gcHJvdG9jb2wgfHwKICAgICAgICBtZXNzYWdlLnZlcnNpb24gIT09IHZlcnNpb24gfHwgbWVzc2FnZS5hc3Nlc3NtZW50SWQgIT09IGFzc2Vzc21lbnRJZCkgcmV0dXJuOwogICAgLy8gJ2xheW91dCcgaXMgc3RpbGwgYWNjZXB0ZWQsIGJ1dCBKU1hHcmFwaCdzIG93biByZXNpemUgb2JzZXJ2ZXIgYWxyZWFkeQogICAgLy8gc2l6ZXMgdGhlIGJvYXJkcyB3aGVuIHRoZSBpZnJhbWUgaXMgc2hvd24gb3IgcmVzaXplZDogbm90aGluZyB0byBkby4KICAgIGlmIChtZXNzYWdlLnR5cGUgPT09ICdsYXlvdXQnKSByZXR1cm47CiAgICBpZiAobWVzc2FnZS50eXBlICE9PSAncmVxdWVzdCcpIHJldHVybjsKICAgIC8vIEJvYXJkIGNvZGUgbWF5IHJlZ2lzdGVyIGluIGEgbG9hZCBoYW5kbGVyOiB3YWl0IGZvciB0aGUgcGFnZSdzIGxvYWQKICAgIC8vIGV2ZW50IChNYXRoSmF4IG1heSBzdGlsbCBiZSBsb2FkaW5nKSwgYXQgbW9zdCBhIGZldyBzZWNvbmRzLgogICAgaWYgKCFyZWdpc3RyYXRpb24gJiYgZG9jdW1lbnQucmVhZHlTdGF0ZSAhPT0gJ2NvbXBsZXRlJykgewogICAgICBhd2FpdCBuZXcgUHJvbWlzZSgocmVzb2x2ZSkgPT4gewogICAgICAgIHdpbmRvdy5hZGRFdmVudExpc3RlbmVyKCdsb2FkJywgcmVzb2x2ZSwge29uY2U6IHRydWV9KTsKICAgICAgICBzZXRUaW1lb3V0KHJlc29sdmUsIDMwMDApOwogICAgICB9KTsKICAgIH0KCiAgICBjb25zdCByZXBseSA9IHsKICAgICAgcHJvdG9jb2wsCiAgICAgIHZlcnNpb24sCiAgICAgIHR5cGU6ICdyZXNwb25zZScsCiAgICAgIGFzc2Vzc21lbnRJZCwKICAgICAgcmVxdWVzdElkOiBtZXNzYWdlLnJlcXVlc3RJZAogICAgfTsKICAgIHRyeSB7CiAgICAgIGlmICghcmVnaXN0cmF0aW9uKSB0aHJvdyBuZXcgRXJyb3IoJ05vIEpTWEdyYXBoIGFzc2Vzc21lbnQgcmVzcG9uc2UgaXMgcmVnaXN0ZXJlZCcpOwogICAgICBjb25zdCByYXcgPSBhd2FpdCByZWdpc3RyYXRpb24ucmVzcG9uc2UoKTsKICAgICAgcmVwbHkucGF5bG9hZCA9IEpTT04ucGFyc2UoSlNPTi5zdHJpbmdpZnkocmF3KSk7CiAgICAgIGlmIChtZXNzYWdlLmluY2x1ZGVBSSAmJiByZWdpc3RyYXRpb24uYWkpIHsKICAgICAgICBjb25zdCBhaVNwZWMgPSByZWdpc3RyYXRpb24uYWk7CiAgICAgICAgY29uc3Qgc3VtbWFyeSA9IHR5cGVvZiBhaVNwZWMuc3VtbWFyeSA9PT0gJ2Z1bmN0aW9uJwogICAgICAgICAgPyBhd2FpdCBhaVNwZWMuc3VtbWFyeShyZXBseS5wYXlsb2FkKQogICAgICAgICAgOiBhaVNwZWMuc3VtbWFyeTsKICAgICAgICByZXBseS5haSA9IHt9OwogICAgICAgIGlmIChzdW1tYXJ5ICE9PSB1bmRlZmluZWQpIHJlcGx5LmFpLnN1bW1hcnkgPSBzdW1tYXJ5OwogICAgICAgIGlmIChhaVNwZWMucmVuZGVyKSB7CiAgICAgICAgICBjb25zdCBib2FyZCA9IHJlc29sdmVCb2FyZChyZWdpc3RyYXRpb24pOwogICAgICAgICAgaWYgKCFib2FyZCB8fCAhYm9hcmQucmVuZGVyZXIgfHwgdHlwZW9mIGJvYXJkLnJlbmRlcmVyLmR1bXBUb0RhdGFVUkkgIT09ICdmdW5jdGlvbicpIHsKICAgICAgICAgICAgdGhyb3cgbmV3IEVycm9yKCdObyByZW5kZXJhYmxlIEpTWEdyYXBoIGJvYXJkIGlzIGF2YWlsYWJsZScpOwogICAgICAgICAgfQogICAgICAgICAgcmVwbHkuYWkuaW1hZ2UgPSBhd2FpdCBzdmdUb1BuZyhib2FyZC5yZW5kZXJlci5kdW1wVG9EYXRhVVJJKGZhbHNlKSwgYm9hcmQpOwogICAgICAgIH0KICAgICAgfQogICAgfSBjYXRjaCAoZXJyb3IpIHsKICAgICAgcmVwbHkuZXJyb3IgPSBlcnJvciAmJiBlcnJvci5tZXNzYWdlID8gZXJyb3IubWVzc2FnZSA6IFN0cmluZyhlcnJvcik7CiAgICB9CiAgICB3aW5kb3cucGFyZW50LnBvc3RNZXNzYWdlKHJlcGx5LCAnKicpOwogIH0pOwp9KSgpOwo8L3NjcmlwdD4KPHNjcmlwdD4oZnVuY3Rpb24gKCkgewogICd1c2Ugc3RyaWN0JzsKCiAgZnVuY3Rpb24gbWVyZ2UoYmFzZSwgZXh0cmEpIHsKICAgIHJldHVybiBPYmplY3QuYXNzaWduKHt9LCBiYXNlLCBleHRyYSB8fCB7fSk7CiAgfQoKICBmdW5jdGlvbiBzdW1tYXJpemVHcmFwaChkYXRhLCBvcHRpb25zKSB7CiAgICBkYXRhID0gZGF0YSB8fCB7fTsKICAgIG9wdGlvbnMgPSBvcHRpb25zIHx8IHt9OwogICAgdmFyIG5vZGVzID0gQXJyYXkuaXNBcnJheShkYXRhLm5vZGVzKSA/IGRhdGEubm9kZXMgOiBbXTsKICAgIHZhciByYXdFZGdlcyA9IEFycmF5LmlzQXJyYXkoZGF0YS5lZGdlcykgPyBkYXRhLmVkZ2VzIDogW107CiAgICB2YXIgdmVydGV4SWRzID0gbm9kZXMubWFwKGZ1bmN0aW9uIChub2RlKSB7IHJldHVybiBub2RlLmlkOyB9KS5zb3J0KGZ1bmN0aW9uIChhLCBiKSB7IHJldHVybiBhIC0gYjsgfSk7CiAgICB2YXIgYWRqYWNlbmN5ID0ge307CiAgICB2ZXJ0ZXhJZHMuZm9yRWFjaChmdW5jdGlvbiAoaWQpIHsgYWRqYWNlbmN5W2lkXSA9IFtdOyB9KTsKICAgIHZhciBlZGdlcyA9IHJhd0VkZ2VzLm1hcChmdW5jdGlvbiAoZWRnZSkgewogICAgICB2YXIgc291cmNlID0gZWRnZVswXTsKICAgICAgdmFyIHRhcmdldCA9IGVkZ2VbMV07CiAgICAgIGlmIChhZGphY2VuY3lbc291cmNlXSkgYWRqYWNlbmN5W3NvdXJjZV0ucHVzaCh0YXJnZXQpOwogICAgICBpZiAoYWRqYWNlbmN5W3RhcmdldF0pIGFkamFjZW5jeVt0YXJnZXRdLnB1c2goc291cmNlKTsKICAgICAgcmV0dXJuIHNvdXJjZSA8IHRhcmdldCA/IFtzb3VyY2UsIHRhcmdldF0gOiBbdGFyZ2V0LCBzb3VyY2VdOwogICAgfSkuc29ydChmdW5jdGlvbiAoYSwgYikgeyByZXR1cm4gYVswXSAtIGJbMF0gfHwgYVsxXSAtIGJbMV07IH0pOwogICAgdmVydGV4SWRzLmZvckVhY2goZnVuY3Rpb24gKGlkKSB7IGFkamFjZW5jeVtpZF0uc29ydChmdW5jdGlvbiAoYSwgYikgeyByZXR1cm4gYSAtIGI7IH0pOyB9KTsKCiAgICB2YXIgdmlzaXRlZCA9IHt9OwogICAgdmFyIGNvbXBvbmVudHMgPSBbXTsKICAgIHZlcnRleElkcy5mb3JFYWNoKGZ1bmN0aW9uIChzdGFydCkgewogICAgICBpZiAodmlzaXRlZFtzdGFydF0pIHJldHVybjsKICAgICAgdmFyIGNvbXBvbmVudCA9IFtdOwogICAgICB2YXIgcXVldWUgPSBbc3RhcnRdOwogICAgICB2aXNpdGVkW3N0YXJ0XSA9IHRydWU7CiAgICAgIHdoaWxlIChxdWV1ZS5sZW5ndGgpIHsKICAgICAgICB2YXIgaWQgPSBxdWV1ZS5zaGlmdCgpOwogICAgICAgIGNvbXBvbmVudC5wdXNoKGlkKTsKICAgICAgICBhZGphY2VuY3lbaWRdLmZvckVhY2goZnVuY3Rpb24gKG5laWdoYm9yKSB7CiAgICAgICAgICBpZiAoIXZpc2l0ZWRbbmVpZ2hib3JdKSB7CiAgICAgICAgICAgIHZpc2l0ZWRbbmVpZ2hib3JdID0gdHJ1ZTsKICAgICAgICAgICAgcXVldWUucHVzaChuZWlnaGJvcik7CiAgICAgICAgICB9CiAgICAgICAgfSk7CiAgICAgIH0KICAgICAgY29tcG9uZW50LnNvcnQoZnVuY3Rpb24gKGEsIGIpIHsgcmV0dXJuIGEgLSBiOyB9KTsKICAgICAgY29tcG9uZW50cy5wdXNoKGNvbXBvbmVudCk7CiAgICB9KTsKCiAgICB2YXIgc3VtbWFyeSA9IHsKICAgICAgcmVwcmVzZW50YXRpb246IGRhdGEucmVwcmVzZW50YXRpb24gfHwgJ3VuZGlyZWN0ZWQtZ3JhcGgnLAogICAgICB2ZXJ0ZXhDb3VudDogdmVydGV4SWRzLmxlbmd0aCwKICAgICAgZWRnZUNvdW50OiBlZGdlcy5sZW5ndGgsCiAgICAgIHZlcnRleElkczogdmVydGV4SWRzLAogICAgICBlZGdlczogZWRnZXMsCiAgICAgIGRlZ3JlZXM6IHZlcnRleElkcy5tYXAoZnVuY3Rpb24gKGlkKSB7IHJldHVybiB7IHZlcnRleDogaWQsIGRlZ3JlZTogYWRqYWNlbmN5W2lkXS5sZW5ndGggfTsgfSksCiAgICAgIGNvbm5lY3RlZDogY29tcG9uZW50cy5sZW5ndGggPT09IDEsCiAgICAgIGNvbXBvbmVudENvdW50OiBjb21wb25lbnRzLmxlbmd0aCwKICAgICAgY29tcG9uZW50czogY29tcG9uZW50cywKICAgICAgaXNvbGF0ZWRWZXJ0aWNlczogdmVydGV4SWRzLmZpbHRlcihmdW5jdGlvbiAoaWQpIHsgcmV0dXJuIGFkamFjZW5jeVtpZF0ubGVuZ3RoID09PSAwOyB9KSwKICAgICAgY3ljbGVSYW5rOiBlZGdlcy5sZW5ndGggLSB2ZXJ0ZXhJZHMubGVuZ3RoICsgY29tcG9uZW50cy5sZW5ndGgKICAgIH07CiAgICBpZiAob3B0aW9ucy5mZWVkYmFja1BvbGljeSAhPT0gdW5kZWZpbmVkKSB7CiAgICAgIHN1bW1hcnkuZmVlZGJhY2tQb2xpY3kgPSBTdHJpbmcob3B0aW9ucy5mZWVkYmFja1BvbGljeSk7CiAgICB9CiAgICBpZiAob3B0aW9ucy5leHRyYSAmJiB0eXBlb2Ygb3B0aW9ucy5leHRyYSA9PT0gJ29iamVjdCcpIHsKICAgICAgc3VtbWFyeS5leHRyYSA9IG9wdGlvbnMuZXh0cmE7CiAgICB9CiAgICByZXR1cm4gc3VtbWFyeTsKICB9CgogIGZ1bmN0aW9uIGNyZWF0ZUdyYXBoRWRpdG9yKG9wdGlvbnMpIHsKICAgIG9wdGlvbnMgPSBvcHRpb25zIHx8IHt9OwogICAgdmFyIGJvYXJkID0gb3B0aW9ucy5ib2FyZDsKICAgIGlmICghYm9hcmQgfHwgdHlwZW9mIGJvYXJkLmNyZWF0ZSAhPT0gJ2Z1bmN0aW9uJykgewogICAgICB0aHJvdyBuZXcgVHlwZUVycm9yKCdHcmFwaCBlZGl0b3IgcmVxdWlyZXMgYSBKU1hHcmFwaCBib2FyZCcpOwogICAgfQoKICAgIHZhciBsYWJlbHMgPSBtZXJnZSh7CiAgICAgIGRlbGV0ZVNlbGVjdGVkOiAnRGVsZXRlIHNlbGVjdGVkJywKICAgICAgY2xlYXJHcmFwaDogJ0NsZWFyIGdyYXBoJywKICAgICAgc2hvd0NvbnRyb2xzOiAnU2hvdyBjb250cm9scycsCiAgICAgIGhpZGVDb250cm9sczogJ0hpZGUgY29udHJvbHMnCiAgICB9LCBvcHRpb25zLmxhYmVscyk7CiAgICB2YXIgaW5zdHJ1Y3Rpb25zID0gb3B0aW9ucy5pbnN0cnVjdGlvbnMgfHwgWwogICAgICAnQ2xpY2sgZW1wdHkgc3BhY2UgdG8gYWRkIGEgdmVydGV4LicsCiAgICAgICdDbGljayB0d28gdmVydGljZXMgdG8gYWRkIG9yIHJlbW92ZSB0aGVpciBlZGdlLicsCiAgICAgICdEcmFnIGEgdmVydGV4IHRvIG1vdmUgaXQuJywKICAgICAgJ1NlbGVjdCBhIHZlcnRleCwgdGhlbiBjaG9vc2UgRGVsZXRlIHNlbGVjdGVkIHRvIHJlbW92ZSBpdC4nCiAgICBdOwogICAgdmFyIHBvaW50QXR0cmlidXRlcyA9IG1lcmdlKHsKICAgICAgc2l6ZTogNiwKICAgICAgZml4ZWQ6IGZhbHNlLAogICAgICBzaG93SW5mb2JveDogZmFsc2UsCiAgICAgIGhpZ2hsaWdodDogZmFsc2UKICAgIH0sIG9wdGlvbnMucG9pbnRBdHRyaWJ1dGVzKTsKICAgIHZhciBlZGdlQXR0cmlidXRlcyA9IG1lcmdlKHsKICAgICAgc3Ryb2tlQ29sb3I6ICcjNDc1NTY5JywKICAgICAgc3Ryb2tlV2lkdGg6IDMsCiAgICAgIGZpeGVkOiB0cnVlLAogICAgICBoaWdobGlnaHQ6IGZhbHNlCiAgICB9LCBvcHRpb25zLmVkZ2VBdHRyaWJ1dGVzKTsKICAgIHZhciBub3JtYWxTdHlsZSA9IG1lcmdlKHsgZmlsbENvbG9yOiAnIzI1NjNlYicsIHN0cm9rZUNvbG9yOiAnIzFkNGVkOCcgfSwgb3B0aW9ucy5ub3JtYWxTdHlsZSk7CiAgICB2YXIgc2VsZWN0ZWRTdHlsZSA9IG1lcmdlKHsgZmlsbENvbG9yOiAnI2Y1OWUwYicsIHN0cm9rZUNvbG9yOiAnIzkyNDAwZScgfSwgb3B0aW9ucy5zZWxlY3RlZFN0eWxlKTsKICAgIC8vIFJlYWQgdGhlIHZpZXcgd2hlbiBhIGNsaWNrIGhhcHBlbnM6IGEgYm9hcmQgc3RhcnRlZCB3aGlsZSBoaWRkZW4gaGFzIG5vCiAgICAvLyB2YWxpZCB2aWV3IHlldCwgYW5kIHJlc2l6aW5nIG1heSBjaGFuZ2UgaXQuCiAgICBmdW5jdGlvbiBlZGl0YWJsZUJvdHRvbSgpIHsKICAgICAgcmV0dXJuIG9wdGlvbnMuZWRpdGFibGVCb3R0b20gPT09IHVuZGVmaW5lZCA/IGJvYXJkLmdldEJvdW5kaW5nQm94KClbM10gKyAwLjkgOiBOdW1iZXIob3B0aW9ucy5lZGl0YWJsZUJvdHRvbSk7CiAgICB9CiAgICB2YXIgdmVydGljZXMgPSBbXTsKICAgIHZhciBlZGdlcyA9IFtdOwogICAgdmFyIHNlbGVjdGVkVmVydGV4ID0gbnVsbDsKICAgIHZhciBwb2ludGVyU3RhcnQgPSBudWxsOwogICAgdmFyIG5leHRWZXJ0ZXhJZCA9IDE7CiAgICB2YXIgY29udHJvbHNWaXNpYmxlID0gZmFsc2U7CiAgICB2YXIgY2xpY2tUb2xlcmFuY2VTcXVhcmVkID0gMzY7CgogICAgZnVuY3Rpb24gc2V0U2VsZWN0ZWQodmVydGV4KSB7CiAgICAgIGlmIChzZWxlY3RlZFZlcnRleCkgc2VsZWN0ZWRWZXJ0ZXgucG9pbnQuc2V0QXR0cmlidXRlKG5vcm1hbFN0eWxlKTsKICAgICAgc2VsZWN0ZWRWZXJ0ZXggPSB2ZXJ0ZXg7CiAgICAgIGlmIChzZWxlY3RlZFZlcnRleCkgc2VsZWN0ZWRWZXJ0ZXgucG9pbnQuc2V0QXR0cmlidXRlKHNlbGVjdGVkU3R5bGUpOwogICAgICBib2FyZC51cGRhdGUoKTsKICAgIH0KCiAgICBmdW5jdGlvbiBhZGRWZXJ0ZXgoeCwgeSkgewogICAgICB4ID0gTnVtYmVyKHgpOwogICAgICB5ID0gTnVtYmVyKHkpOwogICAgICBpZiAoIU51bWJlci5pc0Zpbml0ZSh4KSB8fCAhTnVtYmVyLmlzRmluaXRlKHkpKSB7CiAgICAgICAgdGhyb3cgbmV3IFR5cGVFcnJvcignVmVydGV4IGNvb3JkaW5hdGVzIG11c3QgYmUgZmluaXRlIG51bWJlcnMnKTsKICAgICAgfQogICAgICB2YXIgdmVydGV4ID0geyBpZDogbmV4dFZlcnRleElkKysgfTsKICAgICAgdmVydGV4LnBvaW50ID0gYm9hcmQuY3JlYXRlKCdwb2ludCcsIFt4LCB5XSwgbWVyZ2UocG9pbnRBdHRyaWJ1dGVzLCBtZXJnZShub3JtYWxTdHlsZSwgewogICAgICAgIG5hbWU6IFN0cmluZyh2ZXJ0ZXguaWQpCiAgICAgIH0pKSk7CiAgICAgIHZlcnRpY2VzLnB1c2godmVydGV4KTsKICAgICAgc2V0U2VsZWN0ZWQobnVsbCk7CiAgICAgIHJldHVybiB2ZXJ0ZXguaWQ7CiAgICB9CgogICAgZnVuY3Rpb24gZmluZFZlcnRleChpZCkgewogICAgICByZXR1cm4gdmVydGljZXMuZmluZChmdW5jdGlvbiAodmVydGV4KSB7IHJldHVybiB2ZXJ0ZXguaWQgPT09IGlkOyB9KSB8fCBudWxsOwogICAgfQoKICAgIGZ1bmN0aW9uIGVkZ2VLZXkoYSwgYikgewogICAgICByZXR1cm4gYS5pZCA8IGIuaWQgPyBhLmlkICsgJzonICsgYi5pZCA6IGIuaWQgKyAnOicgKyBhLmlkOwogICAgfQoKICAgIGZ1bmN0aW9uIHRvZ2dsZUVkZ2VWZXJ0aWNlcyhhLCBiKSB7CiAgICAgIGlmICghYSB8fCAhYiB8fCBhID09PSBiKSByZXR1cm4gZmFsc2U7CiAgICAgIHZhciBrZXkgPSBlZGdlS2V5KGEsIGIpOwogICAgICB2YXIgaW5kZXggPSBlZGdlcy5maW5kSW5kZXgoZnVuY3Rpb24gKGVkZ2UpIHsgcmV0dXJuIGVkZ2Uua2V5ID09PSBrZXk7IH0pOwogICAgICBpZiAoaW5kZXggPj0gMCkgewogICAgICAgIGJvYXJkLnJlbW92ZU9iamVjdChlZGdlc1tpbmRleF0uc2VnbWVudCk7CiAgICAgICAgZWRnZXMuc3BsaWNlKGluZGV4LCAxKTsKICAgICAgICBzZXRTZWxlY3RlZChudWxsKTsKICAgICAgICByZXR1cm4gZmFsc2U7CiAgICAgIH0KICAgICAgZWRnZXMucHVzaCh7CiAgICAgICAga2V5OiBrZXksCiAgICAgICAgc291cmNlOiBhLAogICAgICAgIHRhcmdldDogYiwKICAgICAgICBzZWdtZW50OiBib2FyZC5jcmVhdGUoJ3NlZ21lbnQnLCBbYS5wb2ludCwgYi5wb2ludF0sIGVkZ2VBdHRyaWJ1dGVzKQogICAgICB9KTsKICAgICAgc2V0U2VsZWN0ZWQobnVsbCk7CiAgICAgIHJldHVybiB0cnVlOwogICAgfQoKICAgIGZ1bmN0aW9uIHRvZ2dsZUVkZ2Uoc291cmNlSWQsIHRhcmdldElkKSB7CiAgICAgIHZhciBzb3VyY2UgPSBmaW5kVmVydGV4KHNvdXJjZUlkKTsKICAgICAgdmFyIHRhcmdldCA9IGZpbmRWZXJ0ZXgodGFyZ2V0SWQpOwogICAgICBpZiAoIXNvdXJjZSB8fCAhdGFyZ2V0KSB0aHJvdyBuZXcgRXJyb3IoJ0Nhbm5vdCBjb25uZWN0IGFuIHVua25vd24gdmVydGV4Jyk7CiAgICAgIHJldHVybiB0b2dnbGVFZGdlVmVydGljZXMoc291cmNlLCB0YXJnZXQpOwogICAgfQoKICAgIGZ1bmN0aW9uIGhhbmRsZVZlcnRleENsaWNrKHZlcnRleCkgewogICAgICBpZiAoIXNlbGVjdGVkVmVydGV4KSBzZXRTZWxlY3RlZCh2ZXJ0ZXgpOwogICAgICBlbHNlIGlmIChzZWxlY3RlZFZlcnRleCA9PT0gdmVydGV4KSBzZXRTZWxlY3RlZChudWxsKTsKICAgICAgZWxzZSB0b2dnbGVFZGdlVmVydGljZXMoc2VsZWN0ZWRWZXJ0ZXgsIHZlcnRleCk7CiAgICB9CgogICAgZnVuY3Rpb24gZGVsZXRlU2VsZWN0ZWQoKSB7CiAgICAgIGlmICghc2VsZWN0ZWRWZXJ0ZXgpIHJldHVybiBmYWxzZTsKICAgICAgdmFyIGRvb21lZCA9IHNlbGVjdGVkVmVydGV4OwogICAgICBlZGdlcy5zbGljZSgpLmZvckVhY2goZnVuY3Rpb24gKGVkZ2UpIHsKICAgICAgICBpZiAoZWRnZS5zb3VyY2UgPT09IGRvb21lZCB8fCBlZGdlLnRhcmdldCA9PT0gZG9vbWVkKSB7CiAgICAgICAgICBib2FyZC5yZW1vdmVPYmplY3QoZWRnZS5zZWdtZW50KTsKICAgICAgICAgIGVkZ2VzLnNwbGljZShlZGdlcy5pbmRleE9mKGVkZ2UpLCAxKTsKICAgICAgICB9CiAgICAgIH0pOwogICAgICBib2FyZC5yZW1vdmVPYmplY3QoZG9vbWVkLnBvaW50KTsKICAgICAgdmVydGljZXMuc3BsaWNlKHZlcnRpY2VzLmluZGV4T2YoZG9vbWVkKSwgMSk7CiAgICAgIHNlbGVjdGVkVmVydGV4ID0gbnVsbDsKICAgICAgYm9hcmQudXBkYXRlKCk7CiAgICAgIHJldHVybiB0cnVlOwogICAgfQoKICAgIGZ1bmN0aW9uIGNsZWFyKCkgewogICAgICBzZXRTZWxlY3RlZChudWxsKTsKICAgICAgZWRnZXMuZm9yRWFjaChmdW5jdGlvbiAoZWRnZSkgeyBib2FyZC5yZW1vdmVPYmplY3QoZWRnZS5zZWdtZW50KTsgfSk7CiAgICAgIHZlcnRpY2VzLmZvckVhY2goZnVuY3Rpb24gKHZlcnRleCkgeyBib2FyZC5yZW1vdmVPYmplY3QodmVydGV4LnBvaW50KTsgfSk7CiAgICAgIGVkZ2VzID0gW107CiAgICAgIHZlcnRpY2VzID0gW107CiAgICAgIG5leHRWZXJ0ZXhJZCA9IDE7CiAgICAgIGJvYXJkLnVwZGF0ZSgpOwogICAgfQoKICAgIGZ1bmN0aW9uIHJlc3BvbnNlKCkgewogICAgICByZXR1cm4gewogICAgICAgIHJlcHJlc2VudGF0aW9uOiAndW5kaXJlY3RlZC1ncmFwaCcsCiAgICAgICAgbm9kZXM6IHZlcnRpY2VzLm1hcChmdW5jdGlvbiAodmVydGV4KSB7CiAgICAgICAgICByZXR1cm4gewogICAgICAgICAgICBpZDogdmVydGV4LmlkLAogICAgICAgICAgICB4OiBOdW1iZXIodmVydGV4LnBvaW50LlgoKS50b0ZpeGVkKDQpKSwKICAgICAgICAgICAgeTogTnVtYmVyKHZlcnRleC5wb2ludC5ZKCkudG9GaXhlZCg0KSkKICAgICAgICAgIH07CiAgICAgICAgfSksCiAgICAgICAgZWRnZXM6IGVkZ2VzLm1hcChmdW5jdGlvbiAoZWRnZSkgeyByZXR1cm4gW2VkZ2Uuc291cmNlLmlkLCBlZGdlLnRhcmdldC5pZF07IH0pCiAgICAgIH07CiAgICB9CgogICAgdmFyIHBhbmVsID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgnZGl2Jyk7CiAgICBwYW5lbC5zZXRBdHRyaWJ1dGUoJ3JvbGUnLCAnbm90ZScpOwogICAgcGFuZWwuc2V0QXR0cmlidXRlKCdhcmlhLWxhYmVsJywgJ0dyYXBoIGVkaXRvciBjb250cm9scycpOwogICAgcGFuZWwuc2V0QXR0cmlidXRlKCdkYXRhLWdyYXBoLWVkaXRvci1jb250cm9sJywgJ3RydWUnKTsKICAgIHBhbmVsLnN0eWxlLmNzc1RleHQgPSBbCiAgICAgICdwb3NpdGlvbjphYnNvbHV0ZScsICd0b3A6NDhweCcsICdyaWdodDoxMnB4JywgJ3otaW5kZXg6MjAnLAogICAgICAnZGlzcGxheTpub25lJywgJ3dpZHRoOm1pbigyNzBweCxjYWxjKDEwMCUgLSAyNHB4KSknLAogICAgICAnYm94LXNpemluZzpib3JkZXItYm94JywgJ3BhZGRpbmc6MTBweCAxMnB4JywgJ2JvcmRlcjoxcHggc29saWQgIzk0YTNiOCcsCiAgICAgICdib3JkZXItcmFkaXVzOjdweCcsICdiYWNrZ3JvdW5kOnJnYmEoMjU1LDI1NSwyNTUsMC45NiknLAogICAgICAnY29sb3I6IzFlMjkzYicsICdmb250OjE0cHgvMS4zNSBzYW5zLXNlcmlmJywgJ2JveC1zaGFkb3c6MCAzcHggMTJweCByZ2JhKDE1LDIzLDQyLDAuMTgpJwogICAgXS5qb2luKCc7Jyk7CiAgICB2YXIgbGlzdCA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ29sJyk7CiAgICBsaXN0LnN0eWxlLmNzc1RleHQgPSAnbWFyZ2luOjA7cGFkZGluZy1sZWZ0OjEuMzVyZW0nOwogICAgaW5zdHJ1Y3Rpb25zLmZvckVhY2goZnVuY3Rpb24gKGluc3RydWN0aW9uKSB7CiAgICAgIHZhciBpdGVtID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgnbGknKTsKICAgICAgaXRlbS50ZXh0Q29udGVudCA9IGluc3RydWN0aW9uOwogICAgICBsaXN0LmFwcGVuZENoaWxkKGl0ZW0pOwogICAgfSk7CiAgICBwYW5lbC5hcHBlbmRDaGlsZChsaXN0KTsKICAgIGJvYXJkLmNvbnRhaW5lck9iai5zdHlsZS5wb3NpdGlvbiA9IGJvYXJkLmNvbnRhaW5lck9iai5zdHlsZS5wb3NpdGlvbiB8fCAncmVsYXRpdmUnOwogICAgYm9hcmQuY29udGFpbmVyT2JqLmFwcGVuZENoaWxkKHBhbmVsKTsKCiAgICB2YXIgY29udHJvbEJhciA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ2RpdicpOwogICAgY29udHJvbEJhci5zZXRBdHRyaWJ1dGUoJ2RhdGEtZ3JhcGgtZWRpdG9yLWNvbnRyb2wnLCAndHJ1ZScpOwogICAgY29udHJvbEJhci5zdHlsZS5jc3NUZXh0ID0gWwogICAgICAncG9zaXRpb246YWJzb2x1dGUnLCAnbGVmdDoxMnB4JywgJ2JvdHRvbToxMHB4JywgJ3otaW5kZXg6MjAnLAogICAgICAnZGlzcGxheTpmbGV4JywgJ2dhcDo4cHgnLCAnZmxleC13cmFwOndyYXAnLCAnZm9udDoxNHB4LzEuMiBzYW5zLXNlcmlmJwogICAgXS5qb2luKCc7Jyk7CiAgICBib2FyZC5jb250YWluZXJPYmouYXBwZW5kQ2hpbGQoY29udHJvbEJhcik7CgogICAgZnVuY3Rpb24gY3JlYXRlQ29udHJvbChsYWJlbCwgaGFuZGxlcikgewogICAgICB2YXIgYnV0dG9uID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgnYnV0dG9uJyk7CiAgICAgIGJ1dHRvbi50eXBlID0gJ2J1dHRvbic7CiAgICAgIGJ1dHRvbi50ZXh0Q29udGVudCA9IGxhYmVsOwogICAgICBidXR0b24uc3R5bGUuY3NzVGV4dCA9IFsKICAgICAgICAncGFkZGluZzo2cHggMTBweCcsICdib3JkZXI6MXB4IHNvbGlkICM5NGEzYjgnLCAnYm9yZGVyLXJhZGl1czo1cHgnLAogICAgICAgICdiYWNrZ3JvdW5kOiNmZmYnLCAnY29sb3I6IzFlMjkzYicsICdjdXJzb3I6cG9pbnRlcicKICAgICAgXS5qb2luKCc7Jyk7CiAgICAgIGJ1dHRvbi5hZGRFdmVudExpc3RlbmVyKCdjbGljaycsIGZ1bmN0aW9uIChldmVudCkgewogICAgICAgIGV2ZW50LnByZXZlbnREZWZhdWx0KCk7CiAgICAgICAgZXZlbnQuc3RvcFByb3BhZ2F0aW9uKCk7CiAgICAgICAgaGFuZGxlcigpOwogICAgICB9KTsKICAgICAgY29udHJvbEJhci5hcHBlbmRDaGlsZChidXR0b24pOwogICAgICByZXR1cm4gYnV0dG9uOwogICAgfQoKICAgIHZhciB0b2dnbGVCdXR0b247CiAgICBmdW5jdGlvbiBzaG93Q29udHJvbHMoc2hvdykgewogICAgICBjb250cm9sc1Zpc2libGUgPSBzaG93ID09PSB1bmRlZmluZWQgPyAhY29udHJvbHNWaXNpYmxlIDogISFzaG93OwogICAgICBwYW5lbC5zdHlsZS5kaXNwbGF5ID0gY29udHJvbHNWaXNpYmxlID8gJ2Jsb2NrJyA6ICdub25lJzsKICAgICAgaWYgKHRvZ2dsZUJ1dHRvbikgdG9nZ2xlQnV0dG9uLnRleHRDb250ZW50ID0gY29udHJvbHNWaXNpYmxlID8gbGFiZWxzLmhpZGVDb250cm9scyA6IGxhYmVscy5zaG93Q29udHJvbHM7CiAgICAgIGJvYXJkLnVwZGF0ZSgpOwogICAgICByZXR1cm4gY29udHJvbHNWaXNpYmxlOwogICAgfQoKICAgIGNyZWF0ZUNvbnRyb2wobGFiZWxzLmRlbGV0ZVNlbGVjdGVkLCBkZWxldGVTZWxlY3RlZCk7CiAgICBjcmVhdGVDb250cm9sKGxhYmVscy5jbGVhckdyYXBoLCBjbGVhcik7CiAgICB0b2dnbGVCdXR0b24gPSBjcmVhdGVDb250cm9sKGxhYmVscy5zaG93Q29udHJvbHMsIGZ1bmN0aW9uICgpIHsgc2hvd0NvbnRyb2xzKCk7IH0pOwoKICAgIGZ1bmN0aW9uIGlzQ29udHJvbEV2ZW50KGV2ZW50KSB7CiAgICAgIHJldHVybiAhIShldmVudC50YXJnZXQgJiYgZXZlbnQudGFyZ2V0LmNsb3Nlc3QgJiYKICAgICAgICBldmVudC50YXJnZXQuY2xvc2VzdCgnYnV0dG9uLCBpbnB1dCwgW2RhdGEtZ3JhcGgtZWRpdG9yLWNvbnRyb2xdJykpOwogICAgfQoKICAgIGZ1bmN0aW9uIHZlcnRleEF0KHNjcmVlbikgewogICAgICBmb3IgKHZhciBpID0gdmVydGljZXMubGVuZ3RoIC0gMTsgaSA+PSAwOyBpLS0pIHsKICAgICAgICBpZiAodmVydGljZXNbaV0ucG9pbnQuaGFzUG9pbnQoc2NyZWVuWzBdLCBzY3JlZW5bMV0pKSByZXR1cm4gdmVydGljZXNbaV07CiAgICAgIH0KICAgICAgcmV0dXJuIG51bGw7CiAgICB9CgogICAgZnVuY3Rpb24gdXNlclBvc2l0aW9uKHNjcmVlbikgewogICAgICB2YXIgd2lkdGggPSBib2FyZC5jb250YWluZXJPYmouY2xpZW50V2lkdGggfHwgYm9hcmQuY2FudmFzV2lkdGg7CiAgICAgIHZhciBoZWlnaHQgPSBib2FyZC5jb250YWluZXJPYmouY2xpZW50SGVpZ2h0IHx8IGJvYXJkLmNhbnZhc0hlaWdodDsKICAgICAgdmFyIGJvdW5kcyA9IGJvYXJkLmdldEJvdW5kaW5nQm94KCk7CiAgICAgIGlmIChOdW1iZXIuaXNGaW5pdGUod2lkdGgpICYmIHdpZHRoID4gMCAmJiBOdW1iZXIuaXNGaW5pdGUoaGVpZ2h0KSAmJiBoZWlnaHQgPiAwICYmIGJvdW5kcy5ldmVyeShOdW1iZXIuaXNGaW5pdGUpKSB7CiAgICAgICAgcmV0dXJuIFsKICAgICAgICAgIGJvdW5kc1swXSArIHNjcmVlblswXSAvIHdpZHRoICogKGJvdW5kc1syXSAtIGJvdW5kc1swXSksCiAgICAgICAgICBib3VuZHNbMV0gLSBzY3JlZW5bMV0gLyBoZWlnaHQgKiAoYm91bmRzWzFdIC0gYm91bmRzWzNdKQogICAgICAgIF07CiAgICAgIH0KICAgICAgdmFyIGNvb3JkcyA9IG5ldyBKWEcuQ29vcmRzKEpYRy5DT09SRFNfQllfU0NSRUVOLCBzY3JlZW4sIGJvYXJkKTsKICAgICAgcmV0dXJuIFtjb29yZHMudXNyQ29vcmRzWzFdLCBjb29yZHMudXNyQ29vcmRzWzJdXTsKICAgIH0KCiAgICBib2FyZC5vbignZG93bicsIGZ1bmN0aW9uIChldmVudCkgewogICAgICBwb2ludGVyU3RhcnQgPSBudWxsOwogICAgICBpZiAoaXNDb250cm9sRXZlbnQoZXZlbnQpKSByZXR1cm47CiAgICAgIHZhciBzY3JlZW4gPSBib2FyZC5nZXRNb3VzZVBvc2l0aW9uKGV2ZW50KTsKICAgICAgcG9pbnRlclN0YXJ0ID0gewogICAgICAgIHNjcmVlbjogc2NyZWVuLAogICAgICAgIHZlcnRleDogdmVydGV4QXQoc2NyZWVuKQogICAgICB9OwogICAgfSk7CgogICAgYm9hcmQub24oJ3VwJywgZnVuY3Rpb24gKGV2ZW50KSB7CiAgICAgIGlmICghcG9pbnRlclN0YXJ0IHx8IGlzQ29udHJvbEV2ZW50KGV2ZW50KSkgewogICAgICAgIHBvaW50ZXJTdGFydCA9IG51bGw7CiAgICAgICAgcmV0dXJuOwogICAgICB9CiAgICAgIHZhciBzY3JlZW4gPSBib2FyZC5nZXRNb3VzZVBvc2l0aW9uKGV2ZW50KTsKICAgICAgdmFyIGR4ID0gc2NyZWVuWzBdIC0gcG9pbnRlclN0YXJ0LnNjcmVlblswXTsKICAgICAgdmFyIGR5ID0gc2NyZWVuWzFdIC0gcG9pbnRlclN0YXJ0LnNjcmVlblsxXTsKICAgICAgaWYgKGR4ICogZHggKyBkeSAqIGR5IDw9IGNsaWNrVG9sZXJhbmNlU3F1YXJlZCkgewogICAgICAgIGlmIChwb2ludGVyU3RhcnQudmVydGV4KSB7CiAgICAgICAgICBoYW5kbGVWZXJ0ZXhDbGljayhwb2ludGVyU3RhcnQudmVydGV4KTsKICAgICAgICB9IGVsc2UgaWYgKCF2ZXJ0ZXhBdChzY3JlZW4pKSB7CiAgICAgICAgdmFyIHBvc2l0aW9uID0gdXNlclBvc2l0aW9uKHNjcmVlbik7CiAgICAgICAgaWYgKHBvc2l0aW9uWzFdID4gZWRpdGFibGVCb3R0b20oKSkgYWRkVmVydGV4KHBvc2l0aW9uWzBdLCBwb3NpdGlvblsxXSk7CiAgICAgICAgfQogICAgICB9CiAgICAgIHBvaW50ZXJTdGFydCA9IG51bGw7CiAgICB9KTsKCiAgICBib2FyZC5jb250YWluZXJPYmouc2V0QXR0cmlidXRlKCdkYXRhLWdyYXBoLWVkaXRvci1yZWFkeScsICd0cnVlJyk7CgogICAgaWYgKG9wdGlvbnMuY29udHJvbHNJbml0aWFsbHlWaXNpYmxlKSBzaG93Q29udHJvbHModHJ1ZSk7CgogICAgdmFyIGFwaSA9IHsKICAgICAgYm9hcmQ6IGJvYXJkLAogICAgICBhZGRWZXJ0ZXg6IGFkZFZlcnRleCwKICAgICAgdG9nZ2xlRWRnZTogdG9nZ2xlRWRnZSwKICAgICAgZGVsZXRlU2VsZWN0ZWQ6IGRlbGV0ZVNlbGVjdGVkLAogICAgICBjbGVhcjogY2xlYXIsCiAgICAgIHJlc3BvbnNlOiByZXNwb25zZSwKICAgICAgc3VtbWFyaXplOiBmdW5jdGlvbiAoc3VtbWFyeU9wdGlvbnMpIHsgcmV0dXJuIHN1bW1hcml6ZUdyYXBoKHJlc3BvbnNlKCksIHN1bW1hcnlPcHRpb25zKTsgfSwKICAgICAgc2hvd0NvbnRyb2xzOiBzaG93Q29udHJvbHMsCiAgICAgIHJlZ2lzdGVyOiBmdW5jdGlvbiAoc3BlYykgewogICAgICAgIGlmICghSlhHLlF1YXJ0b0Fzc2Vzc21lbnQgfHwgdHlwZW9mIEpYRy5RdWFydG9Bc3Nlc3NtZW50LnJlZ2lzdGVyICE9PSAnZnVuY3Rpb24nKSB7CiAgICAgICAgICB0aHJvdyBuZXcgRXJyb3IoJ0dyYXBoIGVkaXRvciByZWdpc3RyYXRpb24gcmVxdWlyZXMgdGhlIFF1YXJ0byBhc3Nlc3NtZW50IGJyaWRnZScpOwogICAgICAgIH0KICAgICAgICBKWEcuUXVhcnRvQXNzZXNzbWVudC5yZWdpc3RlcihtZXJnZShzcGVjLCB7IGJvYXJkOiBib2FyZCwgcmVzcG9uc2U6IHJlc3BvbnNlIH0pKTsKICAgICAgICByZXR1cm4gYXBpOwogICAgICB9CiAgICB9OwogICAgcmV0dXJuIGFwaTsKICB9CgogIGZ1bmN0aW9uIGNyZWF0ZUJvYXJkKG9wdGlvbnMpIHsKICAgIG9wdGlvbnMgPSBvcHRpb25zIHx8IHt9OwogICAgdmFyIGNvbnRhaW5lciA9IG9wdGlvbnMuY29udGFpbmVyIHx8IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoJy5qeGdib3gnKTsKICAgIGlmICghY29udGFpbmVyKSB0aHJvdyBuZXcgRXJyb3IoJ0dyYXBoIGVkaXRvciBjb3VsZCBub3QgZmluZCBpdHMgSlNYR3JhcGggY29udGFpbmVyJyk7CiAgICB2YXIgYm9hcmQgPSBKWEcuSlNYR3JhcGguaW5pdEJvYXJkKGNvbnRhaW5lci5pZCwgbWVyZ2UoewogICAgICBib3VuZGluZ2JveDogWy01LCA0LCA1LCAtNF0sCiAgICAgIGF4aXM6IGZhbHNlLAogICAgICBwYW46IHsgZW5hYmxlZDogZmFsc2UgfSwKICAgICAgem9vbTogeyBlbmFibGVkOiBmYWxzZSB9LAogICAgICBzaG93TmF2aWdhdGlvbjogZmFsc2UsCiAgICAgIHNob3dDb3B5cmlnaHQ6IGZhbHNlCiAgICB9LCBvcHRpb25zLmJvYXJkQXR0cmlidXRlcykpOwogICAgdmFyIGVkaXRvciA9IGNyZWF0ZUdyYXBoRWRpdG9yKG1lcmdlKG9wdGlvbnMsIHsgYm9hcmQ6IGJvYXJkIH0pKTsKCiAgICBmdW5jdGlvbiByZXNpemVUb1Zpc2libGVDb250YWluZXIoKSB7CiAgICAgIHZhciB3aWR0aCA9IGNvbnRhaW5lci5jbGllbnRXaWR0aDsKICAgICAgdmFyIGhlaWdodCA9IGNvbnRhaW5lci5jbGllbnRIZWlnaHQ7CiAgICAgIGlmICghKHdpZHRoID4gMCAmJiBoZWlnaHQgPiAwKSB8fCB0eXBlb2YgYm9hcmQucmVzaXplQ29udGFpbmVyICE9PSAnZnVuY3Rpb24nKSByZXR1cm4gZmFsc2U7CiAgICAgIGlmIChNYXRoLmFicygoYm9hcmQuY2FudmFzV2lkdGggfHwgMCkgLSB3aWR0aCkgPiAxIHx8CiAgICAgICAgICBNYXRoLmFicygoYm9hcmQuY2FudmFzSGVpZ2h0IHx8IDApIC0gaGVpZ2h0KSA+IDEpIHsKICAgICAgICAvLyBLZWVwIHRoZSBjb250YWluZXIgZmx1aWQgKENTUyBzaXplKTogZml4aW5nIGl0IGluIHB4IHdvdWxkIHN0b3AgaXQKICAgICAgICAvLyBmb2xsb3dpbmcgdGhlIGlmcmFtZSBvbiBuYXJyb3cgc2NyZWVucy4KICAgICAgICBib2FyZC5yZXNpemVDb250YWluZXIod2lkdGgsIGhlaWdodCwgdHJ1ZSk7CiAgICAgICAgaWYgKHR5cGVvZiBib2FyZC5mdWxsVXBkYXRlID09PSAnZnVuY3Rpb24nKSBib2FyZC5mdWxsVXBkYXRlKCk7CiAgICAgIH0KICAgICAgcmV0dXJuIHRydWU7CiAgICB9CgogICAgZWRpdG9yLnJlc2l6ZSA9IHJlc2l6ZVRvVmlzaWJsZUNvbnRhaW5lcjsKICAgIGlmICh0eXBlb2YgUmVzaXplT2JzZXJ2ZXIgIT09ICd1bmRlZmluZWQnKSB7CiAgICAgIHZhciBvYnNlcnZlciA9IG5ldyBSZXNpemVPYnNlcnZlcihyZXNpemVUb1Zpc2libGVDb250YWluZXIpOwogICAgICBvYnNlcnZlci5vYnNlcnZlKGNvbnRhaW5lcik7CiAgICAgIGVkaXRvci5yZXNpemVPYnNlcnZlciA9IG9ic2VydmVyOwogICAgfQogICAgaWYgKHR5cGVvZiByZXF1ZXN0QW5pbWF0aW9uRnJhbWUgPT09ICdmdW5jdGlvbicpIHsKICAgICAgcmVxdWVzdEFuaW1hdGlvbkZyYW1lKGZ1bmN0aW9uICgpIHsKICAgICAgICByZXNpemVUb1Zpc2libGVDb250YWluZXIoKTsKICAgICAgICByZXF1ZXN0QW5pbWF0aW9uRnJhbWUocmVzaXplVG9WaXNpYmxlQ29udGFpbmVyKTsKICAgICAgfSk7CiAgICB9CiAgICByZXNpemVUb1Zpc2libGVDb250YWluZXIoKTsKICAgIHJldHVybiBlZGl0b3I7CiAgfQoKICBKWEcuUXVhcnRvR3JhcGhFZGl0b3IgPSB7CiAgICBjcmVhdGU6IGNyZWF0ZUdyYXBoRWRpdG9yLAogICAgY3JlYXRlQm9hcmQ6IGNyZWF0ZUJvYXJkLAogICAgc3VtbWFyaXplOiBzdW1tYXJpemVHcmFwaAogIH07Cn0pKCk7Cgo8L3NjcmlwdD4KPHNjcmlwdD52YXIgYm9hcmQgPSBKWEcuSlNYR3JhcGguaW5pdEJvYXJkKCJKWEdhNmMwZmU2Nl8xNjZlXzkzYmFfODFkNl85NGJiN2IwZiIsIHsKICAgIGJvdW5kaW5nYm94OiBbLTAuOCwgMS42LCA3LCAtMS42XSwKICAgIGF4aXM6IHRydWUsCiAgICBrZWVwYXNwZWN0cmF0aW86IGZhbHNlLAogICAgc2hvd05hdmlnYXRpb246IGZhbHNlCn0pOwoKdmFyIGdyYXBoID0gYm9hcmQuY3JlYXRlKCdmdW5jdGlvbmdyYXBoJywgW01hdGguc2luLCAwLCAyICogTWF0aC5QSV0sIHsKICAgIHN0cm9rZUNvbG9yOiAnIzIxOTZGMycsCiAgICBzdHJva2VXaWR0aDogMi41Cn0pOwoKdmFyIHAgPSBib2FyZC5jcmVhdGUoJ2dsaWRlcicsIFs0LCBNYXRoLnNpbig0KSwgZ3JhcGhdLCB7CiAgICBuYW1lOiAnUCcsCiAgICBzaXplOiA2LAogICAgZmlsbENvbG9yOiAnI0U5MUU2MycsCiAgICBzdHJva2VDb2xvcjogJyNjMjE4NWInCn0pOwoKSlhHLlF1YXJ0b0Fzc2Vzc21lbnQucmVnaXN0ZXIoewogIGJvYXJkOiBib2FyZCwKICByZXNwb25zZTogZnVuY3Rpb24gKCkgewogICAgcmV0dXJuIHsgeDogcC5YKCksIHk6IHAuWSgpIH07CiAgfQp9KTs8L3NjcmlwdD4KPC9ib2R5Pgo8L2h0bWw+" class="" name="iframeJXGa6c0fe66_166e_93ba_81d6_94bb7b0f" style="width:500px; height:500.0px; position:relative; margin:0; padding:0; display:block; z-index:1;border:1px solid black; border-radius:10px;;" id="ep-hochpunkt-en" sandbox="allow-scripts"></iframe>
+<div class="math-exercise-cell" data-similar="false" data-similar-guidance="[]" data-generation-policy="[]" data-similar-data="" id="math-exercise-2" data-label="ep-hochpunkt-en" data-mode="custom" data-reject="" data-vars="" data-tolerance="" data-decplaces="" data-sigfigs="" data-form="" data-checker="&quot;def check(response, symbols):\n    if abs(response[\&quot;x\&quot;] - 1.5708) < 0.15:\n        return {\&quot;score\&quot;: 1, \&quot;feedback\&quot;: \&quot;Correct, the maximum is at x = pi/2.\&quot;}\n    return {\&quot;score\&quot;: 0, \&quot;feedback\&quot;: \&quot;That is not yet the highest point of the curve.\&quot;}&quot;" data-givens="&quot;&quot;" data-packages="[]" data-response="jsxgraph:ep-hochpunkt-en" data-embed-response="true" data-partial-credit="false" data-form-credit="0.5" data-field-labels="[]" data-vecdir="col" data-feedback-policy="{&quot;exercise&quot;:&quot;ep-hochpunkt-en&quot;,&quot;name&quot;:&quot;&quot;}" data-variant-boards="[]" data-variant-board-title="" data-context-mode="auto" data-context-refs="auto" data-context="&quot;Graph as an exercise\nA graph can also be the answer itself. Here the check looks at where you drag the point.&quot;" data-context-text="&quot;&quot;" data-ctm-component="math-exercise" data-ctm-runtime-id="ctm-block-4" data-ctm-source="4508484fdf52cf79" data-ctm-save="true" data-ctm-id="ep-hochpunkt-en" data-fields="[]" data-structural-field-labels="[]">
+<div class="math-exercise-caption math-exercise-toggle" data-math-exercise-source="Maximum of the sine function" role="button" tabindex="0" aria-expanded="false"><span class="math-chevron" aria-hidden="true"></span>Maximum of the sine function</div>
+
+<div class="math-exercise-body" aria-hidden="true">
+<div id="ep-hochpunkt-en-question" class="math-exercise-question ai-feedback-context" data-math-exercise-source="Drag the point \(P\) to the maximum of \(\sin(x)\) on the interval \([0, 2\pi]\) and click &amp;quot;Check&amp;quot;.">Drag the point \(P\) to the maximum of \(\sin(x)\) on the interval \([0, 2\pi]\) and click "Check".</div>
+<div class="math-exercise-response-slot"></div>
+<div class="math-exercise-controls">
+  <button type="button" class="btn btn-primary math-check-btn">✓&nbsp;Check</button>
+  <button type="button" class="btn btn-light math-legend-btn">ⓘ&nbsp;Input help</button>
+  <div class="btn-group">
+    <button type="button" class="btn btn-light math-feedback-btn">💬&nbsp;Feedback</button>
+    <button type="button" class="btn btn-light math-reconfig-btn" title="Change AI configuration">⚙</button>
+  </div>
+</div>
+<div class="math-legend-panel" style="display:none;"></div>
+<div class="math-feedback-area"></div>
+</div>
+</div>
+
+
+<!--ctm-save-generated--><script type="application/json" id="ctm-store-manifest">{"exercises":[{"component":"py-exercise","id":"","order":1,"runtimeId":"ctm-block-1","save":false,"source":"55d8b1901b54bf1e"},{"component":"math-exercise","id":"ep-math-sin-en","order":2,"runtimeId":"ctm-block-2","save":true,"source":"2e7bff0f160f7897"},{"component":"math-exercise","id":"ep-hochpunkt-en","order":4,"runtimeId":"ctm-block-4","save":true,"source":"4508484fdf52cf79"}],"export":true,"messages":{"answered":"Answered, not graded","answersStorage":"Answers \u0026 storage","clearFailed":"Browser storage could not be cleared or updated. Use your browser settings to remove this course data.","confirmClearCourse":"Delete all your saved answers in this course?","confirmClearPage":"Delete all saved answers on this page?","confirmNewVariant":"Replace your filled answers with a new variant?","confirmSaveOff":"This deletes all saved answers in this course and stops saving.","copyAll":"Copy all","correct":"✓ correct","downloadHTML":"Download .html","downloadMarkdown":"Download .md","exercise":"Exercise","exportClose":"Close","exportTitle":"Export my answers","lastResult":"Last result","locale":"en","notSaving":"Answers aren’t being saved","outdated":"Outdated","partial":"½ partly correct","progressTitle":"Page progress","recordTooLarge":"This answer is too large to save. Copy it before leaving the page.","saveOff":"Do not save on this device","saveOn":"Save again","savedLocal":"Saved in this browser","savingDisabled":"Saving is off for this page.","savingLocal":"Saving in this browser","savingNotice":"Your answers are saved only in this browser.","savingOffNotice":"Saving is off on this device for this course.","settings":"Settings","showSaved":"Show your saved answer","sourceChanged":"The exercise has changed since you answered.","statusCorrect":"correct","statusInvalid":"invalid","statusPartial":"partly correct","statusWrong":"wrong","storageUnavailable":"Saving is unavailable. Your answers are kept in memory for this page only.","total":"{score} of {count}","unattempted":"– not attempted","variantChanged":"This variant has changed.","variantWithdrawn":"This variant has been withdrawn.","wrong":"✗ wrong"},"progress":false,"quizzes":[],"save":true,"v":1}</script>
+<!--ctm-layout-generated--><span id="ctm-layout-ready" hidden=""></span>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const toggle = window.document.createElement('button');
+      toggle.type = "button";
+      toggle.setAttribute("role", "switch");
+      toggle.setAttribute("aria-checked", "false");
+      toggle.classList.add('top-right');
+      toggle.classList.add('quarto-color-scheme-toggle');
+      toggle.setAttribute("aria-label", "Toggle dark mode");
+      toggle.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      toggle.appendChild(i);
+      // Put the toggle in a landmark of its own, so that landmark navigation
+      // can reach it.
+      //
+      // The container is always a fresh direct child of body, and the toggle is
+      // never moved into page furniture that the theme or the author controls.
+      // The toggle is positioned against the page, so any ancestor that
+      // establishes a containing block captures it: a positioned element or a
+      // grid for position: absolute, and transform, filter, will-change or
+      // contain for position: fixed. A direct child of body has none of these
+      // to inherit, and the shift when one appears is silent and visual.
+      //
+      // ARIA says a document should have at most one banner, and axe reports a
+      // duplicate whether or not the banners carry distinct labels. So use a
+      // header when the page has no banner yet, and a named region otherwise.
+      //
+      // A header is a banner wherever it sits, unless it is inside sectioning
+      // content, so this cannot just look at the children of body: a custom
+      // page layout wraps the title block header in a plain div. An explicit
+      // role="banner" always counts.
+      const sectioning = 'article, aside, main, nav, section, [role="article"], [role="complementary"], [role="main"], [role="navigation"], [role="region"]';
+      const hasBanner = Array.from(
+        window.document.querySelectorAll('header:not([role]), [role="banner"]')
+      ).some(function(el) {
+        return el.hasAttribute("role") || el.closest(sectioning) === null;
+      });
+      const container = window.document.createElement(hasBanner ? "div" : "header");
+      if (hasBanner) {
+        container.setAttribute("role", "region");
+        container.setAttribute("aria-label", "Toggle dark mode");
+      }
+      container.classList.add('quarto-color-scheme-toggle-container');
+      container.appendChild(toggle);
+      window.document.body.appendChild(container);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+      window.quartoDecorateExternalLinks = function (root) {
+     var links = (root || window.document).querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+          if (!link.classList.contains('no-external-icon')) {
+          }
+        }
+      }
+      };
+      window.quartoDecorateExternalLinks(window.document);
+    // Esc closes the popup (WCAG 1.4.13) and focus leaving both trigger and
+    // popup closes it (WCAG 2.4.11); tippy handles neither for interactive popups.
+    const hideOnEscAndFocusOut = {
+      name: 'hideOnEscAndFocusOut',
+      defaultValue: true,
+      fn(instance) {
+        const dismiss = () => {
+          // A show scheduled by the trigger delay would otherwise reopen it
+          instance.clearDelayTimeouts();
+          instance.hide();
+        };
+        const onKeyDown = (event) => {
+          if (event.key !== 'Escape') {
+            return;
+          }
+          // Keep Esc from also reaching page handlers (e.g. reveal.js overview),
+          // except an open reveal.js slide menu, which Esc should close too.
+          // The menu handles keys only when its keyboard option is on.
+          const menuHandlesEsc = window.Reveal?.getPlugin?.('menu')?.isOpen() &&
+            window.Reveal.getConfig().menu?.keyboard !== false;
+          if (!menuHandlesEsc) {
+            event.stopPropagation();
+          }
+          if (instance.popper.contains(window.document.activeElement)) {
+            // Disabled while refocusing so the focus trigger does not reopen it
+            instance.disable();
+            instance.reference.focus();
+            instance.enable();
+          }
+          dismiss();
+        };
+        const onFocusOut = (event) => {
+          const target = event.relatedTarget;
+          if (target && !instance.reference.contains(target) &&
+              !instance.popper.contains(target)) {
+            dismiss();
+          }
+        };
+        // On the trigger too: a click trigger (code-annotations: select) has no
+        // blur handling. Attached for the instance's lifetime so leaving the
+        // trigger also cancels a show still pending on the trigger delay.
+        instance.reference.addEventListener('focusout', onFocusOut);
+        return {
+          onShow() {
+            window.document.addEventListener('keydown', onKeyDown, true);
+            instance.popper.addEventListener('focusout', onFocusOut);
+          },
+          onHide() {
+            window.document.removeEventListener('keydown', onKeyDown, true);
+            instance.popper.removeEventListener('focusout', onFocusOut);
+          },
+          onDestroy() {
+            instance.reference.removeEventListener('focusout', onFocusOut);
+          },
+        };
+      },
+    };
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+        plugins: [hideOnEscAndFocusOut],
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          // Each band is positioned against its own containing block, which is
+          // not the offsetParent of the lines, so place it from client rects.
+          const placeBand = (band, firstEl, lastEl, codeBlock) => {
+            const container = band.offsetParent;
+            if (container === null) {
+              return;
+            }
+            const containerRect = container.getBoundingClientRect();
+            // Reveal.js scales slides with a transform, so convert client
+            // pixels back to the CSS pixels of the container.
+            const scale = containerRect.height / container.offsetHeight || 1;
+            const firstRect = firstEl.getBoundingClientRect();
+            const lastRect = lastEl.getBoundingClientRect();
+            const top = (firstRect.top - containerRect.top) / scale - container.clientTop + container.scrollTop;
+            const height = (lastRect.bottom - firstRect.top) / scale;
+            band.style.top = top - 2 + "px";
+            band.style.height = height + 4 + "px";
+            if (codeBlock) {
+              // Without the copy button wrapper, the containing block is wider
+              // than the code block, so span the code block explicitly.
+              const blockRect = codeBlock.getBoundingClientRect();
+              band.style.left = (blockRect.left - containerRect.left) / scale - container.clientLeft + container.scrollLeft + "px";
+              band.style.width = blockRect.width / scale + "px";
+            }
+          };
+          if (lineIds.length > 0) {
+            const el = window.document.getElementById(lineIds[0]);
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const parent = el.parentElement.parentElement;
+            // cook up a div (if necessary) and position it
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            placeBand(div, el, lastEl, parent.closest("div.sourceCode") || parent);
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            placeBand(gutterDiv, el, lastEl);
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+  <script type="application/javascript">
+  window.quartoScrollableRegionsLabels = {"code":"Scrollable code","output":"Scrollable output"};
+  </script>
+<nav class="page-navigation" aria-label="Page">
+  <div class="nav-page nav-page-previous">
+      <a href="../../Qmd Files/Example Page/ep_visuals.html" class="pagination-link" aria-label="Visualizations">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Visualizations</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../Qmd Files/Example Page/ep_quiz.html" class="pagination-link" aria-label="Quiz">
+        <span class="nav-page-text">Quiz</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<script src="../../site_libs/quarto-contrib/ctm-matrix-input-0.9.0/ctm-matrix-input.js"></script>
+<script src="../../site_libs/quarto-contrib/math-exercise-0.11.0/math-store.js"></script>
+<script src="../../site_libs/quarto-contrib/math-exercise-0.11.0/math-exercise.js"></script>
+<script src="../../site_libs/quarto-contrib/math-exercise-0.11.0/math-similar.js"></script>
+<script src="../../site_libs/quarto-contrib/py-exercise-0.5.0/py-exercise.js"></script>
+</body></html>

@@ -30,9 +30,10 @@ ist als reiner Text geschrieben und von Quarto umgewandelt worden.
 |:-:|------|-----------------|
 | 1 | [Layout & Formatierung](ep_layout.qmd) | Hinweiskästen, Spalten, Reiter |
 | 2 | [Code](ep_code.qmd) | Python: nur Ausgabe, ausführbar, mit Eingabe |
-| 3 | [Visualisierungen](ep_visuals.qmd) | Interaktive Grafik, Animation, Aufgaben und Diagramm |
-| 4 | [Quiz](ep_quiz.qmd) | Fragen zur Selbstkontrolle |
-| 5 | [Quellen](ep_references.qmd) | Zitate und Literaturverzeichnis |
+| 3 | [Visualisierungen](ep_visuals.qmd) | Interaktive Grafik, Animation und Diagramm |
+| 4 | [Aufgaben](ep_tasks.qmd) | Aufgaben, die sich selbst prüfen |
+| 5 | [Quiz](ep_quiz.qmd) | Fragen zur Selbstkontrolle |
+| 6 | [Quellen](ep_references.qmd) | Zitate und Literaturverzeichnis |
 ::::
 
 :::: {.content-visible when-profile="english"}
@@ -53,9 +54,10 @@ was written in plain text and rendered by Quarto.
 |:-:|------|-----------------|
 | 1 | [Layout & Formatting](ep_layout.qmd) | Callouts, columns, tabs |
 | 2 | [Code](ep_code.qmd) | Python: output only, executable, with input |
-| 3 | [Visualizations](ep_visuals.qmd) | Interactive plot, animation, exercises & diagram |
-| 4 | [Quiz](ep_quiz.qmd) | Self-check questions |
-| 5 | [References](ep_references.qmd) | Citations & bibliography |
+| 3 | [Visualizations](ep_visuals.qmd) | Interactive plot, animation & diagram |
+| 4 | [Exercises](ep_tasks.qmd) | Exercises that check themselves |
+| 5 | [Quiz](ep_quiz.qmd) | Self-check questions |
+| 6 | [References](ep_references.qmd) | Citations & bibliography |
 ::::
 
 :::: {.content-visible when-profile="dansk"}
@@ -76,9 +78,10 @@ er skrevet som almindelig tekst og omdannet af Quarto.
 |:-:|------|-----------------|
 | 1 | [Layout & formatering](ep_layout.qmd) | Infobokse, kolonner, faner |
 | 2 | [Kode](ep_code.qmd) | Python: kun output, kørbar kode, med input |
-| 3 | [Visualiseringer](ep_visuals.qmd) | Interaktiv graf, animation, opgaver og diagram |
-| 4 | [Quiz](ep_quiz.qmd) | Spørgsmål til selvkontrol |
-| 5 | [Kilder](ep_references.qmd) | Citater og litteraturliste |
+| 3 | [Visualiseringer](ep_visuals.qmd) | Interaktiv graf, animation og diagram |
+| 4 | [Opgaver](ep_tasks.qmd) | Opgaver, der retter sig selv |
+| 5 | [Quiz](ep_quiz.qmd) | Spørgsmål til selvkontrol |
+| 6 | [Kilder](ep_references.qmd) | Citater og litteraturliste |
 ::::
 
 :::: {.content-visible when-profile="norsk"}
@@ -99,9 +102,10 @@ er skrevet som vanlig tekst og omgjort av Quarto.
 |:-:|------|-----------------|
 | 1 | [Layout & formatering](ep_layout.qmd) | Infobokser, kolonner, faner |
 | 2 | [Kode](ep_code.qmd) | Python: bare utdata, kjørbar kode, med inndata |
-| 3 | [Visualiseringer](ep_visuals.qmd) | Interaktiv graf, animasjon, oppgaver og diagram |
-| 4 | [Quiz](ep_quiz.qmd) | Spørsmål for egenkontroll |
-| 5 | [Kilder](ep_references.qmd) | Sitater og litteraturliste |
+| 3 | [Visualiseringer](ep_visuals.qmd) | Interaktiv graf, animasjon og diagram |
+| 4 | [Oppgaver](ep_tasks.qmd) | Oppgaver som retter seg selv |
+| 5 | [Quiz](ep_quiz.qmd) | Spørsmål for egenkontroll |
+| 6 | [Kilder](ep_references.qmd) | Sitater og litteraturliste |
 ::::
 
 :::: {.content-visible when-profile="svenska"}
@@ -122,7 +126,8 @@ Varje del av den här webbplatsen, alltså körbar kod, interaktiva grafer och q
 |:-:|------|-----------------|
 | 1 | [Layout & formatering](ep_layout.qmd) | Inforutor, kolumner, flikar |
 | 2 | [Kod](ep_code.qmd) | Python: bara utdata, körbar kod, med inmatning |
-| 3 | [Visualiseringar](ep_visuals.qmd) | Interaktiv graf, animation, uppgifter och diagram |
-| 4 | [Quiz](ep_quiz.qmd) | Frågor för självkontroll |
-| 5 | [Källor](ep_references.qmd) | Citat och litteraturförteckning |
+| 3 | [Visualiseringar](ep_visuals.qmd) | Interaktiv graf, animation och diagram |
+| 4 | [Uppgifter](ep_tasks.qmd) | Uppgifter som rättar sig själva |
+| 5 | [Quiz](ep_quiz.qmd) | Frågor för självkontroll |
+| 6 | [Källor](ep_references.qmd) | Citat och litteraturförteckning |
 ::::

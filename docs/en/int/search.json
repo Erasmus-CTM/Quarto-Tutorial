@@ -144,7 +144,7 @@
     "href": "Qmd Files/Getting Started/beg_extensions.html",
     "title": "Interactive Code with Pyodide",
     "section": "",
-    "text": "NoteWhat are extensions?\n\n\n\nExtensions add extra features to Quarto that are not built in. You install them once per project folder. See the full list at quarto.org/docs/extensions.\nPyodide lets students run and edit Python code directly in the browser, with no Python installation on their computer. You write the code once; they click Run code.\nThis tutorial uses the extension pyodide-interaktiv for that, a rework of coatless-quarto/pyodide. It runs Python in a Web Worker, that is next to the page rather than inside it. That is what makes real input(), animations, a Stop button and AI feedback possible — more on that in the last section.",
+    "text": "Your answers are saved only in this browser.Do not save on this device\nExport my answers\nDelete answers on this page\nDelete all your answers in this course\nPyodide lets students run and edit Python code directly in the browser, with no Python installation on their computer. You write the code once; they click Run code.\nThe extension pyodide-interaktiv from the package CTM Assessment does that.",
     "crumbs": [
       "Interactive Code",
       "Interactive Python with Pyodide"
@@ -155,7 +155,7 @@
     "href": "Qmd Files/Getting Started/beg_extensions.html#install-the-extension",
     "title": "Interactive Code with Pyodide",
     "section": "1 — Install the extension",
-    "text": "1 — Install the extension\n① Open the Terminal in VS Code\nOpen the Terminal (the command line interface) via View → Terminal. A panel opens at the bottom of the screen. Make sure the path shown matches your project folder.\n\n② Run the install command\nThe extension is published at github.com/Erasmus-CTM/pyodide-interaktiv and installs like any other:\n\n\nTerminal\n\nquarto add Erasmus-CTM/pyodide-interaktiv\n\nWait until it finishes. It asks three questions: whether you trust the source, whether to continue, and whether you want to view the documentation. This only needs to be done once per project folder. Afterwards the extension is in your project’s _extensions/ folder.",
+    "text": "1 — Install the extension\n① Open the Terminal in VS Code\nOpen the Terminal (the command line interface) via View → Terminal. A panel opens at the bottom of the screen. Make sure the path shown matches your project folder.\n\n② Run the install command\nThe extension comes in the package CTM Assessment (source: github.com/Erasmus-CTM/ctm-assessment). You install it with one command:\n\nWindowsmacOS / Linux\n\n\n\n\nTerminal\n\nquarto add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.zip\n\n\n\n\n\nTerminal\n\nquarto add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.tar.gz\n\n\n\n\nNeeded once per project folder. Requires Quarto 1.8.27 or newer (quarto --version).",
     "crumbs": [
       "Interactive Code",
       "Interactive Python with Pyodide"
@@ -166,7 +166,7 @@
     "href": "Qmd Files/Getting Started/beg_extensions.html#enable-it-in-your-file",
     "title": "Interactive Code with Pyodide",
     "section": "2 — Enable it in your file",
-    "text": "2 — Enable it in your file\nAdd a filters: line to the header block of your .qmd file:\n---\ntitle: \"My Page\"\nformat: html\nfilters:\n  - Erasmus-CTM/pyodide-interaktiv\n---",
+    "text": "2 — Enable it in your file\nAdd a filters: line to the header block of your .qmd file:\n---\ntitle: \"My Page\"\nformat: html\nengine: markdown\nfilters:\n  - ctm-assessment\n---\nFrom Quarto 1.10 on you need the line engine: markdown on pages with interactive code; otherwise Quarto sends the page to Jupyter and the build stops. If the page also contains ordinary {python} blocks, leave the line out.",
     "crumbs": [
       "Interactive Code",
       "Interactive Python with Pyodide"
@@ -188,7 +188,7 @@
     "href": "Qmd Files/Getting Started/beg_extensions.html#see-the-result",
     "title": "Interactive Code with Pyodide",
     "section": "4 — See the result",
-    "text": "4 — See the result\nRun quarto preview in the Terminal. The code block appears in the browser with a row of buttons. This is what it looks like, and you can try it right here:\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.\n\nRun code starts the code (also with Shift + Enter). On the first click Python loads, which takes a few seconds.\nReset restores your original code.\nFeedback asks an AI for feedback (needs to be set up first).\nWhile the code is running, Stop appears.\n\nStudents can edit the code and run it again without installing anything.",
+    "text": "4 — See the result\nRun quarto preview in the Terminal. The code block appears in the browser with a row of buttons. This is what it looks like, and you can try it right here:\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.\n\nRun code starts the code (also with Shift + Enter). On the first click Python loads, which takes a few seconds.\nReset restores your original code.\nFeedback produces a ready-made text that you paste into an AI of your choice. With your own access, the button fetches the feedback directly.\nWhile the code is running, Stop appears.",
     "crumbs": [
       "Interactive Code",
       "Interactive Python with Pyodide"
@@ -199,7 +199,7 @@
     "href": "Qmd Files/Getting Started/beg_extensions.html#what-else-the-extension-can-do",
     "title": "Interactive Code with Pyodide",
     "section": "5 — What else the extension can do",
-    "text": "5 — What else the extension can do\n\nCells share their variables. All cells on a page belong to one Python session. A later cell can use what an earlier one defined or imported, but only after the earlier one has been run.\nReal input(). A cell can pause and wait for typed input.\nAnimations. A Matplotlib FuncAnimation appears as a player, from the same code you would write on your own computer.\nInfinite loops are harmless. An accidental while True: does not lock up the page; Stop cancels it.\nAI feedback. The hints get more concrete with each click.\n\nYou can try input() and shared variables on the Code page of the Example Page, and the animation on the Visualizations page.\n\n\n\n\n\n\n\nTipWant students to fill in solutions?\n\n\n\nThe py-exercise extension adds code blocks with hidden automated tests: students see whether their solution passes. The math-exercise extension does the same for mathematical answers, checked with SymPy. Both are installed the same way:\n\n\nTerminal\n\nquarto add Erasmus-CTM/py-exercise\nquarto add Erasmus-CTM/math-exercise\n\nBoth have examples on the Example Page of this tutorial.",
+    "text": "5 — What else the extension can do\n\nCells share their variables. All cells on a page belong to one Python session. A later cell can use what an earlier one defined or imported, but only after the earlier one has been run.\nReal input(). A cell can pause and wait for typed input.\nAnimations. A Matplotlib FuncAnimation appears as a player, from the same code you would write on your own computer.\nInfinite loops are harmless. An accidental while True: does not lock up the page; Stop cancels it.\nAI feedback. The hints get more concrete with each click.\n\nYou can try input() and shared variables on the Code page of the Example Page, and the animation on the Visualizations page.\n\n\n\n\n\n\n\nTipWant students to fill in solutions?\n\n\n\nThe same package contains py-exercise for coding exercises with hidden tests and math-exercise for mathematical answers checked with SymPy. You need to install nothing else. The page An exercise with automatic checking shows step by step how to build one.",
     "crumbs": [
       "Interactive Code",
       "Interactive Python with Pyodide"
@@ -269,6 +269,94 @@
     "crumbs": [
       "Creating an Exercise Sheet with Quarto",
       "What you need"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_check.html",
+    "href": "Qmd Files/Getting Started/beg_check.html",
+    "title": "An exercise with automatic checking",
+    "section": "",
+    "text": "Your answers are saved only in this browser.Do not save on this device\nExport my answers\nDelete answers on this page\nDelete all your answers in this course\nAn exercise with automatic checking tells students at once whether their solution is right. You write the exercise and the correct answer once, and the check runs in the browser. There are two kinds:",
+    "crumbs": [
+      "Interactive Code",
+      "An exercise with automatic checking"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_check.html#install-the-package",
+    "href": "Qmd Files/Getting Started/beg_check.html#install-the-package",
+    "title": "An exercise with automatic checking",
+    "section": "1 — Install the package",
+    "text": "1 — Install the package\nBoth exercise types are in the package CTM Assessment. If you have not installed it yet, open the Terminal in VS Code (View → Terminal) and run this in the project folder:\n\nWindowsmacOS / Linux\n\n\n\n\nTerminal\n\nquarto add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.zip\n\n\n\n\n\nTerminal\n\nquarto add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.tar.gz\n\n\n\n\nThis only needs to be done once per project folder. The same steps are described in more detail on the page Interactive Code with Pyodide.",
+    "crumbs": [
+      "Interactive Code",
+      "An exercise with automatic checking"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_check.html#prepare-the-page",
+    "href": "Qmd Files/Getting Started/beg_check.html#prepare-the-page",
+    "title": "An exercise with automatic checking",
+    "section": "2 — Prepare the page",
+    "text": "2 — Prepare the page\nAdd two things to the header of your .qmd file:\n---\ntitle: \"My exercises\"\nformat: html\nengine: markdown\nfilters:\n  - ctm-assessment\n---\nfilters: switches the package on. From Quarto 1.10 on you need engine: markdown on pages with exercises, otherwise the build stops at Jupyter.",
+    "crumbs": [
+      "Interactive Code",
+      "An exercise with automatic checking"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_check.html#write-a-python-exercise",
+    "href": "Qmd Files/Getting Started/beg_check.html#write-a-python-exercise",
+    "title": "An exercise with automatic checking",
+    "section": "3 — Write a Python exercise",
+    "text": "3 — Write a Python exercise\nA py-exercise block has two parts, separated by the line ## TESTS ##. Above it is what students see, below it the hidden tests:\n```{py-exercise}\ndef square(x):\n    \"\"\"Return x squared.\"\"\"\n    # Your solution here\n    pass\n\n## TESTS ##\nassert square(3) == 9,  \"square(3) should be 9\"\nassert square(-2) == 4, \"square(-2) should be 4\"\n```\nThe text after the comma of an assert is the message when the test fails. Write it as if you were talking to the students.\nThis is what the exercise looks like; try it right here:\n\n  \n    Please enable JavaScript to load the interactive exercise.",
+    "crumbs": [
+      "Interactive Code",
+      "An exercise with automatic checking"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_check.html#write-a-maths-exercise",
+    "href": "Qmd Files/Getting Started/beg_check.html#write-a-maths-exercise",
+    "title": "An exercise with automatic checking",
+    "section": "4 — Write a maths exercise",
+    "text": "4 — Write a maths exercise\nIn math-exercise the correct answer is in the question text, in square brackets after an underscore:\n```{math-exercise}\n#| label: circle-area\n#| vars: r\nA circle has radius $r = 3$. Give its area exactly (write pi for π):\n\n$A =$ _[pi*9]\n```\n#| vars: names the symbols that may appear in the answer. The answer in [...] is a SymPy expression. Try it: pi*9, 9*pi and 3**2*pi all count as correct.\n\nA circle has radius \\(r = 3\\). Give its area exactly (write pi for π):\n\n\\(A =\\) \n\n\n  ✓ Check\n  ⓘ Input help\n  \n    💬 Feedback\n    ⚙",
+    "crumbs": [
+      "Interactive Code",
+      "An exercise with automatic checking"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_check.html#see-the-result",
+    "href": "Qmd Files/Getting Started/beg_check.html#see-the-result",
+    "title": "An exercise with automatic checking",
+    "section": "5 — See the result",
+    "text": "5 — See the result\nRun quarto preview in the Terminal. On the first click on Run code or Check, Python loads, which takes a few seconds. Then the exercises show:\n\nfor py-exercise, an editor with buttons to run and reset. After running, it shows which tests pass and which message appears for a failure.\nfor math-exercise, an input field and a Check button that writes the result next to the field.\n\nMake a mistake on purpose and see whether the message helps students to move on. Try the correct solution too.",
+    "crumbs": [
+      "Interactive Code",
+      "An exercise with automatic checking"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_check.html#help-from-an-ai-optional",
+    "href": "Qmd Files/Getting Started/beg_check.html#help-from-an-ai-optional",
+    "title": "An exercise with automatic checking",
+    "section": "6 — Help from an AI (optional)",
+    "text": "6 — Help from an AI (optional)\nEvery exercise can get a Feedback button. It turns the exercise and the current answer into a ready-made text that students paste into an AI of their choice. For py-exercise you switch it on and state the assignment in every exercise:\n---\npy-exercise:\n  feedback: true\n---\n\n```{py-exercise}\n#| task: Complete square so that it returns the square of x.\ndef square(x):\n    pass\n\n## TESTS ##\nassert square(3) == 9\n```\nThe tests and the expected solution are never sent. How to set hint levels and how to build a page without any AI is described on the page AI feedback & saving.",
+    "crumbs": [
+      "Interactive Code",
+      "An exercise with automatic checking"
+    ]
+  },
+  {
+    "objectID": "Qmd Files/Getting Started/beg_check.html#answers-are-kept",
+    "href": "Qmd Files/Getting Started/beg_check.html#answers-are-kept",
+    "title": "An exercise with automatic checking",
+    "section": "7 — Answers are kept",
+    "text": "7 — Answers are kept\nWhat students enter stays in the browser of their device. On the next visit it is back. Nothing goes to a server. Students can switch that off in the settings dialog, export their answers or delete them.\n\n\n\n\n\n\n\nTipWhat next?\n\n\n\nAll options of both exercise types (forbidden commands, check modes, partial credit, question pools, submission) are under Tips & Tricks.",
+    "crumbs": [
+      "Interactive Code",
+      "An exercise with automatic checking"
     ]
   },
   {

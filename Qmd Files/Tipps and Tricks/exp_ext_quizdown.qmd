@@ -1,0 +1,576 @@
+---
+title: "quizdown – Quizze"
+title-en: "quizdown – quizzes"
+title-sv: "quizdown – frågesporter"
+title-no: "quizdown – quiz"
+title-da: "quizdown – quizzer"
+sidebar: tips-sidebar
+bibliography: ../../Qmd Files/Example Page/references.bib
+filters:
+  - parmsam/quizdown
+---
+
+:::: {.content-visible when-profile="deutsch"}
+**Installation:** `quarto add parmsam/quizdown`
+**Quelle:** [@quizdown], [github.com/parmsam/quarto-quizdown](https://github.com/parmsam/quarto-quizdown)
+
+```{quizdown}
+---
+locale: de
+---
+
+# Welche Datei legt die Einstellungen für das ganze Quarto-Projekt fest?
+
+1. [x] `_quarto.yml`
+1. [ ] `index.qmd`
+1. [ ] `styles.css`
+
+# Wähle alle gültigen Ausgabeformate von Quarto.
+
+- [x] HTML
+- [x] PDF
+- [x] Word (.docx)
+- [ ] Excel (.xlsx)
+
+# Bringe die Schritte beim Bauen in die richtige Reihenfolge.
+
+1. `.qmd`-Quelle einlesen
+2. Code ausführen
+3. Markdown in HTML/PDF umwandeln
+4. Theme und Stile anwenden
+```
+
+::: {.panel-tabset}
+
+## Einstellungen
+
+Einstellungen für das ganze Quiz stehen in einem `---`-Block am Anfang des Quiz:
+
+````{.markdown}
+```{quizdown}
+---
+shuffleAnswers: true    # Standard: true – Antworten mischen
+shuffleQuestions: false # Standard: false – Fragen mischen
+locale: de              # Sprache der Knöpfe
+---
+```
+````
+
+::: {.callout-tip}
+`shuffleAnswers: true` ist der **Standard**. Die Antworten werden gemischt, solange du nicht ausdrücklich `false` setzt.
+:::
+
+## Fragetypen
+
+**Einfachauswahl**, genau eine richtige Antwort:
+````{.markdown}
+```{quizdown}
+# Was ist 2 + 2?
+1. [ ] 3
+1. [x] 4
+1. [ ] 5
+```
+````
+
+**Mehrfachauswahl**, mehrere richtige Antworten:
+````{.markdown}
+```{quizdown}
+# Welche davon sind Programmiersprachen?
+- [x] Python
+- [ ] Quarto
+- [x] R
+- [x] JavaScript
+```
+````
+
+**Reihenfolge**, die Einträge sollen sortiert werden:
+````{.markdown}
+```{quizdown}
+# Bringe die Schritte beim Bauen in die richtige Reihenfolge.
+
+1. `.qmd`-Quelle einlesen
+2. Code ausführen
+3. Markdown in HTML/PDF umwandeln
+4. Theme und Stile anwenden
+```
+````
+
+## Bilder und Code
+
+Ein Bild in einer Frage:
+````{.markdown}
+```{quizdown}
+# Zu wem gehört dieses Logo?
+![](https://quarto.org/quarto.png)
+1. [x] Quarto
+1. [ ] RMarkdown
+```
+````
+
+Code in den Antworten:
+````{.markdown}
+```{quizdown}
+# Welche Option blendet den Quellcode aus?
+1. [x] `echo: false`
+1. [ ] `eval: false`
+1. [ ] `output: false`
+```
+````
+
+:::
+::::
+
+:::: {.content-visible when-profile="english"}
+**Install:** `quarto add parmsam/quizdown`
+**Source:** [@quizdown], [github.com/parmsam/quarto-quizdown](https://github.com/parmsam/quarto-quizdown)
+
+```{quizdown}
+---
+locale: en
+---
+
+# Which file controls global project settings in Quarto?
+
+1. [x] `_quarto.yml`
+1. [ ] `index.qmd`
+1. [ ] `styles.css`
+
+# Select all valid Quarto output formats.
+
+- [x] HTML
+- [x] PDF
+- [x] Word (.docx)
+- [ ] Excel (.xlsx)
+
+# Put the Quarto render pipeline in the correct order.
+
+1. Parse `.qmd` source
+2. Execute code chunks
+3. Convert Markdown to HTML/PDF
+4. Apply theme and styles
+```
+
+::: {.panel-tabset}
+
+## Settings
+
+Global quiz settings go inside a `---` block at the top of the quiz:
+
+````{.markdown}
+```{quizdown}
+---
+shuffleAnswers: true    # default: true — randomise answer order
+shuffleQuestions: false # default: false — randomise question order
+locale: en              # language of the buttons
+---
+```
+````
+
+::: {.callout-tip}
+`shuffleAnswers: true` is the **default**. Answers are shuffled unless you explicitly set it to `false`.
+:::
+
+## Question types
+
+**Single choice**, exactly one correct answer:
+````{.markdown}
+```{quizdown}
+# What is 2 + 2?
+1. [ ] 3
+1. [x] 4
+1. [ ] 5
+```
+````
+
+**Multiple choice**, more than one correct answer:
+````{.markdown}
+```{quizdown}
+# Which of these are programming languages?
+- [x] Python
+- [ ] Quarto
+- [x] R
+- [x] JavaScript
+```
+````
+
+**Ordering**, the items have to be sorted:
+````{.markdown}
+```{quizdown}
+# Put the Quarto render pipeline in the correct order.
+
+1. Parse `.qmd` source
+2. Execute code chunks
+3. Convert Markdown to HTML/PDF
+4. Apply theme and styles
+```
+````
+
+## Images & code
+
+Include an image in a question:
+````{.markdown}
+```{quizdown}
+# What does this logo belong to?
+![](https://quarto.org/quarto.png)
+1. [x] Quarto
+1. [ ] RMarkdown
+```
+````
+
+Include inline code in answers:
+````{.markdown}
+```{quizdown}
+# Which chunk option hides the source code?
+1. [x] `echo: false`
+1. [ ] `eval: false`
+1. [ ] `output: false`
+```
+````
+
+:::
+::::
+
+:::: {.content-visible when-profile="svenska"}
+**Installation:** `quarto add parmsam/quizdown`
+**Källa:** [@quizdown], [github.com/parmsam/quarto-quizdown](https://github.com/parmsam/quarto-quizdown)
+
+```{quizdown}
+---
+locale: en
+---
+
+# Vilken fil styr de globala projektinställningarna i Quarto?
+
+1. [x] `_quarto.yml`
+1. [ ] `index.qmd`
+1. [ ] `styles.css`
+
+# Välj alla giltiga utdataformat i Quarto.
+
+- [x] HTML
+- [x] PDF
+- [x] Word (.docx)
+- [ ] Excel (.xlsx)
+
+# Sätt stegen i Quartos rendering i rätt ordning.
+
+1. Läsa in `.qmd`-källan
+2. Köra kodblocken
+3. Omvandla Markdown till HTML/PDF
+4. Lägga på tema och stilar
+```
+
+::: {.panel-tabset}
+
+## Inställningar
+
+Globala inställningar för quizet skrivs i ett `---`-block högst upp i quizet:
+
+````{.markdown}
+```{quizdown}
+---
+shuffleAnswers: true    # default: true — randomise answer order
+shuffleQuestions: false # default: false — randomise question order
+locale: en              # language of the buttons
+---
+```
+````
+
+::: {.callout-tip}
+`shuffleAnswers: true` är **standard**. Svaren blandas om du inte uttryckligen anger `false`.
+:::
+
+## Frågetyper
+
+**Ett rätt svar**, exakt ett svar är rätt:
+
+````{.markdown}
+```{quizdown}
+# What is 2 + 2?
+1. [ ] 3
+1. [x] 4
+1. [ ] 5
+```
+````
+
+**Flera rätta svar**, mer än ett svar är rätt:
+
+````{.markdown}
+```{quizdown}
+# Which of these are programming languages?
+- [x] Python
+- [ ] Quarto
+- [x] R
+- [x] JavaScript
+```
+````
+
+**Sortering**, posterna ska sättas i rätt ordning:
+
+````{.markdown}
+```{quizdown}
+# Put the Quarto render pipeline in the correct order.
+
+1. Parse `.qmd` source
+2. Execute code chunks
+3. Convert Markdown to HTML/PDF
+4. Apply theme and styles
+```
+````
+
+## Bilder & kod
+
+Ta med en bild i en fråga:
+
+````{.markdown}
+```{quizdown}
+# What does this logo belong to?
+![](https://quarto.org/quarto.png)
+1. [x] Quarto
+1. [ ] RMarkdown
+```
+````
+
+Ta med kod i svaren:
+
+````{.markdown}
+```{quizdown}
+# Which chunk option hides the source code?
+1. [x] `echo: false`
+1. [ ] `eval: false`
+1. [ ] `output: false`
+```
+````
+
+:::
+::::
+
+:::: {.content-visible when-profile="norsk"}
+**Installasjon:** `quarto add parmsam/quizdown`
+**Kilde:** [@quizdown], [github.com/parmsam/quarto-quizdown](https://github.com/parmsam/quarto-quizdown)
+
+```{quizdown}
+---
+locale: en
+---
+
+# Hvilken fil styrer de globale prosjektinnstillingene i Quarto?
+
+1. [x] `_quarto.yml`
+1. [ ] `index.qmd`
+1. [ ] `styles.css`
+
+# Velg alle gyldige utdataformater i Quarto.
+
+- [x] HTML
+- [x] PDF
+- [x] Word (.docx)
+- [ ] Excel (.xlsx)
+
+# Sett trinnene i rendringen i Quarto i riktig rekkefølge.
+
+1. Lese inn `.qmd`-kilden
+2. Kjøre kodeblokkene
+3. Gjøre Markdown om til HTML/PDF
+4. Legge på tema og stiler
+```
+
+::: {.panel-tabset}
+
+## Innstillinger
+
+Globale innstillinger for quizen skrives i en `---`-blokk øverst i quizen:
+
+````{.markdown}
+```{quizdown}
+---
+shuffleAnswers: true    # default: true — randomise answer order
+shuffleQuestions: false # default: false — randomise question order
+locale: en              # language of the buttons
+---
+```
+````
+
+::: {.callout-tip}
+`shuffleAnswers: true` er **standard**. Svarene stokkes med mindre du uttrykkelig setter `false`.
+:::
+
+## Spørsmålstyper
+
+**Ett riktig svar**, nøyaktig ett svar er riktig:
+
+````{.markdown}
+```{quizdown}
+# What is 2 + 2?
+1. [ ] 3
+1. [x] 4
+1. [ ] 5
+```
+````
+
+**Flere riktige svar**, mer enn ett svar er riktig:
+
+````{.markdown}
+```{quizdown}
+# Which of these are programming languages?
+- [x] Python
+- [ ] Quarto
+- [x] R
+- [x] JavaScript
+```
+````
+
+**Sortering**, elementene skal settes i riktig rekkefølge:
+
+````{.markdown}
+```{quizdown}
+# Put the Quarto render pipeline in the correct order.
+
+1. Parse `.qmd` source
+2. Execute code chunks
+3. Convert Markdown to HTML/PDF
+4. Apply theme and styles
+```
+````
+
+## Bilder & kode
+
+Ta med et bilde i et spørsmål:
+
+````{.markdown}
+```{quizdown}
+# What does this logo belong to?
+![](https://quarto.org/quarto.png)
+1. [x] Quarto
+1. [ ] RMarkdown
+```
+````
+
+Ta med kode i svarene:
+
+````{.markdown}
+```{quizdown}
+# Which chunk option hides the source code?
+1. [x] `echo: false`
+1. [ ] `eval: false`
+1. [ ] `output: false`
+```
+````
+
+:::
+::::
+
+:::: {.content-visible when-profile="dansk"}
+**Installation:** `quarto add parmsam/quizdown`
+**Kilde:** [@quizdown], [github.com/parmsam/quarto-quizdown](https://github.com/parmsam/quarto-quizdown)
+
+```{quizdown}
+---
+locale: en
+---
+
+# Hvilken fil styrer de globale projektindstillinger i Quarto?
+
+1. [x] `_quarto.yml`
+1. [ ] `index.qmd`
+1. [ ] `styles.css`
+
+# Vælg alle gyldige outputformater i Quarto.
+
+- [x] HTML
+- [x] PDF
+- [x] Word (.docx)
+- [ ] Excel (.xlsx)
+
+# Sæt trinnene i Quartos rendering i den rigtige rækkefølge.
+
+1. Indlæse `.qmd`-kilden
+2. Køre kodeblokkene
+3. Omdanne Markdown til HTML/PDF
+4. Lægge tema og typografier på
+```
+
+::: {.panel-tabset}
+
+## Indstillinger
+
+Globale indstillinger for quizzen skrives i en `---`-blok øverst i quizzen:
+
+````{.markdown}
+```{quizdown}
+---
+shuffleAnswers: true    # default: true — randomise answer order
+shuffleQuestions: false # default: false — randomise question order
+locale: en              # language of the buttons
+---
+```
+````
+
+::: {.callout-tip}
+`shuffleAnswers: true` er **standard**. Svarene blandes, medmindre du udtrykkeligt angiver `false`.
+:::
+
+## Spørgsmålstyper
+
+**Ét rigtigt svar**, præcis ét svar er rigtigt:
+
+````{.markdown}
+```{quizdown}
+# What is 2 + 2?
+1. [ ] 3
+1. [x] 4
+1. [ ] 5
+```
+````
+
+**Flere rigtige svar**, mere end ét svar er rigtigt:
+
+````{.markdown}
+```{quizdown}
+# Which of these are programming languages?
+- [x] Python
+- [ ] Quarto
+- [x] R
+- [x] JavaScript
+```
+````
+
+**Sortering**, elementerne skal sættes i den rigtige rækkefølge:
+
+````{.markdown}
+```{quizdown}
+# Put the Quarto render pipeline in the correct order.
+
+1. Parse `.qmd` source
+2. Execute code chunks
+3. Convert Markdown to HTML/PDF
+4. Apply theme and styles
+```
+````
+
+## Billeder & kode
+
+Tag et billede med i et spørgsmål:
+
+````{.markdown}
+```{quizdown}
+# What does this logo belong to?
+![](https://quarto.org/quarto.png)
+1. [x] Quarto
+1. [ ] RMarkdown
+```
+````
+
+Tag kode med i svarene:
+
+````{.markdown}
+```{quizdown}
+# Which chunk option hides the source code?
+1. [x] `echo: false`
+1. [ ] `eval: false`
+1. [ ] `output: false`
+```
+````
+
+:::
+::::

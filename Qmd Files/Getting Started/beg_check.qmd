@@ -1,0 +1,840 @@
+---
+title: "Aufgabe mit automatischer Prüfung"
+title-en: "An exercise with automatic checking"
+title-sv: "Uppgift med automatisk kontroll"
+title-no: "Oppgave med automatisk kontroll"
+title-da: "Opgave med automatisk kontrol"
+engine: markdown
+filters:
+  - ctm-assessment
+---
+
+:::: {.content-visible when-profile="deutsch"}
+::: {.callout-tip}
+## Lieber eine Kurzfassung?
+Dieses Kapitel gibt es als [PDF-Cheatsheet](beg_check_cheatsheet.qmd): die Schritte und die Schreibweise der beiden Aufgabentypen, knapp gefasst zum Ausdrucken oder Nachschlagen.
+:::
+
+Eine Aufgabe mit automatischer Prüfung sagt Studierenden sofort, ob ihre Lösung stimmt. Du schreibst die Aufgabe und die richtige Antwort einmal, die Prüfung läuft im Browser. Es gibt zwei Arten:
+
+| Aufgabe | Studierende | Geprüft wird |
+|---|---|---|
+| `py-exercise` | ergänzen eine Python-Funktion | mit versteckten Tests (`assert`) |
+| `math-exercise` | tippen eine mathematische Antwort | mit SymPy, gleichwertige Schreibweisen zählen |
+
+::: {.callout-warning}
+## Interaktiv nur in HTML
+Prüfen geht nur in der **HTML-Ausgabe**, also in Websites (`format: html`) und Büchern. In PDF oder Word erscheint nur der Text der Aufgabe.
+:::
+
+---
+
+## 1 – Das Paket installieren
+
+Beide Aufgabentypen stecken im Paket **CTM Assessment**. Falls du es noch nicht installiert hast, öffne das **Terminal** in VS Code (**View → Terminal**) und gib im Projektordner ein:
+
+::: {.panel-tabset}
+### Windows
+```{.bash filename="Terminal"}
+quarto add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.zip
+```
+
+### macOS / Linux
+```{.bash filename="Terminal"}
+quarto add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.tar.gz
+```
+:::
+
+Das ist nur **einmal je Projektordner** nötig. Dieselben Schritte stehen ausführlicher auf der Seite [Interaktiver Code mit Pyodide](beg_extensions.qmd).
+
+---
+
+## 2 – Die Seite vorbereiten
+
+Ergänze im Kopf deiner `.qmd`-Datei zwei Dinge:
+
+```yaml
+---
+title: "Meine Aufgaben"
+format: html
+engine: markdown
+filters:
+  - ctm-assessment
+---
+```
+
+`filters:` schaltet das Paket ein. `engine: markdown` brauchst du ab Quarto 1.10 auf Seiten mit Aufgaben, sonst bricht der Build bei Jupyter ab.
+
+---
+
+## 3 – Eine Python-Aufgabe schreiben
+
+Ein `py-exercise`-Block hat zwei Teile, getrennt durch die Zeile `## TESTS ##`. Oben steht, was die Studierenden sehen, darunter die versteckten Tests:
+
+````markdown
+```{py-exercise}
+def quadrat(x):
+    """Gib das Quadrat von x zurück."""
+    # Deine Lösung
+    pass
+
+## TESTS ##
+assert quadrat(3) == 9,  "quadrat(3) sollte 9 sein"
+assert quadrat(-2) == 4, "quadrat(-2) sollte 4 sein"
+```
+````
+
+Der Text hinter dem Komma eines `assert` ist die Rückmeldung, wenn der Test scheitert. Schreib ihn so, als würdest du mit den Studierenden sprechen.
+
+So sieht die Aufgabe aus, probier sie gleich aus:
+
+```{py-exercise}
+#| label: check-quadrat
+def quadrat(x):
+    """Gib das Quadrat von x zurück."""
+    # Deine Lösung
+    pass
+
+## TESTS ##
+assert quadrat(3) == 9,  "quadrat(3) sollte 9 sein"
+assert quadrat(-2) == 4, "quadrat(-2) sollte 4 sein"
+```
+
+---
+
+## 4 – Eine Mathe-Aufgabe schreiben
+
+Bei `math-exercise` steht die richtige Antwort im Aufgabentext, in eckigen Klammern hinter einem Unterstrich:
+
+````markdown
+```{math-exercise}
+#| label: kreisflaeche
+#| vars: r
+Ein Kreis hat den Radius $r = 3$. Gib seinen Flächeninhalt exakt an (schreibe pi für π):
+
+$A =$ _[pi*9]
+```
+````
+
+`#| vars:` nennt die Symbole, die in der Antwort vorkommen dürfen. Die Antwort in `[...]` ist ein SymPy-Ausdruck. Probier es aus: `pi*9`, `9*pi` und `3**2*pi` gelten alle als richtig.
+
+```{math-exercise}
+#| label: check-kreisflaeche
+#| vars: r
+Ein Kreis hat den Radius $r = 3$. Gib seinen Flächeninhalt exakt an (schreibe pi für π):
+
+$A =$ _[pi*9]
+```
+
+---
+
+## 5 – Das Ergebnis ansehen
+
+Gib im Terminal `quarto preview` ein. Beim ersten Klick auf **Code ausführen** oder **Überprüfen** lädt Python, das dauert einige Sekunden. Dann zeigen die Aufgaben:
+
+- bei `py-exercise` einen Editor mit den Knöpfen zum Ausführen und Zurücksetzen. Nach dem Ausführen steht dort, welche Tests bestehen und welche Meldung bei einem Fehler erscheint.
+- bei `math-exercise` ein Eingabefeld und einen Knopf **Überprüfen**, der das Ergebnis neben das Feld schreibt.
+
+Mach mit Absicht einen Fehler und schau, ob die Rückmeldung den Studierenden weiterhilft. Probier auch die richtige Lösung aus.
+
+---
+
+## 6 – Hilfe von einer KI (freiwillig)
+
+Jede Aufgabe kann einen Knopf **Feedback** bekommen. Er erzeugt aus der Aufgabe und der aktuellen Antwort einen fertigen Text, den Studierende in eine KI ihrer Wahl einfügen. Für `py-exercise` schaltest du das ein und nennst in jeder Aufgabe den Auftrag:
+
+````markdown
+---
+py-exercise:
+  feedback: true
+---
+
+```{py-exercise}
+#| task: Ergänze quadrat so, dass es das Quadrat von x zurückgibt.
+def quadrat(x):
+    pass
+
+## TESTS ##
+assert quadrat(3) == 9
+```
+````
+
+Die Tests und die erwartete Lösung werden nie mitgeschickt. Wie du Hinweisstufen festlegst und eine Seite ganz ohne KI baust, steht auf der Seite [KI-Feedback & Speichern](../../../exp/Qmd Files/Tipps and Tricks/exp_ext_feedback.html).
+
+---
+
+## 7 – Antworten bleiben erhalten
+
+Was Studierende eintragen, bleibt im Browser ihres Geräts. Beim nächsten Besuch ist es wieder da. Auf einen Server geht dabei nichts. Studierende können das im Einstellungsdialog ausschalten, ihre Antworten exportieren oder löschen.
+
+---
+
+::: {.callout-tip}
+## Wie geht es weiter?
+Alle Optionen der beiden Aufgabentypen (verbotene Befehle, Prüfmodi, Teilpunkte, Aufgabenpools, Abgabe) stehen unter [Tipps & Tricks](../../../exp/Qmd Files/Tipps and Tricks/exp_extensions.html).
+:::
+::::
+
+:::: {.content-visible when-profile="english"}
+::: {.callout-tip}
+## Prefer a quick reference?
+This chapter as a [PDF cheatsheet](beg_check_cheatsheet.qmd): the steps and the syntax of both exercise types, condensed for printing or quick lookup.
+:::
+
+An exercise with automatic checking tells students at once whether their solution is right. You write the exercise and the correct answer once, and the check runs in the browser. There are two kinds:
+
+| Exercise | Students | Checked |
+|---|---|---|
+| `py-exercise` | complete a Python function | with hidden tests (`assert`) |
+| `math-exercise` | type a mathematical answer | with SymPy, equivalent forms count |
+
+::: {.callout-warning}
+## Interactive in HTML only
+Checking works only in **HTML output**, that is in websites (`format: html`) and books. In PDF or Word only the text of the exercise appears.
+:::
+
+---
+
+## 1 — Install the package
+
+Both exercise types are in the package **CTM Assessment**. If you have not installed it yet, open the **Terminal** in VS Code (**View → Terminal**) and run this in the project folder:
+
+::: {.panel-tabset}
+### Windows
+```{.bash filename="Terminal"}
+quarto add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.zip
+```
+
+### macOS / Linux
+```{.bash filename="Terminal"}
+quarto add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.tar.gz
+```
+:::
+
+This only needs to be done **once per project folder**. The same steps are described in more detail on the page [Interactive Code with Pyodide](beg_extensions.qmd).
+
+---
+
+## 2 — Prepare the page
+
+Add two things to the header of your `.qmd` file:
+
+```yaml
+---
+title: "My exercises"
+format: html
+engine: markdown
+filters:
+  - ctm-assessment
+---
+```
+
+`filters:` switches the package on. From Quarto 1.10 on you need `engine: markdown` on pages with exercises, otherwise the build stops at Jupyter.
+
+---
+
+## 3 — Write a Python exercise
+
+A `py-exercise` block has two parts, separated by the line `## TESTS ##`. Above it is what students see, below it the hidden tests:
+
+````markdown
+```{py-exercise}
+def square(x):
+    """Return x squared."""
+    # Your solution here
+    pass
+
+## TESTS ##
+assert square(3) == 9,  "square(3) should be 9"
+assert square(-2) == 4, "square(-2) should be 4"
+```
+````
+
+The text after the comma of an `assert` is the message when the test fails. Write it as if you were talking to the students.
+
+This is what the exercise looks like; try it right here:
+
+```{py-exercise}
+#| label: check-square
+def square(x):
+    """Return x squared."""
+    # Your solution here
+    pass
+
+## TESTS ##
+assert square(3) == 9,  "square(3) should be 9"
+assert square(-2) == 4, "square(-2) should be 4"
+```
+
+---
+
+## 4 — Write a maths exercise
+
+In `math-exercise` the correct answer is in the question text, in square brackets after an underscore:
+
+````markdown
+```{math-exercise}
+#| label: circle-area
+#| vars: r
+A circle has radius $r = 3$. Give its area exactly (write pi for π):
+
+$A =$ _[pi*9]
+```
+````
+
+`#| vars:` names the symbols that may appear in the answer. The answer in `[...]` is a SymPy expression. Try it: `pi*9`, `9*pi` and `3**2*pi` all count as correct.
+
+```{math-exercise}
+#| label: check-circle-area
+#| vars: r
+A circle has radius $r = 3$. Give its area exactly (write pi for π):
+
+$A =$ _[pi*9]
+```
+
+---
+
+## 5 — See the result
+
+Run `quarto preview` in the Terminal. On the first click on **Run code** or **Check**, Python loads, which takes a few seconds. Then the exercises show:
+
+- for `py-exercise`, an editor with buttons to run and reset. After running, it shows which tests pass and which message appears for a failure.
+- for `math-exercise`, an input field and a **Check** button that writes the result next to the field.
+
+Make a mistake on purpose and see whether the message helps students to move on. Try the correct solution too.
+
+---
+
+## 6 — Help from an AI (optional)
+
+Every exercise can get a **Feedback** button. It turns the exercise and the current answer into a ready-made text that students paste into an AI of their choice. For `py-exercise` you switch it on and state the assignment in every exercise:
+
+````markdown
+---
+py-exercise:
+  feedback: true
+---
+
+```{py-exercise}
+#| task: Complete square so that it returns the square of x.
+def square(x):
+    pass
+
+## TESTS ##
+assert square(3) == 9
+```
+````
+
+The tests and the expected solution are never sent. How to set hint levels and how to build a page without any AI is described on the page [AI feedback & saving](../../../exp/Qmd Files/Tipps and Tricks/exp_ext_feedback.html).
+
+---
+
+## 7 — Answers are kept
+
+What students enter stays in the browser of their device. On the next visit it is back. Nothing goes to a server. Students can switch that off in the settings dialog, export their answers or delete them.
+
+---
+
+::: {.callout-tip}
+## What next?
+All options of both exercise types (forbidden commands, check modes, partial credit, question pools, submission) are under [Tips & Tricks](../../../exp/Qmd Files/Tipps and Tricks/exp_extensions.html).
+:::
+::::
+
+:::: {.content-visible when-profile="svenska"}
+::: {.callout-tip}
+## Vill du hellre ha en kortversion?
+Det här kapitlet finns som [PDF-lathund](beg_check_cheatsheet.qmd): stegen och skrivsättet för de två uppgiftstyperna, kortfattat för utskrift eller snabb uppslagning.
+:::
+
+En uppgift med automatisk kontroll talar direkt om för studenterna om deras lösning stämmer. Du skriver uppgiften och det rätta svaret en gång, och kontrollen körs i webbläsaren. Det finns två slag:
+
+| Uppgift | Studenterna | Kontrolleras |
+|---|---|---|
+| `py-exercise` | kompletterar en Python-funktion | med dolda tester (`assert`) |
+| `math-exercise` | skriver ett matematiskt svar | med SymPy, likvärdiga skrivsätt räknas |
+
+::: {.callout-warning}
+## Interaktivt bara i HTML
+Kontrollen fungerar bara i **HTML-utdata**, alltså i webbplatser (`format: html`) och böcker. I PDF eller Word visas bara uppgiftens text.
+:::
+
+---
+
+## 1 – Installera paketet
+
+Båda uppgiftstyperna finns i paketet **CTM Assessment**. Om du inte har installerat det än, öppna **terminalen** i VS Code (**View → Terminal**) och skriv i projektmappen:
+
+::: {.panel-tabset}
+### Windows
+```{.bash filename="Terminal"}
+quarto add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.zip
+```
+
+### macOS / Linux
+```{.bash filename="Terminal"}
+quarto add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.tar.gz
+```
+:::
+
+Det behövs bara **en gång per projektmapp**. Samma steg beskrivs utförligare på sidan [Interaktiv kod med Pyodide](beg_extensions.qmd).
+
+---
+
+## 2 – Förbereda sidan
+
+Lägg till två saker i huvudet på din `.qmd`-fil:
+
+```yaml
+---
+title: "Mina uppgifter"
+format: html
+engine: markdown
+filters:
+  - ctm-assessment
+---
+```
+
+`filters:` slår på paketet. Från Quarto 1.10 behöver du `engine: markdown` på sidor med uppgifter, annars avbryts bygget vid Jupyter.
+
+---
+
+## 3 – Skriva en Python-uppgift
+
+Ett `py-exercise`-block har två delar, åtskilda av raden `## TESTS ##`. Ovanför står det studenterna ser, under står de dolda testerna:
+
+````markdown
+```{py-exercise}
+def kvadrat(x):
+    """Returnera kvadraten av x."""
+    # Din lösning här
+    pass
+
+## TESTS ##
+assert kvadrat(3) == 9,  "kvadrat(3) ska vara 9"
+assert kvadrat(-2) == 4, "kvadrat(-2) ska vara 4"
+```
+````
+
+Texten efter kommatecknet i en `assert` är meddelandet när testet misslyckas. Skriv det som om du pratade med studenterna.
+
+Så här ser uppgiften ut, prova den direkt:
+
+```{py-exercise}
+#| label: check-kvadrat
+def kvadrat(x):
+    """Returnera kvadraten av x."""
+    # Din lösning här
+    pass
+
+## TESTS ##
+assert kvadrat(3) == 9,  "kvadrat(3) ska vara 9"
+assert kvadrat(-2) == 4, "kvadrat(-2) ska vara 4"
+```
+
+---
+
+## 4 – Skriva en matteuppgift
+
+I `math-exercise` står det rätta svaret i uppgiftstexten, inom hakparenteser efter ett understreck:
+
+````markdown
+```{math-exercise}
+#| label: cirkelarea
+#| vars: r
+En cirkel har radien $r = 3$. Ange dess area exakt (skriv pi för π):
+
+$A =$ _[pi*9]
+```
+````
+
+`#| vars:` anger de symboler som får förekomma i svaret. Svaret inom `[...]` är ett SymPy-uttryck. Prova: `pi*9`, `9*pi` och `3**2*pi` räknas alla som rätt.
+
+```{math-exercise}
+#| label: check-cirkelarea
+#| vars: r
+En cirkel har radien $r = 3$. Ange dess area exakt (skriv pi för π):
+
+$A =$ _[pi*9]
+```
+
+---
+
+## 5 – Se resultatet
+
+Skriv `quarto preview` i terminalen. Vid första klicket på **Kör koden** eller **Kontrollera** laddas Python, vilket tar några sekunder. Sedan visar uppgifterna:
+
+- för `py-exercise` en editor med knappar för att köra och återställa. Efter körningen står det vilka tester som klarades och vilket meddelande som visas vid ett fel.
+- för `math-exercise` ett inmatningsfält och en knapp **Kontrollera** som skriver resultatet bredvid fältet.
+
+Gör ett fel med flit och se om meddelandet hjälper studenterna vidare. Prova också den rätta lösningen.
+
+---
+
+## 6 – Hjälp av en AI (frivilligt)
+
+Varje uppgift kan få en knapp **Feedback**. Den gör uppgiften och det aktuella svaret till en färdig text som studenterna klistrar in i en AI efter eget val. För `py-exercise` slår du på det och anger uppdraget i varje uppgift:
+
+````markdown
+---
+py-exercise:
+  feedback: true
+---
+
+```{py-exercise}
+#| task: Komplettera kvadrat så att den returnerar kvadraten av x.
+def kvadrat(x):
+    pass
+
+## TESTS ##
+assert kvadrat(3) == 9
+```
+````
+
+Testerna och den förväntade lösningen skickas aldrig. Hur du ställer in ledtrådsnivåer och bygger en sida helt utan AI beskrivs på sidan [AI-feedback och sparande](../../../exp/Qmd Files/Tipps and Tricks/exp_ext_feedback.html).
+
+---
+
+## 7 – Svaren bevaras
+
+Det studenterna skriver in stannar i webbläsaren på deras enhet. Nästa gång de besöker sidan finns det kvar. Ingenting går till någon server. Studenterna kan stänga av det i inställningsdialogen, exportera sina svar eller radera dem.
+
+---
+
+::: {.callout-tip}
+## Hur går man vidare?
+Alla alternativ för de två uppgiftstyperna (förbjudna kommandon, kontrolllägen, delpoäng, uppgiftspooler, inlämning) finns under [Tips & tricks](../../../exp/Qmd Files/Tipps and Tricks/exp_extensions.html).
+:::
+::::
+
+:::: {.content-visible when-profile="norsk"}
+::: {.callout-tip}
+## Vil du heller ha en kortversjon?
+Dette kapitlet finnes som [PDF-cheatsheet](beg_check_cheatsheet.qmd): trinnene og skrivemåten for de to oppgavetypene, kortfattet til utskrift eller rask oppslag.
+:::
+
+En oppgave med automatisk kontroll forteller studentene med en gang om løsningen deres stemmer. Du skriver oppgaven og det riktige svaret én gang, og kontrollen kjører i nettleseren. Det finnes to slag:
+
+| Oppgave | Studentene | Kontrolleres |
+|---|---|---|
+| `py-exercise` | fullfører en Python-funksjon | med skjulte tester (`assert`) |
+| `math-exercise` | skriver et matematisk svar | med SymPy, likeverdige skrivemåter teller |
+
+::: {.callout-warning}
+## Interaktivt bare i HTML
+Kontrollen fungerer bare i **HTML-utdata**, altså i nettsteder (`format: html`) og bøker. I PDF eller Word vises bare teksten i oppgaven.
+:::
+
+---
+
+## 1 – Installere pakken
+
+Begge oppgavetypene ligger i pakken **CTM Assessment**. Hvis du ikke har installert den ennå, åpner du **terminalen** i VS Code (**View → Terminal**) og skriver i prosjektmappen:
+
+::: {.panel-tabset}
+### Windows
+```{.bash filename="Terminal"}
+quarto add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.zip
+```
+
+### macOS / Linux
+```{.bash filename="Terminal"}
+quarto add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.tar.gz
+```
+:::
+
+Det trengs bare **én gang per prosjektmappe**. De samme trinnene er beskrevet mer utførlig på siden [Interaktiv kode med Pyodide](beg_extensions.qmd).
+
+---
+
+## 2 – Forberede siden
+
+Legg til to ting i hodet på `.qmd`-filen din:
+
+```yaml
+---
+title: "Oppgavene mine"
+format: html
+engine: markdown
+filters:
+  - ctm-assessment
+---
+```
+
+`filters:` slår på pakken. Fra Quarto 1.10 trenger du `engine: markdown` på sider med oppgaver, ellers stopper byggingen ved Jupyter.
+
+---
+
+## 3 – Skrive en Python-oppgave
+
+En `py-exercise`-blokk har to deler, adskilt av linjen `## TESTS ##`. Over står det studentene ser, under står de skjulte testene:
+
+````markdown
+```{py-exercise}
+def kvadrat(x):
+    """Returner kvadratet av x."""
+    # Din løsning her
+    pass
+
+## TESTS ##
+assert kvadrat(3) == 9,  "kvadrat(3) skal være 9"
+assert kvadrat(-2) == 4, "kvadrat(-2) skal være 4"
+```
+````
+
+Teksten etter kommaet i en `assert` er meldingen når testen mislykkes. Skriv den som om du snakket med studentene.
+
+Slik ser oppgaven ut, prøv den med en gang:
+
+```{py-exercise}
+#| label: check-kvadrat
+def kvadrat(x):
+    """Returner kvadratet av x."""
+    # Din løsning her
+    pass
+
+## TESTS ##
+assert kvadrat(3) == 9,  "kvadrat(3) skal være 9"
+assert kvadrat(-2) == 4, "kvadrat(-2) skal være 4"
+```
+
+---
+
+## 4 – Skrive en matteoppgave
+
+I `math-exercise` står det riktige svaret i oppgaveteksten, i hakeparenteser etter en understrek:
+
+````markdown
+```{math-exercise}
+#| label: sirkelareal
+#| vars: r
+En sirkel har radius $r = 3$. Oppgi arealet eksakt (skriv pi for π):
+
+$A =$ _[pi*9]
+```
+````
+
+`#| vars:` angir symbolene som kan forekomme i svaret. Svaret i `[...]` er et SymPy-uttrykk. Prøv: `pi*9`, `9*pi` og `3**2*pi` teller alle som riktig.
+
+```{math-exercise}
+#| label: check-sirkelareal
+#| vars: r
+En sirkel har radius $r = 3$. Oppgi arealet eksakt (skriv pi for π):
+
+$A =$ _[pi*9]
+```
+
+---
+
+## 5 – Se resultatet
+
+Skriv `quarto preview` i terminalen. Ved første klikk på **Kjør koden** eller **Kontroller** lastes Python, og det tar noen sekunder. Deretter viser oppgavene:
+
+- for `py-exercise` en editor med knapper for å kjøre og tilbakestille. Etter kjøringen står det hvilke tester som bestod, og hvilken melding som vises ved en feil.
+- for `math-exercise` et inndatafelt og en knapp **Kontroller** som skriver resultatet ved siden av feltet.
+
+Gjør en feil med vilje og se om meldingen hjelper studentene videre. Prøv også den riktige løsningen.
+
+---
+
+## 6 – Hjelp fra en KI (frivillig)
+
+Hver oppgave kan få en knapp **Tilbakemelding**. Den gjør oppgaven og det gjeldende svaret om til en ferdig tekst som studentene limer inn i en KI etter eget valg. For `py-exercise` slår du det på og angir oppdraget i hver oppgave:
+
+````markdown
+---
+py-exercise:
+  feedback: true
+---
+
+```{py-exercise}
+#| task: Fullfør kvadrat slik at den returnerer kvadratet av x.
+def kvadrat(x):
+    pass
+
+## TESTS ##
+assert kvadrat(3) == 9
+```
+````
+
+Testene og den forventede løsningen sendes aldri. Hvordan du stiller inn hintnivåer og bygger en side helt uten KI, står på siden [KI-tilbakemelding og lagring](../../../exp/Qmd Files/Tipps and Tricks/exp_ext_feedback.html).
+
+---
+
+## 7 – Svarene bevares
+
+Det studentene skriver inn, blir i nettleseren på enheten deres. Neste gang de besøker siden, er det der igjen. Ingenting går til noen server. Studentene kan slå det av i innstillingsdialogen, eksportere svarene sine eller slette dem.
+
+---
+
+::: {.callout-tip}
+## Hva nå?
+Alle alternativer for de to oppgavetypene (forbudte kommandoer, kontrollmoduser, delpoeng, oppgavebanker, innlevering) finner du under [Tips og triks](../../../exp/Qmd Files/Tipps and Tricks/exp_extensions.html).
+:::
+::::
+
+:::: {.content-visible when-profile="dansk"}
+::: {.callout-tip}
+## Vil du hellere have en kortversion?
+Dette kapitel findes som [PDF-cheatsheet](beg_check_cheatsheet.qmd): trinnene og skrivemåden for de to opgavetyper, kortfattet til udskrift eller hurtigt opslag.
+:::
+
+En opgave med automatisk kontrol fortæller med det samme de studerende, om deres løsning er rigtig. Du skriver opgaven og det rigtige svar én gang, og kontrollen kører i browseren. Der findes to slags:
+
+| Opgave | De studerende | Kontrolleres |
+|---|---|---|
+| `py-exercise` | fuldfører en Python-funktion | med skjulte test (`assert`) |
+| `math-exercise` | skriver et matematisk svar | med SymPy, ligeværdige skrivemåder tæller |
+
+::: {.callout-warning}
+## Interaktivt kun i HTML
+Kontrollen virker kun i **HTML-output**, altså i websteder (`format: html`) og bøger. I PDF eller Word vises kun opgavens tekst.
+:::
+
+---
+
+## 1 – Installér pakken
+
+Begge opgavetyper ligger i pakken **CTM Assessment**. Hvis du ikke har installeret den endnu, åbner du **terminalen** i VS Code (**View → Terminal**) og skriver i projektmappen:
+
+::: {.panel-tabset}
+### Windows
+```{.bash filename="Terminal"}
+quarto add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.zip
+```
+
+### macOS / Linux
+```{.bash filename="Terminal"}
+quarto add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.tar.gz
+```
+:::
+
+Det behøves kun **én gang pr. projektmappe**. De samme trin er beskrevet mere udførligt på siden [Interaktiv kode med Pyodide](beg_extensions.qmd).
+
+---
+
+## 2 – Forbered siden
+
+Tilføj to ting i hovedet på din `.qmd`-fil:
+
+```yaml
+---
+title: "Mine opgaver"
+format: html
+engine: markdown
+filters:
+  - ctm-assessment
+---
+```
+
+`filters:` slår pakken til. Fra Quarto 1.10 skal du bruge `engine: markdown` på sider med opgaver, ellers stopper bygningen ved Jupyter.
+
+---
+
+## 3 – Skriv en Python-opgave
+
+En `py-exercise`-blok har to dele, adskilt af linjen `## TESTS ##`. Ovenfor står det, de studerende ser, nedenfor de skjulte test:
+
+````markdown
+```{py-exercise}
+def kvadrat(x):
+    """Returnér kvadratet af x."""
+    # Din løsning her
+    pass
+
+## TESTS ##
+assert kvadrat(3) == 9,  "kvadrat(3) skal være 9"
+assert kvadrat(-2) == 4, "kvadrat(-2) skal være 4"
+```
+````
+
+Teksten efter kommaet i en `assert` er meddelelsen, når testen mislykkes. Skriv den, som om du talte med de studerende.
+
+Sådan ser opgaven ud, prøv den med det samme:
+
+```{py-exercise}
+#| label: check-kvadrat
+def kvadrat(x):
+    """Returnér kvadratet af x."""
+    # Din løsning her
+    pass
+
+## TESTS ##
+assert kvadrat(3) == 9,  "kvadrat(3) skal være 9"
+assert kvadrat(-2) == 4, "kvadrat(-2) skal være 4"
+```
+
+---
+
+## 4 – Skriv en matematikopgave
+
+I `math-exercise` står det rigtige svar i opgaveteksten, i kantede parenteser efter en understreg:
+
+````markdown
+```{math-exercise}
+#| label: cirkelareal
+#| vars: r
+En cirkel har radius $r = 3$. Angiv dens areal eksakt (skriv pi for π):
+
+$A =$ _[pi*9]
+```
+````
+
+`#| vars:` angiver de symboler, der må forekomme i svaret. Svaret i `[...]` er et SymPy-udtryk. Prøv: `pi*9`, `9*pi` og `3**2*pi` tæller alle som rigtige.
+
+```{math-exercise}
+#| label: check-cirkelareal
+#| vars: r
+En cirkel har radius $r = 3$. Angiv dens areal eksakt (skriv pi for π):
+
+$A =$ _[pi*9]
+```
+
+---
+
+## 5 – Se resultatet
+
+Skriv `quarto preview` i terminalen. Ved første klik på **Kør koden** eller **Kontrollér** indlæses Python, og det tager nogle sekunder. Derefter viser opgaverne:
+
+- for `py-exercise` en editor med knapper til at køre og nulstille. Efter kørslen står der, hvilke test der bestod, og hvilken meddelelse der vises ved en fejl.
+- for `math-exercise` et indtastningsfelt og en knap **Kontrollér**, der skriver resultatet ved siden af feltet.
+
+Lav en fejl med vilje og se, om meddelelsen hjælper de studerende videre. Prøv også den rigtige løsning.
+
+---
+
+## 6 – Hjælp fra en AI (frivilligt)
+
+Hver opgave kan få en knap **Feedback**. Den laver opgaven og det aktuelle svar om til en færdig tekst, som de studerende sætter ind i en AI efter eget valg. For `py-exercise` slår du det til og angiver opgaven i hver opgave:
+
+````markdown
+---
+py-exercise:
+  feedback: true
+---
+
+```{py-exercise}
+#| task: Fuldfør kvadrat, så den returnerer kvadratet af x.
+def kvadrat(x):
+    pass
+
+## TESTS ##
+assert kvadrat(3) == 9
+```
+````
+
+Testene og den forventede løsning sendes aldrig. Hvordan du indstiller hintniveauer og bygger en side helt uden AI, står på siden [AI-feedback og lagring](../../../exp/Qmd Files/Tipps and Tricks/exp_ext_feedback.html).
+
+---
+
+## 7 – Svarene bevares
+
+Det, de studerende skriver ind, bliver i browseren på deres enhed. Næste gang de besøger siden, er det der igen. Intet går til nogen server. De studerende kan slå det fra i indstillingsdialogen, eksportere deres svar eller slette dem.
+
+---
+
+::: {.callout-tip}
+## Hvad nu?
+Alle muligheder for de to opgavetyper (forbudte kommandoer, kontroltilstande, delpoint, opgavepuljer, aflevering) finder du under [Tips og tricks](../../../exp/Qmd Files/Tipps and Tricks/exp_extensions.html).
+:::
+::::

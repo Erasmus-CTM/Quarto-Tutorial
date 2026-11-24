@@ -1,0 +1,937 @@
+---
+title: "Python im Browser"
+title-en: "Python in the browser"
+title-sv: "Python i webbläsaren"
+title-no: "Python i nettleseren"
+title-da: "Python i browseren"
+sidebar: tips-sidebar
+bibliography: ../../Qmd Files/Example Page/references.bib
+engine: markdown
+filters:
+  - ctm-assessment
+---
+
+:::: {.content-visible when-profile="deutsch"}
+**Installation:** gehört zu CTM Assessment, siehe [Überblick und Installation](exp_extensions.qmd)
+**Quelle:** [@pyodide-interaktiv], [github.com/Erasmus-CTM/pyodide-interaktiv](https://github.com/Erasmus-CTM/pyodide-interaktiv). Das Python dahinter ist Pyodide [@pyodide].
+
+`pyodide-interaktiv` führt Python in einem **Web Worker** aus, also neben der Seite statt in ihr. Deshalb bleibt die Seite während einer langen Rechnung bedienbar, und jede Zelle hat einen Knopf **Stopp**. Die Extension ist eine Überarbeitung von `coatless-quarto/pyodide`.
+
+::: {.panel-tabset}
+
+## Beispiel
+
+```{pyodide-python}
+# Ändere den Code und klicke auf „Code ausführen“
+woerter = ["Quarto", "ist", "toll"]
+print(" ".join(woerter))
+```
+
+Jede Zelle hat die Knöpfe **Code ausführen** (auch `Shift + Enter`), **Zurücksetzen**, **Kopieren**, **Feedback** und **+ Codeblock**. Der letzte hängt eine leere, veränderbare Zelle an, praktisch unter einem gesperrten Beispiel.
+
+| | `{python}` | `{pyodide-python}` |
+|---|---|---|
+| Läuft | beim Bauen | beim Lesen (im Browser) |
+| Leser können ändern | nein | ja |
+| Braucht installiertes Python | ja (Autorin oder Autor) | nein |
+| Ausgabe steht fest im HTML | ja | nein, wird live berechnet |
+
+::: {.callout-warning}
+## Verfügbare Pakete
+Pyodide läuft in WebAssembly. Viele Pakete gibt es (`numpy`, `pandas`, `matplotlib`, `sympy`), aber nicht jedes Paket mit C-Anteilen ist verfügbar.
+:::
+
+## Gemeinsame Variablen
+
+Alle Zellen einer Seite teilen sich **eine** Python-Sitzung. Eine spätere Zelle kann alles benutzen, was eine frühere definiert hat, sobald die frühere ausgeführt wurde:
+
+```{pyodide-python}
+tutorial = "Quarto"
+werte = [3, 1, 4, 1, 5]
+print("tutorial und werte sind definiert")
+```
+
+```{pyodide-python}
+# 'tutorial' und 'werte' gibt es noch aus der Zelle darüber
+print(f"{tutorial}: Summe = {sum(werte)}, Maximum = {max(werte)}")
+```
+
+Wer die untere Zelle zuerst ausführt, bekommt einen `NameError`. Sag deinen Leserinnen und Lesern deshalb, dass sie die Zellen von oben nach unten ausführen sollen.
+
+Zellen, die laufen sollen, bevor jemand etwas anklickt, bekommen `context: setup`. Zellen, deren Ergebnis zu sehen ist, deren Code aber verborgen bleibt, bekommen `context: output`.
+
+::: {.callout-note}
+## py-exercise sieht diese Variablen nicht
+Eine Aufgabe aus `py-exercise` läuft in einem eigenen, leeren Namensraum. Was in einer `{pyodide-python}`-Zelle definiert wurde, ist dort nicht vorhanden. Alles, was die Aufgabe braucht, muss in der Aufgabe selbst stehen.
+:::
+
+## `input()`
+
+Eine Zelle kann anhalten und auf eine Eingabe warten, ohne die Seite einzufrieren:
+
+```{pyodide-python}
+name = input("Wie heißt du? ")
+print(f"Hallo, {name}!")
+```
+
+::: {.callout-warning}
+## `input()` braucht Cross-Origin-Isolation
+Das Warten auf eine Eingabe beruht auf `SharedArrayBuffer`. Den geben Browser nur Seiten, die „cross-origin isolated“ sind. Ein mitgelieferter Service Worker setzt die nötigen Header auf deiner eigenen Domain von selbst. Lernplattformen wie Moodle blockieren Service Worker meistens. Dort gibt es `input()` nicht, und die Seite sagt das auch. Alles andere läuft weiter.
+:::
+
+## Plots und Animationen
+
+Der Code verhält sich wie auf dem eigenen Rechner: **`plt.show()` löst die Ausgabe aus.** Ohne den Aufruf erscheint nichts. Ein statischer Plot wird zuerst als Bild gezeigt und danach durch eine interaktive Ansicht mit Werkzeugleiste ersetzt (Zoomen, Verschieben, Zurücksetzen, Speichern). Klappt das nicht, bleibt das Bild stehen.
+
+Eine Animation braucht keinen zusätzlichen Aufruf:
+
+```{pyodide-python}
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+import numpy as np
+
+fig, ax = plt.subplots()
+x = np.linspace(0, 2 * np.pi, 100)
+line, = ax.plot(x, np.sin(x))
+
+def update(frame):
+    line.set_ydata(np.sin(x + frame / 10))
+    return line,
+
+ani = animation.FuncAnimation(fig, update, frames=60, blit=True, interval=33)
+plt.show()
+```
+
+Eine Animation zum Ausprobieren steht auf der Seite [Visualisierungen](../../../beg/Qmd Files/Example Page/ep_visuals.html) der Beispielseite.
+
+::: {.callout-tip}
+## Die Geschwindigkeit bestimmt `interval`, nicht `frames`
+`interval` ist der Abstand zwischen zwei Bildern in Millisekunden, 33 ms sind etwa 30 Bilder pro Sekunde. Der Standard von Matplotlib, 200 ms, ruckelt sichtbar. `frames` legt nur fest, wie viele Bilder gezeichnet werden. Mehr davon macht die Animation *länger*, nicht flüssiger. Jedes Bild wird vorab gezeichnet und in die Seite eingebettet, lange Animationen kosten also Rechenzeit.
+:::
+
+Für Sonderfälle steuern `zeige_animation(ani, format="gif")` und `zeige_animation(ani, fps=30)` Format und Bildrate direkt.
+
+## KI-Feedback
+
+Jede interaktive Zelle bekommt einen Knopf **Feedback** (ausschalten mit `pyodide: feedback: false`). Der Knopf schickt den aktuellen Code samt Ausgabe an ein Sprachmodell. Im Standard, **Prompt kopieren**, braucht es dafür weder Konto noch Anbieter: Er erzeugt einen fertigen Text zum Einfügen in ChatGPT, Claude und ähnliche Dienste. Das Zahnrad ⚙ öffnet für alle Aufgaben der Seite denselben Einstellungsdialog.
+
+Damit das Modell die Aufgabe versteht, schreibst du sie mit `#| task:` in die Zelle:
+
+````{.markdown}
+```{pyodide-python}
+#| task: Berechne die Summe der Zahlen von 1 bis 10 mit einer Schleife.
+summe = 0
+```
+````
+
+Anbieter, Hinweisstufen, Richtlinien und der Datenschutz sind für alle Aufgabentypen gleich geregelt. Das steht auf der Seite [KI-Feedback & Speichern](exp_ext_feedback.qmd).
+
+## Optionen
+
+Je Zelle:
+
+| Option | Standard | Beschreibung |
+|---|---|---|
+| `context` | `interactive` | `interactive`, `output` oder `setup` |
+| `read-only` | `false` | Editor ist gesperrt (kein Feedback-Knopf) |
+| `autorun` | – | `true`: läuft von selbst, sobald Pyodide gestartet ist |
+| `code-fold` | – | `true`: Zelle beginnt eingeklappt, `false`: ausgeklappt. Ohne Angabe gilt `code-fold:` des Dokuments |
+| `pdf-fallback` | – | `true`: in PDF, Word usw. erscheint die Zelle als gewöhnlicher, eingefärbter Python-Code |
+| `<format>-autoexec` | – | `true`: für dieses eine Format (z. B. `pdf-autoexec`) wird die Zelle beim Bauen wirklich ausgeführt und ihre Ausgabe gezeigt |
+| `label` | – | eindeutige Kennung der Zelle |
+| `classes` | – | zusätzliche CSS-Klassen |
+| `fig-cap` | – | Bildunterschrift für Plots |
+| `fig-width` / `fig-height` | `7` / `5` | Plotgröße in Zoll |
+
+Je Dokument:
+
+```{.yaml filename="seite.qmd"}
+pyodide:
+  packages: [numpy, pandas]   # beim Start über micropip installiert
+  show-startup-message: true
+  pdf-fallback: false         # PDF/Word: Zellen als Python-Code zeigen
+  pdf-autoexec: false         # PDF: Zellen beim Bauen ausführen
+  feedback: true              # Feedback-Knöpfe an den Zellen (Standard: true)
+```
+
+Pakete, die nur in einem `import` vorkommen, werden bei Bedarf nachgeladen. `packages:` ist für die gedacht, die schon vor dem ersten Lauf bereitstehen sollen. `requests` und `urllib3` sind angepasst, `pd.read_csv(url)` funktioniert deshalb.
+
+Die Sprache der Oberfläche kommt aus `ctm-assessment: lang:` oder aus Quartos eigenem `lang:`. Mitgeliefert sind `en`, `de`, `sv`, `no`/`nb` und `da`. Ein mehrsprachiges Projekt braucht also keine zusätzliche Einstellung, siehe [Mehrsprachige Projekte](exp_multilanguage.qmd).
+
+`code-fold:` ist Quartos gewöhnliche Option. Mit `code-tools: true` klappt der Schalter „Gesamten Code anzeigen“ der Seite auch die Pyodide-Zellen auf und zu. `<format>-autoexec` braucht ein installiertes Python auf dem Rechner, der baut.
+
+## Seiten mit `{python}` und `{pyodide-python}`
+
+::: {.callout-warning}
+## Quarto 1.10 und neuer: `engine: markdown`
+Seit Quarto 1.10 schickt Quarto Seiten mit `{pyodide-python}`, `{py-exercise}` oder `{math-exercise}` an Jupyter, obwohl Jupyter dort nichts zu tun hat. Setze im Kopf **dieser Seite** `engine: markdown`. In der `_quarto.yml` wirkt die Einstellung nicht.
+
+Dann werden aber auch `{python}`-Zellen **nicht mehr ausgeführt**. Eine Seite, die beides enthält, bekommt deshalb kein `engine: markdown`: Sie läuft über Jupyter, und Python muss auf dem Rechner installiert sein, der baut.
+:::
+
+## Marker-Zellen
+
+Eine Abbildung aus einer `{pyodide-python}`-Zelle lässt sich nicht mit `@fig-...` verlinken. Wer eine nummerierte, verlinkbare Abbildung braucht, schreibt eine gewöhnliche `{python}`-Zelle und macht sie mit einem Kommentar `# pyodide: ...` in HTML interaktiv:
+
+````{.markdown}
+```{{python}}
+#| label: fig-parabel
+#| fig-cap: "Die Parabel $y=x^2$."
+# pyodide: autorun, read-only=false
+x = np.linspace(-2, 2, 200)
+plt.plot(x, x**2)
+plt.show()
+```
+````
+
+Der Marker nimmt dieselben Optionen wie die Tabelle im Reiter „Optionen“ und verschwindet aus dem gezeigten Code. In PDF und Word bleibt Quartos echte Abbildung. In HTML erscheint an ihrer Stelle die interaktive Zelle, Bildunterschrift und Verweisziel bleiben erhalten. Die Zelle braucht beim Bauen ein echtes Python, wie jede `{python}`-Zelle.
+
+## Grenzen
+
+- **Stopp:** Auf Seiten mit Cross-Origin-Isolation bricht Stopp sauber ab, die Variablen bleiben erhalten. Sonst startet Stopp Python neu, die Variablen gehen verloren, und `setup`-, `output`- und `autorun`-Zellen laufen von selbst erneut.
+- Es kann immer nur eine Zelle gleichzeitig rechnen.
+- Beim Wechsel auf eine andere Seite des Projekts wird Python neu geladen.
+- `embed-resources: true` ergibt eine einzelne funktionierende Datei, aber keine, die ohne Internet läuft: Pyodide selbst wird weiterhin aus dem Netz geladen. Die Datei muss über http(s) ausgeliefert werden, ein Doppelklick auf die lokale Datei genügt nicht.
+
+:::
+::::
+
+:::: {.content-visible when-profile="english"}
+**Install:** part of CTM Assessment, see [Overview and installation](exp_extensions.qmd)
+**Source:** [@pyodide-interaktiv], [github.com/Erasmus-CTM/pyodide-interaktiv](https://github.com/Erasmus-CTM/pyodide-interaktiv). The Python behind it is Pyodide [@pyodide].
+
+`pyodide-interaktiv` runs Python in a **Web Worker**, that is next to the page rather than inside it. The page therefore stays usable during a long computation, and every cell has a **Stop** button. The extension is a rework of `coatless-quarto/pyodide`.
+
+::: {.panel-tabset}
+
+## Example
+
+```{pyodide-python}
+# Edit this code and click "Run code"
+words = ["Quarto", "is", "great"]
+print(" ".join(words))
+```
+
+Every cell offers **Run code** (also `Shift + Enter`), **Reset**, **Copy**, **Feedback** and **+ Code block**. The last one appends an empty, editable cell, handy under a read-only example.
+
+| | `{python}` | `{pyodide-python}` |
+|---|---|---|
+| Runs at | Render time | Read time (in the browser) |
+| Reader can edit | No | Yes |
+| Needs Python installed | Yes (author) | No |
+| Output baked into HTML | Yes | No, computed live |
+
+::: {.callout-warning}
+## Package availability
+Pyodide runs in WebAssembly. Many packages are available (`numpy`, `pandas`, `matplotlib`, `sympy`), but not every package with C extensions is.
+:::
+
+## Shared state
+
+All cells on a page share **one** Python session. A later cell can use anything an earlier one defined, once the earlier one has been run:
+
+```{pyodide-python}
+tutorial = "Quarto"
+values = [3, 1, 4, 1, 5]
+print("defined tutorial and values")
+```
+
+```{pyodide-python}
+# 'tutorial' and 'values' still exist from the cell above
+print(f"{tutorial}: sum = {sum(values)}, max = {max(values)}")
+```
+
+Running the lower cell first gives a `NameError`. So tell your readers to run the cells from top to bottom.
+
+Cells that should run before the reader touches anything use `context: setup`. Cells whose result is shown but whose code is hidden use `context: output`.
+
+::: {.callout-note}
+## py-exercise does not see these variables
+An exercise from `py-exercise` runs in its own, empty namespace. Whatever was defined in a `{pyodide-python}` cell does not exist there. Everything the exercise needs has to be inside the exercise itself.
+:::
+
+## `input()`
+
+A cell can stop and wait for typed input without freezing the page:
+
+```{pyodide-python}
+name = input("What's your name? ")
+print(f"Hello, {name}!")
+```
+
+::: {.callout-warning}
+## `input()` needs cross-origin isolation
+Blocking input relies on `SharedArrayBuffer`, which browsers only hand out to cross-origin-isolated pages. A service worker shipped with the extension sets the required headers automatically on your own domain. Learning platforms such as Moodle usually block service workers. There `input()` is unavailable and the page says so. Everything else keeps working.
+:::
+
+## Plots & animation
+
+Code behaves like on your own computer: **`plt.show()` triggers the output.** Without the call nothing appears. A static plot is shown as an image first and then replaced by an interactive view with a toolbar (zoom, pan, reset, save). If that fails, the image stays.
+
+An animation needs no extra call:
+
+```{pyodide-python}
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+import numpy as np
+
+fig, ax = plt.subplots()
+x = np.linspace(0, 2 * np.pi, 100)
+line, = ax.plot(x, np.sin(x))
+
+def update(frame):
+    line.set_ydata(np.sin(x + frame / 10))
+    return line,
+
+ani = animation.FuncAnimation(fig, update, frames=60, blit=True, interval=33)
+plt.show()
+```
+
+A live version of this is on the [Visualizations page](../../../beg/Qmd Files/Example Page/ep_visuals.html) of the Example Page.
+
+::: {.callout-tip}
+## Speed is `interval`, not `frames`
+`interval` is the delay between frames in milliseconds; 33 ms is roughly 30 frames per second. Matplotlib's default of 200 ms looks visibly choppy. `frames` only sets how many frames are drawn, so raising it makes the animation *longer*, not smoother. Every frame is pre-rendered and embedded, so long animations cost computing time.
+:::
+
+For special cases, `zeige_animation(ani, format="gif")` and `zeige_animation(ani, fps=30)` control format and frame rate directly.
+
+## AI feedback
+
+Every interactive cell gets a **Feedback** button (turn it off with `pyodide: feedback: false`). It sends the current code plus its output to a language model. By default, **Copy prompt**, this needs neither an account nor a provider: the button produces a ready-to-paste text for ChatGPT, Claude and the like. The ⚙ icon opens the same settings dialog for every exercise on the page.
+
+So that the model understands the task, write it into the cell with `#| task:`:
+
+````{.markdown}
+```{pyodide-python}
+#| task: Compute the sum of the numbers from 1 to 10 with a loop.
+total = 0
+```
+````
+
+Provider, hint levels, policies and privacy are handled the same way for every exercise type. That is described on the page [AI feedback & saving](exp_ext_feedback.qmd).
+
+## Options
+
+Per cell:
+
+| Option | Default | Description |
+|---|---|---|
+| `context` | `interactive` | `interactive`, `output` or `setup` |
+| `read-only` | `false` | editor is locked (no Feedback button) |
+| `autorun` | — | `true`: runs by itself once Pyodide has started |
+| `code-fold` | — | `true`: cell starts collapsed, `false`: expanded. Falls back to the document's `code-fold:` when unset |
+| `pdf-fallback` | — | `true`: in PDF, Word etc. the cell appears as ordinary, highlighted Python code |
+| `<format>-autoexec` | — | `true`: for that one format (e.g. `pdf-autoexec`) the cell is actually run at render time and its output shown |
+| `label` | — | unique cell ID |
+| `classes` | — | extra CSS classes |
+| `fig-cap` | — | caption for plots |
+| `fig-width` / `fig-height` | `7` / `5` | plot size in inches |
+
+Per document:
+
+```{.yaml filename="page.qmd"}
+pyodide:
+  packages: [numpy, pandas]   # installed at startup via micropip
+  show-startup-message: true
+  pdf-fallback: false         # PDF/Word: show cells as Python code
+  pdf-autoexec: false         # PDF: run cells at render time
+  feedback: true              # Feedback buttons on the cells (default: true)
+```
+
+Packages that only appear in an `import` are fetched on demand, so `packages:` is for the ones you want ready before the first run. `requests` and `urllib3` are shimmed, so `pd.read_csv(url)` works.
+
+The interface language comes from `ctm-assessment: lang:` or from Quarto's own `lang:`. Shipped are `en`, `de`, `sv`, `no`/`nb` and `da`. A multilingual project therefore needs no extra setting, see [Multilanguage Projects](exp_multilanguage.qmd).
+
+`code-fold:` is Quarto's ordinary option. With `code-tools: true`, the page's "Show All Code" toggle folds and unfolds the Pyodide cells too. `<format>-autoexec` needs a Python installation on the machine that renders.
+
+## Pages with `{python}` and `{pyodide-python}`
+
+::: {.callout-warning}
+## Quarto 1.10 and newer: `engine: markdown`
+Since Quarto 1.10, pages with `{pyodide-python}`, `{py-exercise}` or `{math-exercise}` are sent to Jupyter although Jupyter has nothing to do there. Put `engine: markdown` into the front matter of **that page**. In `_quarto.yml` the setting has no effect.
+
+But then `{python}` cells are **no longer executed**. A page that contains both therefore gets no `engine: markdown`: it runs through Jupyter, and Python has to be installed on the machine that renders.
+:::
+
+## Marker cells
+
+A figure from a `{pyodide-python}` cell cannot be cross-referenced with `@fig-...`. If you need a numbered, linkable figure, write a normal `{python}` cell and make it interactive in HTML with a `# pyodide: ...` comment:
+
+````{.markdown}
+```{{python}}
+#| label: fig-parabola
+#| fig-cap: "The parabola $y=x^2$."
+# pyodide: autorun, read-only=false
+x = np.linspace(-2, 2, 200)
+plt.plot(x, x**2)
+plt.show()
+```
+````
+
+The marker takes the same options as the table in the "Options" tab and is removed from the displayed code. PDF and Word keep Quarto's real figure. In HTML the interactive cell takes its place, while caption and cross-reference target stay. The cell needs a real Python at render time, like any `{python}` cell.
+
+## Limits
+
+- **Stop:** On cross-origin-isolated pages, Stop aborts gracefully and the variables survive. Otherwise Stop restarts Python, the variables are lost, and `setup`, `output` and `autorun` cells run again by themselves.
+- Only one cell can compute at a time.
+- Navigating to another page of the project reloads Python.
+- `embed-resources: true` gives a single working file, but not one that works offline: Pyodide itself is still fetched from the network. The file has to be served over http(s); double-clicking the local file is not enough.
+
+:::
+::::
+
+:::: {.content-visible when-profile="svenska"}
+**Installation:** ingår i CTM Assessment, se [Översikt och installation](exp_extensions.qmd)
+**Källa:** [@pyodide-interaktiv], [github.com/Erasmus-CTM/pyodide-interaktiv](https://github.com/Erasmus-CTM/pyodide-interaktiv). Python bakom det är Pyodide [@pyodide].
+
+`pyodide-interaktiv` kör Python i en **Web Worker**, alltså bredvid sidan i stället för i den. Därför går sidan att använda under en lång beräkning, och varje cell har knappen **Stoppa**. Tillägget är en omarbetning av `coatless-quarto/pyodide`.
+
+::: {.panel-tabset}
+
+## Exempel
+
+```{pyodide-python}
+# Ändra koden och klicka på "Kör koden"
+words = ["Quarto", "is", "great"]
+print(" ".join(words))
+```
+
+Varje cell har **Kör koden** (också `Shift + Enter`), **Återställ**, **Kopiera**, **Feedback** och **+ Kodblock**. Den sista lägger till en tom, redigerbar cell, praktiskt under ett skrivskyddat exempel.
+
+| | `{python}` | `{pyodide-python}` |
+|---|---|---|
+| Körs | vid renderingen | när sidan läses (i webbläsaren) |
+| Läsaren kan ändra | Nej | Ja |
+| Kräver installerad Python | Ja (författaren) | Nej |
+| Utdatan ligger i HTML-filen | Ja | Nej, den beräknas direkt |
+
+::: {.callout-warning}
+## Tillgängliga paket
+Pyodide körs i WebAssembly. Många paket finns (`numpy`, `pandas`, `matplotlib`, `sympy`), men inte alla paket med C-tillägg.
+:::
+
+## Delat tillstånd
+
+Alla celler på en sida delar **en** Python-session. En senare cell kan använda allt som en tidigare har definierat, när den tidigare har körts:
+
+```{pyodide-python}
+tutorial = "Quarto"
+values = [3, 1, 4, 1, 5]
+print("defined tutorial and values")
+```
+
+```{pyodide-python}
+# 'tutorial' och 'values' finns kvar från cellen ovanför
+print(f"{tutorial}: summa = {sum(values)}, max = {max(values)}")
+```
+
+Kör man den nedre cellen först blir det ett `NameError`. Säg därför till läsarna att köra cellerna uppifrån och ned.
+
+Celler som ska köras innan läsaren gör något använder `context: setup`. Celler där resultatet visas men koden är dold använder `context: output`.
+
+::: {.callout-note}
+## py-exercise ser inte de här variablerna
+En uppgift från `py-exercise` körs i sin egen, tomma namnrymd. Det som har definierats i en `{pyodide-python}`-cell finns inte där. Allt som uppgiften behöver måste stå i själva uppgiften.
+:::
+
+## `input()`
+
+En cell kan stanna och vänta på inmatning utan att sidan fryser:
+
+```{pyodide-python}
+name = input("Vad heter du? ")
+print(f"Hej, {name}!")
+```
+
+::: {.callout-warning}
+## `input()` kräver cross-origin isolation
+Väntande inmatning bygger på `SharedArrayBuffer`, som webbläsare bara ger till sidor som är cross-origin-isolerade. En service worker som följer med tillägget sätter de nödvändiga huvudena automatiskt på din egen domän. Lärplattformar som Moodle blockerar oftast service workers. Där finns `input()` inte, och sidan säger det. Allt annat fungerar.
+:::
+
+## Grafer & animation
+
+Koden beter sig som på din egen dator: **`plt.show()` startar visningen.** Utan anropet visas ingenting. En statisk graf visas först som bild och ersätts sedan av en interaktiv vy med verktygsfält (zooma, flytta, återställa, spara). Om det misslyckas står bilden kvar.
+
+En animation kräver inget extra anrop:
+
+```{pyodide-python}
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+import numpy as np
+
+fig, ax = plt.subplots()
+x = np.linspace(0, 2 * np.pi, 100)
+line, = ax.plot(x, np.sin(x))
+
+def update(frame):
+    line.set_ydata(np.sin(x + frame / 10))
+    return line,
+
+ani = animation.FuncAnimation(fig, update, frames=60, blit=True, interval=33)
+plt.show()
+```
+
+En version att prova finns på sidan [Visualiseringar](../../../beg/Qmd Files/Example Page/ep_visuals.html) i exempelsidan.
+
+::: {.callout-tip}
+## Hastigheten styrs av `interval`, inte av `frames`
+`interval` är tiden mellan två bilder i millisekunder, 33 ms är ungefär 30 bilder per sekund. Matplotlibs standardvärde 200 ms ser tydligt hackigt ut. `frames` anger bara hur många bilder som ritas, så ett större värde gör animationen *längre*, inte mjukare. Varje bild beräknas i förväg och bäddas in, så långa animationer kostar beräkningstid.
+:::
+
+För specialfall styr `zeige_animation(ani, format="gif")` och `zeige_animation(ani, fps=30)` format och bildfrekvens direkt.
+
+## AI-feedback
+
+Varje interaktiv cell får en knapp **Feedback** (stäng av med `pyodide: feedback: false`). Knappen skickar den aktuella koden och dess utdata till en språkmodell. Som standard, **Kopiera prompt**, behövs varken konto eller leverantör: knappen skapar en färdig text som du klistrar in i ChatGPT, Claude och liknande tjänster. Kugghjulet ⚙ öppnar samma inställningsdialog för alla uppgifter på sidan.
+
+För att modellen ska förstå uppgiften skriver du den i cellen med `#| task:`:
+
+````{.markdown}
+```{pyodide-python}
+#| task: Beräkna summan av talen från 1 till 10 med en slinga.
+summa = 0
+```
+````
+
+Leverantör, ledtrådsnivåer, riktlinjer och integritet fungerar likadant för alla uppgiftstyper. Det beskrivs på sidan [AI-feedback och sparande](exp_ext_feedback.qmd).
+
+## Inställningar
+
+Per cell:
+
+| Inställning | Standard | Beskrivning |
+|---|---|---|
+| `context` | `interactive` | `interactive`, `output` eller `setup` |
+| `read-only` | `false` | redigeraren är låst (ingen Feedback-knapp) |
+| `autorun` | — | `true`: körs av sig själv när Pyodide har startat |
+| `code-fold` | — | `true`: cellen börjar hopfälld, `false`: utfälld. Utan värde gäller dokumentets `code-fold:` |
+| `pdf-fallback` | — | `true`: i PDF, Word osv. visas cellen som vanlig, färgmarkerad Python-kod |
+| `<format>-autoexec` | — | `true`: för just det formatet (t.ex. `pdf-autoexec`) körs cellen verkligen vid renderingen och utdatan visas |
+| `label` | — | unikt id för cellen |
+| `classes` | — | extra CSS-klasser |
+| `fig-cap` | — | bildtext för grafer |
+| `fig-width` / `fig-height` | `7` / `5` | grafens storlek i tum |
+
+Per dokument:
+
+```{.yaml filename="page.qmd"}
+pyodide:
+  packages: [numpy, pandas]   # installed at startup via micropip
+  show-startup-message: true
+  pdf-fallback: false         # PDF/Word: show cells as Python code
+  pdf-autoexec: false         # PDF: run cells at render time
+  feedback: true              # feedback-knappar på cellerna (standard: true)
+```
+
+Paket som bara förekommer i en `import` hämtas vid behov. `packages:` är alltså till för dem som ska vara klara före första körningen. `requests` och `urllib3` har ersättningar, så `pd.read_csv(url)` fungerar.
+
+Gränssnittets språk kommer från `ctm-assessment: lang:` eller från Quartos eget `lang:`. Det som följer med är `en`, `de`, `sv`, `no`/`nb` och `da`. Ett flerspråkigt projekt behöver alltså ingen extra inställning, se [Flerspråkiga projekt](exp_multilanguage.qmd).
+
+`code-fold:` är Quartos vanliga inställning. Med `code-tools: true` fäller sidans knapp "Visa all kod" också ihop och ut Pyodide-cellerna. `<format>-autoexec` kräver en Python-installation på den dator som renderar.
+
+## Sidor med `{python}` och `{pyodide-python}`
+
+::: {.callout-warning}
+## Quarto 1.10 och senare: `engine: markdown`
+Sedan Quarto 1.10 skickar Quarto sidor med `{pyodide-python}`, `{py-exercise}` eller `{math-exercise}` till Jupyter, fast Jupyter inte har något att göra där. Skriv `engine: markdown` i sidhuvudet på **den sidan**. I `_quarto.yml` har inställningen ingen effekt.
+
+Då körs dock `{python}`-celler **inte längre**. En sida som innehåller båda får därför inte `engine: markdown`: den körs via Jupyter, och Python måste vara installerat på datorn som bygger.
+:::
+
+## Markörceller
+
+En figur från en `{pyodide-python}`-cell kan inte korsrefereras med `@fig-...`. Om du behöver en numrerad figur som går att länka till, skriv en vanlig `{python}`-cell och gör den interaktiv i HTML med en kommentar `# pyodide: ...`:
+
+````{.markdown}
+```{{python}}
+#| label: fig-parabola
+#| fig-cap: "The parabola $y=x^2$."
+# pyodide: autorun, read-only=false
+x = np.linspace(-2, 2, 200)
+plt.plot(x, x**2)
+plt.show()
+```
+````
+
+Markören tar samma inställningar som tabellen i fliken "Inställningar" och tas bort ur den visade koden. PDF och Word behåller Quartos riktiga figur. I HTML tar den interaktiva cellen dess plats, medan bildtexten och målet för korsreferensen finns kvar. Cellen kräver en riktig Python vid renderingen, som varje `{python}`-cell.
+
+## Begränsningar
+
+- **Stoppa:** På cross-origin-isolerade sidor avbryter Stoppa mjukt och variablerna finns kvar. Annars startar Stoppa om Python, variablerna går förlorade och cellerna med `setup`, `output` och `autorun` körs igen av sig själva.
+- Bara en cell kan räkna åt gången.
+- När du går till en annan sida i projektet laddas Python om.
+- `embed-resources: true` ger en enda fungerande fil, men inte en som fungerar offline: Pyodide hämtas fortfarande från nätet. Filen måste levereras via http(s), det räcker inte att dubbelklicka på den lokala filen.
+
+:::
+::::
+
+:::: {.content-visible when-profile="norsk"}
+**Installasjon:** er en del av CTM Assessment, se [Oversikt og installasjon](exp_extensions.qmd)
+**Kilde:** [@pyodide-interaktiv], [github.com/Erasmus-CTM/pyodide-interaktiv](https://github.com/Erasmus-CTM/pyodide-interaktiv). Pythonen bak er Pyodide [@pyodide].
+
+`pyodide-interaktiv` kjører Python i en **Web Worker**, altså ved siden av siden i stedet for i den. Derfor kan siden brukes under en lang beregning, og hver celle har knappen **Stopp**. Utvidelsen er en omarbeiding av `coatless-quarto/pyodide`.
+
+::: {.panel-tabset}
+
+## Eksempel
+
+```{pyodide-python}
+# Endre koden og klikk på "Kjør koden"
+words = ["Quarto", "is", "great"]
+print(" ".join(words))
+```
+
+Hver celle har **Kjør koden** (også `Shift + Enter`), **Tilbakestill**, **Kopier**, **Tilbakemelding** og **+ Kodeblokk**. Den siste legger til en tom, redigerbar celle, praktisk under et skrivebeskyttet eksempel.
+
+| | `{python}` | `{pyodide-python}` |
+|---|---|---|
+| Kjøres | ved rendring | når siden leses (i nettleseren) |
+| Leseren kan endre | Nei | Ja |
+| Krever installert Python | Ja (forfatteren) | Nei |
+| Utdataen ligger i HTML-filen | Ja | Nei, den beregnes direkte |
+
+::: {.callout-warning}
+## Tilgjengelige pakker
+Pyodide kjører i WebAssembly. Mange pakker finnes (`numpy`, `pandas`, `matplotlib`, `sympy`), men ikke alle pakker med C-utvidelser.
+:::
+
+## Delt tilstand
+
+Alle cellene på en side deler **én** Python-økt. En senere celle kan bruke alt en tidligere har definert, når den tidligere er kjørt:
+
+```{pyodide-python}
+tutorial = "Quarto"
+values = [3, 1, 4, 1, 5]
+print("defined tutorial and values")
+```
+
+```{pyodide-python}
+# 'tutorial' og 'values' finnes fortsatt fra cellen over
+print(f"{tutorial}: sum = {sum(values)}, maks = {max(values)}")
+```
+
+Kjører man den nederste cellen først, får man en `NameError`. Si derfor til leserne at de skal kjøre cellene ovenfra og ned.
+
+Celler som skal kjøres før leseren gjør noe, bruker `context: setup`. Celler der resultatet vises, men koden er skjult, bruker `context: output`.
+
+::: {.callout-note}
+## py-exercise ser ikke disse variablene
+En oppgave fra `py-exercise` kjører i sitt eget, tomme navnerom. Det som er definert i en `{pyodide-python}`-celle, finnes ikke der. Alt oppgaven trenger, må stå i selve oppgaven.
+:::
+
+## `input()`
+
+En celle kan stoppe og vente på inndata uten at siden fryser:
+
+```{pyodide-python}
+name = input("Hva heter du? ")
+print(f"Hei, {name}!")
+```
+
+::: {.callout-warning}
+## `input()` krever cross-origin isolation
+Ventende inndata bygger på `SharedArrayBuffer`, som nettlesere bare gir til sider som er cross-origin-isolert. En service worker som følger med utvidelsen, setter de nødvendige hodene automatisk på ditt eget domene. Læringsplattformer som Moodle blokkerer som regel service workers. Der er `input()` ikke tilgjengelig, og siden sier fra om det. Alt annet virker.
+:::
+
+## Grafer & animasjon
+
+Koden oppfører seg som på din egen datamaskin: **`plt.show()` starter visningen.** Uten kallet vises ingenting. En statisk graf vises først som bilde og erstattes deretter av en interaktiv visning med verktøylinje (zoome, flytte, tilbakestille, lagre). Hvis det ikke lykkes, blir bildet stående.
+
+En animasjon trenger ikke noe ekstra kall:
+
+```{pyodide-python}
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+import numpy as np
+
+fig, ax = plt.subplots()
+x = np.linspace(0, 2 * np.pi, 100)
+line, = ax.plot(x, np.sin(x))
+
+def update(frame):
+    line.set_ydata(np.sin(x + frame / 10))
+    return line,
+
+ani = animation.FuncAnimation(fig, update, frames=60, blit=True, interval=33)
+plt.show()
+```
+
+En versjon du kan prøve, finner du på siden [Visualiseringer](../../../beg/Qmd Files/Example Page/ep_visuals.html) i eksempelsiden.
+
+::: {.callout-tip}
+## Farten styres av `interval`, ikke av `frames`
+`interval` er tiden mellom to bilder i millisekunder, 33 ms er omtrent 30 bilder per sekund. Standardverdien i Matplotlib, 200 ms, ser tydelig hakkete ut. `frames` angir bare hvor mange bilder som tegnes, så en større verdi gjør animasjonen *lengre*, ikke jevnere. Hvert bilde beregnes på forhånd og bygges inn, så lange animasjoner koster regnetid.
+:::
+
+For spesialtilfeller styrer `zeige_animation(ani, format="gif")` og `zeige_animation(ani, fps=30)` format og bildefrekvens direkte.
+
+## KI-tilbakemelding
+
+Hver interaktive celle får en knapp **Tilbakemelding** (slå av med `pyodide: feedback: false`). Knappen sender den gjeldende koden og utdataene til en språkmodell. Som standard, **Kopier prompt**, trengs verken konto eller leverandør: knappen lager en ferdig tekst som du limer inn i ChatGPT, Claude og lignende tjenester. Tannhjulet ⚙ åpner den samme innstillingsdialogen for alle oppgaver på siden.
+
+For at modellen skal forstå oppgaven, skriver du den i cellen med `#| task:`:
+
+````{.markdown}
+```{pyodide-python}
+#| task: Regn ut summen av tallene fra 1 til 10 med en løkke.
+sum_tall = 0
+```
+````
+
+Leverandør, hintnivåer, retningslinjer og personvern fungerer likt for alle oppgavetyper. Det er beskrevet på siden [KI-tilbakemelding og lagring](exp_ext_feedback.qmd).
+
+## Innstillinger
+
+Per celle:
+
+| Innstilling | Standard | Beskrivelse |
+|---|---|---|
+| `context` | `interactive` | `interactive`, `output` eller `setup` |
+| `read-only` | `false` | redigeringsfeltet er låst (ingen tilbakemeldingsknapp) |
+| `autorun` | — | `true`: kjøres av seg selv når Pyodide har startet |
+| `code-fold` | — | `true`: cellen starter sammenfoldet, `false`: foldet ut. Uten verdi gjelder `code-fold:` for dokumentet |
+| `pdf-fallback` | — | `true`: i PDF, Word osv. vises cellen som vanlig, fargelagt Python-kode |
+| `<format>-autoexec` | — | `true`: for akkurat det formatet (f.eks. `pdf-autoexec`) kjøres cellen faktisk ved rendring, og utdataen vises |
+| `label` | — | unik ID for cellen |
+| `classes` | — | ekstra CSS-klasser |
+| `fig-cap` | — | bildetekst for grafer |
+| `fig-width` / `fig-height` | `7` / `5` | størrelsen på grafen i tommer |
+
+Per dokument:
+
+```{.yaml filename="page.qmd"}
+pyodide:
+  packages: [numpy, pandas]   # installed at startup via micropip
+  show-startup-message: true
+  pdf-fallback: false         # PDF/Word: show cells as Python code
+  pdf-autoexec: false         # PDF: run cells at render time
+  feedback: true              # tilbakemeldingsknapper på cellene (standard: true)
+```
+
+Pakker som bare forekommer i en `import`, hentes ved behov. `packages:` er altså for dem som skal være klare før første kjøring. `requests` og `urllib3` har erstatninger, så `pd.read_csv(url)` virker.
+
+Språket i grensesnittet kommer fra `ctm-assessment: lang:` eller fra Quartos eget `lang:`. Det som følger med er `en`, `de`, `sv`, `no`/`nb` og `da`. Et flerspråklig prosjekt trenger altså ingen ekstra innstilling, se [Flerspråklige prosjekter](exp_multilanguage.qmd).
+
+`code-fold:` er den vanlige innstillingen i Quarto. Med `code-tools: true` folder knappen "Vis all kode" på siden også Pyodide-cellene sammen og ut. `<format>-autoexec` krever en Python-installasjon på maskinen som rendrer.
+
+## Sider med `{python}` og `{pyodide-python}`
+
+::: {.callout-warning}
+## Quarto 1.10 og nyere: `engine: markdown`
+Siden Quarto 1.10 sender Quarto sider med `{pyodide-python}`, `{py-exercise}` eller `{math-exercise}` til Jupyter, selv om Jupyter ikke har noe å gjøre der. Skriv `engine: markdown` i sidehodet på **den siden**. I `_quarto.yml` har innstillingen ingen effekt.
+
+Da kjøres imidlertid `{python}`-celler **ikke lenger**. En side som inneholder begge deler, får derfor ikke `engine: markdown`: den kjøres via Jupyter, og Python må være installert på maskinen som bygger.
+:::
+
+## Markørceller
+
+En figur fra en `{pyodide-python}`-celle kan ikke kryssrefereres med `@fig-...`. Hvis du trenger en nummerert figur som det kan lenkes til, skriver du en vanlig `{python}`-celle og gjør den interaktiv i HTML med en kommentar `# pyodide: ...`:
+
+````{.markdown}
+```{{python}}
+#| label: fig-parabola
+#| fig-cap: "The parabola $y=x^2$."
+# pyodide: autorun, read-only=false
+x = np.linspace(-2, 2, 200)
+plt.plot(x, x**2)
+plt.show()
+```
+````
+
+Markøren tar de samme innstillingene som tabellen i fanen "Innstillinger" og fjernes fra koden som vises. PDF og Word beholder den ekte figuren fra Quarto. I HTML tar den interaktive cellen plassen, mens bildeteksten og målet for kryssreferansen blir stående. Cellen krever en ekte Python ved rendring, som enhver `{python}`-celle.
+
+## Begrensninger
+
+- **Stopp:** På cross-origin-isolerte sider avbryter Stopp skånsomt, og variablene beholdes. Ellers starter Stopp Python på nytt, variablene går tapt, og cellene med `setup`, `output` og `autorun` kjøres på nytt av seg selv.
+- Bare én celle kan regne om gangen.
+- Når du går til en annen side i prosjektet, lastes Python på nytt.
+- `embed-resources: true` gir én enkelt fil som virker, men ikke en som virker uten nett: Pyodide hentes fortsatt fra nettet. Filen må leveres over http(s), det holder ikke å dobbeltklikke på den lokale filen.
+
+:::
+::::
+
+:::: {.content-visible when-profile="dansk"}
+**Installation:** er en del af CTM Assessment, se [Oversigt og installation](exp_extensions.qmd)
+**Kilde:** [@pyodide-interaktiv], [github.com/Erasmus-CTM/pyodide-interaktiv](https://github.com/Erasmus-CTM/pyodide-interaktiv). Den Python, der ligger bag, er Pyodide [@pyodide].
+
+`pyodide-interaktiv` kører Python i en **Web Worker**, altså ved siden af siden i stedet for i den. Derfor kan siden bruges under en lang beregning, og hver celle har knappen **Stop**. Udvidelsen er en omarbejdning af `coatless-quarto/pyodide`.
+
+::: {.panel-tabset}
+
+## Eksempel
+
+```{pyodide-python}
+# Ret koden, og klik på "Kør koden"
+words = ["Quarto", "is", "great"]
+print(" ".join(words))
+```
+
+Hver celle har **Kør koden** (også `Shift + Enter`), **Nulstil**, **Kopiér**, **Feedback** og **+ Kodeblok**. Den sidste tilføjer en tom, redigerbar celle, praktisk under et skrivebeskyttet eksempel.
+
+| | `{python}` | `{pyodide-python}` |
+|---|---|---|
+| Køres | ved renderingen | når siden læses (i browseren) |
+| Læseren kan ændre | Nej | Ja |
+| Kræver installeret Python | Ja (forfatteren) | Nej |
+| Outputtet ligger i HTML-filen | Ja | Nej, det beregnes direkte |
+
+::: {.callout-warning}
+## Tilgængelige pakker
+Pyodide kører i WebAssembly. Mange pakker findes (`numpy`, `pandas`, `matplotlib`, `sympy`), men ikke alle pakker med C-udvidelser.
+:::
+
+## Delt tilstand
+
+Alle celler på en side deler **én** Python-session. En senere celle kan bruge alt, hvad en tidligere har defineret, når den tidligere er kørt:
+
+```{pyodide-python}
+tutorial = "Quarto"
+values = [3, 1, 4, 1, 5]
+print("defined tutorial and values")
+```
+
+```{pyodide-python}
+# 'tutorial' og 'values' findes stadig fra cellen ovenfor
+print(f"{tutorial}: sum = {sum(values)}, maks = {max(values)}")
+```
+
+Kører man den nederste celle først, får man en `NameError`. Sig derfor til læserne, at de skal køre cellerne oppefra og ned.
+
+Celler, der skal køres, før læseren gør noget, bruger `context: setup`. Celler, hvor resultatet vises, men koden er skjult, bruger `context: output`.
+
+::: {.callout-note}
+## py-exercise kan ikke se disse variabler
+En opgave fra `py-exercise` kører i sit eget, tomme navnerum. Det, der er defineret i en `{pyodide-python}`-celle, findes ikke der. Alt, hvad opgaven skal bruge, skal stå i selve opgaven.
+:::
+
+## `input()`
+
+En celle kan stoppe og vente på input, uden at siden fryser:
+
+```{pyodide-python}
+name = input("Hvad hedder du? ")
+print(f"Hej, {name}!")
+```
+
+::: {.callout-warning}
+## `input()` kræver cross-origin isolation
+Ventende input bygger på `SharedArrayBuffer`, som browsere kun giver til sider, der er cross-origin-isolerede. En service worker, der følger med udvidelsen, sætter de nødvendige headere automatisk på dit eget domæne. Læringsplatforme som Moodle blokerer som regel service workers. Der er `input()` ikke tilgængelig, og siden siger det. Alt andet virker.
+:::
+
+## Grafer & animation
+
+Koden opfører sig som på din egen computer: **`plt.show()` starter visningen.** Uden kaldet vises der ingenting. En statisk graf vises først som billede og erstattes derefter af en interaktiv visning med værktøjslinje (zoome, flytte, nulstille, gemme). Hvis det ikke lykkes, bliver billedet stående.
+
+En animation kræver ikke noget ekstra kald:
+
+```{pyodide-python}
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+import numpy as np
+
+fig, ax = plt.subplots()
+x = np.linspace(0, 2 * np.pi, 100)
+line, = ax.plot(x, np.sin(x))
+
+def update(frame):
+    line.set_ydata(np.sin(x + frame / 10))
+    return line,
+
+ani = animation.FuncAnimation(fig, update, frames=60, blit=True, interval=33)
+plt.show()
+```
+
+En udgave, du kan prøve, finder du på siden [Visualiseringer](../../../beg/Qmd Files/Example Page/ep_visuals.html) i eksempelsiden.
+
+::: {.callout-tip}
+## Hastigheden styres af `interval`, ikke af `frames`
+`interval` er tiden mellem to billeder i millisekunder, 33 ms er cirka 30 billeder i sekundet. Matplotlibs standardværdi på 200 ms ser tydeligt hakkende ud. `frames` angiver kun, hvor mange billeder der tegnes, så en større værdi gør animationen *længere*, ikke mere jævn. Hvert billede beregnes på forhånd og indlejres, så lange animationer koster regnetid.
+:::
+
+Til særlige tilfælde styrer `zeige_animation(ani, format="gif")` og `zeige_animation(ani, fps=30)` format og billedfrekvens direkte.
+
+## AI-feedback
+
+Hver interaktiv celle får en knap **Feedback** (slå den fra med `pyodide: feedback: false`). Knappen sender den aktuelle kode og dens output til en sprogmodel. Som standard, **Kopiér prompt**, behøver man hverken konto eller udbyder: knappen laver en færdig tekst, som du sætter ind i ChatGPT, Claude og lignende tjenester. Tandhjulet ⚙ åbner den samme indstillingsdialog for alle opgaver på siden.
+
+For at modellen kan forstå opgaven, skriver du den i cellen med `#| task:`:
+
+````{.markdown}
+```{pyodide-python}
+#| task: Beregn summen af tallene fra 1 til 10 med en løkke.
+sum_tal = 0
+```
+````
+
+Udbyder, hintniveauer, retningslinjer og privatliv fungerer ens for alle opgavetyper. Det er beskrevet på siden [AI-feedback og lagring](exp_ext_feedback.qmd).
+
+## Indstillinger
+
+Pr. celle:
+
+| Indstilling | Standard | Beskrivelse |
+|---|---|---|
+| `context` | `interactive` | `interactive`, `output` eller `setup` |
+| `read-only` | `false` | editoren er låst (ingen Feedback-knap) |
+| `autorun` | — | `true`: kører af sig selv, når Pyodide er startet |
+| `code-fold` | — | `true`: cellen starter foldet sammen, `false`: foldet ud. Uden værdi gælder dokumentets `code-fold:` |
+| `pdf-fallback` | — | `true`: i PDF, Word osv. vises cellen som almindelig, farvelagt Python-kode |
+| `<format>-autoexec` | — | `true`: for netop det format (f.eks. `pdf-autoexec`) køres cellen faktisk ved renderingen, og outputtet vises |
+| `label` | — | entydigt id for cellen |
+| `classes` | — | ekstra CSS-klasser |
+| `fig-cap` | — | billedtekst til grafer |
+| `fig-width` / `fig-height` | `7` / `5` | grafens størrelse i tommer |
+
+Pr. dokument:
+
+```{.yaml filename="page.qmd"}
+pyodide:
+  packages: [numpy, pandas]   # installed at startup via micropip
+  show-startup-message: true
+  pdf-fallback: false         # PDF/Word: show cells as Python code
+  pdf-autoexec: false         # PDF: run cells at render time
+  feedback: true              # feedbackknapper på cellerne (standard: true)
+```
+
+Pakker, der kun forekommer i en `import`, hentes efter behov. `packages:` er altså til dem, der skal være klar før første kørsel. `requests` og `urllib3` har erstatninger, så `pd.read_csv(url)` virker.
+
+Grænsefladens sprog kommer fra `ctm-assessment: lang:` eller fra Quartos eget `lang:`. Der følger `en`, `de`, `sv`, `no`/`nb` og `da` med. Et flersproget projekt behøver altså ingen ekstra indstilling, se [Flersprogede projekter](exp_multilanguage.qmd).
+
+`code-fold:` er Quartos almindelige indstilling. Med `code-tools: true` folder sidens knap "Vis al kode" også Pyodide-cellerne sammen og ud. `<format>-autoexec` kræver en Python-installation på den computer, der renderer.
+
+## Sider med `{python}` og `{pyodide-python}`
+
+::: {.callout-warning}
+## Quarto 1.10 og nyere: `engine: markdown`
+Siden Quarto 1.10 sender Quarto sider med `{pyodide-python}`, `{py-exercise}` eller `{math-exercise}` til Jupyter, selvom Jupyter ikke har noget at gøre dér. Skriv `engine: markdown` i sidehovedet på **den side**. I `_quarto.yml` har indstillingen ingen virkning.
+
+Så køres `{python}`-celler dog **ikke længere**. En side, der indeholder begge dele, får derfor ikke `engine: markdown`: den køres via Jupyter, og Python skal være installeret på den computer, der bygger.
+:::
+
+## Markørceller
+
+En figur fra en `{pyodide-python}`-celle kan ikke krydshenvises med `@fig-...`. Hvis du har brug for en nummereret figur, der kan linkes til, så skriv en almindelig `{python}`-celle, og gør den interaktiv i HTML med en kommentar `# pyodide: ...`:
+
+````{.markdown}
+```{{python}}
+#| label: fig-parabola
+#| fig-cap: "The parabola $y=x^2$."
+# pyodide: autorun, read-only=false
+x = np.linspace(-2, 2, 200)
+plt.plot(x, x**2)
+plt.show()
+```
+````
+
+Markøren tager de samme indstillinger som tabellen i fanen "Indstillinger" og fjernes fra den viste kode. PDF og Word beholder Quartos rigtige figur. I HTML overtager den interaktive celle pladsen, mens billedteksten og målet for krydshenvisningen bliver stående. Cellen kræver en rigtig Python ved renderingen, som enhver `{python}`-celle.
+
+## Begrænsninger
+
+- **Stop:** På cross-origin-isolerede sider afbryder Stop skånsomt, og variablerne bevares. Ellers genstarter Stop Python, variablerne går tabt, og cellerne med `setup`, `output` og `autorun` kører igen af sig selv.
+- Kun én celle kan regne ad gangen.
+- Når du går til en anden side i projektet, indlæses Python igen.
+- `embed-resources: true` giver en enkelt fil, der virker, men ikke en, der virker offline: Pyodide hentes stadig fra nettet. Filen skal leveres over http(s), det er ikke nok at dobbeltklikke på den lokale fil.
+
+:::
+::::

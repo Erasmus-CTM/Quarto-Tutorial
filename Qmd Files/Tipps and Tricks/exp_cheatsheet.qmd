@@ -180,19 +180,16 @@ Spaltenbreiten werden in Zwölfteln angegeben: `g-col-4` ist ein Drittel, `g-col
 ## Extensions: Schreibweisen im Überblick
 
 ```{.bash}
-quarto add parmsam/quizdown
-quarto add Erasmus-CTM/pyodide-interaktiv
-quarto add Erasmus-CTM/py-exercise
-quarto add Erasmus-CTM/math-exercise      # bringt jsxgraph mit
+quarto add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.zip     # Windows
+quarto add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.tar.gz  # macOS / Linux
+quarto add parmsam/quizdown               # Quizze, getrennt
 ```
 
 ```{.yaml}
-filters:                 # Reihenfolge beachten
+engine: markdown         # nur auf Seiten mit Aufgaben (Quarto 1.10+)
+filters:
   - parmsam/quizdown
-  - Erasmus-CTM/pyodide-interaktiv
-  - Erasmus-CTM/py-exercise
-  - jsxgraph
-  - Erasmus-CTM/math-exercise
+  - ctm-assessment       # Python-Zellen, py-/math-exercise, JSXGraph
 ```
 
 ### quizdown
@@ -490,19 +487,16 @@ Column widths are in 12ths: `g-col-4` = one third, `g-col-6` = half, `g-col-12` 
 ## Extensions: syntax summary
 
 ```{.bash}
-quarto add parmsam/quizdown
-quarto add Erasmus-CTM/pyodide-interaktiv
-quarto add Erasmus-CTM/py-exercise
-quarto add Erasmus-CTM/math-exercise      # brings jsxgraph along
+quarto add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.zip     # Windows
+quarto add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.tar.gz  # macOS / Linux
+quarto add parmsam/quizdown               # quizzes, separate
 ```
 
 ```{.yaml}
-filters:                 # mind the order
+engine: markdown         # only on pages with exercises (Quarto 1.10+)
+filters:
   - parmsam/quizdown
-  - Erasmus-CTM/pyodide-interaktiv
-  - Erasmus-CTM/py-exercise
-  - jsxgraph
-  - Erasmus-CTM/math-exercise
+  - ctm-assessment       # Python cells, py-/math-exercise, JSXGraph
 ```
 
 ### quizdown
@@ -800,19 +794,16 @@ Kolonnebredder angives i tolvtedele: `g-col-4` = en tredjedel, `g-col-6` = halvd
 ## Udvidelser: syntaks kort fortalt
 
 ```{.bash}
-quarto add parmsam/quizdown
-quarto add Erasmus-CTM/pyodide-interaktiv
-quarto add Erasmus-CTM/py-exercise
-quarto add Erasmus-CTM/math-exercise      # brings jsxgraph along
+quarto add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.zip     # Windows
+quarto add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.tar.gz  # macOS / Linux
+quarto add parmsam/quizdown               # quizzer, separat
 ```
 
 ```{.yaml}
-filters:                 # mind the order
+engine: markdown         # kun på sider med opgaver (Quarto 1.10+)
+filters:
   - parmsam/quizdown
-  - Erasmus-CTM/pyodide-interaktiv
-  - Erasmus-CTM/py-exercise
-  - jsxgraph
-  - Erasmus-CTM/math-exercise
+  - ctm-assessment       # Python-celler, py-/math-exercise, JSXGraph
 ```
 
 ### quizdown
@@ -1110,19 +1101,16 @@ Kolonnebredder angis i tolvdeler: `g-col-4` = en tredjedel, `g-col-6` = halvpart
 ## Utvidelser: syntaks i korte trekk
 
 ```{.bash}
-quarto add parmsam/quizdown
-quarto add Erasmus-CTM/pyodide-interaktiv
-quarto add Erasmus-CTM/py-exercise
-quarto add Erasmus-CTM/math-exercise      # brings jsxgraph along
+quarto add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.zip     # Windows
+quarto add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.tar.gz  # macOS / Linux
+quarto add parmsam/quizdown               # quizer, separat
 ```
 
 ```{.yaml}
-filters:                 # mind the order
+engine: markdown         # bare på sider med oppgaver (Quarto 1.10+)
+filters:
   - parmsam/quizdown
-  - Erasmus-CTM/pyodide-interaktiv
-  - Erasmus-CTM/py-exercise
-  - jsxgraph
-  - Erasmus-CTM/math-exercise
+  - ctm-assessment       # Python-celler, py-/math-exercise, JSXGraph
 ```
 
 ### quizdown
@@ -1420,19 +1408,16 @@ Kolumnbredder anges i tolftedelar: `g-col-4` = en tredjedel, `g-col-6` = hälfte
 ## Tillägg: syntax i korthet
 
 ```{.bash}
-quarto add parmsam/quizdown
-quarto add Erasmus-CTM/pyodide-interaktiv
-quarto add Erasmus-CTM/py-exercise
-quarto add Erasmus-CTM/math-exercise      # brings jsxgraph along
+quarto add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.zip     # Windows
+quarto add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.tar.gz  # macOS / Linux
+quarto add parmsam/quizdown               # frågesporter, separat
 ```
 
 ```{.yaml}
-filters:                 # mind the order
+engine: markdown         # bara på sidor med uppgifter (Quarto 1.10+)
+filters:
   - parmsam/quizdown
-  - Erasmus-CTM/pyodide-interaktiv
-  - Erasmus-CTM/py-exercise
-  - jsxgraph
-  - Erasmus-CTM/math-exercise
+  - ctm-assessment       # Python-celler, py-/math-exercise, JSXGraph
 ```
 
 ### quizdown

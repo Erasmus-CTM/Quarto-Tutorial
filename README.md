@@ -68,6 +68,14 @@ The details are explained on the tutorial page *Multilanguage Projects*.
 
 | Extension | Purpose | Install |
 |---|---|---|
+| [`CTM Assessment`](https://github.com/Erasmus-CTM/ctm-assessment) | One package with everything for interactive exercises: Python live in the browser (`pyodide-interaktiv`), `py-exercise`, `math-exercise`, JSXGraph (also as answers to exercises), shared AI feedback and answer saving. Needs Quarto 1.8.27 or newer | `quarto add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.zip` (Windows) or `quarto add https://erasmus-ctm.github.io/ctm-assessment/ctm-assessment.tar.gz` (macOS/Linux), then `filters: [ctm-assessment]` |
+| [`parmsam/quizdown`](https://github.com/parmsam/quarto-quizdown) | Interactive quizzes | `quarto add parmsam/quizdown` |
+
+Since Quarto 1.10, pages with `{pyodide-python}`, `{py-exercise}` or `{math-exercise}` need `engine: markdown` in their front matter (it switches `{python}` cells off on that page).
+
+More projects built with these extensions: [`Erasmus-CTM/thematicProjects`](https://github.com/Erasmus-CTM/thematicProjects).
+
+---|---|---|
 | [`Erasmus-CTM/pyodide-interaktiv`](https://github.com/Erasmus-CTM/pyodide-interaktiv) | Python live in the browser, in a Web Worker: shared session per page, real `input()`, Matplotlib animations, Stop button, AI feedback | `quarto add Erasmus-CTM/pyodide-interaktiv` |
 | [`Erasmus-CTM/py-exercise`](https://github.com/Erasmus-CTM/py-exercise) | Editable Python exercises with hidden tests | `quarto add Erasmus-CTM/py-exercise` |
 | [`Erasmus-CTM/math-exercise`](https://github.com/Erasmus-CTM/math-exercise) | Exercises with symbolic/numeric answers, checked with SymPy | `quarto add Erasmus-CTM/math-exercise` |
